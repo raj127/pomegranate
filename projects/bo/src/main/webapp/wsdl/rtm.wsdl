@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="RTMService" targetNamespace="http://rtm.supertv.com.cn" xmlns:ns1="http://cxf.apache.org/bindings/xformat" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://rtm.supertv.com.cn" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xs:schema elementFormDefault="unqualified" targetNamespace="http://rtm.supertv.com.cn" version="1.0" xmlns:tns="http://rtm.supertv.com.cn" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="updateState" type="tns:updateState" />
+<xs:element name="updateStateResponse" type="tns:updateStateResponse" />
+<xs:complexType name="updateState">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string" />
+      <xs:element minOccurs="0" name="arg1" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="updateStateResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:UpdateStateResult" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="UpdateStateResult">
+    <xs:complexContent>
+      <xs:extension base="tns:WSResult">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="WSResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="code" type="xs:string" />
+      <xs:element minOccurs="0" name="message" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="updateState">
+    <wsdl:part element="tns:updateState" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateStateResponse">
+    <wsdl:part element="tns:updateStateResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="RTMService">
+    <wsdl:operation name="updateState">
+      <wsdl:input message="tns:updateState" name="updateState">
+    </wsdl:input>
+      <wsdl:output message="tns:updateStateResponse" name="updateStateResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="RTMServiceSoapBinding" type="tns:RTMService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="updateState">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="updateState">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="updateStateResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="RTMService">
+    <wsdl:port binding="tns:RTMServiceSoapBinding" name="RTMServicePort">
+      <soap:address location="http://localhost:8080/bo/ws/rtmservice" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,84 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+<HEAD>
+<TITLE>LeftMenu</TITLE>
+<META content="text/html; charset=utf-8" http-equiv=Content-Type>
+<SCRIPT language=JavaScript type=text/javascript src="Band_files/window.js"></SCRIPT>
+<META name=vs_defaultClientScript content=JavaScript>
+<SCRIPT>
+		function refresh(){
+			document.Test.submit();
+		}
+	</SCRIPT>
+
+<META name=GENERATOR content="MSHTML 8.00.6001.19170"></HEAD>
+<BODY onresize=myOnResize(); onload=resize_op5(); MS_POSITIONING="GridLayout">
+<FORM id=Test method=post name=Test action=""><INPUT 
+value=dDwzODYyMzczMDY7Oz4beMgBhxNv73E2yUB710unXwWo5g== type=hidden 
+name=__VIEWSTATE> 
+<STYLE>DIV {
+	POSITION: absolute
+}
+</STYLE>
+
+<SCRIPT language=JavaScript type=text/javascript 
+src="Band_files/crossbrowser.js">
+</SCRIPT>
+
+<SCRIPT language=JavaScript type=text/javascript src="Band_files/outlook.js">
+</SCRIPT>
+
+<SCRIPT>
+function resize_op5() {
+  if (bt.op5) {
+    o.showPanel(o.aktPanel);
+    var s = new createPageSize();
+    if ((screenSize.width!=s.width) || (screenSize.height!=s.height)) {
+      screenSize=new createPageSize();
+      setTimeout("o.resize(0,0,screenSize.width,screenSize.height)",100);
+    }
+    setTimeout("resize_op5()",100);
+  }
+}
+
+function myOnResize() {
+  if (bt.ie4 || bt.ie5 || bt.ns5) {
+    var s=new createPageSize();
+    o.resize(0,0,s.width,s.height);
+  }
+  else
+    if (bt.ns4) location.reload();
+}
+
+</SCRIPT>
+
+<SCRIPT>var o = new createOutlookBar('Bar',0,0,screenSize.width,screenSize.height,'#356FC4','white','images/background.jpg');
+var p100 = new createPanel('p100','申请审批');
+var p350 = new createPanel('p350','问卷调查');
+var p400 = new createPanel('p400','培训管理');
+var p220 = new createPanel('p220','个人信息查询');
+var p300 = new createPanel('p300','制度确认');
+p100.addButton('./images/Band/906.GIF','申请审批','parent.cnt.location="ExMenu.aspx?parameters=D30304C343"');
+p350.addButton('./images/Band/202.GIF','答题','parent.cnt.location="ExMenu.aspx?parameters=04D324C3C3C303B3C3B3"');
+p400.addButton('./images/Band/205.GIF','培训登记','parent.cnt.location="ExMenu.aspx?parameters=33D324C3C3C30314C3B3"');
+p400.addButton('./images/Band/205.GIF','培训历史','parent.cnt.location="ExMenu.aspx?parameters=C3C324C3C3C30314C3B3"');
+p220.addButton('./images/Band/209.GIF','个人信息','parent.cnt.location="ExMenu.aspx?parameters=040343C3B3"');
+p220.addButton('./images/Band/208.GIF','薪资汇总查询','parent.cnt.location="ExMenu.aspx?parameters=14C3D3C3D3C3C30353C3B3"');
+p220.addButton('./images/Band/23.GIF','薪资单月查询','parent.cnt.location="ExMenu.aspx?parameters=B353C3C3D3B31324B3"');
+p220.addButton('./images/Band/207.GIF','本月考勤明细','parent.cnt.location="ExMenu.aspx?parameters=D353D3C3D3C3340363C3B3"');
+p220.addButton('./images/Band/205.GIF','考勤查询','parent.cnt.location="ExMenu.aspx?parameters=C314C3D3C3340314C3B3"');
+p300.addButton('./images/Band/202.GIF','制度确认(年签)','parent.cnt.location="ExMenu.aspx?parameters=D3242403B3C3B3"');
+p300.addButton('./images/Band/202.GIF','通知及规章制度','parent.cnt.location="ExMenu.aspx?parameters=D3B32403B3C3B3"');
+p220.addButton('./images/Band/202.GIF','岗位说明书','parent.cnt.location="ExMenu.aspx?parameters=24B3C3C303B3C3B3"');
+o.addPanel(p100);
+o.addPanel(p350);
+o.addPanel(p400);
+o.addPanel(p220);
+o.addPanel(p300);
+o.draw();
+</SCRIPT>
+
+</FORM>
+</BODY>
+</HTML>

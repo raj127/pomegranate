@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<project name="save-wsdl" default="save-wsdl">
+	<target name="save-wsdl">
+		<property name="cmsWsdlfile" value="../../src/main/webapp/wsdl/cms.wsdl"/>
+		<!-- 保存cxf生成的WSDL -->
+		<get src="http://localhost:8080/bo/ws/cmsservice?wsdl" dest="${cmsWsdlfile}"/>
+		<get src="http://localhost:8080/bo/ws/catalogservice?wsdl" dest="${catalogWsdlfile}"/>
+		<get src="http://localhost:8080/bo/ws/programservice?wsdl" dest="${programWsdlfile}"/>
+		<!-- 替换address路径为生产环境路径,请修改replacevalue的值 -->
+		<replace file="${cmsWsdlfile}">
+			<replacetoken>
+				<![CDATA[<soap:address location="http://localhost:8080/bo/ws/cmsservice" />]]></replacetoken>
+			<replacevalue>
+				<![CDATA[<soap:address location="http://localhost:8080/bo/ws/cmsservice" />]]></replacevalue>
+		</replace>
+		
+		<property name="catalogWsdlfile" value="../../src/main/webapp/wsdl/catalog.wsdl"/>
+		<!-- 保存cxf生成的WSDL -->
+		<get src="http://localhost:8080/bo/ws/catalogservice?wsdl" dest="${catalogWsdlfile}"/>
+			
+		<!-- 替换address路径为生产环境路径,请修改replacevalue的值 -->
+		<replace file="${catalogWsdlfile}">
+			<replacetoken>
+				<![CDATA[<soap:address location="http://localhost:8080/bo/ws/catalogservice" />]]></replacetoken>
+			<replacevalue>
+				<![CDATA[<soap:address location="http://localhost:8080/bo/ws/catalogservice" />]]></replacevalue>
+		</replace>
+		
+		<property name="programWsdlfile" value="../../src/main/webapp/wsdl/program.wsdl"/>
+		<!-- 保存cxf生成的WSDL -->
+		<get src="http://localhost:8080/bo/ws/programservice?wsdl" dest="${programWsdlfile}"/>
+			
+		<!-- 替换address路径为生产环境路径,请修改replacevalue的值 -->
+		<replace file="${programWsdlfile}">
+			<replacetoken>
+				<![CDATA[<soap:address location="http://localhost:8080/bo/ws/programservice" />]]></replacetoken>
+			<replacevalue>
+				<![CDATA[<soap:address location="http://localhost:8080/bo/ws/programservice" />]]></replacevalue>
+		</replace>
+		
+		
+		<property name="apmWsdlfile" value="../../src/main/webapp/wsdl/apm.wsdl"/>
+		<!-- 保存cxf生成的WSDL -->
+		<get src="http://localhost:8080/bo/ws/apmservice?wsdl" dest="${apmWsdlfile}"/>
+			
+		<!-- 替换address路径为生产环境路径,请修改replacevalue的值 -->
+		<replace file="${apmWsdlfile}">
+			<replacetoken>
+				<![CDATA[<soap:address location="http://localhost:8080/bo/ws/apmservice" />]]></replacetoken>
+			<replacevalue>
+				<![CDATA[<soap:address location="http://localhost:8080/bo/ws/apmservice" />]]></replacevalue>
+		</replace>
+		
+		<property name="stateWsdlfile" value="../../src/main/webapp/wsdl/state.wsdl"/>
+				<!-- 保存cxf生成的WSDL -->
+		<get src="http://localhost:8080/bo/ws/apmservice?wsdl" dest="${stateWsdlfile}"/>
+					
+				<!-- 替换address路径为生产环境路径,请修改replacevalue的值 -->
+				<replace file="${stateWsdlfile}">
+					<replacetoken>
+						<![CDATA[<soap:address location="http://localhost:8080/bo/ws/stateservice" />]]></replacetoken>
+					<replacevalue>
+						<![CDATA[<soap:address location="http://localhost:8080/bo/ws/stateservice" />]]></replacevalue>
+				</replace>
+		
+		<property name="rtmWsdlfile" value="../../src/main/webapp/wsdl/rtm.wsdl"/>
+				<!-- 保存cxf生成的WSDL -->
+		<get src="http://localhost:8080/bo/ws/rtmservice?wsdl" dest="${rtmWsdlfile}"/>
+					
+				<!-- 替换address路径为生产环境路径,请修改replacevalue的值 -->
+				<replace file="${rtmWsdlfile}">
+					<replacetoken>
+						<![CDATA[<soap:address location="http://localhost:8080/bo/ws/rtmservice" />]]></replacetoken>
+					<replacevalue>
+						<![CDATA[<soap:address location="http://localhost:8080/bo/ws/rtmservice" />]]></replacevalue>
+				</replace>
+	</target>
+	
+	
+	
+</project>
