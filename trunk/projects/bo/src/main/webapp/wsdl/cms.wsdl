@@ -1,0 +1,455 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="CMSService" targetNamespace="http://cms.supertv.com.cn" xmlns:ns1="http://cxf.apache.org/bindings/xformat" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://cms.supertv.com.cn" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xs:schema elementFormDefault="unqualified" targetNamespace="http://cms.supertv.com.cn" version="1.0" xmlns:tns="http://cms.supertv.com.cn" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="createKtvs" type="tns:createKtvs" />
+<xs:element name="createKtvsResponse" type="tns:createKtvsResponse" />
+<xs:element name="createMovies" type="tns:createMovies" />
+<xs:element name="createMoviesResponse" type="tns:createMoviesResponse" />
+<xs:element name="createTv" type="tns:createTv" />
+<xs:element name="createTvResponse" type="tns:createTvResponse" />
+<xs:element name="offline" type="tns:offline" />
+<xs:element name="offlineResponse" type="tns:offlineResponse" />
+<xs:element name="updateState" type="tns:updateState" />
+<xs:element name="updateStateResponse" type="tns:updateStateResponse" />
+<xs:element name="updateToCensoring" type="tns:updateToCensoring" />
+<xs:element name="updateToCensoringResponse" type="tns:updateToCensoringResponse" />
+<xs:element name="updateToIngestable" type="tns:updateToIngestable" />
+<xs:element name="updateToIngestableResponse" type="tns:updateToIngestableResponse" />
+<xs:element name="updateToIngested" type="tns:updateToIngested" />
+<xs:element name="updateToIngestedResponse" type="tns:updateToIngestedResponse" />
+<xs:complexType name="createMovies">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="movieList" type="tns:Movie" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="Movie">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="actors" type="xs:string" />
+      <xs:element minOccurs="0" name="description" type="xs:string" />
+      <xs:element minOccurs="0" name="directors" type="xs:string" />
+      <xs:element minOccurs="0" name="ftpId" type="xs:string" />
+      <xs:element minOccurs="0" name="genreTreeIndex" type="xs:string" />
+      <xs:element minOccurs="0" name="posterFtpPath" type="xs:string" />
+      <xs:element minOccurs="0" name="previewFtpPath" type="xs:string" />
+      <xs:element minOccurs="0" name="previewRunTime" type="xs:int" />
+      <xs:element minOccurs="0" name="providerId" type="xs:string" />
+      <xs:element minOccurs="0" name="recommended" type="xs:boolean" />
+      <xs:element minOccurs="0" name="regionTreeIndex" type="xs:string" />
+      <xs:element minOccurs="0" name="releaseYear" type="xs:string" />
+      <xs:element minOccurs="0" name="runTime" type="xs:int" />
+      <xs:element minOccurs="0" name="suggestedPrice" type="xs:int" />
+      <xs:element minOccurs="0" name="title" type="xs:string" />
+      <xs:element minOccurs="0" name="videoFtpPath" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="createMoviesResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:CreateMovieResult" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="CreateMovieResult">
+    <xs:complexContent>
+      <xs:extension base="tns:WSResult">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="WSResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="code" type="xs:string" />
+      <xs:element minOccurs="0" name="message" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="createTv">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="tv" type="tns:Tv" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="Tv">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="actors" type="xs:string" />
+      <xs:element minOccurs="0" name="description" type="xs:string" />
+      <xs:element minOccurs="0" name="directors" type="xs:string" />
+      <xs:element minOccurs="0" name="episodeList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="episode" type="tns:Episode" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="ftpId" type="xs:string" />
+      <xs:element minOccurs="0" name="genreTreeIndex" type="xs:string" />
+      <xs:element minOccurs="0" name="posterFtpPath" type="xs:string" />
+      <xs:element minOccurs="0" name="previewFtpPath" type="xs:string" />
+      <xs:element minOccurs="0" name="previewRunTime" type="xs:int" />
+      <xs:element minOccurs="0" name="providerId" type="xs:string" />
+      <xs:element minOccurs="0" name="recommended" type="xs:boolean" />
+      <xs:element minOccurs="0" name="regionTreeIndex" type="xs:string" />
+      <xs:element minOccurs="0" name="releaseYear" type="xs:string" />
+      <xs:element minOccurs="0" name="runTime" type="xs:int" />
+      <xs:element minOccurs="0" name="suggestedPrice" type="xs:int" />
+      <xs:element minOccurs="0" name="title" type="xs:string" />
+      <xs:element minOccurs="0" name="volumn" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="Episode">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="episodeId" type="xs:int" />
+      <xs:element minOccurs="0" name="ftpId" type="xs:string" />
+      <xs:element minOccurs="0" name="suggestedPrice" type="xs:int" />
+      <xs:element minOccurs="0" name="videoFtpPath" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="createTvResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:CreateTvResult" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="CreateTvResult">
+    <xs:complexContent>
+      <xs:extension base="tns:WSResult">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="updateState">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="title" type="xs:string" />
+      <xs:element minOccurs="0" name="type" type="tns:typeEnum" />
+      <xs:element minOccurs="0" name="status" type="xs:boolean" />
+      <xs:element minOccurs="0" name="contentType" type="tns:contentTypeEnum" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="updateStateResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:UpdateStateResult" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="UpdateStateResult">
+    <xs:complexContent>
+      <xs:extension base="tns:WSResult">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="updateToCensoring">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="titleList" type="xs:string" />
+      <xs:element minOccurs="0" name="type" type="tns:typeEnum" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="updateToCensoringResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:UpdateToCensoringResult" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="UpdateToCensoringResult">
+    <xs:complexContent>
+      <xs:extension base="tns:WSResult">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="offline">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="titleList" type="xs:string" />
+      <xs:element minOccurs="0" name="type" type="tns:typeEnum" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="offlineResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:OfflineResult" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="OfflineResult">
+    <xs:complexContent>
+      <xs:extension base="tns:WSResult">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="createKtvs">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="ktvList" type="tns:Ktv" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="Ktv">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="actors" type="xs:string" />
+      <xs:element minOccurs="0" name="album" type="xs:string" />
+      <xs:element minOccurs="0" name="arranged" type="xs:string" />
+      <xs:element minOccurs="0" name="authors" type="xs:string" />
+      <xs:element minOccurs="0" name="compose" type="xs:string" />
+      <xs:element minOccurs="0" name="description" type="xs:string" />
+      <xs:element minOccurs="0" name="ftpId" type="xs:string" />
+      <xs:element minOccurs="0" name="genreTreeIndex" type="xs:string" />
+      <xs:element minOccurs="0" name="posterFtpPath" type="xs:string" />
+      <xs:element minOccurs="0" name="producer" type="xs:string" />
+      <xs:element minOccurs="0" name="providerId" type="xs:string" />
+      <xs:element minOccurs="0" name="recommended" type="xs:boolean" />
+      <xs:element minOccurs="0" name="releaseYear" type="xs:string" />
+      <xs:element minOccurs="0" name="runTime" type="xs:int" />
+      <xs:element minOccurs="0" name="suggestedPrice" type="xs:int" />
+      <xs:element minOccurs="0" name="title" type="xs:string" />
+      <xs:element minOccurs="0" name="videoFtpPath" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="createKtvsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:CreateKtvResult" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="CreateKtvResult">
+    <xs:complexContent>
+      <xs:extension base="tns:WSResult">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="updateToIngested">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="titleList" type="xs:string" />
+      <xs:element minOccurs="0" name="type" type="tns:typeEnum" />
+      <xs:element minOccurs="0" name="productId" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="updateToIngestedResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:UpdateToIngestedResult" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="UpdateToIngestedResult">
+    <xs:complexContent>
+      <xs:extension base="tns:WSResult">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="updateToIngestable">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="titleList" type="xs:string" />
+      <xs:element minOccurs="0" name="type" type="tns:typeEnum" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="updateToIngestableResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:UpdateToIngestableResult" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="UpdateToIngestableResult">
+    <xs:complexContent>
+      <xs:extension base="tns:WSResult">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:simpleType name="typeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="MOVIE" />
+      <xs:enumeration value="EPISODE" />
+      <xs:enumeration value="KTV" />
+    </xs:restriction>
+  </xs:simpleType>
+<xs:simpleType name="contentTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="VIEW" />
+      <xs:enumeration value="PREVIEW" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="createMoviesResponse">
+    <wsdl:part element="tns:createMoviesResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateToIngested">
+    <wsdl:part element="tns:updateToIngested" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateToCensoring">
+    <wsdl:part element="tns:updateToCensoring" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateStateResponse">
+    <wsdl:part element="tns:updateStateResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateToCensoringResponse">
+    <wsdl:part element="tns:updateToCensoringResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createTv">
+    <wsdl:part element="tns:createTv" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="offlineResponse">
+    <wsdl:part element="tns:offlineResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateToIngestedResponse">
+    <wsdl:part element="tns:updateToIngestedResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createTvResponse">
+    <wsdl:part element="tns:createTvResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateToIngestableResponse">
+    <wsdl:part element="tns:updateToIngestableResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateToIngestable">
+    <wsdl:part element="tns:updateToIngestable" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createKtvs">
+    <wsdl:part element="tns:createKtvs" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createMovies">
+    <wsdl:part element="tns:createMovies" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="offline">
+    <wsdl:part element="tns:offline" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateState">
+    <wsdl:part element="tns:updateState" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createKtvsResponse">
+    <wsdl:part element="tns:createKtvsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="CMSService">
+    <wsdl:operation name="createMovies">
+      <wsdl:input message="tns:createMovies" name="createMovies">
+    </wsdl:input>
+      <wsdl:output message="tns:createMoviesResponse" name="createMoviesResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createTv">
+      <wsdl:input message="tns:createTv" name="createTv">
+    </wsdl:input>
+      <wsdl:output message="tns:createTvResponse" name="createTvResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateState">
+      <wsdl:input message="tns:updateState" name="updateState">
+    </wsdl:input>
+      <wsdl:output message="tns:updateStateResponse" name="updateStateResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateToCensoring">
+      <wsdl:input message="tns:updateToCensoring" name="updateToCensoring">
+    </wsdl:input>
+      <wsdl:output message="tns:updateToCensoringResponse" name="updateToCensoringResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="offline">
+      <wsdl:input message="tns:offline" name="offline">
+    </wsdl:input>
+      <wsdl:output message="tns:offlineResponse" name="offlineResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createKtvs">
+      <wsdl:input message="tns:createKtvs" name="createKtvs">
+    </wsdl:input>
+      <wsdl:output message="tns:createKtvsResponse" name="createKtvsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateToIngested">
+      <wsdl:input message="tns:updateToIngested" name="updateToIngested">
+    </wsdl:input>
+      <wsdl:output message="tns:updateToIngestedResponse" name="updateToIngestedResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateToIngestable">
+      <wsdl:input message="tns:updateToIngestable" name="updateToIngestable">
+    </wsdl:input>
+      <wsdl:output message="tns:updateToIngestableResponse" name="updateToIngestableResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CMSServiceSoapBinding" type="tns:CMSService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="createMovies">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="createMovies">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="createMoviesResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createTv">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="createTv">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="createTvResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateState">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="updateState">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="updateStateResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="offline">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="offline">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="offlineResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateToCensoring">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="updateToCensoring">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="updateToCensoringResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createKtvs">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="createKtvs">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="createKtvsResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateToIngested">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="updateToIngested">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="updateToIngestedResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateToIngestable">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="updateToIngestable">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="updateToIngestableResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CMSService">
+    <wsdl:port binding="tns:CMSServiceSoapBinding" name="CMSServicePort">
+      <soap:address location="http://localhost:8080/bo/ws/cmsservice" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

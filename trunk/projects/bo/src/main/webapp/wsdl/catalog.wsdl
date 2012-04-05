@@ -1,0 +1,528 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="CatalogService" targetNamespace="http://catalog.pps.supertv.com.cn" xmlns:ns1="http://cxf.apache.org/bindings/xformat" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://catalog.pps.supertv.com.cn" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xs:schema elementFormDefault="unqualified" targetNamespace="http://catalog.pps.supertv.com.cn" version="1.0" xmlns:tns="http://catalog.pps.supertv.com.cn" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="createCatalog" type="tns:createCatalog" />
+<xs:element name="createCatalogResponse" type="tns:createCatalogResponse" />
+<xs:element name="createCategory" type="tns:createCategory" />
+<xs:element name="createCategoryOffering" type="tns:createCategoryOffering" />
+<xs:element name="createCategoryOfferingResponse" type="tns:createCategoryOfferingResponse" />
+<xs:element name="createCategoryResponse" type="tns:createCategoryResponse" />
+<xs:element name="createService" type="tns:createService" />
+<xs:element name="createServiceResponse" type="tns:createServiceResponse" />
+<xs:element name="deleteCatalog" type="tns:deleteCatalog" />
+<xs:element name="deleteCatalogResponse" type="tns:deleteCatalogResponse" />
+<xs:element name="deleteCategory" type="tns:deleteCategory" />
+<xs:element name="deleteCategoryOffering" type="tns:deleteCategoryOffering" />
+<xs:element name="deleteCategoryOfferingResponse" type="tns:deleteCategoryOfferingResponse" />
+<xs:element name="deleteCategoryResponse" type="tns:deleteCategoryResponse" />
+<xs:element name="deleteService" type="tns:deleteService" />
+<xs:element name="deleteServiceResponse" type="tns:deleteServiceResponse" />
+<xs:complexType name="createService">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="service" type="tns:Service" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="Service">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="name" type="xs:string" />
+      <xs:element minOccurs="0" name="serviceId" type="xs:string" />
+      <xs:element minOccurs="0" name="serviceType" type="tns:ServiceTypeEnumService" />
+      <xs:element minOccurs="0" name="state" type="tns:StateEnumService" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="createServiceResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:CreateServiceResult" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="CreateServiceResult">
+    <xs:complexContent>
+      <xs:extension base="tns:WSResult">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="WSResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="code" type="xs:string" />
+      <xs:element minOccurs="0" name="message" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="createCategoryOffering">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="treeIndex" type="xs:string" />
+      <xs:element minOccurs="0" name="offeringId" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="createCategoryOfferingResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:CreateCategoryOfferingResult" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="CreateCategoryOfferingResult">
+    <xs:complexContent>
+      <xs:extension base="tns:WSResult">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="createCategory">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="category" type="tns:Category" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="Category">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="isLeaf" type="xs:boolean" />
+      <xs:element minOccurs="0" name="name" type="xs:string" />
+      <xs:element minOccurs="0" name="sort" type="xs:int" />
+      <xs:element minOccurs="0" name="state" type="xs:boolean" />
+      <xs:element minOccurs="0" name="treeIndex" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="createCategoryResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:CreateCategoryResult" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="CreateCategoryResult">
+    <xs:complexContent>
+      <xs:extension base="tns:WSResult">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="deleteCatalog">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="offeringId" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="deleteCatalogResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:DeleteCatalogResult" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="DeleteCatalogResult">
+    <xs:complexContent>
+      <xs:extension base="tns:WSResult">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="createCatalog">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="treeIndexList" type="xs:string" />
+      <xs:element minOccurs="0" name="offering" type="tns:Offering" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="Offering">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="assetId" type="xs:string" />
+      <xs:element minOccurs="0" name="categoryList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="category" type="tns:Category" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="description" type="xs:string" />
+      <xs:element minOccurs="0" name="fileName" type="xs:string" />
+      <xs:element minOccurs="0" name="name" type="xs:string" />
+      <xs:element minOccurs="0" name="offeringId" type="xs:long" />
+      <xs:element minOccurs="0" name="packageAsset" type="tns:PackageAsset" />
+      <xs:element minOccurs="0" name="packageName" type="xs:string" />
+      <xs:element minOccurs="0" name="previewFileName" type="xs:string" />
+      <xs:element minOccurs="0" name="price" type="xs:int" />
+      <xs:element minOccurs="0" name="productId" type="xs:string" />
+      <xs:element minOccurs="0" name="providerId" type="xs:string" />
+      <xs:element minOccurs="0" name="serviceId" type="xs:string" />
+      <xs:element minOccurs="0" name="state" type="tns:StateEnumOffering" />
+      <xs:element minOccurs="0" name="type" type="tns:TypeEnumOffering" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="PackageAsset">
+    <xs:complexContent>
+      <xs:extension base="tns:Asset">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="movieAsset" type="tns:MovieAsset" />
+          <xs:element minOccurs="0" name="previewAsset" type="tns:PreviewAsset" />
+          <xs:element minOccurs="0" name="stillImageAsset" type="tns:StillImageAsset" />
+          <xs:element minOccurs="0" name="titleAsset" type="tns:TitleAsset" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="Asset">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="assetClass" type="xs:string" />
+      <xs:element minOccurs="0" name="assetId" type="xs:string" />
+      <xs:element minOccurs="0" name="assetName" type="xs:string" />
+      <xs:element minOccurs="0" name="creationDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="description" type="xs:string" />
+      <xs:element minOccurs="0" name="metadataList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="metadata" type="tns:Metadata" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="product" type="xs:string" />
+      <xs:element minOccurs="0" name="provider" type="xs:string" />
+      <xs:element minOccurs="0" name="providerId" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="MovieAsset">
+    <xs:complexContent>
+      <xs:extension base="tns:Asset">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="content" type="xs:string" />
+          <xs:element minOccurs="0" name="contentCheckSum" type="xs:string" />
+          <xs:element minOccurs="0" name="contentFileSize" type="xs:int" />
+          <xs:element minOccurs="0" name="fileName" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="Metadata">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="name" type="xs:string" />
+      <xs:element minOccurs="0" name="value" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="PreviewAsset">
+    <xs:complexContent>
+      <xs:extension base="tns:Asset">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="content" type="xs:string" />
+          <xs:element minOccurs="0" name="contentCheckSum" type="xs:string" />
+          <xs:element minOccurs="0" name="contentFileSize" type="xs:int" />
+          <xs:element minOccurs="0" name="fileName" type="xs:string" />
+          <xs:element minOccurs="0" name="runTime" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="StillImageAsset">
+    <xs:complexContent>
+      <xs:extension base="tns:Asset">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="contentCheckSum" type="xs:string" />
+          <xs:element minOccurs="0" name="contentFileSize" type="xs:int" />
+          <xs:element minOccurs="0" name="contentUrl" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="TitleAsset">
+    <xs:complexContent>
+      <xs:extension base="tns:Asset">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="actors" type="xs:string" />
+          <xs:element minOccurs="0" name="channelName" type="xs:string" />
+          <xs:element minOccurs="0" name="countryOfOrigin" type="xs:string" />
+          <xs:element minOccurs="0" name="director" type="xs:string" />
+          <xs:element minOccurs="0" name="episodeId" type="xs:int" />
+          <xs:element minOccurs="0" name="genre" type="xs:string" />
+          <xs:element minOccurs="0" name="programId" type="xs:long" />
+          <xs:element minOccurs="0" name="recommended" type="xs:boolean" />
+          <xs:element minOccurs="0" name="runTime" type="xs:int" />
+          <xs:element minOccurs="0" name="startTime" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="suggestedPrice" type="xs:int" />
+          <xs:element minOccurs="0" name="summary" type="xs:string" />
+          <xs:element minOccurs="0" name="title" type="xs:string" />
+          <xs:element minOccurs="0" name="type" type="xs:string" />
+          <xs:element minOccurs="0" name="volum" type="xs:int" />
+          <xs:element minOccurs="0" name="year" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="createCatalogResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:CreateCatalogResult" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="CreateCatalogResult">
+    <xs:complexContent>
+      <xs:extension base="tns:WSResult">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="deleteCategory">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="treeIndex" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="deleteCategoryResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:DeleteCategoryResult" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="DeleteCategoryResult">
+    <xs:complexContent>
+      <xs:extension base="tns:WSResult">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="deleteCategoryOffering">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="treeIndex" type="xs:string" />
+      <xs:element minOccurs="0" name="offeringId" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="deleteCategoryOfferingResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:DeleteCategoryOfferingResult" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="DeleteCategoryOfferingResult">
+    <xs:complexContent>
+      <xs:extension base="tns:WSResult">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="deleteService">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="serviceId" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="deleteServiceResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:DeleteServiceResult" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="DeleteServiceResult">
+    <xs:complexContent>
+      <xs:extension base="tns:WSResult">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:simpleType name="ServiceTypeEnumService">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="MOD" />
+      <xs:enumeration value="SVOD" />
+      <xs:enumeration value="FVOD" />
+    </xs:restriction>
+  </xs:simpleType>
+<xs:simpleType name="StateEnumService">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NORMAL" />
+      <xs:enumeration value="DELETE" />
+    </xs:restriction>
+  </xs:simpleType>
+<xs:simpleType name="StateEnumOffering">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NORMAL" />
+      <xs:enumeration value="DELETE" />
+    </xs:restriction>
+  </xs:simpleType>
+<xs:simpleType name="TypeEnumOffering">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="MOVIE" />
+      <xs:enumeration value="TV" />
+      <xs:enumeration value="EPISODE" />
+      <xs:enumeration value="KTV" />
+      <xs:enumeration value="TSTV" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="deleteCategoryResponse">
+    <wsdl:part element="tns:deleteCategoryResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createCategoryOffering">
+    <wsdl:part element="tns:createCategoryOffering" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteCategoryOffering">
+    <wsdl:part element="tns:deleteCategoryOffering" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteService">
+    <wsdl:part element="tns:deleteService" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createCategoryResponse">
+    <wsdl:part element="tns:createCategoryResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteCategoryOfferingResponse">
+    <wsdl:part element="tns:deleteCategoryOfferingResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createServiceResponse">
+    <wsdl:part element="tns:createServiceResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createCategoryOfferingResponse">
+    <wsdl:part element="tns:createCategoryOfferingResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteCatalogResponse">
+    <wsdl:part element="tns:deleteCatalogResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createCatalog">
+    <wsdl:part element="tns:createCatalog" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteCatalog">
+    <wsdl:part element="tns:deleteCatalog" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteServiceResponse">
+    <wsdl:part element="tns:deleteServiceResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createCategory">
+    <wsdl:part element="tns:createCategory" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createCatalogResponse">
+    <wsdl:part element="tns:createCatalogResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteCategory">
+    <wsdl:part element="tns:deleteCategory" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createService">
+    <wsdl:part element="tns:createService" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="CatalogService">
+    <wsdl:operation name="createService">
+      <wsdl:input message="tns:createService" name="createService">
+    </wsdl:input>
+      <wsdl:output message="tns:createServiceResponse" name="createServiceResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createCategoryOffering">
+      <wsdl:input message="tns:createCategoryOffering" name="createCategoryOffering">
+    </wsdl:input>
+      <wsdl:output message="tns:createCategoryOfferingResponse" name="createCategoryOfferingResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createCategory">
+      <wsdl:input message="tns:createCategory" name="createCategory">
+    </wsdl:input>
+      <wsdl:output message="tns:createCategoryResponse" name="createCategoryResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteCatalog">
+      <wsdl:input message="tns:deleteCatalog" name="deleteCatalog">
+    </wsdl:input>
+      <wsdl:output message="tns:deleteCatalogResponse" name="deleteCatalogResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createCatalog">
+      <wsdl:input message="tns:createCatalog" name="createCatalog">
+    </wsdl:input>
+      <wsdl:output message="tns:createCatalogResponse" name="createCatalogResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteCategory">
+      <wsdl:input message="tns:deleteCategory" name="deleteCategory">
+    </wsdl:input>
+      <wsdl:output message="tns:deleteCategoryResponse" name="deleteCategoryResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteCategoryOffering">
+      <wsdl:input message="tns:deleteCategoryOffering" name="deleteCategoryOffering">
+    </wsdl:input>
+      <wsdl:output message="tns:deleteCategoryOfferingResponse" name="deleteCategoryOfferingResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteService">
+      <wsdl:input message="tns:deleteService" name="deleteService">
+    </wsdl:input>
+      <wsdl:output message="tns:deleteServiceResponse" name="deleteServiceResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CatalogServiceSoapBinding" type="tns:CatalogService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="createService">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="createService">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="createServiceResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createCategoryOffering">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="createCategoryOffering">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="createCategoryOfferingResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createCategory">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="createCategory">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="createCategoryResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteCatalog">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="deleteCatalog">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="deleteCatalogResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createCatalog">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="createCatalog">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="createCatalogResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteCategory">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="deleteCategory">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="deleteCategoryResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteCategoryOffering">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="deleteCategoryOffering">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="deleteCategoryOfferingResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteService">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="deleteService">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="deleteServiceResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CatalogService">
+    <wsdl:port binding="tns:CatalogServiceSoapBinding" name="CatalogServicePort">
+      <soap:address location="http://localhost:8080/bo/ws/catalogservice" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

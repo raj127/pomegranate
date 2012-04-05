@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.darkmi.rose</groupId>
+	<artifactId>rose</artifactId>
+	<version>0.0.1</version>
+	<name>ROSE HRMS</name>
+	<packaging>pom</packaging>
+	
+	<repositories>
+		<repository>
+			<id>nexus</id>
+			<name>Team Nexus Repository</name>
+			<url>http://192.168.7.126:8081/nexus/content/groups/public</url>
+		</repository>
+	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>nexus</id>
+			<name>Team Nexus Repository</name>
+			<url>http://192.168.7.126:8081/nexus/content/groups/public</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+	
+	<modules>
+		<module>modules/parent</module>
+		<module>modules/core</module>
+		<module>modules/extension</module>
+		<module>modules/common</module>
+		<module>modules/entity</module>
+		<module>projects/bo</module>
+		<!--
+		<module>tools/maven/archetype</module>
+		<module>projects/ens</module>
+		<module>projects/smslite</module>
+		<module>projects/cmslite</module>
+		<module>projects/ccur</module>
+	         <module>projects/VSI</module>
+		<module>projects/cs</module>
+		<module>projects/sm</module>
+		<module>projects/nvs</module>
+		<module>projects/vodlite-batch</module>
+		<module>projects/rtm</module>
+		<module>projects/vvs</module>
+		<module>projects/srm</module>
+		<module>projects/RCServer/RCServer-SRM</module>
+		<module>projects/RCServer/RCServer-PS</module>
+		<module>projects/RCServer/RCServer-CA</module>
+		<module>projects/RCServer/RCServer-session-manager</module>
+		<module>projects/RCServer/RCServer-IVR</module>
+		<module>projects/RCServer/RCServer-IT</module>
+		<module>projects/RCServer/RCServer-SRC</module>
+		<module>projects/RCServer/RCServer-SRC_Manager</module>
+		<module>projects/RCServer/RCServer-PBM</module>	
+		<module>projects/RCServer/IVRBankServer</module>	
+		<module>projects/RCServer/PagerServer</module>
+		<module>projects/RCServer/RCServer-Phone-Remote</module>
+		<module>projects/portal/ivr</module>
+		<module>projects/portal/mob</module>	
+		-->
+  	</modules>
+</project>

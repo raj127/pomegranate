@@ -1,0 +1,226 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="ProgramService" targetNamespace="http://program.pps.supertv.com.cn" xmlns:ns1="http://cxf.apache.org/bindings/xformat" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://program.pps.supertv.com.cn" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xs:schema elementFormDefault="unqualified" targetNamespace="http://program.pps.supertv.com.cn" version="1.0" xmlns:tns="http://program.pps.supertv.com.cn" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="createProgram" type="tns:createProgram" />
+<xs:element name="createProgramResponse" type="tns:createProgramResponse" />
+<xs:element name="deleteChannel" type="tns:deleteChannel" />
+<xs:element name="deleteChannelResponse" type="tns:deleteChannelResponse" />
+<xs:element name="deleteProgram" type="tns:deleteProgram" />
+<xs:element name="deleteProgramResponse" type="tns:deleteProgramResponse" />
+<xs:element name="updateChannel" type="tns:updateChannel" />
+<xs:element name="updateChannelResponse" type="tns:updateChannelResponse" />
+<xs:complexType name="updateChannel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="channel" type="tns:Channel" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="Channel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="name" type="xs:string" />
+      <xs:element minOccurs="0" name="networkId" type="xs:int" />
+      <xs:element minOccurs="0" name="productId" type="xs:string" />
+      <xs:element minOccurs="0" name="productServiceId" type="xs:string" />
+      <xs:element minOccurs="0" name="programList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="program" type="tns:Program" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="serviceId" type="xs:int" />
+      <xs:element minOccurs="0" name="state" type="tns:stateEnum" />
+      <xs:element minOccurs="0" name="tsId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="Program">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="description" type="xs:string" />
+      <xs:element minOccurs="0" name="duration" type="xs:int" />
+      <xs:element minOccurs="0" name="name" type="xs:string" />
+      <xs:element minOccurs="0" name="offeringId" type="xs:long" />
+      <xs:element minOccurs="0" name="programId" type="xs:long" />
+      <xs:element minOccurs="0" name="startTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="title" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="updateChannelResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:UpdateChannelResult" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="UpdateChannelResult">
+    <xs:complexContent>
+      <xs:extension base="tns:WSResult">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="WSResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="code" type="xs:string" />
+      <xs:element minOccurs="0" name="message" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="deleteProgram">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="programList" type="tns:Program" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="deleteProgramResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:DeleteProgramResult" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="DeleteProgramResult">
+    <xs:complexContent>
+      <xs:extension base="tns:WSResult">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="deleteChannel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="name" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="deleteChannelResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:DeleteChannelResult" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="DeleteChannelResult">
+    <xs:complexContent>
+      <xs:extension base="tns:WSResult">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="createProgram">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="programList" type="tns:Program" />
+      <xs:element minOccurs="0" name="channelName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="createProgramResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:CreateProgramResult" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="CreateProgramResult">
+    <xs:complexContent>
+      <xs:extension base="tns:WSResult">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:simpleType name="stateEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NORMAL" />
+      <xs:enumeration value="DELETE" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="deleteProgram">
+    <wsdl:part element="tns:deleteProgram" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateChannelResponse">
+    <wsdl:part element="tns:updateChannelResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteProgramResponse">
+    <wsdl:part element="tns:deleteProgramResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateChannel">
+    <wsdl:part element="tns:updateChannel" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createProgramResponse">
+    <wsdl:part element="tns:createProgramResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createProgram">
+    <wsdl:part element="tns:createProgram" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteChannelResponse">
+    <wsdl:part element="tns:deleteChannelResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteChannel">
+    <wsdl:part element="tns:deleteChannel" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ProgramService">
+    <wsdl:operation name="updateChannel">
+      <wsdl:input message="tns:updateChannel" name="updateChannel">
+    </wsdl:input>
+      <wsdl:output message="tns:updateChannelResponse" name="updateChannelResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteProgram">
+      <wsdl:input message="tns:deleteProgram" name="deleteProgram">
+    </wsdl:input>
+      <wsdl:output message="tns:deleteProgramResponse" name="deleteProgramResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteChannel">
+      <wsdl:input message="tns:deleteChannel" name="deleteChannel">
+    </wsdl:input>
+      <wsdl:output message="tns:deleteChannelResponse" name="deleteChannelResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createProgram">
+      <wsdl:input message="tns:createProgram" name="createProgram">
+    </wsdl:input>
+      <wsdl:output message="tns:createProgramResponse" name="createProgramResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ProgramServiceSoapBinding" type="tns:ProgramService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="updateChannel">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="updateChannel">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="updateChannelResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteProgram">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="deleteProgram">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="deleteProgramResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteChannel">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="deleteChannel">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="deleteChannelResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createProgram">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="createProgram">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="createProgramResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ProgramService">
+    <wsdl:port binding="tns:ProgramServiceSoapBinding" name="ProgramServicePort">
+      <soap:address location="http://localhost:8080/bo/ws/programservice" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

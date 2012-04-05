@@ -1,0 +1,513 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="APMService" targetNamespace="http://injection.apm.supertv.com.cn" xmlns:ns1="http://cxf.apache.org/bindings/xformat" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://injection.apm.supertv.com.cn" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xs:schema elementFormDefault="unqualified" targetNamespace="http://injection.apm.supertv.com.cn" version="1.0" xmlns:tns="http://injection.apm.supertv.com.cn" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="injection" type="tns:injection" />
+<xs:element name="injectionResponse" type="tns:injectionResponse" />
+<xs:element name="kill" type="tns:kill" />
+<xs:element name="killResponse" type="tns:killResponse" />
+<xs:element name="listInjectionProduct" type="tns:listInjectionProduct" />
+<xs:element name="listInjectionProductResponse" type="tns:listInjectionProductResponse" />
+<xs:element name="listNpvrRti" type="tns:listNpvrRti" />
+<xs:element name="listNpvrRtiResponse" type="tns:listNpvrRtiResponse" />
+<xs:element name="listProduct" type="tns:listProduct" />
+<xs:element name="listProductResponse" type="tns:listProductResponse" />
+<xs:element name="listUploadFtp" type="tns:listUploadFtp" />
+<xs:element name="listUploadFtpResponse" type="tns:listUploadFtpResponse" />
+<xs:element name="offline" type="tns:offline" />
+<xs:element name="offlineResponse" type="tns:offlineResponse" />
+<xs:complexType name="listUploadFtp">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="titleList" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="listUploadFtpResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:ListUploadFtpResult" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="ListUploadFtpResult">
+    <xs:complexContent>
+      <xs:extension base="tns:WSResult">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="contentStatusList">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="contentStatus" type="tns:ContentStatus" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="WSResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="code" type="xs:string" />
+      <xs:element minOccurs="0" name="message" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="ContentStatus">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="contentStatusCode" type="tns:InjectionStatusCode" />
+      <xs:element minOccurs="0" name="previewStatusCode" type="tns:InjectionStatusCode" />
+      <xs:element minOccurs="0" name="title" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="injection">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="packageAsset" type="tns:PackageAsset" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="PackageAsset">
+    <xs:complexContent>
+      <xs:extension base="tns:Asset">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="movieAsset" type="tns:MovieAsset" />
+          <xs:element minOccurs="0" name="previewAsset" type="tns:PreviewAsset" />
+          <xs:element minOccurs="0" name="stillImageAsset" type="tns:StillImageAsset" />
+          <xs:element minOccurs="0" name="titleAsset" type="tns:TitleAsset" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="Asset">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="assetClass" type="tns:AssetClassEnum" />
+      <xs:element minOccurs="0" name="assetId" type="xs:string" />
+      <xs:element minOccurs="0" name="assetMetadataList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="assetMetadata" type="tns:MetaData" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="assetName" type="xs:string" />
+      <xs:element minOccurs="0" name="creationDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="description" type="xs:string" />
+      <xs:element minOccurs="0" name="product" type="xs:string" />
+      <xs:element minOccurs="0" name="provider" type="xs:string" />
+      <xs:element minOccurs="0" name="providerId" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="MovieAsset">
+    <xs:complexContent>
+      <xs:extension base="tns:Asset">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="content" type="xs:string" />
+          <xs:element minOccurs="0" name="contentCheckSum" type="xs:string" />
+          <xs:element minOccurs="0" name="contentFileSize" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="MetaData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="name" type="xs:string" />
+      <xs:element minOccurs="0" name="value" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="PreviewAsset">
+    <xs:complexContent>
+      <xs:extension base="tns:Asset">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="content" type="xs:string" />
+          <xs:element minOccurs="0" name="contentCheckSum" type="xs:string" />
+          <xs:element minOccurs="0" name="contentFileSize" type="xs:int" />
+          <xs:element minOccurs="0" name="runTime" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="StillImageAsset">
+    <xs:complexContent>
+      <xs:extension base="tns:Asset">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="contentCheckSum" type="xs:string" />
+          <xs:element minOccurs="0" name="contentFileSize" type="xs:int" />
+          <xs:element minOccurs="0" name="contentUrl" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="TitleAsset">
+    <xs:complexContent>
+      <xs:extension base="tns:Asset">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="actors" type="xs:string" />
+          <xs:element minOccurs="0" name="channelName" type="xs:string" />
+          <xs:element minOccurs="0" name="countryOfOrigin" type="xs:string" />
+          <xs:element minOccurs="0" name="director" type="xs:string" />
+          <xs:element minOccurs="0" name="episodeId" type="xs:int" />
+          <xs:element minOccurs="0" name="genre" type="xs:string" />
+          <xs:element minOccurs="0" name="host" type="xs:string" />
+          <xs:element minOccurs="0" name="port" type="xs:int" />
+          <xs:element minOccurs="0" name="programId" type="xs:long" />
+          <xs:element minOccurs="0" name="recommended" type="xs:boolean" />
+          <xs:element minOccurs="0" name="runTime" type="xs:int" />
+          <xs:element minOccurs="0" name="startTime" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="suggestedPrice" type="xs:int" />
+          <xs:element minOccurs="0" name="summary" type="xs:string" />
+          <xs:element minOccurs="0" name="title" type="xs:string" />
+          <xs:element minOccurs="0" name="type" type="tns:typeEnum" />
+          <xs:element minOccurs="0" name="volum" type="xs:int" />
+          <xs:element minOccurs="0" name="year" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="injectionResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:InjectionResult" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="InjectionResult">
+    <xs:complexContent>
+      <xs:extension base="tns:WSResult">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="offeringIdList">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="offeringId" type="xs:long" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="offline">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="title" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="offlineResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:OfflineResult" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="OfflineResult">
+    <xs:complexContent>
+      <xs:extension base="tns:WSResult">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="listInjectionProduct">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="title" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="listInjectionProductResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:ListInjectionProductResult" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="ListInjectionProductResult">
+    <xs:complexContent>
+      <xs:extension base="tns:WSResult">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="productList">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="product" type="tns:Product" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="Product">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="productId" type="xs:string" />
+      <xs:element minOccurs="0" name="productName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="kill">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="title" type="xs:string" />
+      <xs:element minOccurs="0" name="keep" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="killResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:KillResult" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="KillResult">
+    <xs:complexContent>
+      <xs:extension base="tns:WSResult">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="listProduct">
+    <xs:sequence />
+  </xs:complexType>
+<xs:complexType name="listProductResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:ListProductResult" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="ListProductResult">
+    <xs:complexContent>
+      <xs:extension base="tns:WSResult">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="productList">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="product" type="tns:Product" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="listNpvrRti">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="npvrRecordList" type="tns:NpvrRecord" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="NpvrRecord">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="endtime" type="xs:string" />
+      <xs:element minOccurs="0" name="host" type="xs:string" />
+      <xs:element minOccurs="0" name="port" type="xs:string" />
+      <xs:element minOccurs="0" name="starttime" type="xs:string" />
+      <xs:element minOccurs="0" name="title" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="listNpvrRtiResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:ListNpvrRtiResult" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="ListNpvrRtiResult">
+    <xs:complexContent>
+      <xs:extension base="tns:WSResult">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="recordStatusList">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="recordStatus" type="tns:RecordStatus" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="RecordStatus">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="statusCode" type="tns:InjectionStatusCode" />
+      <xs:element minOccurs="0" name="title" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:simpleType name="InjectionStatusCode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="IN_QUEUE" />
+      <xs:enumeration value="UPLOADING" />
+      <xs:enumeration value="UPLOAD_COMPLETE" />
+      <xs:enumeration value="ERROR_ADDRESS" />
+      <xs:enumeration value="ERROR_FTP_AUTH" />
+      <xs:enumeration value="ERROR_URL" />
+      <xs:enumeration value="ERROR_FILENAME" />
+      <xs:enumeration value="RECORDING" />
+      <xs:enumeration value="RECORD_COMPLETE" />
+      <xs:enumeration value="ERROR_SPACE" />
+      <xs:enumeration value="ERROR_OTHER" />
+    </xs:restriction>
+  </xs:simpleType>
+<xs:simpleType name="AssetClassEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PACKAGE" />
+      <xs:enumeration value="MOVIE" />
+      <xs:enumeration value="PREVIEW" />
+      <xs:enumeration value="TITLE" />
+      <xs:enumeration value="STILLASSETIMAGE" />
+    </xs:restriction>
+  </xs:simpleType>
+<xs:simpleType name="typeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="MOVIE" />
+      <xs:enumeration value="TV" />
+      <xs:enumeration value="EPISODE" />
+      <xs:enumeration value="KTV" />
+      <xs:enumeration value="TSTV" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="offlineResponse">
+    <wsdl:part element="tns:offlineResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listUploadFtpResponse">
+    <wsdl:part element="tns:listUploadFtpResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listInjectionProductResponse">
+    <wsdl:part element="tns:listInjectionProductResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listProductResponse">
+    <wsdl:part element="tns:listProductResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="killResponse">
+    <wsdl:part element="tns:killResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listUploadFtp">
+    <wsdl:part element="tns:listUploadFtp" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="injection">
+    <wsdl:part element="tns:injection" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listNpvrRtiResponse">
+    <wsdl:part element="tns:listNpvrRtiResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="kill">
+    <wsdl:part element="tns:kill" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="offline">
+    <wsdl:part element="tns:offline" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listProduct">
+    <wsdl:part element="tns:listProduct" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listInjectionProduct">
+    <wsdl:part element="tns:listInjectionProduct" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listNpvrRti">
+    <wsdl:part element="tns:listNpvrRti" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="injectionResponse">
+    <wsdl:part element="tns:injectionResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="APMService">
+    <wsdl:operation name="listUploadFtp">
+      <wsdl:input message="tns:listUploadFtp" name="listUploadFtp">
+    </wsdl:input>
+      <wsdl:output message="tns:listUploadFtpResponse" name="listUploadFtpResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="injection">
+      <wsdl:input message="tns:injection" name="injection">
+    </wsdl:input>
+      <wsdl:output message="tns:injectionResponse" name="injectionResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="offline">
+      <wsdl:input message="tns:offline" name="offline">
+    </wsdl:input>
+      <wsdl:output message="tns:offlineResponse" name="offlineResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listInjectionProduct">
+      <wsdl:input message="tns:listInjectionProduct" name="listInjectionProduct">
+    </wsdl:input>
+      <wsdl:output message="tns:listInjectionProductResponse" name="listInjectionProductResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="kill">
+      <wsdl:input message="tns:kill" name="kill">
+    </wsdl:input>
+      <wsdl:output message="tns:killResponse" name="killResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listProduct">
+      <wsdl:input message="tns:listProduct" name="listProduct">
+    </wsdl:input>
+      <wsdl:output message="tns:listProductResponse" name="listProductResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listNpvrRti">
+      <wsdl:input message="tns:listNpvrRti" name="listNpvrRti">
+    </wsdl:input>
+      <wsdl:output message="tns:listNpvrRtiResponse" name="listNpvrRtiResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="APMServiceSoapBinding" type="tns:APMService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="listUploadFtp">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="listUploadFtp">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="listUploadFtpResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="injection">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="injection">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="injectionResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="offline">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="offline">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="offlineResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listInjectionProduct">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="listInjectionProduct">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="listInjectionProductResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="kill">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="kill">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="killResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listProduct">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="listProduct">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="listProductResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listNpvrRti">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="listNpvrRti">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="listNpvrRtiResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="APMService">
+    <wsdl:port binding="tns:APMServiceSoapBinding" name="APMServicePort">
+      <soap:address location="http://localhost:8080/bo/ws/apmservice" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

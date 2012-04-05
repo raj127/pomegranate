@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:s="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd"
+	default-lazy-init="true">
+
+	<description>SpringSecurity安全配置</description>
+
+	<!-- http安全配置 -->
+	<s:http auto-config="true" use-expressions="true">
+		<s:intercept-url pattern="/css/**" filters="none" />
+		<s:intercept-url pattern="/images/**" filters="none" />
+		<s:intercept-url pattern="/js/**" filters="none" />
+		
+
+		<!-- 系统管理 -->
+		<s:intercept-url pattern="/system/user!save*" access="hasAnyRole('ROLE_修改用户')" />
+		<s:intercept-url pattern="/system/user!delete*" access="hasAnyRole('ROLE_修改用户')" />
+		<s:intercept-url pattern="/system/user*" access="hasAnyRole('ROLE_浏览用户')" />
+		<s:intercept-url pattern="/system/role!save*" access="hasAnyRole('ROLE_修改角色')" />
+		<s:intercept-url pattern="/system/role!delete*" access="hasAnyRole('ROLE_修改角色')" />
+		<s:intercept-url pattern="/system/role*" access="hasAnyRole('ROLE_浏览角色')" />
+		<s:intercept-url pattern="/system/modify-password*" access="hasAnyRole('ROLE_修改密码')" />
+		<s:intercept-url pattern="/system/ftp!save*" access="hasAnyRole('ROLE_修改FTP')" />
+		<s:intercept-url pattern="/system/ftp!delete*" access="hasAnyRole('ROLE_修改FTP')" />
+		<s:intercept-url pattern="/system/ftp*" access="hasAnyRole('ROLE_浏览FTP')" />
+		<s:intercept-url pattern="/system/config!save*" access="hasAnyRole('ROLE_修改配置')" />
+		<s:intercept-url pattern="/system/config!delete*" access="hasAnyRole('ROLE_修改配置')" />
+		<s:intercept-url pattern="/system/config*" access="hasAnyRole('ROLE_浏览配置')" />
+		<s:intercept-url pattern="/system/log!delete*" access="hasAnyRole('ROLE_删除日志')" />
+		<s:intercept-url pattern="/system/log*" access="hasAnyRole('ROLE_浏览日志')" />
+		<!-- 内容管理 -->
+		<s:intercept-url pattern="/cms/provider-info!save*" access="hasAnyRole('ROLE_修改内容供应商')" />
+		<s:intercept-url pattern="/cms/provider-info!delete*" access="hasAnyRole('ROLE_修改内容供应商')" />
+		<s:intercept-url pattern="/cms/provider-info*" access="hasAnyRole('ROLE_浏览内容供应商')" />
+		<s:intercept-url pattern="/cms/media-category!tree*" access="hasAnyRole('ROLE_修改内容分类')" />
+		<s:intercept-url pattern="/cms/media-category*" access="hasAnyRole('ROLE_浏览内容分类')" />
+		<s:intercept-url pattern="/cms/movie-published!delete*" access="hasAnyRole('ROLE_下线电影')" />
+		<s:intercept-url pattern="/cms/movie-published*" access="hasAnyRole('ROLE_发布电影')" />
+		<s:intercept-url pattern="/cms/movie-audit*" access="hasAnyRole('ROLE_审核电影')" />
+		<s:intercept-url pattern="/cms/movie!save*" access="hasAnyRole('ROLE_修改电影')" />
+		<s:intercept-url pattern="/cms/movie!resumeEditing*" access="hasAnyRole('ROLE_修改电影')" />
+		<s:intercept-url pattern="/cms/movie!submittedForReview*" access="hasAnyRole('ROLE_修改电影')" />
+		<s:intercept-url pattern="/cms/movie!delete*" access="hasAnyRole('ROLE_修改电影')" />
+		<s:intercept-url pattern="/cms/movie*" access="hasAnyRole('ROLE_浏览电影')" />
+		<s:intercept-url pattern="/cms/ktv-published!delete*" access="hasAnyRole('ROLE_下线KTV')" />
+		<s:intercept-url pattern="/cms/ktv-published*" access="hasAnyRole('ROLE_发布KTV')" />
+		<s:intercept-url pattern="/cms/ktv-audit*" access="hasAnyRole('ROLE_审核KTV')" />
+		<s:intercept-url pattern="/cms/ktv!save*" access="hasAnyRole('ROLE_修改KTV')" />
+		<s:intercept-url pattern="/cms/ktv!resumeEditing*" access="hasAnyRole('ROLE_修改KTV')" />
+		<s:intercept-url pattern="/cms/ktv!submittedForReview*" access="hasAnyRole('ROLE_修改KTV')" />
+		<s:intercept-url pattern="/cms/ktv!delete*" access="hasAnyRole('ROLE_修改KTV')" />
+		<s:intercept-url pattern="/cms/ktv*" access="hasAnyRole('ROLE_浏览KTV')" />
+		<s:intercept-url pattern="/cms/tv!save*" access="hasAnyRole('ROLE_修改电视剧')" />
+		<s:intercept-url pattern="/cms/tv!delete*" access="hasAnyRole('ROLE_修改电视剧')" />
+		<s:intercept-url pattern="/cms/tv*" access="hasAnyRole('ROLE_浏览电视剧')" />
+		<s:intercept-url pattern="/cms/episode-published!delete*" access="hasAnyRole('ROLE_下线电视剧集')" />
+		<s:intercept-url pattern="/cms/episode-published*" access="hasAnyRole('ROLE_发布电视剧集')" />
+		<s:intercept-url pattern="/cms/episode-audit*" access="hasAnyRole('ROLE_审核电视剧集')" />
+		<s:intercept-url pattern="/cms/episode!save*" access="hasAnyRole('ROLE_修改电视剧集')" />
+		<s:intercept-url pattern="/cms/episode!resumeEditing*" access="hasAnyRole('ROLE_修改电视剧集')" />
+		<s:intercept-url pattern="/cms/episode!submittedForReview*" access="hasAnyRole('ROLE_修改电视剧集')" />
+		<s:intercept-url pattern="/cms/episode!delete*" access="hasAnyRole('ROLE_修改电视剧集')" />
+		<s:intercept-url pattern="/cms/episode*" access="hasAnyRole('ROLE_浏览电视剧集')" />
+		<s:intercept-url pattern="/cms/oplog*" access="hasAnyRole('ROLE_浏览内容状态列表')" />
+		<s:intercept-url pattern="/cms/media-history*" access="hasAnyRole('ROLE_浏览历史记录')" />
+		<s:intercept-url pattern="/cms/file-state*" access="hasAnyRole('ROLE_浏览内容存储状态')" />
+		<!-- 时移管理 -->
+		<s:intercept-url pattern="/rtm/channel!save*" access="hasAnyRole('ROLE_修改频道')" />
+		<s:intercept-url pattern="/rtm/chennel!delete*" access="hasAnyRole('ROLE_修改频道')" />
+		<s:intercept-url pattern="/rtm/chennel-state*" access="hasAnyRole('ROLE_修改频道')" />
+		<s:intercept-url pattern="/rtm/chennel*" access="hasAnyRole('ROLE_浏览频道')" />
+		<s:intercept-url pattern="/rtm/program-state*" access="hasAnyRole('ROLE_修改节目')" />
+		<s:intercept-url pattern="/rtm/program*" access="hasAnyRole('ROLE_浏览节目')" />
+		<s:intercept-url pattern="/rtm/recording*" access="hasAnyRole('ROLE_浏览录制列表')" />
+		<s:intercept-url pattern="/rtm/program-oplog*" access="hasAnyRole('ROLE_浏览时移状态列表')" />
+		<s:intercept-url pattern="/rtm/channel-upload*" access="hasAnyRole('ROLE_导入节目单')" />
+		<s:intercept-url pattern="/rtm/program-history*" access="hasAnyRole('ROLE_浏览录制历史')" />
+		<s:intercept-url pattern="/rtm/encoder!save*" access="hasAnyRole('ROLE_修改编码器')" />
+		<s:intercept-url pattern="/rtm/encoder!delete*" access="hasAnyRole('ROLE_修改编码器')" />
+		<s:intercept-url pattern="/rtm/encoder*" access="hasAnyRole('ROLE_浏览编码器')" />
+		<s:intercept-url pattern="/rtm/file-state*" access="hasAnyRole('ROLE_浏览时移存储状态')" />
+		<s:intercept-url pattern="/rtm/recording-cache*" access="hasAnyRole('ROLE_浏览录制队列')" />
+		<s:intercept-url pattern="/rtm/channel-cache*" access="hasAnyRole('ROLE_浏览频道队列')" />
+		<!-- 注入管理 -->
+		<s:intercept-url pattern="/apm/create-offering*" access="hasAnyRole('ROLE_生成OFFERING')" />
+		<s:intercept-url pattern="/apm/package-asset*" access="hasAnyRole('ROLE_浏览元数据')" />
+		<s:intercept-url pattern="/apm/movie-asset*" access="hasAnyRole('ROLE_浏览元数据')" />
+		<s:intercept-url pattern="/apm/title-asset*" access="hasAnyRole('ROLE_浏览元数据')" />
+		<s:intercept-url pattern="/apm/preview-asset*" access="hasAnyRole('ROLE_浏览元数据')" />
+		<s:intercept-url pattern="/apm/still-image-asset*" access="hasAnyRole('ROLE_浏览元数据')" />
+		<!-- 点播管理 -->
+		<s:intercept-url pattern="/odm/provider!save*" access="hasAnyRole('ROLE_修改点播供应商')" />
+		<s:intercept-url pattern="/odm/provider!delete*" access="hasAnyRole('ROLE_修改点播供应商')" />
+		<s:intercept-url pattern="/odm/provider*" access="hasAnyRole('ROLE_浏览点播供应商')" />
+		<s:intercept-url pattern="/odm/product!save*" access="hasAnyRole('ROLE_修改产品')" />
+		<s:intercept-url pattern="/odm/product!delete*" access="hasAnyRole('ROLE_修改产品')" />
+		<s:intercept-url pattern="/odm/product*" access="hasAnyRole('ROLE_浏览产品')" />
+		<s:intercept-url pattern="/odm/service!save*" access="hasAnyRole('ROLE_修改业务')" />
+		<s:intercept-url pattern="/odm/service!delete*" access="hasAnyRole('ROLE_修改业务')" />
+		<s:intercept-url pattern="/odm/service*" access="hasAnyRole('ROLE_浏览业务')" />
+		<s:intercept-url pattern="/odm/category!tree*" access="hasAnyRole('ROLE_修改点播分类')" />
+		<s:intercept-url pattern="/odm/category*" access="hasAnyRole('ROLE_浏览点播分类')" />
+		<s:intercept-url pattern="/odm/asset-still-image*" access="hasAnyRole('ROLE_浏览海报列表')" />
+		<s:intercept-url pattern="/odm/offering!save*" access="hasAnyRole('ROLE_修改OFFERING')" />
+		<s:intercept-url pattern="/odm/offering-history*" access="hasAnyRole('ROLE_浏览OFFERING历史')" />
+		<s:intercept-url pattern="/odm/offering*" access="hasAnyRole('ROLE_浏览OFFERING')" />
+		<!-- 授权管理 -->
+		<s:intercept-url pattern="/ens/customer*" access="hasAnyRole('ROLE_浏览授权管理')" />
+		<s:intercept-url pattern="/ens/equipment*" access="hasAnyRole('ROLE_浏览授权管理')" />
+		<s:intercept-url pattern="/ens/subscription*" access="hasAnyRole('ROLE_浏览授权管理')" />
+		<s:intercept-url pattern="/ens/purchase*" access="hasAnyRole('ROLE_浏览授权管理')" />
+		<!-- 资源管理 -->
+		<s:intercept-url pattern="/rm/video-server!save*" access="hasAnyRole('ROLE_修改视频服务器')" />
+		<s:intercept-url pattern="/rm/video-server!delete*" access="hasAnyRole('ROLE_修改视频服务器')" />
+		<s:intercept-url pattern="/rm/video-server!synchronizefile*" access="hasAnyRole('ROLE_同步视频服务器文件')" />
+		<s:intercept-url pattern="/rm/video-server!sendCSData*" access="hasAnyRole('ROLE_同步CS数据')" />
+		<s:intercept-url pattern="/rm/video-server*" access="hasAnyRole('ROLE_浏览视频服务器')" />
+		<s:intercept-url pattern="/rm/vsnic!save*" access="hasAnyRole('ROLE_修改网卡')" />
+		<s:intercept-url pattern="/rm/vsnic!delete*" access="hasAnyRole('ROLE_修改网卡')" />
+		<s:intercept-url pattern="/rm/vsnic*" access="hasAnyRole('ROLE_浏览网卡')" />
+		<s:intercept-url pattern="/rm/service-group-cache*" access="hasAnyRole('ROLE_浏览ServiceGroup队列')" />
+		<s:intercept-url pattern="/rm/service-group!delete*" access="hasAnyRole('ROLE_修改ServiceGroup')" />
+		<s:intercept-url pattern="/rm/service-group*" access="hasAnyRole('ROLE_浏览ServiceGroup')" />
+		<s:intercept-url pattern="/rm/ipqam!save*" access="hasAnyRole('ROLE_修改ipqam')" />
+		<s:intercept-url pattern="/rm/ipqam!delete*" access="hasAnyRole('ROLE_修改ipqam')" />
+		<s:intercept-url pattern="/rm/ipqam*" access="hasAnyRole('ROLE_浏览ipqam')" />
+		<s:intercept-url pattern="/rm/ts!save*" access="hasAnyRole('ROLE_修改ts')" />
+		<s:intercept-url pattern="/rm/ts!delete*" access="hasAnyRole('ROLE_修改ts')" />
+		<s:intercept-url pattern="/rm/ts*" access="hasAnyRole('ROLE_浏览ts')" />
+		<s:intercept-url pattern="/rm/page-server!save*" access="hasAnyRole('ROLE_修改PageServer')" />
+		<s:intercept-url pattern="/rm/page-server!delete*" access="hasAnyRole('ROLE_修改PageServer')" />
+		<s:intercept-url pattern="/rm/page-server*" access="hasAnyRole('ROLE_浏览PageServer')" />
+		<!-- SRM会话管理 -->
+		<s:intercept-url pattern="/sm/session!delete*" access="hasAnyRole('ROLE_删除SRM会话')" />
+		<s:intercept-url pattern="/sm/vod-asset*" access="hasAnyRole('ROLE_浏览SRM会话')" />
+		<s:intercept-url pattern="/sm/vod-customer*" access="hasAnyRole('ROLE_浏览SRM会话')" />
+		<s:intercept-url pattern="/sm/buy-transaction*" access="hasAnyRole('ROLE_浏览SRM会话')" />
+		<s:intercept-url pattern="/sm/play-transaction*" access="hasAnyRole('ROLE_浏览SRM会话')" />
+		<s:intercept-url pattern="/sm/session*" access="hasAnyRole('ROLE_浏览SRM会话')" />
+		<s:intercept-url pattern="/sm/session-history*" access="hasAnyRole('ROLE_浏览SRM会话')" />
+		<!-- 页面发布 -->
+		<s:intercept-url pattern="/pps/channel-info*" access="hasAnyRole('ROLE_浏览页面发布')" />
+		<s:intercept-url pattern="/pps/customer-info*" access="hasAnyRole('ROLE_浏览页面发布')" />
+		<s:intercept-url pattern="/pps/favorite*" access="hasAnyRole('ROLE_浏览页面发布')" />
+		<s:intercept-url pattern="/pps/bookmark*" access="hasAnyRole('ROLE_浏览页面发布')" />
+		<s:intercept-url pattern="/pps/service-info*" access="hasAnyRole('ROLE_浏览页面发布')" />
+		<s:intercept-url pattern="/pps/program-info*" access="hasAnyRole('ROLE_浏览页面发布')" />
+		<s:intercept-url pattern="/pps/offering-still-images*" access="hasAnyRole('ROLE_浏览页面发布')" />
+		<s:intercept-url pattern="/pps/offering-info-movie*" access="hasAnyRole('ROLE_浏览页面发布')" />
+		<s:intercept-url pattern="/pps/offering-info-tv*" access="hasAnyRole('ROLE_浏览页面发布')" />
+		<s:intercept-url pattern="/pps/offering-info-ktv*" access="hasAnyRole('ROLE_浏览页面发布')" />
+		<s:intercept-url pattern="/pps/offering-info-recommended-tv!delete*" access="hasAnyRole('ROLE_删除推荐')" />
+		<s:intercept-url pattern="/pps/offering-info-recommended-ktv!delete*" access="hasAnyRole('ROLE_删除推荐')" />
+		<s:intercept-url pattern="/pps/offering-info-recommended-movie!delete*" access="hasAnyRole('ROLE_删除推荐')" />
+		<s:intercept-url pattern="/pps/offering-info-recommended!delete*" access="hasAnyRole('ROLE_删除推荐')" />
+		<s:intercept-url pattern="/pps/offering-info-recommended*" access="hasAnyRole('ROLE_浏览页面发布')" />
+		<s:intercept-url pattern="/pps/reservation*" access="hasAnyRole('ROLE_浏览页面发布')" />
+		<s:intercept-url pattern="/pps/image-upload*" access="hasAnyRole('ROLE_上传图片')" />
+		<s:intercept-url pattern="/pps/style-info!save*" access="hasAnyRole('ROLE_修改风格')" />
+		<s:intercept-url pattern="/pps/style-info!delete*" access="hasAnyRole('ROLE_修改风格')" />
+		<s:intercept-url pattern="/pps/style-info*" access="hasAnyRole('ROLE_浏览风格')" />
+		<s:intercept-url pattern="/pps/group-info!save*" access="hasAnyRole('ROLE_修改分组')" />
+		<s:intercept-url pattern="/pps/group-info!delete*" access="hasAnyRole('ROLE_修改分组')" />
+		<s:intercept-url pattern="/pps/group-info*" access="hasAnyRole('ROLE_浏览分组')" />
+		<s:intercept-url pattern="/pps/templates-info!save*" access="hasAnyRole('ROLE_修改模板')" />
+		<s:intercept-url pattern="/pps/templates-info!delete*" access="hasAnyRole('ROLE_修改模板')" />
+		<s:intercept-url pattern="/pps/templates-info*" access="hasAnyRole('ROLE_浏览模板')" />
+		
+			<!--电话会话管理 -->
+		<s:intercept-url pattern="/ps/*" access="hasAnyRole('ROLE_回传服务')" />
+
+		<!-- 报表 -->
+		<s:intercept-url pattern="/report/**" access="hasAnyRole('ROLE_浏览报表')" />
+		
+		
+		<s:intercept-url pattern="/index*" access="hasAnyRole('ROLE_浏览首页')" />
+
+		<s:form-login login-page="/login.action" default-target-url="/" authentication-failure-url="/login.action?error=1" />
+		<s:logout logout-success-url="/" />
+		<!--  
+		<s:session-management invalid-session-url="/login.action?error=3">
+			<s:concurrency-control max-sessions="1" error-if-maximum-exceeded="false" />
+		</s:session-management>
+		-->
+		<s:remember-me key="e37f4b31-0c45-11dd-bd0b-0800200c9a66" />
+		<s:custom-filter after="SECURITY_CONTEXT_FILTER" ref="autoLoginFilter" />
+	</s:http>
+
+	<!-- 认证配置, 使用userDetailsService提供的用户信息 -->
+	<s:authentication-manager alias="authenticationManager">
+		<s:authentication-provider user-service-ref="userDetailsService">
+			<s:password-encoder hash="sha" />
+		</s:authentication-provider>
+	</s:authentication-manager>
+
+	<!-- 项目实现的用户查询服务 -->
+	<bean id="userDetailsService" class="com.darkmi.system.service.UserDetailsServiceImpl" />
+	
+	<!-- 开发时自动登录的filter -->
+	<bean id="autoLoginFilter" class="com.darkmi.system.service.AutoLoginFilter">
+		<property name="enabled" value="${security.autologin.enabled}" />
+		<property name="defaultUserName" value="admin" />
+	</bean>
+
+	<!--JCaptcha验证码服务 -->
+	<!--  
+	<bean id="captchaService" class="com.octo.captcha.service.image.DefaultManageableImageCaptchaService">
+		<property name="captchaEngine">
+			<bean class="org.springside.modules.security.jcaptcha.GMailEngine" />
+		</property>
+	
+		默认生成的图片180秒过期 , 可另行设置
+		<property name="minGuarantedStorageDelayInSeconds" value="180" />
+	
+	</bean>
+	-->
+</beans>
