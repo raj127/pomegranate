@@ -19,8 +19,11 @@
 						<security:authorize ifAnyGranted="ROLE_浏览用户">
 							<a href="${ctx}/system/user.action" id="n2">系统管理</a>
 						</security:authorize>
+						<security:authorize ifAnyGranted="ROLE_浏览用户">
+							<a href="${ctx}/template/template.action" id="n3">模板管理</a>
+						</security:authorize>						
 							<security:authorize ifAnyGranted="ROLE_浏览电影">
-							<a href="${ctx}/task/task.action" id="n3">任务管理</a>
+							<a href="${ctx}/task/task.action" id="n4">任务管理</a>
 							</security:authorize>
 							<security:authorize ifAnyGranted="ROLE_浏览录制列表">
 							<a href="${ctx}/rtm/recording.action?state=NORMAL" id="n4">规程编制</a>
@@ -53,6 +56,13 @@
 			</security:authorize>
 			<security:authorize ifAnyGranted="ROLE_浏览电影">
 					<div id="subNav3" class="subNav3">
+						<a id="subNav301" href="${ctx}/template/template.action" >模板列表</a>
+						<a id="subNav302" href="${ctx}/task/chapter.action" >导入模板</a>
+					</div>
+			</security:authorize>
+
+			<security:authorize ifAnyGranted="ROLE_浏览电影">
+					<div id="subNav4" class="subNav4">
 						<a id="subNav301" href="${ctx}/task/task.action" >任务列表</a>
 						<a id="subNav302" href="${ctx}/task/chapter.action" >查看目录</a>
 						<a id="subNav303" href="${ctx}/cms/media-category.action" >查询任务</a>
