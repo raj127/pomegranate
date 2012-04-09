@@ -8,7 +8,7 @@
 	String attachFileName="";
 	String attachFileDescribe="";
 	String attachFileUrl="";
-	String templateFileUrl="templateFile/";//新建文档模板url
+	String templateFileUrl="./templateFile/";//新建文档模板url
 	String otherData="";
 	
 	filetype="word";
@@ -60,7 +60,8 @@
 		<td>&nbsp;</td>
 		</tr>
 	</table>
-	</div>                
+	</div>  
+	              
 	<div id="officecontrol">
 	<script type="text/javascript" src="officecontrol/ntkoofficecontrol.js"></script>
 	<div id="statusBar" style="height:20px;width:100%;background-color:#c0c0c0;font-size:12px;"></div>
