@@ -81,6 +81,7 @@
 		</repository>
 	</repositories>
 
+	<!--  
 	<pluginRepositories>
 		<pluginRepository>
 			<id>nexus</id>
@@ -91,8 +92,9 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
-
+	-->
 	<!-- 设定团队持续集成发布包服务器  -->
+	<!--  
 	<distributionManagement>
 		<repository>
 			<id>nexus</id>
@@ -106,7 +108,7 @@
 			<uniqueVersion>false</uniqueVersion>
 		</snapshotRepository>
 	</distributionManagement>
-
+	-->
 	<!-- 预定义依赖项的version,scope与exclusions,子项目中只需定义groupId 和 artifactId 即可 -->
 	<dependencyManagement>
 		<dependencies>
