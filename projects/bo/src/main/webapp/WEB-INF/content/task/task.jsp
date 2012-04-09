@@ -16,11 +16,11 @@
 	<script>
 		$(document).ready(function() {
 			$(".mainNav a").attr("class","");
-			$("#n3").attr("class","actived");
-			$("#subNav301").attr("class","actived");
+			$("#n4").attr("class","actived");
+			$("#subNav401").attr("class","actived");
 			$(".secondNav div").each(function(){
 				$(this).hide();
-				$("#subNav3").show();
+				$("#subNav4").show();
 			});
 		});
 	</script>
@@ -40,11 +40,11 @@
 
 		<div id="message"><s:actionmessage theme="custom" cssClass="success"/></div>
 		<div id="filter">
-			任务名称: <input type="text" name="filter_LIKES_taskName" value="${param['filter_LIKES_taskName']}" size="9" tabindex="1" onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
+			作业规程名称: <input type="text" name="filter_LIKES_taskName" value="${param['filter_LIKES_taskName']}" size="9" tabindex="1" onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
 			<input type="button" value="搜索" onclick="search();" tabindex="2"/>
 			&nbsp;&nbsp;
 			<security:authorize ifAnyGranted="ROLE_修改内容供应商">
-				<input type="button" value="添加任务" onclick="linkTo('task!input.action')" tabindex="3"/>
+				<input type="button" value="新建作业规程" onclick="linkTo('task!input.action')" tabindex="3"/>
 			</security:authorize>
 		</div>
 		<div id="content">

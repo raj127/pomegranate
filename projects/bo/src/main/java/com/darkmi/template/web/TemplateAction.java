@@ -47,9 +47,6 @@ public class TemplateAction extends CrudActionSupport<Template> {
 			page.setOrderBy("id");
 			page.setOrder(Page.DESC);
 		}
-		//List<Template> list = templateManager.getAllTemplate();
-		//for (Iterator<Template> iterator = list.iterator(); iterator.hasNext();) {
-		//}
 		page = templateManager.searchTemplate(page, filters);
 		return SUCCESS;
 	}
@@ -62,7 +59,7 @@ public class TemplateAction extends CrudActionSupport<Template> {
 	@Override
 	public String save() throws Exception {
 		templateManager.saveTemplate(template);
-		addActionMessage("保存模板信息成功！");
+		addActionMessage("保存作业规程模板信息成功！");
 		return RELOAD;
 	}
 
@@ -73,9 +70,14 @@ public class TemplateAction extends CrudActionSupport<Template> {
 	public String delete() throws Exception {
 		template = templateManager.getTemplate(id);
 		templateManager.deleteTemplate(id);
-		dbLogger.info(SpringSecurityUtils.getCurrentUserName() + ":删除" + template.getTemplateName() + "员工！");
-		addActionMessage("删除模板信息成功！");
+		dbLogger.info(SpringSecurityUtils.getCurrentUserName() + ":删除" + template.getTemplateName() + "作业规程模板！");
+		addActionMessage("删除作业规程模板信息成功！");
 		return RELOAD;
+	}
+	
+	public String getChapters(){
+		
+		return "getChaptersucess";
 	}
 
 	/**

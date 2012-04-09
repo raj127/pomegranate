@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
@@ -60,9 +61,10 @@ public class TaskAction extends CrudActionSupport<Task> {
 		return SUCCESS;
 	}
 
+	@Action("/task/chapter")
 	public String viewChapter() {
 		System.out.println("aaa");
-		return "VIEW_CHAPTER";
+		return SUCCESS;
 	}
 
 	@Override
@@ -73,7 +75,7 @@ public class TaskAction extends CrudActionSupport<Task> {
 	@Override
 	public String save() throws Exception {
 		taskManager.saveTask(task);
-		addActionMessage("保存员工信息成功！");
+		addActionMessage("保存作业规程任务成功！");
 		return RELOAD;
 	}
 
@@ -81,8 +83,8 @@ public class TaskAction extends CrudActionSupport<Task> {
 	public String delete() throws Exception {
 		task = taskManager.getTask(id);
 		taskManager.deleteTask(id);
-		dbLogger.info(SpringSecurityUtils.getCurrentUserName() + ":删除" + task.getTaskName() + "员工！");
-		addActionMessage("删除员工信息成功！");
+		dbLogger.info(SpringSecurityUtils.getCurrentUserName() + ":删除" + task.getTaskName() + "任务！");
+		addActionMessage("删除作业规任务成功！");
 		return RELOAD;
 	}
 
