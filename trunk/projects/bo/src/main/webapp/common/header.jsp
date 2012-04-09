@@ -63,9 +63,8 @@
 
 			<security:authorize ifAnyGranted="ROLE_浏览电影">
 					<div id="subNav4" class="subNav4">
-						<a id="subNav301" href="${ctx}/task/task.action" >任务列表</a>
-						<a id="subNav302" href="${ctx}/task/chapter.action" >查看目录</a>
-						<a id="subNav303" href="${ctx}/cms/media-category.action" >查询任务</a>
+						<a id="subNav401" href="${ctx}/task/task.action" >作业规程任务列表</a>
+						<a id="subNav402" href="${ctx}/task/task!input.action" >新建作业规程任务</a>
 					</div>
 			</security:authorize>
 				<security:authorize ifAnyGranted="ROLE_浏览录制列表">

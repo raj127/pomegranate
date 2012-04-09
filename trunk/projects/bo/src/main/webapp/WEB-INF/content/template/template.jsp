@@ -68,9 +68,14 @@
 								</security:authorize>
 							</security:authorize>
 
+							<security:authorize ifAnyGranted="ROLE_浏览内容供应商">
+									<a href="template!getChapters.action?id=${id}">查看模板目录</a>&nbsp;
+							</security:authorize>
+
+
 							<security:authorize ifAnyGranted="ROLE_修改内容供应商">
 								<a href="template!input.action?id=${id}&page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}">修改</a>&nbsp;
-								<a href="#" onclick="if(confirm('确定要永久删除么?')){linkTo('template!delete.action?id=${id}');}">永久删除</a>
+								<a href="#" onclick="if(confirm('确定要永久删除么?')){linkTo('template!delete.action?id=${id}');}">删除</a>
 							</security:authorize>
 						</td>
 					</tr>

@@ -40,7 +40,7 @@
 
 		<div id="message"><s:actionmessage theme="custom" cssClass="success"/></div>
 		<div id="filter">
-			任务名称: <input type="text" name="filter_LIKES_fullName" value="${param['filter_LIKES_fullName']}" size="9" tabindex="1" onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
+			章节名称: <input type="text" name="filter_LIKES_fullName" value="${param['filter_LIKES_fullName']}" size="9" tabindex="1" onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
 			<input type="button" value="搜索" onclick="search();" tabindex="2"/>
 			
 			&nbsp;&nbsp;
