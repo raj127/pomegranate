@@ -13,33 +13,41 @@
 			<div class="navLaftBg">
 				<div class="navRightBg">
 					<div class="mainNav">
-						<security:authorize ifAnyGranted="ROLE_浏览首页">
+						<security:authorize ifAnyGranted="ROLE_首页浏览">
 							<a href="${ctx}/index.action" id="n1" class="actived">首页</a>
 						</security:authorize>
-						<security:authorize ifAnyGranted="ROLE_浏览用户">
+						<security:authorize ifAnyGranted="ROLE_系统管理">
 							<a href="${ctx}/system/user.action" id="n2">系统管理</a>
 						</security:authorize>
-						<security:authorize ifAnyGranted="ROLE_浏览用户">
+						
+						<security:authorize ifAnyGranted="ROLE_模板管理">
 							<a href="${ctx}/template/template.action" id="n3">模板管理</a>
-						</security:authorize>						
-							<security:authorize ifAnyGranted="ROLE_浏览电影">
+						</security:authorize>	
+											
+						<security:authorize ifAnyGranted="ROLE_任务管理">
 							<a href="${ctx}/task/task.action" id="n4">任务管理</a>
-							</security:authorize>
-							<security:authorize ifAnyGranted="ROLE_浏览录制列表">
+						</security:authorize>
+							
+						<security:authorize ifAnyGranted="ROLE_作业规程编制">
 							<a href="${ctx}/rtm/recording.action?state=NORMAL" id="n4">规程编制</a>
-							</security:authorize>
-							<security:authorize ifAnyGranted="ROLE_浏览元数据">
+						</security:authorize>
+							
+						<security:authorize ifAnyGranted="ROLE_作业规程审批">
 							<a href="${ctx}/apm/package-asset.action" id="n5">规程审批</a>
-							</security:authorize>
-							<security:authorize ifAnyGranted="ROLE_浏览OFFERING">
+						</security:authorize>
+							
+						<security:authorize ifAnyGranted="ROLE_作业规程查询">
 							<a href="${ctx}/odm/offering.action" id="n6">规程查询</a>
-							</security:authorize>
-							<security:authorize ifAnyGranted="ROLE_浏览授权管理">
+						</security:authorize>
+						
+						<security:authorize ifAnyGranted="ROLE_作业规程快讯">
 							<a href="${ctx}/ens/customer.action" id="n7">规程快讯</a>
-							</security:authorize>
-							<security:authorize ifAnyGranted="ROLE_浏览视频服务器">
+						</security:authorize>
+						
+						<security:authorize ifAnyGranted="ROLE_在线帮助">
 							<a href="${ctx}/rm/video-server.action" id="n8">在线帮助</a>
-							</security:authorize>
+						</security:authorize>
+							
 					</div>
 				</div>
 			</div>
@@ -54,11 +62,12 @@
 					<a id="subNav205" href="${ctx}/system/log.action" >日志列表</a>
 				</div>
 			</security:authorize>
+			
 			<security:authorize ifAnyGranted="ROLE_浏览电影">
-					<div id="subNav3" class="subNav3">
-						<a id="subNav301" href="${ctx}/template/template.action" >模板列表</a>
-						<a id="subNav302" href="${ctx}/task/chapter.action" >导入模板</a>
-					</div>
+				<div id="subNav3" class="subNav3">
+					<a id="subNav301" href="${ctx}/template/template.action" >模板列表</a>
+					<a id="subNav302" href="${ctx}/task/chapter.action" >导入模板</a>
+				</div>
 			</security:authorize>
 
 			<security:authorize ifAnyGranted="ROLE_浏览电影">

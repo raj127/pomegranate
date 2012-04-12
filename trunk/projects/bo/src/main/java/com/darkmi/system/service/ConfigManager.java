@@ -14,7 +14,7 @@ import com.darkmi.entity.system.Config;
 import com.darkmi.system.dao.ConfigDao;
 
 /**
- * Description: 配置相关的管理类
+ * Description: 配置相关的管理类.
  * Copyright (c) darkmi.com
  * All Rights Reserved.
  * @version 1.0  2012-03-17 上午08:31:05 darkmi created.
