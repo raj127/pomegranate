@@ -74,7 +74,7 @@
 			<tr>
 				<td>任务名称:</td>
 				<td>
-					<input type="text" id="taskName" name="taskName" value="${taskName}" size="40" maxlength="50" <s:if test="id != null"> disabled="disabled"</s:if>/>
+					<input type="text" id="taskName" name="taskName" value="${taskName}" size="40" maxlength="50"/>
 				</td>
 			</tr>
 			<tr>

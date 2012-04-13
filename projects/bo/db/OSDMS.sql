@@ -250,7 +250,8 @@ CREATE TABLE `t_template` (
 
 /*Data for the table `t_template` */
 
-insert  into `t_template`(`id`,`template_name`,`path`,`description`,`state`,`create_by`,`create_time`,`last_modify_by`,`last_modify_time`) values (13,'aaa',NULL,NULL,0,'user','2012-04-07 16:05:28',NULL,NULL),(14,'aaab',NULL,NULL,0,'user','2012-04-07 16:06:07',NULL,NULL),(15,'xxx',NULL,'xxx',0,'user','2012-04-07 16:09:52',NULL,NULL);
+insert  into `t_template`(`id`,`template_name`,`path`,`description`,`state`,`create_by`,`create_time`,`last_modify_by`,`last_modify_time`) 
+values (13,'aaa',NULL,NULL,0,'user','2012-04-07 16:05:28',NULL,NULL),(14,'aaab',NULL,NULL,0,'user','2012-04-07 16:06:07',NULL,NULL),(15,'xxx',NULL,'xxx',0,'user','2012-04-07 16:09:52',NULL,NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

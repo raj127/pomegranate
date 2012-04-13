@@ -1,15 +1,14 @@
 package com.darkmi.task.web;
 
-import java.util.Iterator;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springside.modules.orm.Page;
-import org.springside.modules.orm.PropertyFilter;
-import org.springside.modules.utils.web.struts2.Struts2Utils;
 
 import com.darkmi.entity.chapter.Chapter;
 import com.darkmi.task.service.ChapterManager;
@@ -24,6 +23,11 @@ public class ChapterAction extends CrudActionSupport<Chapter> {
 	private Long id;
 	private Chapter chapter;
 	private ChapterManager chapterManager;
+	
+	private String chapterName;
+	private Integer parentId;
+	
+	
 
 	private Page<Chapter> page = new Page<Chapter>(20);
 
@@ -44,20 +48,47 @@ public class ChapterAction extends CrudActionSupport<Chapter> {
 
 	@Override
 	public String list() throws Exception {
-		List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(Struts2Utils.getRequest());
-		//设置默认排序方式
-		if (!page.isOrderBySetted()) {
-			page.setOrderBy("id");
-			page.setOrder(Page.DESC);
-		}
-		List<Chapter> list = chapterManager.getAllChapter();
-		for (Iterator<Chapter> iterator = list.iterator(); iterator.hasNext();) {
-			Chapter employee = (Chapter) iterator.next();
-			System.out.println(employee.getChapterName());
-		}
-		page = chapterManager.searchChapter(page, filters);
+		StringBuilder hqlBuilder = new StringBuilder();
+		Map<String, Object> map = new HashMap<String, Object>();
+		builerWhere(hqlBuilder, map);
+		builderOrder(hqlBuilder);
+		page = chapterManager.searchChapter(page, hqlBuilder.toString(), map);
+		System.out.println("chapter list");
 		return SUCCESS;
 	}
+	
+	private void builerWhere(StringBuilder hqlBuilder, Map<String, Object> map) {
+
+		//if (StringUtils.isNotBlank(parentId)) {
+		//	hqlBuilder.append(" and v.ip like :ip");
+		//	map.put("ip", "%" + queryIp + "%");
+		//}
+
+		//if (StringUtils.isNotBlank(queryName)) {
+		//	hqlBuilder.append(" and v.name like :name");
+		//	map.put("name", "%" + queryName + "%");
+		//}
+
+		if (parentId != null) {
+			logger.debug("parentId is --> " + parentId);
+			hqlBuilder.append(" and t.parentId=:parentId");
+			map.put("parentId", parentId);
+		}
+
+		//if (StringUtils.isNotBlank(queryState)) {
+		//	hqlBuilder.append(" and v.state=:state");
+		//	map.put("state", StateEnum.valueOf(queryState));
+		//}
+	}
+
+	private void builderOrder(StringBuilder hqlBuilder) {
+		if (StringUtils.isNotBlank(page.getOrder()) && StringUtils.isNotBlank(page.getOrderBy())) {
+			hqlBuilder.append(" order by ").append(page.getOrderBy()).append(" ").append(page.getOrder());
+		} else {
+			hqlBuilder.append(" order by t.id desc");
+		}
+	}
+
 
 	@Override
 	public String input() throws Exception {
@@ -113,4 +144,21 @@ public class ChapterAction extends CrudActionSupport<Chapter> {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
+	public String getChapterName() {
+		return chapterName;
+	}
+
+	public void setChapterName(String chapterName) {
+		this.chapterName = chapterName;
+	}
+
+	public int getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(int parentId) {
+		this.parentId = parentId;
+	}
+
 }
