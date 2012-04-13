@@ -62,15 +62,8 @@
 						<td>${description}&nbsp;</td>
 						<td>${state}&nbsp;</td>
 						<td>&nbsp;
-							<security:authorize ifAnyGranted="ROLE_浏览内容供应商">
-								<a href="task!input.action?id=${id}">查看</a>&nbsp;
-							</security:authorize>
-							<security:authorize ifAnyGranted="ROLE_修改内容供应商">
-								<a href="task!input.action?id=${id}&page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}">修改</a>&nbsp;
-							</security:authorize>
-							<a href="chapter.action?parentId=${id}">查看目录</a>&nbsp;
-							<security:authorize ifAnyGranted="ROLE_修改内容供应商">
-								<a href="#" onclick="if(confirm('确定要永久删除么?')){linkTo('task!delete.action?id=${id}');}">永久删除</a>
+							<security:authorize ifAnyGranted="ROLE_作业规程编制">
+								<a href="task-chapter!edit.action?id=${id}">编辑</a>&nbsp;
 							</security:authorize>
 						</td>
 					</tr>
