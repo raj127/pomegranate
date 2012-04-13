@@ -29,7 +29,7 @@
 						</security:authorize>
 							
 						<security:authorize ifAnyGranted="ROLE_作业规程编制">
-							<a href="${ctx}/design/task-chapter.action" id="n5">规程编制</a>
+							<a href="${ctx}/edit/task-chapter.action" id="n5">规程编制</a>
 						</security:authorize>
 							
 						<security:authorize ifAnyGranted="ROLE_作业规程审批">
@@ -84,7 +84,7 @@
 			</security:authorize>
 			<security:authorize ifAnyGranted="ROLE_作业规程编制">
 				<div id="subNav5" class="subNav5">
-					<a  id="subNav501" href="${ctx}/design/design.action" >作业规程编制</a>
+					<a  id="subNav501" href="${ctx}/edit/task-chapter.action" >作业规程编制</a>
 				</div>
 			</security:authorize>
 			
