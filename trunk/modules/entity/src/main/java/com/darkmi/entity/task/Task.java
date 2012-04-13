@@ -12,7 +12,7 @@ public class Task extends AuditableEntity {
 
 	private String taskId;
 	private String taskName;
-	private String desdescription;
+	private String description;
 	private int state;
 	private String path;
 
@@ -35,12 +35,12 @@ public class Task extends AuditableEntity {
 	}
 
 	@Column(name = "description")
-	public String getDesdescription() {
-		return desdescription;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDesdescription(String desdescription) {
-		this.desdescription = desdescription;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@Column(name = "state")
@@ -63,7 +63,7 @@ public class Task extends AuditableEntity {
 
 	@Override
 	public String toString() {
-		return "Task [taskId=" + taskId + ", taskName=" + taskName + ", desdescription=" + desdescription + ", state="
+		return "Task [taskId=" + taskId + ", taskName=" + taskName + ", desdescription=" + description + ", state="
 				+ state + ", path=" + path + "]";
 	}
 

@@ -1,6 +1,7 @@
 package com.darkmi.task.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,6 +82,11 @@ public class ChapterManager {
 	@Transactional(readOnly = true)
 	public Page<Chapter> searchChapter(Page<Chapter> page, List<PropertyFilter> filters) {
 		return chapterDao.findPage(page, filters);
+	}
+	
+	@Transactional(readOnly = true)
+	public Page<Chapter> searchChapter(Page<Chapter> page, String where, Map<String, Object> values) {
+		return chapterDao.findPageByWhere(page, where, values);
 	}
 
 	@Autowired
