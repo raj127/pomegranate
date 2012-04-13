@@ -51,7 +51,7 @@ public class TaskChapterAction extends CrudActionSupport<TaskChapter> {
 		return SUCCESS;
 	}
 
-	@Action(value = "edit", results = { @Result(name = "success", location = "edit.jsp", type = "redirect") })
+	//@Action(value = "edit", results = { @Result(name = "success", location = "edit.jsp", type = "redirect") })
 	public String edit() {
 		logger.debug("编辑作业规程... begin{ ");
 		logger.debug("编辑作业规程... end} ");
