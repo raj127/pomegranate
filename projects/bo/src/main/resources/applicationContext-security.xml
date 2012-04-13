@@ -38,10 +38,10 @@
 		<s:intercept-url pattern="/task/*" access="hasAnyRole('ROLE_任务管理')" />
 		
 		<!-- 作业规程编制 -->
-		<s:intercept-url pattern="/operation/*" access="hasAnyRole('ROLE_作业规程编制')" />
+		<s:intercept-url pattern="/edit/*" access="hasAnyRole('ROLE_作业规程编制')" />
 		
 		<!-- 作业规程审批 -->
-		<s:intercept-url pattern="/approval/*" access="hasAnyRole('ROLE_浏览授权管理')" />
+		<s:intercept-url pattern="/approve/*" access="hasAnyRole('ROLE_浏览授权管理')" />
 		
 		<!-- 作业规程查询 -->
 		<s:intercept-url pattern="/query/*" access="hasAnyRole('ROLE_作业规程查询')" />
