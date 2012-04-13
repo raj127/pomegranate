@@ -43,7 +43,7 @@
 			模板名称: <input type="text" name="filter_LIKES_templateName" value="${param['filter_LIKES_templateName']}" size="20" tabindex="1" onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
 			<input type="button" value="搜索" onclick="search();" tabindex="2"/>
 			&nbsp;&nbsp;
-			<security:authorize ifAnyGranted="ROLE_修改内容供应商">
+			<security:authorize ifAnyGranted="ROLE_模板修改">
 				<input type="button" value="添加模板" onclick="linkTo('template!input.action')" tabindex="3"/>
 			</security:authorize>
 		</div>
@@ -62,18 +62,13 @@
 						<td>${path}&nbsp;</td>
 						<td>${state}&nbsp;</td>
 						<td>&nbsp;
-							<security:authorize ifAnyGranted="ROLE_浏览内容供应商">
-								<security:authorize ifNotGranted="ROLE_修改内容供应商">
-									<a href="template!input.action?id=${id}">查看</a>&nbsp;
-								</security:authorize>
+							<security:authorize ifAnyGranted="ROLE_模板浏览">
+								<a href="template!input.action?id=${id}">查看</a>&nbsp;
 							</security:authorize>
-
-							<security:authorize ifAnyGranted="ROLE_浏览内容供应商">
-									<a href="template!getChapters.action?id=${id}">查看模板目录</a>&nbsp;
+							<security:authorize ifAnyGranted="ROLE_模板浏览">
+									<a href="template-chapter.action?templateId=${id}">查看模板目录</a>&nbsp;
 							</security:authorize>
-
-
-							<security:authorize ifAnyGranted="ROLE_修改内容供应商">
+							<security:authorize ifAnyGranted="ROLE_模板修改">
 								<a href="template!input.action?id=${id}&page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}">修改</a>&nbsp;
 								<a href="#" onclick="if(confirm('确定要永久删除么?')){linkTo('template!delete.action?id=${id}');}">删除</a>
 							</security:authorize>
