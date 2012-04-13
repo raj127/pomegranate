@@ -29,23 +29,23 @@
 						</security:authorize>
 							
 						<security:authorize ifAnyGranted="ROLE_作业规程编制">
-							<a href="${ctx}/design/design.action" id="n4">规程编制</a>
+							<a href="${ctx}/design/design.action" id="n5">规程编制</a>
 						</security:authorize>
 							
 						<security:authorize ifAnyGranted="ROLE_作业规程审批">
-							<a href="${ctx}/approve/approve.action" id="n5">规程审批</a>
+							<a href="${ctx}/approve/approve.action" id="n6">规程审批</a>
 						</security:authorize>
 							
 						<security:authorize ifAnyGranted="ROLE_作业规程查询">
-							<a href="${ctx}/query/query.action" id="n6">规程查询</a>
+							<a href="${ctx}/query/query.action" id="n7">规程查询</a>
 						</security:authorize>
 						
 						<security:authorize ifAnyGranted="ROLE_作业规程快讯">
-							<a href="${ctx}/news/news.action" id="n7">规程快讯</a>
+							<a href="${ctx}/news/news.action" id="n8">规程快讯</a>
 						</security:authorize>
 						
 						<security:authorize ifAnyGranted="ROLE_在线帮助">
-							<a href="${ctx}/help/help.action" id="n8">在线帮助</a>
+							<a href="${ctx}/help/help.action" id="n9">在线帮助</a>
 						</security:authorize>
 							
 					</div>
