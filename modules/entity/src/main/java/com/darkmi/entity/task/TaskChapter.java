@@ -8,7 +8,6 @@ import com.darkmi.entity.AuditableEntity;
 
 /**
  * Description: 目录实体类.
- *  
  * Copyright (c) darkmi.com
  * @version 1.0  2012-4-13 下午01:25:14 DarkMi created.
  */
