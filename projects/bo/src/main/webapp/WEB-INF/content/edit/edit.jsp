@@ -1,108 +1,135 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="org.springside.modules.security.springsecurity.SpringSecurityUtils" %>
 <%@ include file="/common/taglibs.jsp" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-	<title>作业规程任务管理</title>
-	<%@ include file="/common/meta.jsp" %>
-	<link href="${ctx}/css/yui.css" type="text/css" rel="stylesheet"/>
-	<link href="${ctx}/css/style.css" type="text/css" rel="stylesheet"/>
-	<link href="${ctx}/js/validate/jquery.validate.css" type="text/css" rel="stylesheet"/>
-	<script src="${ctx}/js/jquery.js" type="text/javascript"></script>
-	<script src="${ctx}/js/validate/jquery.validate.js" type="text/javascript"></script>
-		<script>
-		$(document).ready(function() {
-			$(".mainNav a").attr("class","");
-			$("#n4").attr("class","actived");
-			$("#subNav402").attr("class","actived");
-			$(".secondNav div").each(function(){
-				$(this).hide();
-				$("#subNav4").show();
-			});
-		});
-	</script>
-	<script>
-		$(document).ready(function() {
-			//聚焦第一个输入框
-			$("#fullname").focus();
-			//为inputForm注册validate函数
-			$("#inputForm").validate({
-				rules: {
-					providerId: {
-						required: true,
-						remote: "provider-info!checkProviderId.action?oldProviderId=" + encodeURIComponent('${providerId}')
-					},
-					name: {
-						required: true,
-						remote: "provider-info!checkProviderName.action?oldProviderName=" + encodeURIComponent('${name}')
-					},
-					state:"required",
-					checkedProductIds:"required"
-				},
-				messages: {
-					providerId: {
-						required:"不能为空",
-						remote: "已存在"
-					},
-					name: {
-						required:"不能为空",
-						remote: "已存在"
-					},
-					state:"不能为空",
-					checkedProductIds:"不能为空"
-				}
-			});
-		});
-	</script>
-</head>
+<%
+	String filetype=""; //文件类型
+	String fileId=""; //文件ID
+	String fileName=""; //文件名称
+	String fileUrl=""; //文件链接
+	String attachFileName="";
+	String attachFileDescribe="";
+	String attachFileUrl="";
+	String templateFileUrl="././templateFile/";//新建文档模板url
+	String otherData="";
+	
+	filetype="word";
+	fileName="新建word文档.doc";
+	templateFileUrl=templateFileUrl+"newWordTemplate.doc";
+	fileUrl=templateFileUrl;//如果是新文档，控件打开新建模板文档
+	
+	System.out.println("filetype -->" + filetype);
+	System.out.println("fileId -->" + fileId);
+	System.out.println("fileName -->" + fileName);
+	System.out.println("fileUrl -->" + fileUrl);
+	System.out.println("attachFileName -->" + attachFileName);
+	System.out.println("attachFileDescribe -->" + attachFileDescribe);
+	System.out.println("attachFileUrl -->" + attachFileUrl);
+	System.out.println("templateFileUrl -->" + templateFileUrl);
+	System.out.println("otherData -->" + otherData);
+%>
 
-<body>
-<div id="doc3">
-<%@ include file="/common/header.jsp" %>
-<div id="bd1">
-	<div id="yui-main">
-	<div class="yui-b">
-	<h2><s:if test="id == null">创建</s:if><s:else>修改</s:else>作业规程任务信息</h2>
-	<form id="inputForm" action="task!save.action" method="post">
-		<input type="hidden" name="id" value="${id}"/>
-		<input type="hidden" name="page.pageNo" id="pageNo" value="${page.pageNo}"/>
-		<input type="hidden" name="page.orderBy" id="orderBy" value="${page.orderBy}"/>
-		<input type="hidden" name="page.order" id="order" value="${page.order}"/>
-		<input type="hidden" name="page.pageSize" id="pageSize" value="${page.pageSize}"/>
-		<table class="noborder">
-			<tr>
-				<td>任务名称:</td>
-				<td>
-					<input type="text" id="taskName" name="taskName" value="${taskName}" size="40" maxlength="50"/>
-				</td>
-			</tr>
-			<tr>
-				<td>任务描述:</td>
-				<td><input type="text" id="description" name="description" value="${description}" size="40" maxlength="255"/></td>
-			</tr>
-			<tr>
-					<td>创建:</td>
-					<td>${createBy} <fmt:formatDate value="${createTime}" type="both"/></td>
-				</tr>
-				<tr>
-					<td>最后修改:</td>
-					<td>${lastModifyBy} <fmt:formatDate value="${lastModifyTime}" type="both"/></td>
-				</tr>
-			<tr>
-				<td colspan="2">
-					<security:authorize ifAnyGranted="ROLE_修改内容供应商">
-						<input class="button" type="submit" value="提交"/>&nbsp;
-					</security:authorize>
-					<input class="button" type="button" value="返回" onclick="history.back()"/>
-				</td>
-			</tr>
-		</table>
-	</form>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>ntko office文档控件示例-ms office文档编辑</title>
+	<meta content="IE=7" http-equiv="X-UA-Compatible" /> 
+	<!--设置缓存-->
+	<meta http-equiv="cache-control" content="no-cache,must-revalidate"/>
+	<meta http-equiv="pragram" content="no-cache"/>
+	<meta http-equiv="expires" content="0"/>
+	<link href="${ctx}/css/edit.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="${ctx}/js/OfficeContorlFunctions.js"></script>
+</head>
+<body onload='intializePage("${ctx}/templateFile/newWordTemplate.doc")' onbeforeunload ="onPageClose()">
+<form id="form1" action="upLoadOfficeFile.jsp" enctype="multipart/form-data" style="padding:0px;margin:0px;">
+	<div id="editmain_top" class="editmain_top">
+	<div id="edit_button_div" class="edit_button_div">
+	<img alt="保存office文档" src="${ctx}/images/edit_save_office.gif" onclick="saveFileToUrl();" />
+	<img alt="保存html文档" src="${ctx}/images/edit_save_html.gif" onclick="saveFileAsHtmlToUrl();"/>
+	<img alt="保存PDF" src="${ctx}/images/edit_save_pdf.gif" onclick="saveFileAsPdfToUrl();"/>
 	</div>
 	</div>
-</div>
-<%@ include file="/common/footer.jsp" %>
-</div>
+	<div id="formtop">
+	<table>
+		<tr><td colspan="5"  class="edit_tabletitle">文件表单数据:</td></tr>
+		<tr><td colspan="5">&nbsp;</td></tr>
+		<tr>
+		<td width="7%"> 文&nbsp;件&nbsp;ID:</td>
+		<td width="20%"><input name="fileId" id="fileId" readOnly  type="text" value="" /></td>
+		<td width="8%">文件名称:</td>
+		<td width="40%"><input name="filename" id="filename" type="text" value="测试" /></td>
+		<td>&nbsp;</td>
+		</tr>
+	</table>
+	</div>  
+	              
+	<div id="officecontrol">
+	<script type="text/javascript" src="${ctx}/officecontrol/ntkoofficecontrol.js"></script>
+	<div id="statusBar" style="height:20px;width:100%;background-color:#c0c0c0;font-size:12px;"></div>
+	<script language="JScript" for=TANGER_OCX event="OnDocumentClosed()">
+	setFileOpenedOrClosed(false);
+	</script>
+	<script language="JScript" for="TANGER_OCX" event="OnDocumentOpened(TANGER_OCX_str,TANGER_OCX_obj)">
+	//saved属性用来判断文档是否被修改过,文档打开的时候设置成ture,当文档被修改,自动被设置为false,该属性由office提供.
+	OFFICE_CONTROL_OBJ.activeDocument.saved=true;
+	
+	//获取文档控件中打开的文档的文档类型
+	switch (OFFICE_CONTROL_OBJ.doctype){
+	case 1:
+	fileType = "Word.Document";
+	fileTypeSimple = "wrod";
+	break;
+	case 2:
+	fileType = "Excel.Sheet";
+	fileTypeSimple="excel";
+	break;
+	case 3:
+	fileType = "PowerPoint.Show";
+	fileTypeSimple = "ppt";
+	break;
+	case 4:
+	fileType = "Visio.Drawing";
+	break;
+	case 5:
+	fileType = "MSProject.Project";
+	break;
+	case 6:
+	fileType = "WPS Doc";
+	fileTypeSimple="wps";
+	break;
+	case 7:
+	fileType = "Kingsoft Sheet";
+	fileTypeSimple="et";
+	break;
+	default :
+	fileType = "unkownfiletype";
+	fileTypeSimple="unkownfiletype";
+	}
+	alert("fileType --> " + fileType);
+	setFileOpenedOrClosed(true);
+	</script>
+	<script language="JScript" for=TANGER_OCX event="BeforeOriginalMenuCommand(TANGER_OCX_str,TANGER_OCX_obj)">
+	alert("BeforeOriginalMenuCommand事件被触发");
+	</script>
+	<script language="JScript" for=TANGER_OCX event="OnFileCommand(TANGER_OCX_str,TANGER_OCX_obj)">
+	if (TANGER_OCX_str == 3) 
+	{
+	alert("不能保存！");
+	CancelLastCommand = true;
+	}
+	</script>
+	<script language="JScript" for=TANGER_OCX event="AfterPublishAsPDFToURL(result,code)">
+	result=trim(result);
+	alert(result);
+	document.all("statusBar").innerHTML="服务器返回信息:"+result;
+	if(result=="文档保存成功。")
+	{window.close();}
+	</script>
+	<script language="JScript" for=TANGER_OCX event="OnCustomMenuCmd2(menuPos,submenuPos,subsubmenuPos,menuCaption,menuID)">
+	alert("第" + menuPos +","+ submenuPos +","+ subsubmenuPos +"个菜单项,menuID="+menuID+",菜单标题为\""+menuCaption+"\"的命令被执行.");
+	</script>
+	</div><!--officecontrol-->
+</form>
 </body>
 </html>
