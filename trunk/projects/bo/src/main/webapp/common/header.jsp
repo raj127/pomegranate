@@ -72,7 +72,6 @@
 			<security:authorize ifAnyGranted="ROLE_模板管理">
 				<div id="subNav3" class="subNav3">
 					<a id="subNav301" href="${ctx}/template/template.action" >模板列表</a>
-					<a id="subNav302" href="${ctx}/task/chapter.action" >导入模板</a>
 				</div>
 			</security:authorize>
 
@@ -80,6 +79,7 @@
 					<div id="subNav4" class="subNav4">
 						<a id="subNav401" href="${ctx}/task/task.action" >作业规程任务列表</a>
 						<a id="subNav402" href="${ctx}/task/task!input.action" >新建作业规程任务</a>
+						<a id="subNav403" href="${ctx}/task/authority.action" >权限管理</a>
 					</div>
 			</security:authorize>
 			<security:authorize ifAnyGranted="ROLE_作业规程编制">
