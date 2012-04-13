@@ -41,7 +41,7 @@
 		<s:intercept-url pattern="/edit/*" access="hasAnyRole('ROLE_作业规程编制')" />
 		
 		<!-- 作业规程审批 -->
-		<s:intercept-url pattern="/approve/*" access="hasAnyRole('ROLE_浏览授权管理')" />
+		<s:intercept-url pattern="/approve/*" access="hasAnyRole('ROLE_作业规程审批')" />
 		
 		<!-- 作业规程查询 -->
 		<s:intercept-url pattern="/query/*" access="hasAnyRole('ROLE_作业规程查询')" />

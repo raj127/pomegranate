@@ -43,7 +43,7 @@
 			作业规程名称: <input type="text" name="filter_LIKES_taskName" value="${param['filter_LIKES_taskName']}" size="9" tabindex="1" onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
 			<input type="button" value="搜索" onclick="search();" tabindex="2"/>
 			&nbsp;&nbsp;
-			<security:authorize ifAnyGranted="ROLE_修改内容供应商">
+			<security:authorize ifAnyGranted="ROLE_任务修改">
 				<input type="button" value="新建作业规程" onclick="linkTo('task!input.action')" tabindex="3"/>
 			</security:authorize>
 		</div>
@@ -62,14 +62,16 @@
 						<td>${description}&nbsp;</td>
 						<td>${state}&nbsp;</td>
 						<td>&nbsp;
-							<security:authorize ifAnyGranted="ROLE_浏览内容供应商">
+							<security:authorize ifAnyGranted="ROLE_任务浏览">
 								<a href="task!input.action?id=${id}">查看</a>&nbsp;
 							</security:authorize>
-							<security:authorize ifAnyGranted="ROLE_修改内容供应商">
+							<security:authorize ifAnyGranted="ROLE_任务修改">
 								<a href="task!input.action?id=${id}&page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}">修改</a>&nbsp;
 							</security:authorize>
-							<a href="chapter.action?parentId=${id}">查看目录</a>&nbsp;
-							<security:authorize ifAnyGranted="ROLE_修改内容供应商">
+							<security:authorize ifAnyGranted="ROLE_任务浏览">
+							<a href="task-chapter.action?taskId=${id}">查看目录</a>&nbsp;
+							</security:authorize>
+							<security:authorize ifAnyGranted="ROLE_任务修改">
 								<a href="#" onclick="if(confirm('确定要永久删除么?')){linkTo('task!delete.action?id=${id}');}">永久删除</a>
 							</security:authorize>
 						</td>

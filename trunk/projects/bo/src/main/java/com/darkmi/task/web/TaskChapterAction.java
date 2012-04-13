@@ -10,39 +10,36 @@ import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springside.modules.orm.Page;
 
-import com.darkmi.entity.chapter.Chapter;
-import com.darkmi.task.service.ChapterManager;
+import com.darkmi.edit.service.TaskChapterManager;
+import com.darkmi.entity.task.TaskChapter;
 import com.darkmi.util.CrudActionSupport;
 
 @Namespace("/task")
-@Results({ @Result(name = CrudActionSupport.RELOAD, location = "chapter.action?page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}", type = "redirect"),
-	       @Result(name = "edit", location = "/WEB-INF/content/task/chapter-edit.jsp")
-	     })
-public class ChapterAction extends CrudActionSupport<Chapter> {
+@Results({
+		@Result(name = CrudActionSupport.RELOAD, location = "chapter.action?page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}", type = "redirect"),
+		@Result(name = "success", location = "chapter.jsp") })
+public class TaskChapterAction extends CrudActionSupport<TaskChapter> {
 	private static final long serialVersionUID = 7117372628753539453L;
 	private Long id;
-	private Chapter chapter;
-	private ChapterManager chapterManager;
-	
+	private Integer taskId;
 	private String chapterName;
-	private Integer parentId;
-	
-	
+	private TaskChapter chapter;
+	private TaskChapterManager taskChapterManager;
 
-	private Page<Chapter> page = new Page<Chapter>(20);
+	private Page<TaskChapter> page = new Page<TaskChapter>(20);
 
 	@Override
 	protected void prepareModel() throws Exception {
 		if (id != null) {
-			chapter = chapterManager.getChapter(id);
+			chapter = taskChapterManager.getTaskChapter(id);
 		} else {
-			chapter = new Chapter();
+			chapter = new TaskChapter();
 		}
 
 	}
 
 	@Override
-	public Chapter getModel() {
+	public TaskChapter getModel() {
 		return chapter;
 	}
 
@@ -52,33 +49,16 @@ public class ChapterAction extends CrudActionSupport<Chapter> {
 		Map<String, Object> map = new HashMap<String, Object>();
 		builerWhere(hqlBuilder, map);
 		builderOrder(hqlBuilder);
-		page = chapterManager.searchChapter(page, hqlBuilder.toString(), map);
-		System.out.println("chapter list");
+		page = taskChapterManager.searchTaskChapter(page, hqlBuilder.toString(), map);
 		return SUCCESS;
 	}
-	
+
 	private void builerWhere(StringBuilder hqlBuilder, Map<String, Object> map) {
-
-		//if (StringUtils.isNotBlank(parentId)) {
-		//	hqlBuilder.append(" and v.ip like :ip");
-		//	map.put("ip", "%" + queryIp + "%");
-		//}
-
-		//if (StringUtils.isNotBlank(queryName)) {
-		//	hqlBuilder.append(" and v.name like :name");
-		//	map.put("name", "%" + queryName + "%");
-		//}
-
-		if (parentId != null) {
-			logger.debug("parentId is --> " + parentId);
-			hqlBuilder.append(" and t.parentId=:parentId");
-			map.put("parentId", parentId);
+		if (taskId != null) {
+			logger.debug("taskId is --> " + taskId);
+			hqlBuilder.append(" and t.taskId=:taskId");
+			map.put("taskId", taskId);
 		}
-
-		//if (StringUtils.isNotBlank(queryState)) {
-		//	hqlBuilder.append(" and v.state=:state");
-		//	map.put("state", StateEnum.valueOf(queryState));
-		//}
 	}
 
 	private void builderOrder(StringBuilder hqlBuilder) {
@@ -89,7 +69,6 @@ public class ChapterAction extends CrudActionSupport<Chapter> {
 		}
 	}
 
-
 	@Override
 	public String input() throws Exception {
 		return INPUT;
@@ -97,13 +76,9 @@ public class ChapterAction extends CrudActionSupport<Chapter> {
 
 	@Override
 	public String save() throws Exception {
-		chapterManager.saveChapter(chapter);
+		taskChapterManager.saveTaskChapter(chapter);
 		addActionMessage("保存章节信息成功！");
 		return RELOAD;
-	}
-	
-	public String edit(){
-		return "edit";
 	}
 
 	@Override
@@ -132,19 +107,14 @@ public class ChapterAction extends CrudActionSupport<Chapter> {
 	//		return null;
 	//	}
 
-	public Page<Chapter> getPage() {
+	public Page<TaskChapter> getPage() {
 		return page;
-	}
-
-	@Autowired
-	public void setChapterManager(ChapterManager chapterManager) {
-		this.chapterManager = chapterManager;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	public String getChapterName() {
 		return chapterName;
 	}
@@ -153,12 +123,17 @@ public class ChapterAction extends CrudActionSupport<Chapter> {
 		this.chapterName = chapterName;
 	}
 
-	public int getParentId() {
-		return parentId;
+	public int getTaskId() {
+		return taskId;
 	}
 
-	public void setParentId(int parentId) {
-		this.parentId = parentId;
+	public void setTaskId(Integer taskId) {
+		this.taskId = taskId;
+	}
+
+	@Autowired
+	public void setTaskChapterManager(TaskChapterManager taskChapterManager) {
+		this.taskChapterManager = taskChapterManager;
 	}
 
 }

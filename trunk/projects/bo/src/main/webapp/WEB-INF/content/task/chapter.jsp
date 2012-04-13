@@ -16,11 +16,11 @@
 	<script>
 		$(document).ready(function() {
 			$(".mainNav a").attr("class","");
-			$("#n3").attr("class","actived");
-			$("#subNav302").attr("class","actived");
+			$("#n4").attr("class","actived");
+			$("#subNav402").attr("class","actived");
 			$(".secondNav div").each(function(){
 				$(this).hide();
-				$("#subNav3").show();
+				$("#subNav4").show();
 			});
 		});
 	</script>

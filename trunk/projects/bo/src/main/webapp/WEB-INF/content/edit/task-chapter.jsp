@@ -39,14 +39,7 @@
 		<input type="hidden" name="page.pageSize" id="pageSize" value="${page.pageSize}"/>
 
 		<div id="message"><s:actionmessage theme="custom" cssClass="success"/></div>
-		<div id="filter">
-			作业规程名称: <input type="text" name="filter_LIKES_taskName" value="${param['filter_LIKES_taskName']}" size="9" tabindex="1" onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
-			<input type="button" value="搜索" onclick="search();" tabindex="2"/>
-			&nbsp;&nbsp;
-			<security:authorize ifAnyGranted="ROLE_修改内容供应商">
-				<input type="button" value="新建作业规程" onclick="linkTo('task!input.action')" tabindex="3"/>
-			</security:authorize>
-		</div>
+
 		<div id="content">
 			<table id="contentTable">
 				<tr>
@@ -58,12 +51,12 @@
 
 				<s:iterator value="page.result">
 					<tr>
-						<td>${taskName}&nbsp;</td>
+						<td>${chapterName}&nbsp;</td>
 						<td>${description}&nbsp;</td>
 						<td>${state}&nbsp;</td>
 						<td>&nbsp;
 							<security:authorize ifAnyGranted="ROLE_作业规程编制">
-								<a href="task-chapter!edit.action?id=${id}">编辑</a>&nbsp;
+								<a href="task-chapter!edit.action?id=${id}" target="_blank">编辑</a>&nbsp;
 							</security:authorize>
 						</td>
 					</tr>
