@@ -6,6 +6,12 @@ import javax.persistence.Table;
 
 import com.darkmi.entity.AuditableEntity;
 
+/**
+ * Description: 任务实体类.
+ *  
+ * Copyright (c) darkmi.com
+ * @version 1.0  2012-4-13 下午01:25:14 DarkMi created.
+ */
 @Entity
 @Table(name = "t_task")
 public class Task extends AuditableEntity {
@@ -13,7 +19,7 @@ public class Task extends AuditableEntity {
 	private String taskId;
 	private String taskName;
 	private String description;
-	private int state;
+	private Integer state;
 	private String path;
 
 	@Column(name = "task_id")
@@ -44,11 +50,11 @@ public class Task extends AuditableEntity {
 	}
 
 	@Column(name = "state")
-	public int getState() {
+	public Integer getState() {
 		return state;
 	}
 
-	public void setState(int state) {
+	public void setState(Integer state) {
 		this.state = state;
 	}
 

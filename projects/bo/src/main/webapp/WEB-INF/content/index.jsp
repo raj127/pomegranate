@@ -14,14 +14,14 @@
 	<script src="${ctx}/js/jquery.js" type="text/javascript"></script>
 	<script src="${ctx}/js/validate/jquery.validate.js" type="text/javascript"></script>
 	<script>
-		/*$(document).ready(function() {
+		$(document).ready(function() {
 			$(".mainNav a").attr("class","");
 			$("#n1").attr("class","actived");
 			$(".secondNav div").each(function(){
 				$(this).hide();
 				$("#subNav1").show();
 			});
-		});*/
+		});
 	</script>
 </head>
 <body>
@@ -35,12 +35,22 @@
 	       <tr>
 	       		<td width="240" height="120">	
 	       		<security:authorize ifAnyGranted="ROLE_系统管理"> 
-	       		<table align="center"><tr><td><a href="${ctx}/system/user.action" ><img src="${ctx}/images/index-00.png" border="0px" align="top" /></a></td></tr><tr><td align="center" ><a style="font-size:15px" href="${ctx}/system/user.action" >系统管理</a></td></tr></table>
+		       		<table align="center">
+		       		<tr><td>
+		       		<a href="${ctx}/system/user.action" ><img src="${ctx}/images/index-00.png" border="0px" align="top" /></a>
+		       		</td></tr>
+		       		<tr><td align="center" ><a style="font-size:15px" href="${ctx}/system/user.action" >系统管理</a></td></tr>
+		       		</table>
 	       		</security:authorize>
 	       		</td>
 	            <td width="240" height="120">	
 	            <security:authorize ifAnyGranted="ROLE_任务管理"> 
-	            <table align="center"><tr><td><a href="${ctx}/cms/movie.action" ><img src="${ctx}/images/index-01.png" border="0px" align="top" /></a></td></tr><tr><td align="center"><a style="font-size:15px" href="${ctx}/cms/movie.action" >任务管理</a></td></tr></table>
+		            <table align="center">
+		            <tr><td>
+		            <a href="${ctx}/cms/movie.action" ><img src="${ctx}/images/index-01.png" border="0px" align="top" /></a>
+		            </td></tr>
+		            <tr><td align="center"><a style="font-size:15px" href="${ctx}/cms/movie.action" >任务管理</a></td></tr>
+		            </table>
 	            </security:authorize>
 	            </td>
 	            <td width="240" height="120"> 

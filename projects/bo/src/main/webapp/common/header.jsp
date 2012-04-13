@@ -29,7 +29,7 @@
 						</security:authorize>
 							
 						<security:authorize ifAnyGranted="ROLE_作业规程编制">
-							<a href="${ctx}/design/design.action" id="n5">规程编制</a>
+							<a href="${ctx}/design/task-chapter.action" id="n5">规程编制</a>
 						</security:authorize>
 							
 						<security:authorize ifAnyGranted="ROLE_作业规程审批">
@@ -54,6 +54,12 @@
 		</div>
 		
 		<div class="secondNav">
+			<security:authorize ifAnyGranted="ROLE_首页浏览">
+				<div id="subNav1" class="subNav1">
+					<a href="${ctx}/index.action" id="n1" class="actived">首页</a>
+				</div>
+			</security:authorize>
+					
 			<security:authorize ifAnyGranted="ROLE_系统管理">
 				<div id="subNav2" class="subNav2">
 					<a id="subNav201" href="${ctx}/system/user.action" >用户列表</a>

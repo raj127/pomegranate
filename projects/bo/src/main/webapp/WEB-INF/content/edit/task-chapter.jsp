@@ -32,7 +32,7 @@
 <div id="bd">
 	<div id="yui-main">
 	<div class="yui-b">
-	<form id="mainForm" action="task.action" method="get">
+	<form id="mainForm" action="tast-chapter.action" method="get">
 		<input type="hidden" name="page.pageNo" id="pageNo" value="${page.pageNo}"/>
 		<input type="hidden" name="page.orderBy" id="orderBy" value="${page.orderBy}"/>
 		<input type="hidden" name="page.order" id="order" value="${page.order}"/>
@@ -50,9 +50,9 @@
 		<div id="content">
 			<table id="contentTable">
 				<tr>
-					<th><a href="javascript:sort('fullName','asc')">任务名称</a></th>
-					<th><a href="javascript:sort('gender','asc')">任务描述</a></th>
-					<th><a href="javascript:sort('birthyear','asc')">任务状态</a></th>
+					<th><a href="javascript:sort('chapterName','asc')">章节名称</a></th>
+					<th><a href="javascript:sort('description','asc')">章节描述</a></th>
+					<th><a href="javascript:sort('state','asc')">章节状态</a></th>
 					<th>操作</th>
 				</tr>
 
