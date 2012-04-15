@@ -60,7 +60,7 @@
 			<input type="button" value="搜索" onclick="search();" tabindex="5"/>
 			&nbsp;&nbsp;
 			
-			<security:authorize ifAnyGranted="ROLE_修改用户">
+			<security:authorize ifAnyGranted="ROLE_用户修改">
 						<input type="button" value="增加新用户" onclick="linkTo('user!input.action')" tabindex="6"/>
 			</security:authorize>
 		</div>
@@ -90,11 +90,11 @@
 				          	</s:else>
 			          	</td>
 						<td>&nbsp;
-							<security:authorize ifAnyGranted="ROLE_浏览用户">
+							<security:authorize ifAnyGranted="ROLE_用户浏览">
 									<a href="user!input.action?id=${id}&viewOnly=true">查看</a>&nbsp;
 							</security:authorize>
 
-							<security:authorize ifAnyGranted="ROLE_修改用户">
+							<security:authorize ifAnyGranted="ROLE_用户修改">
 								<a href="user!input.action?id=${id}&page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}">修改</a>&nbsp;
 								<a href="user-pass!input.action?id=${id}&page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}">修改密码</a>&nbsp;
 								<a href="#" onclick="deleteUser('${loginName}',${id})">删除</a>

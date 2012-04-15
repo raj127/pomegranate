@@ -71,12 +71,6 @@
 				<td>值:</td>
 				<td><input type="text" id="value" name="value" size="40" value="${value}" maxlength="100"/></td>
 			</tr>
-			<tr>
-				<td>所属系统:</td>
-				<td>
-					<s:select id="system" name="system"  list="@cn.com.supertv.entity.system.SystemEnum@values()"   value="%{system}" listValue="label" headerKey="" headerValue="请选择" required="true" theme="simple"/>
-				</td>
-			</tr>
 				<tr>
 				<td>描述:</td>
 				<td>
@@ -93,7 +87,7 @@
 				</tr>
 			<tr>
 				<td colspan="2">
-					<security:authorize ifAnyGranted="ROLE_修改配置">
+					<security:authorize ifAnyGranted="ROLE_配置修改">
 						<input class="button" type="submit" value="提交"/>&nbsp;
 					</security:authorize>
 					<input class="button" type="button" value="返回" onclick="history.back()"/>

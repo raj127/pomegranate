@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>VODLite2.0 角色管理</title>
+	<title>角色管理</title>
 	<%@ include file="/common/meta.jsp" %>
 	<link href="${ctx}/css/yui.css" type="text/css" rel="stylesheet"/>
 	<link href="${ctx}/css/style.css" type="text/css" rel="stylesheet"/>
@@ -53,7 +53,7 @@
 		<div id="message"><s:actionmessage theme="custom" cssClass="success"/></div>
 		<div id="content">
 			<div>
-				<security:authorize ifAnyGranted="ROLE_修改角色">
+				<security:authorize ifAnyGranted="ROLE_角色修改">
 					<input type="button" value="增加新角色" onclick="linkTo('role!input.action')" tabindex="1"/>
 				</security:authorize>
 			</div>
@@ -77,11 +77,11 @@
 				          	</s:else>
 			          	</td>
 						<td>&nbsp;
-							<security:authorize ifAnyGranted="ROLE_浏览角色">
+							<security:authorize ifAnyGranted="ROLE_角色浏览">
 									<a href="role!input.action?id=${id}&viewOnly=true">查看</a>&nbsp;
 							</security:authorize>
 	
-							<security:authorize ifAnyGranted="ROLE_修改角色">
+							<security:authorize ifAnyGranted="ROLE_角色修改">
 								<a href="role!input.action?id=${id}" id="editLink-${name}">修改</a>&nbsp;
 								<a href="#" id="deleteLink-${name}" onclick="deleteRole(${fn:length(userList)},${id})">删除</a>
 							</security:authorize>

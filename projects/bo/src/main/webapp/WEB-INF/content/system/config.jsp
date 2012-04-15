@@ -46,7 +46,7 @@
 			<input type="button" value="搜索" onclick="search();" tabindex="3"/>
 			
 			&nbsp;&nbsp;
-			<security:authorize ifAnyGranted="ROLE_修改用户">
+			<security:authorize ifAnyGranted="ROLE_配置修改">
 				<input type="button" value="增加新配置" onclick="linkTo('config!input.action')" tabindex="4"/>
 			</security:authorize>
 		</div>
@@ -69,13 +69,13 @@
 						<td>${system.label}&nbsp;</td>
 						<td><fmt:formatDate value="${createTime}" type="both"/>&nbsp;</td>
 						<td>&nbsp;
-							<security:authorize ifAnyGranted="ROLE_浏览配置">
-								<security:authorize ifNotGranted="ROLE_修改配置">
+							<security:authorize ifAnyGranted="ROLE_配置浏览">
+								<security:authorize ifNotGranted="ROLE_配置修改">
 									<a href="config!input.action?id=${id}">查看</a>&nbsp;
 								</security:authorize>
 							</security:authorize>
 
-							<security:authorize ifAnyGranted="ROLE_修改配置">
+							<security:authorize ifAnyGranted="ROLE_配置修改">
 								<a href="config!input.action?id=${id}&page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}">修改</a>&nbsp;
 								<a href="config!delete.action?id=${id}" onclick="return confirm('确定删除吗？')">永久删除</a>
 							</security:authorize>
