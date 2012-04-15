@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>VODLite2.0  日志管理</title>
+	<title>日志管理</title>
 	<%@ include file="/common/meta.jsp" %>
 	<link href="${ctx}/css/yui.css" type="text/css" rel="stylesheet"/>
 	<link href="${ctx}/css/style.css" type="text/css" rel="stylesheet"/>
@@ -46,7 +46,7 @@
 			<input type="button" value="搜索" onclick="search();" tabindex="4"/>
 			
 			&nbsp;&nbsp;
-			<security:authorize ifAnyGranted="ROLE_删除日志">
+			<security:authorize ifAnyGranted="ROLE_日志删除">
 						<input type="button" value="删除所有日志" onclick="javascript:if(confirm('确定要删除所有日志么？')){linkTo('log!deleteAll.action');}" tabindex="4"/>
 			</security:authorize>
 		</div>
@@ -63,7 +63,7 @@
 						<td>${message}&nbsp;</td>
 						<td><fmt:formatDate value="${logTime}" type="both"/>&nbsp;</td>
 						<td>&nbsp;
-							<security:authorize ifAnyGranted="ROLE_删除日志">
+							<security:authorize ifAnyGranted="ROLE_日志删除">
 								<a href="log!delete.action?id=${id}" onclick="return confirm('确定删除吗？')">删除</a>
 							</security:authorize>
 						</td>

@@ -24,11 +24,14 @@
 		<s:intercept-url pattern="/system/role!delete*" access="hasAnyRole('ROLE_角色修改')" />
 		
 		<s:intercept-url pattern="/system/modify-password*" access="hasAnyRole('ROLE_修改密码')" />
-		<s:intercept-url pattern="/system/config!save*" access="hasAnyRole('ROLE_修改配置')" />
-		<s:intercept-url pattern="/system/config!delete*" access="hasAnyRole('ROLE_修改配置')" />
-		<s:intercept-url pattern="/system/config*" access="hasAnyRole('ROLE_浏览配置')" />
-		<s:intercept-url pattern="/system/log!delete*" access="hasAnyRole('ROLE_删除日志')" />
-		<s:intercept-url pattern="/system/log*" access="hasAnyRole('ROLE_浏览日志')" />
+		
+		<s:intercept-url pattern="/system/config*" access="hasAnyRole('ROLE_配置浏览')" />
+		<s:intercept-url pattern="/system/config!save*" access="hasAnyRole('ROLE_配置修改')" />
+		<s:intercept-url pattern="/system/config!delete*" access="hasAnyRole('ROLE_配置修改')" />
+		
+		
+		<s:intercept-url pattern="/system/log!delete*" access="hasAnyRole('ROLE_日志删除')" />
+		<s:intercept-url pattern="/system/log*" access="hasAnyRole('ROLE_日志浏览')" />
 		
 
 		<!-- 作业规程模板管理 -->
