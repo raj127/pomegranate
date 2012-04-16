@@ -142,7 +142,7 @@
 				</tr>
 			<tr>
 				<td colspan="2">
-					<security:authorize ifAnyGranted="ROLE_修改用户">
+					<security:authorize ifAnyGranted="ROLE_用户修改">
 						<c:if test='${viewOnly!=true}'><input class="button" type="submit" value="提交"/>&nbsp;</c:if>
 					</security:authorize>
 					<input class="button" type="button" value="返回" onclick="history.back()"/>
