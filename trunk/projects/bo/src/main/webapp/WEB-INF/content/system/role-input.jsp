@@ -96,13 +96,12 @@
 			<tr>
 				<td>授权:</td>
 				<td>
-					<s:checkboxlist name="checkedAuthIds" list="allAuthorityList" listKey="id"
-										listValue="name" theme="custom"/>
+					<s:checkboxlist name="checkedAuthIds" list="allAuthorityList" listKey="id" listValue="name" theme="custom"/>
 				</td>
 			</tr>
 			<tr>
 				<td colspan="2">
-					<security:authorize ifAnyGranted="ROLE_修改角色">
+					<security:authorize ifAnyGranted="ROLE_角色修改">
 						<c:if test='${viewOnly!=true}'><input class="button" type="submit" value="提交"/>&nbsp;</c:if>
 					</security:authorize>
 					<input class="button" type="button" value="返回" onclick="history.back()"/>
