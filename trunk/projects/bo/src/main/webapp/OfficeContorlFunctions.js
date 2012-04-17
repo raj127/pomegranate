@@ -40,8 +40,8 @@ function trim(str)
 { //删除左右两端的空格
 　　return str.replace(/(^\s*)|(\s*$)/g, "");
 }
-function saveFileToUrl()
-{
+
+function saveFileToUrl(){
 	var myUrl =document.forms[0].action ;
 	var fileName = document.all("fileName").value;
 	var result  ;
@@ -85,6 +85,7 @@ function saveFileToUrl()
 		window.close();
 	}
 }
+
 function saveFileAsHtmlToUrl()
 {
 	var myUrl = "upLoadHtmlFile.jsp"	;
