@@ -24,12 +24,12 @@
 		<spring-security.version>3.0.3.RELEASE</spring-security.version>
 		<activemq.version>5.4.0</activemq.version>
 		<jetty.version>6.1.25</jetty.version>
-		<h2.version>1.2.142</h2.version>
-		<!--<quartz.version>1.8.4</quartz.version>-->
 		<jackson.version>1.6.0</jackson.version>
 		<slf4j.version>1.6.1</slf4j.version>
 		<selenium.version>2.0a5</selenium.version>
 		<compass.version>2.2.0</compass.version>
+		<!--<h2.version>1.2.142</h2.version>-->
+		<!--<quartz.version>1.8.4</quartz.version>-->
 		<!-- Plugin的属性定义  -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -296,7 +296,103 @@
 				<version>3.1.0</version>
 			</dependency>
 			<!-- web end -->
+			
+			<!-- utils begin { -->
+			<dependency>
+				<groupId>commons-beanutils</groupId>
+				<artifactId>commons-beanutils</artifactId>
+				<version>1.8.3</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-lang</groupId>
+				<artifactId>commons-lang</artifactId>
+				<version>2.5</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-collections</groupId>
+				<artifactId>commons-collections</artifactId>
+				<version>3.2.1</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-codec</groupId>
+				<artifactId>commons-codec</artifactId>
+				<version>1.4</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>1.4</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-net</groupId>
+				<artifactId>commons-net</artifactId>
+				<version>2.0</version>
+			</dependency>
 
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>r06</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>joda-time</groupId>
+				<artifactId>joda-time</artifactId>
+				<version>1.6.1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpclient</artifactId>
+				<version>4.0.1</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>net.jcip</groupId>
+				<artifactId>jcip-annotations</artifactId>
+				<version>1.0</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>ognl</groupId>
+				<artifactId>ognl</artifactId>
+				<version>3.0</version>
+				<exclusions>
+					<!-- use javassist.javassist instead -->
+					<exclusion>
+						<groupId>jboss</groupId>
+						<artifactId>javassist</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<!-- template engine -->
+			<dependency>
+				<groupId>org.apache.velocity</groupId>
+				<artifactId>velocity</artifactId>
+				<version>1.6.4</version>
+			</dependency>
+
+			<!-- cache (usually for orm) -->
+			<dependency>
+				<groupId>net.sf.ehcache</groupId>
+				<artifactId>ehcache</artifactId>
+				<version>1.6.2</version>
+			</dependency>
+
+			<!-- pojo copy (usually for webservice) -->
+			<dependency>
+				<groupId>net.sf.dozer</groupId>
+				<artifactId>dozer</artifactId>
+				<version>5.2.1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>asm</groupId>
+				<artifactId>asm</artifactId>
+				<version>3.2</version>
+			</dependency>
+			<!-- utils end } -->			
 
 			<!--  rest begin -->
 			<dependency>
@@ -321,6 +417,50 @@
 				</exclusions>
 			</dependency>
 			<!-- rest end -->
+			
+			<!-- webservice begin -->
+			<!-- cxf -->
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-core</artifactId>
+				<version>${cxf.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.apache.geronimo.specs</groupId>
+						<artifactId>geronimo-javamail_1.4_spec</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.apache.geronimo.specs</groupId>
+						<artifactId>geronimo-activation_1.1_spec</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-frontend-jaxws</artifactId>
+				<version>${cxf.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.apache.geronimo.specs</groupId>
+						<artifactId>geronimo-javamail_1.4_spec</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.apache.geronimo.specs</groupId>
+						<artifactId>geronimo-activation_1.1_spec</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-transports-http</artifactId>
+				<version>${cxf.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-ws-security</artifactId>
+				<version>${cxf.version}</version>
+			</dependency>
+			<!-- webservice end -->
 
 			<!-- security begin -->
 			<dependency>
@@ -350,35 +490,7 @@
 				<version>1.0</version>
 			</dependency>
 			<!-- security end -->
-
-			<!-- jms begin -->
-			<!--<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-jms</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.apache.activemq</groupId>
-				<artifactId>activemq-core</artifactId>
-				<version>${activemq.version}</version>
-				<exclusions>
-					<exclusion>
-						<groupId>org.apache.activemq.protobuf</groupId>
-						<artifactId>activemq-protobuf</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>org.springframework.osgi</groupId>
-						<artifactId>spring-osgi-core</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>org.osgi</groupId>
-						<artifactId>org.osgi.core</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>-->
-			<!-- jms end -->
-
+			
 			<!-- compass -->
 			<dependency>
 				<groupId>org.compass-project</groupId>
@@ -484,104 +596,6 @@
 			</dependency>
 			<!-- excel end -->
 
-			<!-- utils begin { -->
-			<dependency>
-				<groupId>commons-beanutils</groupId>
-				<artifactId>commons-beanutils</artifactId>
-				<version>1.8.3</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-lang</groupId>
-				<artifactId>commons-lang</artifactId>
-				<version>2.5</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-collections</groupId>
-				<artifactId>commons-collections</artifactId>
-				<version>3.2.1</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-codec</groupId>
-				<artifactId>commons-codec</artifactId>
-				<version>1.4</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-io</groupId>
-				<artifactId>commons-io</artifactId>
-				<version>1.4</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-net</groupId>
-				<artifactId>commons-net</artifactId>
-				<version>2.0</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.google.guava</groupId>
-				<artifactId>guava</artifactId>
-				<version>r06</version>
-			</dependency>
-			
-			<dependency>
-				<groupId>joda-time</groupId>
-				<artifactId>joda-time</artifactId>
-				<version>1.6.1</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.apache.httpcomponents</groupId>
-				<artifactId>httpclient</artifactId>
-				<version>4.0.1</version>
-			</dependency>
-			
-			<dependency>
-				<groupId>net.jcip</groupId>
-				<artifactId>jcip-annotations</artifactId>
-				<version>1.0</version>
-			</dependency>
-			
-
-			
-			<dependency>
-				<groupId>ognl</groupId>
-				<artifactId>ognl</artifactId>
-				<version>3.0</version>
-				<exclusions>
-					<!-- use javassist.javassist instead -->
-					<exclusion>
-						<groupId>jboss</groupId>
-						<artifactId>javassist</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-
-			<!-- template engine -->
-			<dependency>
-				<groupId>org.apache.velocity</groupId>
-				<artifactId>velocity</artifactId>
-				<version>1.6.4</version>
-			</dependency>
-
-			<!-- cache (usually for orm) -->
-			<dependency>
-				<groupId>net.sf.ehcache</groupId>
-				<artifactId>ehcache</artifactId>
-				<version>1.6.2</version>
-			</dependency>
-
-			<!-- pojo copy (usually for webservice) -->
-			<dependency>
-				<groupId>net.sf.dozer</groupId>
-				<artifactId>dozer</artifactId>
-				<version>5.2.1</version>
-			</dependency>
-
-			<dependency>
-				<groupId>asm</groupId>
-				<artifactId>asm</artifactId>
-				<version>3.2</version>
-			</dependency>
-			<!-- utils end } -->
 			
 			<!-- test begin -->
 			<dependency>
@@ -792,49 +806,33 @@
 				<scope>test</scope>
 			</dependency>-->
 			<!-- memcached end -->
-			<!-- webservice begin -->
-			<!-- cxf -->
+			<!-- jms begin -->
+			<!--<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jms</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+
 			<dependency>
-				<groupId>org.apache.cxf</groupId>
-				<artifactId>cxf-rt-core</artifactId>
-				<version>${cxf.version}</version>
+				<groupId>org.apache.activemq</groupId>
+				<artifactId>activemq-core</artifactId>
+				<version>${activemq.version}</version>
 				<exclusions>
 					<exclusion>
-						<groupId>org.apache.geronimo.specs</groupId>
-						<artifactId>geronimo-javamail_1.4_spec</artifactId>
+						<groupId>org.apache.activemq.protobuf</groupId>
+						<artifactId>activemq-protobuf</artifactId>
 					</exclusion>
 					<exclusion>
-						<groupId>org.apache.geronimo.specs</groupId>
-						<artifactId>geronimo-activation_1.1_spec</artifactId>
+						<groupId>org.springframework.osgi</groupId>
+						<artifactId>spring-osgi-core</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.osgi</groupId>
+						<artifactId>org.osgi.core</artifactId>
 					</exclusion>
 				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.cxf</groupId>
-				<artifactId>cxf-rt-frontend-jaxws</artifactId>
-				<version>${cxf.version}</version>
-				<exclusions>
-					<exclusion>
-						<groupId>org.apache.geronimo.specs</groupId>
-						<artifactId>geronimo-javamail_1.4_spec</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>org.apache.geronimo.specs</groupId>
-						<artifactId>geronimo-activation_1.1_spec</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.cxf</groupId>
-				<artifactId>cxf-rt-transports-http</artifactId>
-				<version>${cxf.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.cxf</groupId>
-				<artifactId>cxf-rt-ws-security</artifactId>
-				<version>${cxf.version}</version>
-			</dependency>
-			<!-- webservice end -->
+			</dependency>-->
+			<!-- jms end -->
 
 		</dependencies>
 	</dependencyManagement>

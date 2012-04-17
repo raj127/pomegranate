@@ -9,15 +9,11 @@ function intializePage(fileUrl){
 	alert(document.all("TANGER_OCX"));
 	OFFICE_CONTROL_OBJ = document.all("TANGER_OCX");
 	initCustomMenus();
-	alert("aaa");
-	alert(fileUrl);
 	NTKO_OCX_OpenDoc(fileUrl);
-	//alert("fileUrl -->" + fileUrl);
 	alert("end intializePage ...}");
 }
 
-function onPageClose()
-{
+function onPageClose(){
 	if(!OFFICE_CONTROL_OBJ.activeDocument.saved)
 	{
 		if(confirm( "文档修改过,还没有保存,是否需要保存?"))
@@ -27,21 +23,25 @@ function onPageClose()
 	}
 }
 
-function NTKO_OCX_OpenDoc(fileUrl)
-{
+function NTKO_OCX_OpenDoc(fileUrl){
 	OFFICE_CONTROL_OBJ.BeginOpenFromURL(fileUrl);
 }
-function setFileOpenedOrClosed(bool)
-{
+
+function setFileOpenedOrClosed(bool){
 	IsFileOpened = bool;
 	fileType = OFFICE_CONTROL_OBJ.DocType ;
 }
+
 function trim(str)
 { //删除左右两端的空格
 　　return str.replace(/(^\s*)|(\s*$)/g, "");
 }
-function saveFileToUrl()
-{
+
+/**
+ * 将文件保存到指定路径,以原始格式.
+ * @returns
+ */
+function saveFileToUrl(){
 	var myUrl =document.forms[0].action ;
 	var fileName = document.all("fileName").value;
 	var result  ;
@@ -74,17 +74,22 @@ function saveFileToUrl()
 				fileType = "unkownfiletype";
 		}
 		result = OFFICE_CONTROL_OBJ.saveToURL(myUrl,//提交到的url地址
-		"upLoadFile",//文件域的id，类似<input type=file id=upLoadFile 中的id
-		"fileType="+fileType,          //与控件一起提交的参数如："p1=a&p2=b&p3=c"
-		fileName,    //上传文件的名称，类似<input type=file 的value
-		0    //与控件一起提交的表单id，也可以是form的序列号，这里应该是0.
-		);
+											  "upLoadFile",//文件域的id，类似<input type=file id=upLoadFile 中的id
+											  "fileType="+fileType,          //与控件一起提交的参数如："p1=a&p2=b&p3=c"
+											  fileName,    //上传文件的名称，类似<input type=file 的value
+											  0    //与控件一起提交的表单id，也可以是form的序列号，这里应该是0.
+											  );
 		result=trim(result);
 		document.all("statusBar").innerHTML="服务器返回信息:"+result;
 		alert(result);
 		window.close();
 	}
 }
+
+/**
+ * 将文档保存到服务器.
+ * @returns
+ */
 function saveFileAsHtmlToUrl()
 {
 	var myUrl = "upLoadHtmlFile.jsp"	;
@@ -99,6 +104,11 @@ function saveFileAsHtmlToUrl()
 		window.close();
 	}
 }
+
+/**
+ * 将文档保存到服务器.
+ * @returns
+ */
 function saveFileAsPdfToUrl()
 {
 	var myUrl = "upLoadPdfFile.jsp"	;
@@ -389,9 +399,8 @@ function setToolBar()
 	OFFICE_CONTROL_OBJ.ToolBars=!OFFICE_CONTROL_OBJ.ToolBars;
 }
 //控制是否显示所有菜单
-function setMenubar()
-{
-		OFFICE_CONTROL_OBJ.Menubar=!OFFICE_CONTROL_OBJ.Menubar;
+function setMenubar(){
+	OFFICE_CONTROL_OBJ.Menubar=!OFFICE_CONTROL_OBJ.Menubar;
 }
 //控制”插入“菜单栏
 function setInsertMemu()
