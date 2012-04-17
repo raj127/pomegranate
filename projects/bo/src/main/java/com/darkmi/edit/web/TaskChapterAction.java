@@ -94,6 +94,45 @@ public class TaskChapterAction extends CrudActionSupport<TaskChapter> {
 		//		//因为直接输出内容而不经过jsp,因此返回null.
 		return null;
 	}
+	
+	public void saveFileToDisk() {
+		//		String absoluteOfficeFileDir = ""; //word文件保存的决定路径
+		//		String absoluteAttachFileDir = ""; //附件保存的绝对路径
+		//		String officeFileUploadPath = "";
+		//		String attachFileUploadPath = "";
+		//		
+		//		String officefileNameDisk = "米的文档";  //word文档的名称
+		//		String attachFileNameDisk = null; //附件名称
+		//		
+		//		FileItem officeFileItem = null;
+		//		FileItem attachFileItem = null;
+		//
+		//		
+		//		File officeFileUpload = null;
+		//		File attachFileUpload = null;
+		//		boolean result = true;
+		//
+		//		try {
+		//			System.out.println("officefilepath:" + absoluteOfficeFileDir + officefileNameDisk);
+		//			System.out.println("attachfilepath:" + absoluteAttachFileDir + attachFileNameDisk);
+		//			if (!officefileNameDisk.equalsIgnoreCase("") && officeFileItem != null) {
+		//				officeFileUpload = new File(absoluteOfficeFileDir + officefileNameDisk);
+		//				officeFileItem.write(officeFileUpload);
+		//			}
+		//			
+		//			if (!attachFileNameDisk.equalsIgnoreCase("") && attachFileItem != null) {
+		//				attachFileUpload = new File(absoluteAttachFileDir + attachFileNameDisk);
+		//				attachFileItem.write(attachFileUpload);
+		//			}
+		//			
+		//		} catch (FileNotFoundException e) {
+		//		} catch (Exception e) {
+		//			System.out.println("error saveFileToDisk:" + e.getMessage());
+		//			e.printStackTrace();
+		//			result = false;
+		//		}
+	}
+
 
 	public Page<TaskChapter> getPage() {
 		return page;
