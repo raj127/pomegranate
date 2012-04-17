@@ -15,6 +15,18 @@
 	<script src="${ctx}/js/jquery.pagination.js" type="text/javascript"></script>
 	<script>
 		$(document).ready(function() {
+			
+			/*测试代码 begin { }*/
+			//alert($("#filter").html());
+			//$(mainForm.elements).hide();
+			
+			$("a").click(function(){
+				alert("hello");
+			});
+			
+			
+			/*测试代码 end } }*/
+			
 			$(".mainNav a").attr("class","");
 			$("#n3").attr("class","actived");
 			$("#subNav301").attr("class","actived");
