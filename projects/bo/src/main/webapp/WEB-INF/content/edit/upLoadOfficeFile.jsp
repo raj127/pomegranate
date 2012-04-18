@@ -133,6 +133,8 @@
 	boolean isNewRecode = true;
 	officeFileItem = null;
 	attachFileItem = null;
+	
+	
 	DiskFileItemFactory factory = new DiskFileItemFactory();
 	// 设置最多只允许在内存中存储的数据,单位:字节
 	factory.setSizeThreshold(4096);
@@ -150,6 +152,7 @@
 		e.printStackTrace();
 		return;
 	}
+	
 	Iterator iter = fileItems.iterator();
 	attachFileItem = null;
 	while (iter.hasNext()) {

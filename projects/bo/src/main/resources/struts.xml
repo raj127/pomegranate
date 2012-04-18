@@ -5,6 +5,15 @@
 	<constant name="struts.convention.default.parent.package" value="crud-default" />
 	<constant name="struts.convention.package.locators" value="web" />
 	<constant name="struts.convention.package.locators.basePackage" value="com.darkmi" />
+	<!-- struts.xml变更时是否自动重新加载 -->
+	<constant name="struts.configuration.xml.reload" value="true" />
+	<!-- 配置应用的编码方式 -->
+	<constant name="struts.i18n.encoding" value="UTF-8"/>
+	<!-- 限定上传文件最大大小4M,struts2默认maxSize为2M -->
+	<constant name="struts.multipart.maxSize" value="4194304"></constant>
+	<!-- 指定上传文件时临时文件的存放路径,设为"/tempFile"将在 项目所在盘下创建文件夹tempUpload-->
+	<constant name="struts.multipart.saveDir" value="/tempFile"></constant>
+	<constant name="struts.action.excludePattern" value="upLoadOfficeFile.jsp"/> 
 
 	<!-- 用于CRUD Action的parent package -->
 	<package name="crud-default" extends="convention-default">
@@ -22,6 +31,22 @@
 			</interceptor-stack>
 		</interceptors>
 		<default-interceptor-ref name="crudStack" />
+
+	<action name="upload" class="com.darkmi.edit.web.UploadAction">
+		<!-- 配置fileUpload拦截器 -->
+		<interceptor-ref name="fileUpload">
+			<!-- 配置允许上传的文件类型 -->
+			<param name="allowedTypes">image/x-ms-bmp,image/jpeg,image/gif,image/png,image/x-png,application/excel,application/vnd.ms-excel</param>
+			<!-- 配置允许上传的文件大小 -->
+			<param name="maximumSize">2048000</param>
+		</interceptor-ref>
+		<interceptor-ref name="defaultStack"></interceptor-ref>
+		<!-- 配置上传文件的保存的相对路径 -->
+		<param name="savePath">/uploadOfficeFile</param>
+		<!-- 配置逻辑视图和实际资源的对应关系 -->
+		<result>/WEB-INF/content/edit/upload.jsp</result>
+		<result name="input">/WEB-INF/content/edit/upload-input.jsp</result>
+	</action>
 
 	</package>
 
