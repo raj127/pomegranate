@@ -34,7 +34,7 @@ public class UploadAction extends ActionSupport {
 			// 读取文件内容到InputStream里
 			InputStream is = new FileInputStream(getFile());
 			// 创建输出流，生成新文件
-			OutputStream os = new FileOutputStream(getSavePath() + "//" + getFileName());
+			OutputStream os = new FileOutputStream(getSavePath() + "//" + getFileName()+".doc");
 			// 将InputStream里的byte拷贝到OutputStream
 			IOUtils.copy(is, os);
 			os.flush();
