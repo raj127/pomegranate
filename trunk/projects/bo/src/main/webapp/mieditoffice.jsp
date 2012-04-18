@@ -37,10 +37,10 @@
 	<meta http-equiv="pragram" content="no-cache"/>
 	<meta http-equiv="expires" content="0"/>
 	<link href="StyleSheet.css" rel="stylesheet" type="text/css" />
-	<script type="text/javascript" src="OfficeContorlFunctions.js"></script>
+	<script type="text/javascript" src="${ctx}/js/OfficeContorlFunctions.js"></script>
 </head>
-<body onload='intializePage("<%=fileUrl%>")' onbeforeunload ="onPageClose()">
-<form id="form1" action="upLoadOfficeFile.jsp" enctype="multipart/form-data" style="padding:0px;margin:0px;">
+<body onload='intializePage("<%=fileUrl%>")' onunload ="onPageClose()">
+<form id="form1" action="upLoadOfficeFile.jsp" method="post" enctype="multipart/form-data">
 	<div id="editmain_top" class="editmain_top">
 	<div id="edit_button_div" class="edit_button_div">
 	<img alt="保存office文档" src="images/edit_save_office.gif" onclick="saveFileToUrl();" />

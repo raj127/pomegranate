@@ -58,6 +58,7 @@
 							<security:authorize ifAnyGranted="ROLE_作业规程编制">
 								<a href="task-chapter!edit.action?id=${id}" target="_blank">编辑</a>&nbsp;
 							</security:authorize>
+							<a href="task-chapter!testUpload.action">上传测试</a>&nbsp;
 						</td>
 					</tr>
 				</s:iterator>

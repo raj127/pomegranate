@@ -1,13 +1,19 @@
 package com.darkmi.edit.web;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.IOUtils;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
@@ -23,13 +29,20 @@ import com.darkmi.util.CrudActionSupport;
 @Namespace("/edit")
 @Results({
 		@Result(name = CrudActionSupport.RELOAD, location = "design.action?page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}", type = "redirect"),
-		@Result(name = "edit", location = "edit.jsp") })
+		@Result(name = "edit", location = "edit.jsp"), @Result(name = "upload", location = "upload-input.jsp"), })
 public class TaskChapterAction extends CrudActionSupport<TaskChapter> {
 	private static final long serialVersionUID = -2907389496513631586L;
 	private Long id;
 	private TaskChapter taskChapter;
 	private TaskChapterManager taskChapterManager;
 	private Page<TaskChapter> page = new Page<TaskChapter>(20);
+
+	private File file;// 对应文件域的file，封装文件内容
+	private String savePath = "uploadOfficeFile/";// 保存路径
+	private String tempFileDir = "tempFile/";
+
+	private String fileId;
+	private String fileName;
 
 	//---------
 	public FileItem officeFileItem = null;
@@ -38,7 +51,7 @@ public class TaskChapterAction extends CrudActionSupport<TaskChapter> {
 	public String attachFileNameDisk = "";
 	//---------
 
-	public String tempFileDir = "F:\\JavaWork\\rose\\projects\\bo\\src\\main\\webapp\\tempFile\\"; //临时文件目录
+	//public String tempFileDir = "F:\\JavaWork\\rose\\projects\\bo\\src\\main\\webapp\\tempFile\\"; //临时文件目录
 	public String absoluteOfficeFileDir = "F:\\JavaWork\\rose\\projects\\bo\\src\\main\\webapp\\uploadOfficeFile\\"; //office文档保存绝对路径
 	public String absoluteHtmlFileDir = "F:\\JavaWork\\rose\\projects\\bo\\src\\main\\webapp\\uploadHtmlFile\\"; //Html文档保存绝对路径
 	public String absoluteAttachFileDir = "F:\\JavaWork\\rose\\projects\\bo\\src\\main\\webapp\\uploadAttachFile\\"; //附件保存绝对路径
@@ -81,6 +94,40 @@ public class TaskChapterAction extends CrudActionSupport<TaskChapter> {
 		logger.debug("编辑作业规程... begin{ ");
 		logger.debug("编辑作业规程... end} ");
 		return "edit";
+	}
+
+	public String testUpload() {
+		return "upload";
+	}
+
+	public String show() {
+		logger.debug("保存作业规程word文档... begin{ ");
+		if (file != null) {
+			try {
+				// 读取文件内容到InputStream里
+				InputStream is = new FileInputStream(getFile());
+				// 创建输出流，生成新文件
+				OutputStream os = new FileOutputStream(getSavePath() + "//" + "a.doc");
+				// 将InputStream里的byte拷贝到OutputStream
+				IOUtils.copy(is, os);
+				os.flush();
+				IOUtils.closeQuietly(is);
+				IOUtils.closeQuietly(os);
+				return SUCCESS;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		logger.debug("保存作业规程word文档... end} ");
+		return "edit";
+	}
+
+	public String getSavePath() {
+		String aPath = ServletActionContext.getServletContext().getRealPath(savePath);
+		System.out.println(aPath);
+		// 将相对路径转换成绝对路径
+		return aPath;
 	}
 
 	/**
@@ -293,6 +340,14 @@ public class TaskChapterAction extends CrudActionSupport<TaskChapter> {
 		return RELOAD;
 	}
 
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
 	public Page<TaskChapter> getPage() {
 		return page;
 	}
@@ -300,10 +355,26 @@ public class TaskChapterAction extends CrudActionSupport<TaskChapter> {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	@Autowired
 	public void setTaskChapterManager(TaskChapterManager taskChapterManager) {
 		this.taskChapterManager = taskChapterManager;
+	}
+
+	public String getFileId() {
+		return fileId;
+	}
+
+	public void setFileId(String fileId) {
+		this.fileId = fileId;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 }
