@@ -13,7 +13,7 @@
 	<script src="${ctx}/js/jquery.js" type="text/javascript"></script>
 	<script src="${ctx}/js/table.js" type="text/javascript"></script>
 	<script src="${ctx}/js/jquery.pagination.js" type="text/javascript"></script>
-	<script>
+	<script type="text/javascript">
 		$(document).ready(function() {
 			$(".mainNav a").attr("class","");
 			$("#n5").attr("class","actived");
@@ -23,6 +23,18 @@
 				$("#subNav5").show();
 			});
 		});
+		
+	</script>
+	<script type="text/javascript">
+	function showWin(){
+		var height = screen.availHeight;
+		var width  = screen.availWidth;
+		//var top    = (screen.availHeight - height)/2;
+		//var left   = (screen.availWidth - width)/2;
+		var param  = 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=auto,resizable=yes,' + 
+		             'width=' + width + ',height=' + height + ',left=0,top=0';
+		window.open('task-chapter!edit.action?id=${id}', 'win_name', param);
+	}
 	</script>
 </head>
 
@@ -56,7 +68,7 @@
 						<td>${state}&nbsp;</td>
 						<td>&nbsp;
 							<security:authorize ifAnyGranted="ROLE_作业规程编制">
-								<a href="task-chapter!edit.action?id=${id}" target="_blank">编辑</a>&nbsp;
+								<a href="#" onClick="showWin();" target="_blank">编辑</a>&nbsp;
 							</security:authorize>
 							<a href="task-chapter!testUpload.action">上传测试</a>&nbsp;
 						</td>
