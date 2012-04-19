@@ -15,15 +15,15 @@
 </head>
 <body onload='intializePage("${ctx}/company/default/task/default/01-01.docx")' onunload="onPageClose()">
 	<form id="form1" method="post" action="upload.action" enctype="multipart/form-data">
-		<div id="editmain_top" class="editmain_top">
+		<!--<div id="editmain_top" class="editmain_top">
 			<div id="edit_button_div" class="edit_button_div">
 				<img alt="保存office文档" src="${ctx}/images/edit_save_office.gif" onclick="saveFileToUrl();" />
 				<img alt="保存html文档" src="${ctx}/images/edit_save_html.gif" onclick="saveFileAsHtmlToUrl();"/>
 				<img alt="保存PDF" src="${ctx}/images/edit_save_pdf.gif" onclick="saveFileAsPdfToUrl();"/>
 			</div>
-		</div>
-		<div id="formtop">
-			<table>
+		</div>-->
+		<!--<div id="formtop">
+			  <table>
 				<tr><td colspan="5"  class="edit_tabletitle">文件表单数据:</td></tr>
 				<tr><td colspan="5">&nbsp;</td></tr>
 				<tr>
@@ -34,7 +34,7 @@
 				<td>&nbsp;</td>
 				</tr>
 			</table>
-		</div>
+		</div>-->
 		              
 		<div id="officecontrol">
 			<!--<div id="statusBar" style="height:20px;width:100%;background-color:#c0c0c0;font-size:12px;"></div>-->
