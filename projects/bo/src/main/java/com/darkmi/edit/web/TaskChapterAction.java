@@ -2,7 +2,6 @@ package com.darkmi.edit.web;
 
 import java.util.List;
 
-import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
@@ -16,7 +15,9 @@ import com.darkmi.entity.task.TaskChapter;
 import com.darkmi.util.CrudActionSupport;
 
 @Namespace("/edit")
-@Results({ @Result(name = CrudActionSupport.RELOAD, location = "design.action?page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}", type = "redirect") })
+@Results({
+		@Result(name = CrudActionSupport.RELOAD, location = "design.action?page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}", type = "redirect"),
+		@Result(name = "edit", location = "edit.jsp") })
 public class TaskChapterAction extends CrudActionSupport<TaskChapter> {
 	private static final long serialVersionUID = -2907389496513631586L;
 	private Long id;
@@ -50,7 +51,7 @@ public class TaskChapterAction extends CrudActionSupport<TaskChapter> {
 		return SUCCESS;
 	}
 
-	@Action(value = "edit", results = { @Result(name = "edit", location = "edit.jsp", type = "redirect") })
+	//@Action(value = "edit", results = { @Result(name = "edit", location = "edit.jsp", type = "redirect") })
 	public String edit() {
 		logger.debug("编辑作业规程... begin{ ");
 		logger.debug("编辑作业规程... end} ");
