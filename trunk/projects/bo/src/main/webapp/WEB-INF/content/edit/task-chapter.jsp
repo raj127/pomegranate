@@ -68,7 +68,7 @@
 						<td>${state}&nbsp;</td>
 						<td>&nbsp;
 							<security:authorize ifAnyGranted="ROLE_作业规程编制">
-								<a href="#" onClick="showWin();" target="_blank">编辑</a>&nbsp;
+								<a href="#" onclick="showWin();" target="_blank">编辑</a>&nbsp;
 							</security:authorize>
 							<a href="task-chapter!testUpload.action">上传测试</a>&nbsp;
 						</td>

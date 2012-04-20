@@ -6,36 +6,23 @@
 <html  xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title>作业规程编辑</title>
-	<meta content="IE=7" http-equiv="X-UA-Compatible" /> 
 	<meta http-equiv="cache-control" content="no-cache,must-revalidate"/><!--设置缓存-->
 	<meta http-equiv="pragram" content="no-cache"/>
 	<meta http-equiv="expires" content="0"/>
 	<link href="${ctx}/css/edit.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="${ctx}/js/OfficeContorlFunctions.js"></script>
+	<script type="text/javascript" src="${ctx}/js/jquery.js"></script>
+	<script type="text/javascript" src="${ctx}/js/jquery.layout.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function () {
+		$('body').layout({ applyDefaultStyles: true });
+	});
+	</script>
+	
 </head>
 <body onload='intializePage("${ctx}/company/default/task/default/01-01.docx")' onunload="onPageClose()">
-	<form id="form1" method="post" action="upload.action" enctype="multipart/form-data">
-		<!--<div id="editmain_top" class="editmain_top">
-			<div id="edit_button_div" class="edit_button_div">
-				<img alt="保存office文档" src="${ctx}/images/edit_save_office.gif" onclick="saveFileToUrl();" />
-				<img alt="保存html文档" src="${ctx}/images/edit_save_html.gif" onclick="saveFileAsHtmlToUrl();"/>
-				<img alt="保存PDF" src="${ctx}/images/edit_save_pdf.gif" onclick="saveFileAsPdfToUrl();"/>
-			</div>
-		</div>-->
-		<!--<div id="formtop">
-			  <table>
-				<tr><td colspan="5"  class="edit_tabletitle">文件表单数据:</td></tr>
-				<tr><td colspan="5">&nbsp;</td></tr>
-				<tr>
-				<td width="7%"> 文&nbsp;件&nbsp;ID:</td>
-				<td width="20%"><input id="fileId" name="fileId" type="text" value="" /></td>
-				<td width="8%">文件名称:</td>
-				<td width="40%"><input id="fileName" name="fileName" type="text" value="测试" /></td>
-				<td>&nbsp;</td>
-				</tr>
-			</table>
-		</div>-->
-		              
+<div class="ui-layout-center">
+	<form id="form1" method="post" action="upload.action" enctype="multipart/form-data">		              
 		<div id="officecontrol">
 			<!--<div id="statusBar" style="height:20px;width:100%;background-color:#c0c0c0;font-size:12px;"></div>-->
 			<script type="text/javascript" src="${ctx}/officecontrol/ntkoofficecontrol.js"></script>
@@ -101,5 +88,24 @@
 			</script>
 		</div><!--officecontrol-->
 	</form>
+</div>
+<div class="ui-layout-east">
+
+	<img alt="保存office文档" src="${ctx}/images/edit_save_office.gif" onclick="saveFileToUrl();" /><br/><br/>
+	<img alt="保存html文档" src="${ctx}/images/edit_save_html.gif" onclick="saveFileAsHtmlToUrl();"/><br/><br/>
+	<img alt="保存PDF" src="${ctx}/images/edit_save_pdf.gif" onclick="saveFileAsPdfToUrl();"/><br/><br/>
+
+  <table>
+	<tr>
+	<td> 文&nbsp;件&nbsp;ID:</td>
+	<td><input id="fileId" name="fileId" type="text" value="" /></td>
+	</tr>
+	<tr>
+	<td>文件名称:</td>
+	<td><input id="fileName" name="fileName" type="text" value="测试" /></td>
+	</tr>
+</table>
+
+</div>
 </body>
 </html>
