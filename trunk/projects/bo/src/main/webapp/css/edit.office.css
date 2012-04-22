@@ -1,0 +1,82 @@
+table {
+	border-collapse: collapse;
+}
+
+.small {
+	font-size: 9pt;
+}
+
+.TableControl {
+	background: #e7f0fb
+}
+
+.TableHeader {
+	COLOR: #fff;
+	FONT-WEIGHT: bold;
+	FONT-SIZE: 9pt;
+	background: #5d99da;
+	line-height: 21px;
+}
+
+.TableData {
+	BACKGROUND: #FFFFFF;
+	COLOR: #000000;
+}
+
+.TableHeader a:link,.TableHeader a:hover,.TableHeader a:active,.TableHeader a:visited{
+	color: #fff;
+}
+
+.TableControl a:link,.TableControl a:hover,.TableControl a:active,.TableControl a:visited{
+	color: #383838;
+}
+
+/*  block型表格样式  */
+.TableBlock {
+	border: 1px #4686c6 solid;
+	line-height: 20px;
+	font-size: 9pt;
+	border-collapse: collapse;
+}
+
+.TableBlock td {
+	padding: 3px;
+	height: 30px;
+}
+
+.TableBlock .TableHeader td,.TableBlock td.TableHeader {
+	height: 30px !important;
+	height: 32px;
+	background: #5d99da;
+	border: 1px #4686c6 solid;
+	font-weight: bold;
+	color: #fff;
+	line-height: 23px;
+	padding: 0px;
+	padding-left: 5px;
+}
+
+.TableBlock .TableHeader td.TableCorner {
+	background: #5d99da;
+	color: #fff;
+	font-weight: bold;
+}
+
+.TableBlock .TableLine1 td,.TableBlock td.TableLine1 {
+	background: #FFFFFF;
+	border-bottom: 1px #cccccc solid;
+	border-right: 1px #cccccc solid;
+}
+
+.TableBlock .TableLine2 td,.TableBlock td.TableLine2 {
+	background: #FFFFFF;
+	border-bottom: 1px #cccccc solid;
+	border-right: 1px #cccccc solid;
+}
+
+.TableBlock .TableData td,.TableBlock td.TableData {
+	background: #FFFFFF;
+	border-bottom: 1px #cccccc solid;
+	border-right: 1px #cccccc solid;
+}
+

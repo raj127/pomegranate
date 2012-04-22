@@ -5,12 +5,12 @@ var fileTypeSimple;
 
 /*初始化页面*/
 function intializePage(fileUrl){
-	alert("begin intializePage { ...");
-	alert(document.all("TANGER_OCX"));
+	//alert("begin intializePage { ...");
+	//alert(document.all("TANGER_OCX"));
 	OFFICE_CONTROL_OBJ = document.all("TANGER_OCX");
 	initCustomMenus();
 	NTKO_OCX_OpenDoc(fileUrl);
-	alert("end intializePage ...}");
+	//alert("end intializePage ...}");
 }
 
 function onPageClose(){

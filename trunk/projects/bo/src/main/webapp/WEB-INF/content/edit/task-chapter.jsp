@@ -34,6 +34,7 @@
 		var param  = 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=auto,resizable=yes,' + 
 		             'width=' + width + ',height=' + height + ',left=0,top=0';
 		window.open('task-chapter!edit.action?id=${id}', 'win_name', param);
+		return false;
 	}
 	</script>
 </head>
@@ -68,7 +69,7 @@
 						<td>${state}&nbsp;</td>
 						<td>&nbsp;
 							<security:authorize ifAnyGranted="ROLE_作业规程编制">
-								<a href="#" onclick="showWin();" target="_blank">编辑</a>&nbsp;
+								<a href="javascript:void(0)" onclick="showWin();return false;" target="_blank">编辑</a>&nbsp;
 							</security:authorize>
 							<a href="task-chapter!testUpload.action">上传测试</a>&nbsp;
 						</td>
