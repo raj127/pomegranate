@@ -23,7 +23,10 @@
 </head>
 <body onload='intializePage("${ctx}/company/default/task/default/01-01.docx")' onunload="onPageClose()">
 <div class="ui-layout-center">
-	<form id="form1" method="post" action="upload.action" enctype="multipart/form-data">		              
+	<form id="form1" method="post" action="upload.action" enctype="multipart/form-data">
+	<input id="fileName" name="fileName" type="hidden" value="测试" />
+	<input id="fileId" name="fileId" type="hidden" value="" />
+
 		<div id="officecontrol">
 			<script type="text/javascript" src="${ctx}/officecontrol/ntkoofficecontrol.js"></script>
 			<script type="text/javascript" for="TANGER_OCX" event="OnDocumentClosed()">
@@ -90,8 +93,6 @@
 	</form>
 </div>
 <div class="ui-layout-east">
-	<input id="fileName" name="fileName" type="hidden" value="测试" />
-	<input id="fileId" name="fileId" type="hidden" value="" />
 	<table class="TableBlock" width="100%" align="center">
 		<tr class="TableHeader">
 			<td align="center">文件操作</td>
