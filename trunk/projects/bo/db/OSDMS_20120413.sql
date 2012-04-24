@@ -231,6 +231,21 @@ CREATE TABLE `t_template_chapter` (
 
 insert  into `t_template_chapter`(`id`,`chapter_id`,`chapter_name`,`description`,`state`,`parent_id`,`create_by`,`create_time`,`last_modify_by`,`last_modify_time`) values (1,'1','1','1',0,1,'darkmi',NULL,NULL,NULL);
 
+CREATE TABLE `t_system_company` (
+  `id` bigint(20) NOT NULL auto_increment,
+  `company_name` varchar(255) default NULL,
+  `email` varchar(255) default NULL,
+  `phone_number` varchar(50) default NULL,
+  `status` varchar(20) default NULL,
+  `version` int(11) default '0',
+  `create_by` varchar(50) default NULL,
+  `create_time` datetime default NULL,
+  `last_modify_by` varchar(50) default NULL,
+  `last_modify_time` datetime default NULL,
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `ak_key_2` (`company_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
