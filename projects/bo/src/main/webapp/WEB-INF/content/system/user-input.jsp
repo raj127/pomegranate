@@ -15,7 +15,7 @@
 		$(document).ready(function() {
 			$(".mainNav a").attr("class","");
 			$("#n2").attr("class","actived");
-			$("#subNav201").attr("class","actived");
+			$("#subNav202").attr("class","actived");
 			$(".secondNav div").each(function(){
 				$(this).hide();
 				$("#subNav2").show();

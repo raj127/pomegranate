@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>帐号管理</title>
+	<title>公司信息管理</title>
 	<%@ include file="/common/meta.jsp" %>
 	<link href="${ctx}/css/yui.css" type="text/css" rel="stylesheet"/>
 	<link href="${ctx}/css/style.css" type="text/css" rel="stylesheet"/>
@@ -17,7 +17,7 @@
 		$(document).ready(function() {
 			$(".mainNav a").attr("class","");
 			$("#n2").attr("class","actived");
-			$("#subNav202").attr("class","actived");
+			$("#subNav201").attr("class","actived");
 			$(".secondNav div").each(function(){
 				$(this).hide();
 				$("#subNav2").show();
@@ -42,7 +42,7 @@
 <div id="bd">
 	<div id="yui-main">
 	<div class="yui-b">
-	<form id="mainForm" action="user.action" method="get">
+	<form id="mainForm" action="company.action" method="get">
 		<input type="hidden" name="page.pageNo" id="pageNo" value="${page.pageNo}"/>
 		<input type="hidden" name="page.orderBy" id="orderBy" value="${page.orderBy}"/>
 		<input type="hidden" name="page.order" id="order" value="${page.order}"/>
@@ -50,9 +50,7 @@
 
 		<div id="message"><s:actionmessage theme="custom" cssClass="success"/></div>
 		<div id="filter">
-			登录名: <input type="text" name="filter_LIKES_loginName" value="${param['filter_LIKES_loginName']}" size="9" tabindex="1" onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
-			姓名: <input type="text" name="filter_LIKES_name"
-							 value="${param['filter_LIKES_name']}" size="9" tabindex="2" onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
+			公司名称: <input type="text" name="filter_LIKES_companyName" value="${param['filter_LIKES_companyName']}" size="9" tabindex="1" onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
 			Email: <input type="text" name="filter_LIKES_email"
 							 value="${param['filter_LIKES_email']}" size="9" tabindex="3" onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
 			电话: <input type="text" name="filter_LIKES_phoneNumber"
@@ -61,42 +59,30 @@
 			&nbsp;&nbsp;
 			
 			<security:authorize ifAnyGranted="ROLE_用户修改">
-						<input type="button" value="增加新用户" onclick="linkTo('user!input.action')" tabindex="6"/>
+						<input type="button" value="增加新公司" onclick="linkTo('company!input.action')" tabindex="6"/>
 			</security:authorize>
 		</div>
 		<div id="content">
 			<table id="contentTable">
 				<tr>
-					<th width="5%"><a href="javascript:sort('loginName','asc')">登录名</a></th>
-					<th width="5%"><a href="javascript:sort('name','asc')">姓名</a></th>
+					<th width="5%"><a href="javascript:sort('loginName','asc')">公司名称</a></th>
 					<th width="10%"><a href="javascript:sort('phoneNumber','asc')">电话</a></th>
 					<th width="10%"><a href="javascript:sort('email','asc')">电邮</a></th>
-					<th width="55%" style="word-break:break-all;">角色</th>
 					<th width="15%">操作</th>
 				</tr>
 
 				<s:iterator value="page.result">
 					<tr>
-						<td>${loginName}&nbsp;</td>
-						<td>${name}&nbsp;</td>
+						<td>${companyName}&nbsp;</td>
 						<td>${phoneNumber}&nbsp;</td>
 						<td>${email}&nbsp;</td>
-						<td>
-							<s:if test="%{roleNames != null && roleNames.length()>70}">
-	                      			<s:property value='%{roleNames.substring(0, 59)+"......"}' />
-				           	</s:if>
-				           	<s:else>
-				            	<s:property value="%{roleNames}" default="-" />
-				          	</s:else>
-			          	</td>
 						<td>&nbsp;
 							<security:authorize ifAnyGranted="ROLE_用户浏览">
-									<a href="user!input.action?id=${id}&viewOnly=true">查看</a>&nbsp;
+									<a href="company!input.action?id=${id}&viewOnly=true">查看</a>&nbsp;
 							</security:authorize>
 
 							<security:authorize ifAnyGranted="ROLE_用户修改">
-								<a href="user!input.action?id=${id}&page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}">修改</a>&nbsp;
-								<a href="user-pass!input.action?id=${id}&page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}">修改密码</a>&nbsp;
+								<a href="company!input.action?id=${id}&page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}">修改</a>&nbsp;
 								<a href="#" onclick="deleteUser('${loginName}',${id})">删除</a>
 							</security:authorize>
 						</td>
