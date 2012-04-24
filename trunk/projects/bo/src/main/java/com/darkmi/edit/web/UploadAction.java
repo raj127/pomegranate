@@ -13,17 +13,20 @@ import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.opensymphony.xwork2.ActionSupport;
 
 @Namespace("/edit")
 @Results({ @Result(name = "success", location = "upload.jsp") })
 public class UploadAction extends ActionSupport {
+	private static Logger logger = LoggerFactory.getLogger(UploadAction.class);
 	private static final long serialVersionUID = 1L;
 	private File file;// 对应文件域的file，封装文件内容
 	private String fileContentType;// 封装文件类型
 	private String fileName;// 封装文件名
-	private String savePath = "uploadOfficeFile/";// 保存路径
+	private String savePath = "company/default/task/default/";// 保存路径
 	private String tempFileDir = "tempFile/";
 	private String title;// 文件标题
 
@@ -34,7 +37,9 @@ public class UploadAction extends ActionSupport {
 			// 读取文件内容到InputStream里
 			InputStream is = new FileInputStream(getFile());
 			// 创建输出流，生成新文件
-			OutputStream os = new FileOutputStream(getSavePath() + "//" + getFileName()+".doc");
+			String savePath = getSavePath() + "//" + getFileName()+".doc";
+			logger.debug("savePath -->" + savePath);
+			OutputStream os = new FileOutputStream(savePath);
 			// 将InputStream里的byte拷贝到OutputStream
 			IOUtils.copy(is, os);
 			os.flush();
