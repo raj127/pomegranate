@@ -12,14 +12,20 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.StringReader;
 
+import javax.servlet.ServletContext;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.AndFileFilter;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.NotFileFilter;
 import org.apache.commons.io.filefilter.SuffixFileFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FileHelper {
+
+	private static Logger logger = LoggerFactory.getLogger(FileHelper.class);
 
 	/**
 	 * 读取文件内容.
@@ -78,6 +84,7 @@ public class FileHelper {
 		File distFile = new File(distFolder);
 		if (resFile.isDirectory()) {
 			FileUtils.copyDirectoryToDirectory(resFile, distFile);
+
 		} else if (resFile.isFile()) {
 			FileUtils.copyFileToDirectory(resFile, distFile, true);
 		}
@@ -201,11 +208,25 @@ public class FileHelper {
 		return flag;
 	}
 
+	/**
+	 * 获得绝对路径.
+	 * @param savePath
+	 * @return
+	 */
+	public static String getAbsolutePath(ServletContext sc, String savePath) {
+		// 将相对路径转换成绝对路径
+		String aPath = sc.getRealPath(savePath);
+		logger.debug("绝对路径为 --> {}", aPath);
+		return aPath;
+	}
+
 	public static void main(String[] args) {
-		try {
-			FileUtils.touch(new File(""));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+
+		//System.out.println(getAbsolutePath("/task/"));
+		//		try {
+		//			FileUtils.touch(new File(""));
+		//		} catch (Exception e) {
+		//			e.printStackTrace();
+		//		}
 	}
 }

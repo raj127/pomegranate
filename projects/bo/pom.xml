@@ -295,6 +295,14 @@
 			<artifactId>hibernate-tools</artifactId>
 		</dependency>
 		
+		<!-- pinyin4j -->
+		<dependency>
+			<groupId>pinyin4j</groupId>
+			<artifactId>pinyin4j</artifactId>
+		</dependency>
+		<!-- pinyin4j end -->
+		
+		
 		<!-- flexjson -->
 		<!--<dependency>
 			<groupId>net.sf.flexjson</groupId>
@@ -305,15 +313,7 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 		</dependency>-->
-		
-		<!-- pinyin4j -->
-		<!--  <dependency>
-			<groupId>pinyin4j</groupId>
-			<artifactId>pinyin4j</artifactId>
-		</dependency>
-		-->
-		<!-- pinyin4j end -->
-		
+				
 		<!--<dependency>
 			<groupId>com.googlecode.xmemcached</groupId>
 			<artifactId>xmemcached</artifactId>

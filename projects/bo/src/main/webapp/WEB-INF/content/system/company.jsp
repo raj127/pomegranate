@@ -24,15 +24,6 @@
 			});
 		});
 		
-		function deleteUser(loginName,id){
-			if (loginName=='<%=SpringSecurityUtils.getCurrentUserName()%>') {
-				alert('不能删除当前登录用户!');
-			}else{
-				if(confirm('确定删除吗？')){
-					window.location.href="user!delete.action?id="+id;
-				}
-			} 
-		}
 	</script>
 </head>
 
@@ -83,7 +74,7 @@
 
 							<security:authorize ifAnyGranted="ROLE_用户修改">
 								<a href="company!input.action?id=${id}&page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}">修改</a>&nbsp;
-								<a href="#" onclick="deleteUser('${loginName}',${id})">删除</a>
+								<a href="company!delete.action?id=${id}" onclick="return confirm('确定删除吗？')">永久删除</a>
 							</security:authorize>
 						</td>
 					</tr>

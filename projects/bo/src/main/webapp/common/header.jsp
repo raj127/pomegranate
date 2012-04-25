@@ -17,7 +17,7 @@
 							<a href="${ctx}/index.action" id="n1" class="actived">首页</a>
 						</security:authorize>
 						<security:authorize ifAnyGranted="ROLE_系统管理">
-							<a href="${ctx}/system/user.action" id="n2">系统管理</a>
+							<a href="${ctx}/system/company.action" id="n2">系统管理</a>
 						</security:authorize>
 						
 						<security:authorize ifAnyGranted="ROLE_模板管理">
