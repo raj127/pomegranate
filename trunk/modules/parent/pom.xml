@@ -730,14 +730,6 @@
 				<scope>provided</scope>
 			</dependency>
 			<!-- jsw + jetty runtime end } -->
-
-			<!--  
-			<dependency>
-				<groupId>pinyin4j</groupId>
-				<artifactId>pinyin4j</artifactId>
-				<version>2.5.0</version>
-			</dependency>
-			-->
 			
 			<!-- json -->
 			<dependency>
@@ -756,6 +748,11 @@
 				<version>${jackson.version}</version>
 			</dependency>
 			
+			<dependency>
+				<groupId>pinyin4j</groupId>
+				<artifactId>pinyin4j</artifactId>
+				<version>2.5.0</version>
+			</dependency>
 			
 			<!--<dependency>
 				<groupId>com.h2database</groupId>

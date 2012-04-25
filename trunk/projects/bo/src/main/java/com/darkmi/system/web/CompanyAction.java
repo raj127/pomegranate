@@ -1,9 +1,12 @@
 package com.darkmi.system.web;
 
+import java.io.File;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
@@ -12,11 +15,15 @@ import org.hibernate.StaleStateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springside.modules.orm.Page;
 import org.springside.modules.orm.PropertyFilter;
+import org.springside.modules.security.springsecurity.SpringSecurityUtils;
 import org.springside.modules.utils.web.struts2.Struts2Utils;
 
+import com.darkmi.SystemConfig;
+import com.darkmi.common.tools.Cn2Spell;
 import com.darkmi.entity.system.Company;
 import com.darkmi.system.service.CompanyManager;
 import com.darkmi.util.CrudActionSupport;
+import com.darkmi.util.FileHelper;
 import com.darkmi.util.ServiceException;
 
 /**
@@ -33,7 +40,10 @@ import com.darkmi.util.ServiceException;
 public class CompanyAction extends CrudActionSupport<Company> {
 
 	private static final long serialVersionUID = 6515585588066931187L;
+	
+	//-- 业务操作类 --//
 	private CompanyManager companyManager;
+	private SystemConfig systemConfig;
 
 	//-- 页面属性 --//
 	private Long id;
@@ -43,6 +53,7 @@ public class CompanyAction extends CrudActionSupport<Company> {
 	private Page<Company> page = new Page<Company>(20);//每页20条记录
 
 	//-- ModelDriven 与 Preparable函数 --//
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -62,6 +73,10 @@ public class CompanyAction extends CrudActionSupport<Company> {
 	}
 
 	//-- CRUD Action 函数 --//
+	
+	/**
+	 * 公司列表页面.
+	 */
 	@Override
 	public String list() throws Exception {
 		List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(Struts2Utils.getRequest());
@@ -74,34 +89,68 @@ public class CompanyAction extends CrudActionSupport<Company> {
 		return SUCCESS;
 	}
 
+	/**
+	 * 直接进入新公司录入页面.
+	 */
 	@Override
 	public String input() throws Exception {
 		return INPUT;
 	}
 
+	/**
+	 * 保存公司信息并创建公司根目录.
+	 */
 	@Override
 	public String save() throws Exception {
 		if (workingVersion != null && workingVersion < entity.getVersion()) {
 			throw new StaleStateException("已经被其他人更新");
 		}
+
+		String companyNameCn = entity.getCompanyName();
+		String companyNameEn = Cn2Spell.converterToSpell(companyNameCn);
+		ServletContext sc = ServletActionContext.getServletContext();
+		String companyPath = FileHelper.getAbsolutePath(sc, systemConfig.getCompanyFolder() + companyNameEn);
+		logger.debug("公司根目录为 --> " + companyPath);
+
+		//创建公司根目录
+		File companyFolder = new File(companyPath);
+		FileUtils.forceMkdir(companyFolder);
+
+		//创建作业规程保存目录
+		File taskFolder = new File(companyPath + "/task/");
+		FileUtils.forceMkdir(taskFolder);
+
+		//创建作业规程模板保存目录
+		File templateFolder = new File(companyPath + "/template/");
+		FileUtils.forceMkdir(templateFolder);
+
+		//创建附件保存目录
+		File attachmentFolder = new File(companyPath + "/attachment/");
+		FileUtils.forceMkdir(attachmentFolder);
+
 		companyManager.saveCompany(entity);
 		addActionMessage("保存公司信息成功");
 		return RELOAD;
 	}
 
+	/**
+	 * 删除公司信息及公司根目录.
+	 * 该公司所有文件将被物理删除.
+	 */
 	@Override
 	public String delete() throws Exception {
 		try {
-			//Company Company = companyManager.getCompany(id);
+			Company company = companyManager.getCompany(id);
 			companyManager.deleteCompany(id);
-			//dbLogger.info(SpringSecurityUtils.getCurrentCompanyName() + ":删除" + Company.getName() + "用户！");
-			addActionMessage("删除用户成功");
+			dbLogger.info(SpringSecurityUtils.getCurrentUserName() + ":删除(" + company.getCompanyName() + " )公司信息！");
+			addActionMessage("删除公司成功");
 		} catch (ServiceException e) {
 			logger.error(e.getMessage(), e);
-			addActionMessage("删除用户失败");
+			addActionMessage("删除公司失败");
 		}
 		return RELOAD;
 	}
+	
 
 	//-- 其他Action函数 --//
 	/**
@@ -137,13 +186,18 @@ public class CompanyAction extends CrudActionSupport<Company> {
 		this.viewOnly = viewOnly;
 	}
 
+	public void setWorkingVersion(Integer workingVersion) {
+		this.workingVersion = workingVersion;
+	}
+
+	//-- 需要注入的服务类 --//
 	@Autowired
 	public void setCompanyManager(CompanyManager companyManager) {
 		this.companyManager = companyManager;
 	}
 
-	public void setWorkingVersion(Integer workingVersion) {
-		this.workingVersion = workingVersion;
+	@Autowired
+	public void setSystemConfig(SystemConfig systemConfig) {
+		this.systemConfig = systemConfig;
 	}
-
 }
