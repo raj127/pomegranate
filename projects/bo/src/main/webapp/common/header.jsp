@@ -85,8 +85,8 @@
 			</security:authorize>
 			<security:authorize ifAnyGranted="ROLE_作业规程编制">
 				<div id="subNav5" class="subNav5">
-					<a id="subNav501" href="${ctx}/edit/task-chapter.action" >作业规程编制</a>
-					<a id="subNav502" href="${ctx}/edit/task-chapter!input.action" >作业规程编制</a>
+					<a id="subNav501" href="${ctx}/edit/task-chapter.action" >作业规程列表</a>
+					<a id="subNav502" href="${ctx}/edit/task-chapter!input.action" >新建作业规程</a>
 				</div>
 			</security:authorize>
 			

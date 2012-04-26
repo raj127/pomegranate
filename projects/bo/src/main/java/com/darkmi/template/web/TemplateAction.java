@@ -15,6 +15,10 @@ import com.darkmi.entity.template.Template;
 import com.darkmi.template.service.TemplateManager;
 import com.darkmi.util.CrudActionSupport;
 
+/**
+ * 模板管理Action.
+ * @author darkmi
+ */
 @Namespace("/template")
 @Results({ @Result(name = CrudActionSupport.RELOAD, location = "template.action?page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}", type = "redirect") })
 public class TemplateAction extends CrudActionSupport<Template> {
@@ -74,9 +78,9 @@ public class TemplateAction extends CrudActionSupport<Template> {
 		addActionMessage("删除作业规程模板信息成功！");
 		return RELOAD;
 	}
-	
-	public String getChapters(){
-		
+
+	public String getChapters() {
+
 		return "getChaptersucess";
 	}
 

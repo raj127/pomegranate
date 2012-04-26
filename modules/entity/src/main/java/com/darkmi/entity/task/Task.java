@@ -2,9 +2,13 @@ package com.darkmi.entity.task;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.darkmi.entity.AuditableEntity;
+import com.darkmi.entity.system.Company;
 
 /**
  * Description: 任务实体类.
@@ -21,6 +25,7 @@ public class Task extends AuditableEntity {
 	private String description;
 	private Integer state;
 	private String path;
+	private Company company;
 
 	@Column(name = "task_id")
 	public String getTaskId() {
@@ -66,6 +71,17 @@ public class Task extends AuditableEntity {
 	public void setPath(String path) {
 		this.path = path;
 	}
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "company_id")
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+
 
 	@Override
 	public String toString() {

@@ -40,7 +40,7 @@ import com.darkmi.util.ServiceException;
 public class CompanyAction extends CrudActionSupport<Company> {
 
 	private static final long serialVersionUID = 6515585588066931187L;
-	
+
 	//-- 业务操作类 --//
 	private CompanyManager companyManager;
 	private SystemConfig systemConfig;
@@ -53,7 +53,7 @@ public class CompanyAction extends CrudActionSupport<Company> {
 	private Page<Company> page = new Page<Company>(20);//每页20条记录
 
 	//-- ModelDriven 与 Preparable函数 --//
-	
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -73,7 +73,7 @@ public class CompanyAction extends CrudActionSupport<Company> {
 	}
 
 	//-- CRUD Action 函数 --//
-	
+
 	/**
 	 * 公司列表页面.
 	 */
@@ -105,9 +105,25 @@ public class CompanyAction extends CrudActionSupport<Company> {
 		if (workingVersion != null && workingVersion < entity.getVersion()) {
 			throw new StaleStateException("已经被其他人更新");
 		}
-
+		//获取公司名并将其转换为英文
 		String companyNameCn = entity.getCompanyName();
 		String companyNameEn = Cn2Spell.converterToSpell(companyNameCn);
+		//创建公司根目录
+		createCompanyFolder(companyNameEn);
+		//保存公司信息
+		entity.setFolder(companyNameEn);
+		companyManager.saveCompany(entity);
+		addActionMessage("保存公司信息成功");
+		return RELOAD;
+	}
+
+	/**
+	 * 创建公司根目录
+	 * @param companyNameEn
+	 * @throws Exception
+	 */
+	private void createCompanyFolder(String companyNameEn) throws Exception {
+		logger.debug("createCompanyFolder() { ...");
 		ServletContext sc = ServletActionContext.getServletContext();
 		String companyPath = FileHelper.getAbsolutePath(sc, systemConfig.getCompanyFolder() + companyNameEn);
 		logger.debug("公司根目录为 --> " + companyPath);
@@ -117,20 +133,17 @@ public class CompanyAction extends CrudActionSupport<Company> {
 		FileUtils.forceMkdir(companyFolder);
 
 		//创建作业规程保存目录
-		File taskFolder = new File(companyPath + "/task/");
+		File taskFolder = new File(companyPath + systemConfig.getTaskFolder());
 		FileUtils.forceMkdir(taskFolder);
 
 		//创建作业规程模板保存目录
-		File templateFolder = new File(companyPath + "/template/");
+		File templateFolder = new File(companyPath + systemConfig.getTemplateFolder());
 		FileUtils.forceMkdir(templateFolder);
 
 		//创建附件保存目录
-		File attachmentFolder = new File(companyPath + "/attachment/");
+		File attachmentFolder = new File(companyPath + systemConfig.getAttachmentFolder());
 		FileUtils.forceMkdir(attachmentFolder);
-
-		companyManager.saveCompany(entity);
-		addActionMessage("保存公司信息成功");
-		return RELOAD;
+		logger.debug("createCompanyFolder() ...}");
 	}
 
 	/**
@@ -140,9 +153,23 @@ public class CompanyAction extends CrudActionSupport<Company> {
 	@Override
 	public String delete() throws Exception {
 		try {
+
+			//---------------------
+			//此处欠考虑的东西很多,比如公司下有员工不允许删除等.
+			//开发阶段允许直接删除.
+			//---------------------
+
+			//删除DB中的公司信息
 			Company company = companyManager.getCompany(id);
 			companyManager.deleteCompany(id);
 			dbLogger.info(SpringSecurityUtils.getCurrentUserName() + ":删除(" + company.getCompanyName() + " )公司信息！");
+
+			//删除公司根目录
+			ServletContext sc = ServletActionContext.getServletContext();
+			String folderName = company.getFolder();
+			String companyPath = FileHelper.getAbsolutePath(sc, systemConfig.getCompanyFolder() + folderName);
+			FileUtils.forceDelete(new File(companyPath));
+
 			addActionMessage("删除公司成功");
 		} catch (ServiceException e) {
 			logger.error(e.getMessage(), e);
@@ -150,7 +177,6 @@ public class CompanyAction extends CrudActionSupport<Company> {
 		}
 		return RELOAD;
 	}
-	
 
 	//-- 其他Action函数 --//
 	/**

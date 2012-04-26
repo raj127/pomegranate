@@ -14,6 +14,9 @@
 
 	<bean id="systemConfig" class="com.darkmi.SystemConfig">
 		<property name="companyFolder" value="${company.folder}" />
+		<property name="taskFolder" value="${task.folder}" />
+		<property name="templateFolder" value="${template.folder}" />
+		<property name="attachmentFolder" value="${attachment.folder}" />
 		<property name="companyDefault" value="${company.default}" />
 		<property name="taskDefault" value="${task.default}" />
 		<property name="templateDefault" value="${template.default}"></property>

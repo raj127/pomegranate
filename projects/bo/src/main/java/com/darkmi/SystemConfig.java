@@ -8,6 +8,9 @@ package com.darkmi;
 public class SystemConfig {
 
 	private String companyFolder;
+	private String taskFolder;
+	private String templateFolder;
+	private String attachmentFolder;
 	private String companyDefault;
 	private String taskDefault;
 	private String templateDefault;
@@ -19,6 +22,30 @@ public class SystemConfig {
 
 	public void setCompanyFolder(String companyFolder) {
 		this.companyFolder = companyFolder;
+	}
+
+	public String getTaskFolder() {
+		return taskFolder;
+	}
+
+	public void setTaskFolder(String taskFolder) {
+		this.taskFolder = taskFolder;
+	}
+
+	public String getTemplateFolder() {
+		return templateFolder;
+	}
+
+	public void setTemplateFolder(String templateFolder) {
+		this.templateFolder = templateFolder;
+	}
+
+	public String getAttachmentFolder() {
+		return attachmentFolder;
+	}
+
+	public void setAttachmentFolder(String attachmentFolder) {
+		this.attachmentFolder = attachmentFolder;
 	}
 
 	public String getCompanyDefault() {
