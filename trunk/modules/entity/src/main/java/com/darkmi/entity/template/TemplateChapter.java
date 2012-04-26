@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import com.darkmi.entity.AuditableEntity;
 
 /**
- * Description: 目录实体类.
+ * Description: 模板章节实体类.
  * Copyright (c) darkmi.com
  * @version 1.0  2012-4-13 下午01:25:14 DarkMi created.
  */
@@ -17,6 +17,7 @@ public class TemplateChapter extends AuditableEntity {
 
 	private String chapterId;
 	private String chapterName;
+	private String fileName;
 	private String description;
 	private Integer state;
 	private Integer templateId;
@@ -37,6 +38,15 @@ public class TemplateChapter extends AuditableEntity {
 
 	public void setChapterName(String chapterName) {
 		this.chapterName = chapterName;
+	}
+
+	@Column(name = "file_name")
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 	@Column(name = "template_id")

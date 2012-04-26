@@ -63,6 +63,7 @@
 			<table id="contentTable">
 				<tr>
 					<th><a href="javascript:sort('templateName','asc')">模板名称</a></th>
+					<th><a href="javascript:sort('templateName','asc')">所属单位</a></th>
 					<th><a href="javascript:sort('path','asc')">保存路径</a></th>
 					<th><a href="javascript:sort('state','asc')">状态</a></th>
 					<th>操作</th>
@@ -71,6 +72,7 @@
 				<s:iterator value="page.result">
 					<tr>
 						<td>${templateName}&nbsp;</td>
+						<td>${company.companyName}&nbsp;</td>
 						<td>${path}&nbsp;</td>
 						<td>${state}&nbsp;</td>
 						<td>&nbsp;

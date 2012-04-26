@@ -112,6 +112,12 @@ public class UserAction extends CrudActionSupport<User> {
 	public String delete() throws Exception {
 		try {
 			User user = accountManager.getUser(id);
+			
+			if(user.getId() == 1){
+				addActionMessage("创始人账号不能删除");
+				return RELOAD;
+			}
+			
 			accountManager.deleteUser(id);
 			dbLogger.info(SpringSecurityUtils.getCurrentUserName() + ":删除" + user.getName() + "用户！");
 			addActionMessage("删除用户成功");
