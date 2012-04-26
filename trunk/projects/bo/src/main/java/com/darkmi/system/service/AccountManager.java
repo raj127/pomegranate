@@ -13,11 +13,12 @@ import org.springside.modules.orm.Page;
 import org.springside.modules.orm.PropertyFilter;
 import org.springside.modules.security.springsecurity.SpringSecurityUtils;
 
-
 import com.darkmi.entity.system.Authority;
+import com.darkmi.entity.system.Company;
 import com.darkmi.entity.system.Role;
 import com.darkmi.entity.system.User;
 import com.darkmi.system.dao.AuthorityDao;
+import com.darkmi.system.dao.CompanyDao;
 import com.darkmi.system.dao.RoleDao;
 import com.darkmi.system.dao.UserDao;
 import com.darkmi.util.ServiceException;
@@ -38,6 +39,7 @@ public class AccountManager {
 	private UserDao userDao;
 	private RoleDao roleDao;
 	private AuthorityDao authorityDao;
+	private CompanyDao companyDao;
 
 	private final PasswordEncoder encoder = new ShaPasswordEncoder();
 
@@ -56,6 +58,28 @@ public class AccountManager {
 		if (user.getId() == null) {
 			String shaPassword = encoder.encodePassword(user.getPassword(), null);
 			user.setShaPassword(shaPassword);
+		}
+
+		userDao.save(user);
+
+	}
+
+	public void saveUser(User user, Long companyId) {
+		if (isSupervisor(user)) {
+			logger.warn("操作员{}尝试修改超级管理员用户", SpringSecurityUtils.getCurrentUserName());
+			throw new ServiceException("不能修改超级管理员用户");
+		}
+
+		//保存加密密码
+		if (user.getId() == null) {
+			String shaPassword = encoder.encodePassword(user.getPassword(), null);
+			user.setShaPassword(shaPassword);
+		}
+
+		//保存companyId
+		if (null != companyId) {
+			Company company = companyDao.get(companyId);
+			user.setCompany(company);
 		}
 
 		userDao.save(user);
@@ -119,7 +143,7 @@ public class AccountManager {
 	public boolean isLoginNameUnique(String newLoginName, String oldLoginName) {
 		return userDao.isPropertyUnique("loginName", newLoginName, oldLoginName);
 	}
-	
+
 	/**
 	 * 检查角色名是否唯一.
 	 *
@@ -169,4 +193,10 @@ public class AccountManager {
 	public void setAuthorityDao(AuthorityDao authorityDao) {
 		this.authorityDao = authorityDao;
 	}
+
+	@Autowired
+	public void setCompanyDao(CompanyDao companyDao) {
+		this.companyDao = companyDao;
+	}
+
 }

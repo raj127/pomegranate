@@ -1,6 +1,5 @@
 package com.darkmi.system.service;
 
-
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -42,6 +41,15 @@ public class CompanyManager {
 	}
 
 	/**
+	 * 获得所有的公司列表
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public List<Company> getAllCompany() {
+		return companyDao.getAll("id", true);
+	}
+
+	/**
 	 * 判断公司名字是否唯一
 	 * @return 唯一返回true 不唯一返回false
 	 */
@@ -49,7 +57,6 @@ public class CompanyManager {
 	public boolean isNameUnique(String newName, String oldName) {
 		return companyDao.isPropertyUnique("companyName", newName, oldName);
 	}
-
 
 	/**
 	 * 保存Company的信息,包括更新和添加
@@ -80,4 +87,3 @@ public class CompanyManager {
 		this.companyDao = CompanyDao;
 	}
 }
-

@@ -99,14 +99,6 @@
 				<td>登录名:</td>
 				<td><input type="text" name="loginName" size="40" id="loginName" value="${loginName}" maxlength="50"/></td>
 			</tr>
-			<tr>
-				<td>用户名:</td>
-				<td><input type="text" id="name" name="name" size="40" value="${name}" maxlength="50" /></td>
-			</tr>
-			<tr>
-				<td>电话:</td>
-				<td><input type="text" id="phoneNumber" name="phoneNumber" size="40" value="${phoneNumber}" maxlength="50" /></td>
-			</tr>
 		    <c:if test="${id==null}">
 		    <tr>
 				<td>密码:</td>
@@ -119,6 +111,10 @@
 			</tr>
 			</c:if>
 			<tr>
+				<td>用户名:</td>
+				<td><input type="text" id="name" name="name" size="40" value="${name}" maxlength="50" /></td>
+			</tr>
+			<tr>
 				<td>电话:</td>
 				<td><input type="text" id="phoneNumber" name="phoneNumber" size="40" value="${phoneNumber}" maxlength="100"/></td>
 			</tr>
@@ -126,6 +122,22 @@
 				<td>邮箱:</td>
 				<td><input type="text" id="email" name="email" size="40" value="${email}" maxlength="100"/></td>
 			</tr>
+			
+			<tr>
+				<td>所属公司:</td>
+				<td>
+				<s:select id="companyId" 
+				          name="companyId"
+				          headerKey="" 
+				          headerValue="请选择" 
+				          list="%{allCompany}"  
+				          listKey="id" 
+				          listValue="companyName"  
+				          value="%{companyId}" 
+				          required="true" theme="simple" />
+				</td>
+			</tr>
+			
 			<tr>
 				<td>角色:</td>
 				<td>
