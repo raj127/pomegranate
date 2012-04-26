@@ -1,26 +1,32 @@
 package com.darkmi.entity.system;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import javax.persistence.CascadeType;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.darkmi.entity.AuditableEntity;
+import com.google.common.collect.Lists;
 
 @Entity
 @Table(name = "T_SYSTEM_COMPANY")
 //默认的缓存策略.
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Company extends AuditableEntity {
-
 	private String companyName;
 	private String email;
 	private String phoneNumber;
 	private String status;
 	private Integer version;
+	private List<User> userList = Lists.newArrayList();
 
 	@Column(name = "company_name")
 	public String getCompanyName() {
@@ -65,6 +71,15 @@ public class Company extends AuditableEntity {
 
 	public void setVersion(Integer version) {
 		this.version = version;
+	}
+
+	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "company")
+	public List<User> getUserList() {
+		return userList;
+	}
+
+	public void setUserList(List<User> userList) {
+		this.userList = userList;
 	}
 
 	@Override

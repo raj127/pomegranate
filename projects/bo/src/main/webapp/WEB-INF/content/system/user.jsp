@@ -71,6 +71,7 @@
 					<th width="5%"><a href="javascript:sort('name','asc')">姓名</a></th>
 					<th width="10%"><a href="javascript:sort('phoneNumber','asc')">电话</a></th>
 					<th width="10%"><a href="javascript:sort('email','asc')">电邮</a></th>
+					<th width="10%"><a href="javascript:sort('email','asc')">单位名称</a></th>
 					<th width="55%" style="word-break:break-all;">角色</th>
 					<th width="15%">操作</th>
 				</tr>
@@ -81,6 +82,7 @@
 						<td>${name}&nbsp;</td>
 						<td>${phoneNumber}&nbsp;</td>
 						<td>${email}&nbsp;</td>
+						<td>${company.companyName}&nbsp;</td>
 						<td>
 							<s:if test="%{roleNames != null && roleNames.length()>70}">
 	                      			<s:property value='%{roleNames.substring(0, 59)+"......"}' />

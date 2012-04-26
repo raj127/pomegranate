@@ -5,9 +5,11 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -31,15 +33,16 @@ import com.google.common.collect.Lists;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class User extends AuditableEntity {
 
-	private Integer version;
-	private String email;
 	private String loginName;
-	private String name;
 	private String shaPassword;
 	private String password;
-	private String status;
-	private Date loginTime;
+	private String name;
+	private String email;
 	private String phoneNumber;
+	private Company company;
+	private String status;
+	private Integer version;
+	private Date loginTime;
 	private List<Role> roleList = Lists.newArrayList();
 
 	@Version
@@ -77,6 +80,16 @@ public class User extends AuditableEntity {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "company_id")
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 
 	@Column(name = "sha_password")

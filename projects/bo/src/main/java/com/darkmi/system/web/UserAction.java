@@ -15,10 +15,11 @@ import org.springside.modules.orm.PropertyFilter;
 import org.springside.modules.security.springsecurity.SpringSecurityUtils;
 import org.springside.modules.utils.web.struts2.Struts2Utils;
 
-
+import com.darkmi.entity.system.Company;
 import com.darkmi.entity.system.Role;
 import com.darkmi.entity.system.User;
 import com.darkmi.system.service.AccountManager;
+import com.darkmi.system.service.CompanyManager;
 import com.darkmi.util.CrudActionSupport;
 import com.darkmi.util.HibernateUtils;
 import com.darkmi.util.ServiceException;
@@ -39,6 +40,7 @@ public class UserAction extends CrudActionSupport<User> {
 	private static final long serialVersionUID = 8683878162525847072L;
 
 	private AccountManager accountManager;
+	private CompanyManager companyManager;
 
 	//-- 页面属性 --//
 	private Long id;
@@ -46,6 +48,7 @@ public class UserAction extends CrudActionSupport<User> {
 	private Page<User> page = new Page<User>(20);//每页20条记录
 	private List<Long> checkedRoleIds; //页面中钩选的角色id列表
 	private Integer workingVersion;//对象版本号, 配合Hibernate的@Version防止并发修改
+	private Long companyId;
 	private boolean viewOnly = false;
 
 	//-- ModelDriven 与 Preparable函数 --//
@@ -62,6 +65,8 @@ public class UserAction extends CrudActionSupport<User> {
 	protected void prepareModel() throws Exception {
 		if (id != null) {
 			entity = accountManager.getUser(id);
+			companyId = entity.getCompany().getId();
+			logger.debug("companyId --> {}", companyId);
 		} else {
 			entity = new User();
 		}
@@ -70,6 +75,7 @@ public class UserAction extends CrudActionSupport<User> {
 	//-- CRUD Action 函数 --//
 	@Override
 	public String list() throws Exception {
+		logger.debug("list() begin { ...");
 		List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(Struts2Utils.getRequest());
 		//设置默认排序方式
 		if (!page.isOrderBySetted()) {
@@ -77,6 +83,7 @@ public class UserAction extends CrudActionSupport<User> {
 			page.setOrder(Page.DESC);
 		}
 		page = accountManager.searchUser(page, filters);
+		logger.debug("list() end ...}");
 		return SUCCESS;
 	}
 
@@ -88,14 +95,16 @@ public class UserAction extends CrudActionSupport<User> {
 
 	@Override
 	public String save() throws Exception {
+		logger.debug("save() begin { ...");
 		if (workingVersion != null && workingVersion < entity.getVersion()) {
 			throw new StaleStateException("已经被其他人更新");
 		}
 		//根据页面上的checkbox选择 整合User的Roles Set
 		HibernateUtils.mergeByCheckedIds(entity.getRoleList(), checkedRoleIds, Role.class);
 
-		accountManager.saveUser(entity);
+		accountManager.saveUser(entity, companyId);
 		addActionMessage("保存用户成功");
+		logger.debug("save() end ...}");
 		return RELOAD;
 	}
 
@@ -140,13 +149,6 @@ public class UserAction extends CrudActionSupport<User> {
 	}
 
 	/**
-	 * input页面显示所有角色列表.
-	 */
-	public List<Role> getAllRoleList() {
-		return accountManager.getAllRole();
-	}
-
-	/**
 	 * input页面显示用户拥有的角色.
 	 */
 	public List<Long> getCheckedRoleIds() {
@@ -168,13 +170,43 @@ public class UserAction extends CrudActionSupport<User> {
 		this.viewOnly = viewOnly;
 	}
 
+	public void setWorkingVersion(Integer workingVersion) {
+		this.workingVersion = workingVersion;
+	}
+
+	public Long getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(Long companyId) {
+		this.companyId = companyId;
+	}
+
+	//-- 获取页面列表选项 --//
+
+	/**
+	 * input页面显示所有角色列表.
+	 */
+	public List<Role> getAllRoleList() {
+		return accountManager.getAllRole();
+	}
+
+	/**
+	 * input页面显示所有角色列表.
+	 */
+	public List<Company> getAllCompany() {
+		return companyManager.getAllCompany();
+	}
+
+	//-- 注入业务逻辑类 --//
+
 	@Autowired
 	public void setAccountManager(AccountManager accountManager) {
 		this.accountManager = accountManager;
 	}
 
-	public void setWorkingVersion(Integer workingVersion) {
-		this.workingVersion = workingVersion;
+	@Autowired
+	public void setCompanyManager(CompanyManager companyManager) {
+		this.companyManager = companyManager;
 	}
-
 }
