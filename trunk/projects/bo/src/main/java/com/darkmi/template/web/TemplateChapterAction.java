@@ -1,6 +1,7 @@
 package com.darkmi.template.web;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
@@ -14,24 +15,32 @@ import com.darkmi.entity.template.TemplateChapter;
 import com.darkmi.template.service.TemplateChapterManager;
 import com.darkmi.util.CrudActionSupport;
 
+/**
+ * 模板目录管理Action.
+ * @author darkmi
+ */
 @Namespace("/template")
-@Results({ @Result(name = CrudActionSupport.RELOAD, location = "template-chapter.action?page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}", type = "redirect"),
-	 	   @Result(name="edit", location="edit.jsp")})
+@Results({
+		@Result(name = CrudActionSupport.RELOAD, location = "template-chapter.action?page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}", type = "redirect"),
+		@Result(name = "edit", location = "edit.jsp") })
 public class TemplateChapterAction extends CrudActionSupport<TemplateChapter> {
 	private static final long serialVersionUID = 4387918912684322626L;
 	private Long id;
 	private Integer templateId;
+	private Long parentId;
 	private TemplateChapter templateChapter;
-	private TemplateChapterManager templateChapterManager;
+	private TemplateChapterManager tcManager;
 	private Page<TemplateChapter> page = new Page<TemplateChapter>(20);
 
 	@Override
 	protected void prepareModel() throws Exception {
+		logger.debug("prepareModel begin { ...");
 		if (id != null) {
-			templateChapter = templateChapterManager.getTemplateChapter(id);
+			templateChapter = tcManager.getTemplateChapter(id);
 		} else {
 			templateChapter = new TemplateChapter();
 		}
+		logger.debug("prepareModel begin ...}");
 	}
 
 	@Override
@@ -39,13 +48,16 @@ public class TemplateChapterAction extends CrudActionSupport<TemplateChapter> {
 		return templateChapter;
 	}
 
+	/**
+	 * 显示目录列表
+	 */
 	@Override
 	public String list() throws Exception {
 		StringBuilder hqlBuilder = new StringBuilder();
 		Map<String, Object> map = new HashMap<String, Object>();
 		builerWhere(hqlBuilder, map);
 		builderOrder(hqlBuilder);
-		page = templateChapterManager.searchTemplateChapter(page, hqlBuilder.toString(), map);
+		page = tcManager.searchTemplateChapter(page, hqlBuilder.toString(), map);
 		return SUCCESS;
 	}
 
@@ -65,25 +77,35 @@ public class TemplateChapterAction extends CrudActionSupport<TemplateChapter> {
 		}
 	}
 
+	/**
+	 * 保存目录信息.
+	 */
+	@Override
+	public String save() throws Exception {
+		logger.debug("begin save { ...");
+		tcManager.saveTemplateChapter(templateChapter);
+		addActionMessage("保存作业规程任务成功！");
+		logger.debug("end save ...}");
+		return RELOAD;
+	}
+
+	/**
+	 * 进入模板编辑页面
+	 * @return
+	 */
 	//@Action(value = "edit", results = { @Result(name = "success", location = "edit.jsp", type = "redirect") })
 	public String edit() {
 		logger.debug("编辑作业规程... begin{ ");
 		logger.debug("编辑作业规程... end} ");
 		return "edit";
 	}
-	
-	
 
+	/**
+	 * 进入目录录入界面.
+	 */
 	@Override
 	public String input() throws Exception {
 		return INPUT;
-	}
-
-	@Override
-	public String save() throws Exception {
-		//designManager.saveTask(taskChapter);
-		addActionMessage("保存作业规程任务成功！");
-		return RELOAD;
 	}
 
 	@Override
@@ -116,15 +138,24 @@ public class TemplateChapterAction extends CrudActionSupport<TemplateChapter> {
 		return page;
 	}
 
-	@Autowired
-	public void setTemplateChapterManager(TemplateChapterManager templateChapterManager) {
-		this.templateChapterManager = templateChapterManager;
+	/**
+	 * 获取该模板的所有一级目录
+	 * @return
+	 */
+	public List<TemplateChapter> getAllParentChapter() {
+		logger.debug("获得一级目录 begin { ...");
+		List<TemplateChapter> list = tcManager.getParentTemplateChapter();
+		logger.debug("获取到一级目录数量为 --》 {}", list.size());
+		logger.debug("获得一级目录 end ...}");
+		return list;
+
 	}
 
+	/*~~~~~~~~~~~Setters And Getters ~~~~~~~~~~~~~~~~~*/
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	public Integer getTemplateId() {
 		return templateId;
 	}
@@ -132,4 +163,19 @@ public class TemplateChapterAction extends CrudActionSupport<TemplateChapter> {
 	public void setTemplateId(Integer templateId) {
 		this.templateId = templateId;
 	}
+
+	public Long getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
+	}
+
+	/*~~~~~~~~~~~业务逻辑类注入~~~~~~~~~~~~~~~~~*/
+	@Autowired
+	public void setTemplateChapterManager(TemplateChapterManager templateChapterManager) {
+		this.tcManager = templateChapterManager;
+	}
+
 }

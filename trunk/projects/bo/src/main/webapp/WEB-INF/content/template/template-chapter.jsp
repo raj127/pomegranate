@@ -9,10 +9,14 @@
 	<%@ include file="/common/meta.jsp" %>
 	<link href="${ctx}/css/yui.css" type="text/css" rel="stylesheet"/>
 	<link href="${ctx}/css/style.css" type="text/css" rel="stylesheet"/>
-	<link href="${ctx}/css/pagination.css" type="text/css" rel="stylesheet"/>
+	<!--<link href="${ctx}/css/pagination.css" type="text/css" rel="stylesheet"/>
+	<link href="${ctx}/css/jquery.treeTable.css" type="text/css" rel="stylesheet"/>-->
+	
 	<script src="${ctx}/js/jquery.js" type="text/javascript"></script>
 	<script src="${ctx}/js/table.js" type="text/javascript"></script>
-	<script src="${ctx}/js/jquery.pagination.js" type="text/javascript"></script>
+	<!--  <script src="${ctx}/js/jquery.pagination.js" type="text/javascript"></script>
+	<script src="${ctx}/js/jquery.treeTable.js" type="text/javascript"></script>-->
+	
 	<script>
 		$(document).ready(function() {
 			$(".mainNav a").attr("class","");
@@ -22,6 +26,8 @@
 				$(this).hide();
 				$("#subNav3").show();
 			});
+			
+
 		});
 	</script>
 </head>
@@ -39,8 +45,22 @@
 		<input type="hidden" name="page.pageSize" id="pageSize" value="${page.pageSize}"/>
 
 		<div id="message"><s:actionmessage theme="custom" cssClass="success"/></div>
+		<div id="filter">
+			目录名称: <input type="text" 
+			                 name="filter_LIKES_chapterName" 
+			                 value="${param['filter_LIKES_chapterName']}" 
+			                 size="9" tabindex="1" 
+			                 onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
+			<input type="button" value="搜索" onclick="search();" tabindex="5"/>
+			&nbsp;&nbsp;
+			
+			<security:authorize ifAnyGranted="ROLE_用户修改">
+				<input type="button" value="增加新目录" onclick="linkTo('template-chapter!input.action')" tabindex="6"/>
+			</security:authorize>
+		</div>		
 
 		<div id="content">
+		
 			<table id="contentTable">
 				<tr>
 					<th><a href="javascript:sort('chapterName','asc')">章节名称</a></th>
@@ -56,7 +76,9 @@
 						<td>${state}&nbsp;</td>
 						<td>&nbsp;
 							<security:authorize ifAnyGranted="ROLE_模板修改">
-								<a href="template-chapter!edit.action?id=${id}" target="_blank">编辑</a>&nbsp;
+								<a href="template-chapter!input.action?id=${id}">编辑目录</a>&nbsp;
+								<a href="template-chapter!input.action?parentId=${id}">添加子目录</a>&nbsp;
+								<a href="template-chapter!edit.action?id=${id}" target="_blank">编辑模板</a>&nbsp;
 							</security:authorize>
 						</td>
 					</tr>
@@ -64,9 +86,6 @@
 			</table>
 		</div>
 
-		<div class="pagination">
-		    <%@ include file="/common/page.jsp" %>
-		</div>
 	</form>
 	</div>
 	</div>

@@ -198,7 +198,7 @@ public class UserAction extends CrudActionSupport<User> {
 	}
 
 	/**
-	 * input页面显示所有角色列表.
+	 * input页面显示所有公司列表.
 	 */
 	public List<Company> getAllCompany() {
 		return companyManager.getAllCompany();
