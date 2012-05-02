@@ -15,19 +15,19 @@ import com.darkmi.entity.template.TemplateChapter;
 import com.darkmi.template.dao.TemplateChapterDao;
 
 /**
- * 作业规程任务管理Manager
+ * 作业规程模板目录管理Manager
  */
 @Component
 @Transactional
 public class TemplateChapterManager {
 	private static Logger logger = LoggerFactory.getLogger(TemplateChapterManager.class);
-	private TemplateChapterDao templateChapterDao;
+	private TemplateChapterDao tcDao;
 
 	/**
 	 * 保存作业规程任务信息
 	 */
 	public void saveTemplateChapter(TemplateChapter templateChapter) {
-		//taskDao.save(task);
+		tcDao.save(templateChapter);
 		logger.debug("保存TemplateChapter信息成功.");
 	}
 
@@ -36,24 +36,30 @@ public class TemplateChapterManager {
 	 * @param id
 	 */
 	public void deleteTemplateChapter(Long id) {
-		templateChapterDao.delete(id);
+		tcDao.delete(id);
 		logger.debug("删除TemplateChapter id={}", id);
 	}
 
 	/**
-	 * 根据主键得到作业规程任务信息
+	 * 根据主键得到章节信息
 	 */
 	@Transactional(readOnly = true)
 	public TemplateChapter getTemplateChapter(Long id) {
-		//return taskDao.get(id);
-		return null;
+		return tcDao.get(id);
 	}
 
 	/**
 	 * 得到所有的作业规程任务列表
 	 */
 	public List<TemplateChapter> getAllTemplateChapter() {
-		return templateChapterDao.getAll();
+		return tcDao.getAll();
+	}
+
+	/**
+	 * 得到作业规程模板的一级目录.
+	 */
+	public List<TemplateChapter> getParentTemplateChapter() {
+		return tcDao.findBy("parentId", new Long(0));
 	}
 
 	/**
@@ -62,7 +68,7 @@ public class TemplateChapterManager {
 	 */
 	@Transactional(readOnly = true)
 	public TemplateChapter getTemplateChapter(long id) {
-		return templateChapterDao.findUniqueBy("id", id);
+		return tcDao.findUniqueBy("id", id);
 	}
 
 	/**
@@ -70,16 +76,17 @@ public class TemplateChapterManager {
 	 */
 	@Transactional(readOnly = true)
 	public Page<TemplateChapter> searchTemplateChapter(Page<TemplateChapter> page, List<PropertyFilter> filters) {
-		return templateChapterDao.findPage(page, filters);
+		return tcDao.findPage(page, filters);
 	}
 
 	@Transactional(readOnly = true)
-	public Page<TemplateChapter> searchTemplateChapter(Page<TemplateChapter> page, String where, Map<String, Object> values) {
-		return templateChapterDao.findPageByWhere(page, where, values);
+	public Page<TemplateChapter> searchTemplateChapter(Page<TemplateChapter> page, String where,
+			Map<String, Object> values) {
+		return tcDao.findPageByWhere(page, where, values);
 	}
 
 	@Autowired
 	public void setTemplateDao(TemplateChapterDao templateDao) {
-		this.templateChapterDao = templateDao;
+		this.tcDao = templateDao;
 	}
 }

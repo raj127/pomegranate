@@ -21,6 +21,8 @@ public class TemplateChapter extends AuditableEntity {
 	private String description;
 	private Integer state;
 	private Integer templateId;
+	private Long parentId;
+	private Integer displayOrder;
 
 	@Column(name = "chapter_id")
 	public String getChapterId() {
@@ -67,6 +69,15 @@ public class TemplateChapter extends AuditableEntity {
 		this.description = description;
 	}
 
+	@Column(name = "parent_id")
+	public Long getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
+	}
+
 	@Column(name = "state")
 	public Integer getState() {
 		return state;
@@ -74,6 +85,15 @@ public class TemplateChapter extends AuditableEntity {
 
 	public void setState(Integer state) {
 		this.state = state;
+	}
+
+	@Column(name = "display_order")
+	public Integer getDisplayOrder() {
+		return displayOrder;
+	}
+
+	public void setDisplayOrder(Integer displayOrder) {
+		this.displayOrder = displayOrder;
 	}
 
 	@Override

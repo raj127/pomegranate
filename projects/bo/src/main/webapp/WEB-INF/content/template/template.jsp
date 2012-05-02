@@ -20,9 +20,9 @@
 			//alert($("#filter").html());
 			//$(mainForm.elements).hide();
 			
-			$("a").click(function(){
-				alert("hello");
-			});
+			//$("a").click(function(){
+			//	alert("hello");
+			//});
 			
 			
 			/*测试代码 end } }*/
