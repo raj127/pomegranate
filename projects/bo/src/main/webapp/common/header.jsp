@@ -73,6 +73,7 @@
 			<security:authorize ifAnyGranted="ROLE_模板管理">
 				<div id="subNav3" class="subNav3">
 					<a id="subNav301" href="${ctx}/template/template.action" >模板列表</a>
+					<a id="subNav302" href="${ctx}/template/template-chapter.action" >模板目录列表</a>
 				</div>
 			</security:authorize>
 

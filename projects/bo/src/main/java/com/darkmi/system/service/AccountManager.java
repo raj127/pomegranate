@@ -49,6 +49,24 @@ public class AccountManager {
 		return userDao.get(id);
 	}
 
+	/**
+	 * 根据登录名获取用户信息.
+	 * @param loginName
+	 * @return
+	 */
+	public User getUserByLoginName(String loginName) {
+		return userDao.findUniqueBy("loginName", loginName);
+	}
+
+	/**
+	 * 根据登录名获取用户所属公司信息.
+	 * @param loginName
+	 * @return
+	 */
+	public Company getCompanyByLoginName(String loginName) {
+		return userDao.findUniqueBy("loginName", loginName).getCompany();
+	}
+
 	public void saveUser(User user) {
 		if (isSupervisor(user)) {
 			logger.warn("操作员{}尝试修改超级管理员用户", SpringSecurityUtils.getCurrentUserName());
