@@ -29,8 +29,6 @@ import com.darkmi.util.ServiceException;
 /**
  * 公司信息管理Action.
  * 
- * 使用Struts2 convention-plugin annotation定义Action参数.
- * 
  * @author darkmi
  */
 //定义URL映射对应/system/Company.action
