@@ -21,7 +21,7 @@
 
 	</script>	
 </head>
-<body onload='intializePage("${ctx}/company/default/template/default/001/01-01.docx")' onunload="onPageClose()">
+<body onload='intializePage("${ctx}/${filePath}")' onunload="onPageClose()">
 <div class="ui-layout-center">
 	<form id="form1" method="post" action="upload.action" enctype="multipart/form-data">
 	<input id="fileName" name="fileName" type="hidden" value="测试" />

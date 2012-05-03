@@ -9,8 +9,8 @@
 	<%@ include file="/common/meta.jsp" %>
 	<link href="${ctx}/css/yui.css" type="text/css" rel="stylesheet"/>
 	<link href="${ctx}/css/style.css" type="text/css" rel="stylesheet"/>
-	<!--<link href="${ctx}/css/pagination.css" type="text/css" rel="stylesheet"/>
-	<link href="${ctx}/css/jquery.treeTable.css" type="text/css" rel="stylesheet"/>-->
+	<!--<link href="${ctx}/css/pagination.css" type="text/css" rel="stylesheet"/>-->
+	<!--<link href="${ctx}/css/jquery.treeTable.css" type="text/css" rel="stylesheet"/>-->
 	
 	<script src="${ctx}/js/jquery.js" type="text/javascript"></script>
 	<script src="${ctx}/js/table.js" type="text/javascript"></script>
@@ -21,13 +21,11 @@
 		$(document).ready(function() {
 			$(".mainNav a").attr("class","");
 			$("#n3").attr("class","actived");
-			$("#subNav301").attr("class","actived");
+			$("#subNav302").attr("class","actived");
 			$(".secondNav div").each(function(){
 				$(this).hide();
 				$("#subNav3").show();
 			});
-			
-
 		});
 	</script>
 </head>
@@ -55,7 +53,7 @@
 			&nbsp;&nbsp;
 			
 			<security:authorize ifAnyGranted="ROLE_用户修改">
-				<input type="button" value="增加新目录" onclick="linkTo('template-chapter!input.action')" tabindex="6"/>
+				<input type="button" value="增加新目录" onclick="linkTo('template-chapter!input.action?templateId=%{templateId}')" tabindex="6"/>
 			</security:authorize>
 		</div>		
 
@@ -63,11 +61,11 @@
 		
 			<table id="contentTable">
 				<tr>
-					<th><a href="javascript:sort('chapterName','asc')">章节名称</a></th>
-					<th><a href="javascript:sort('fileName','asc')">文件名称</a></th>
-					<th><a href="javascript:sort('displayOrder','asc')">显示顺序</a></th>
-					<th><a href="javascript:sort('description','asc')">章节描述</a></th>
-					<th><a href="javascript:sort('state','asc')">章节状态</a></th>
+					<th>章节名称</th>
+					<th>文件名称</th>
+					<th>显示顺序</th>
+					<th>章节描述</th>
+					<th>章节状态</th>
 					<th>操作</th>
 				</tr>
 
@@ -81,8 +79,8 @@
 						<td>&nbsp;
 							<security:authorize ifAnyGranted="ROLE_模板修改">
 								<a href="template-chapter!input.action?id=${id}">编辑目录</a>&nbsp;
-								<a href="template-chapter!input.action?parentId=${id}">添加子目录</a>&nbsp;
-								<a href="template-chapter!edit.action?id=${id}" target="_blank">编辑模板</a>&nbsp;
+								<a href="template-chapter!input.action?parentId=${id}&templateId=${templateId}" <s:if test="parentId!=0">disabled</s:if>>添加子目录</a>&nbsp;
+								<a href="template-chapter!delete.action?id=${id}">删除</a>&nbsp;
 							</security:authorize>
 						</td>
 					</tr>

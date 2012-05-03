@@ -71,6 +71,7 @@
 		<input type="hidden" name="page.orderBy" id="orderBy" value="${page.orderBy}"/>
 		<input type="hidden" name="page.order" id="order" value="${page.order}"/>
 		<input type="hidden" name="page.pageSize" id="pageSize" value="${page.pageSize}"/>
+		<input type="hidden" name="templateId" id="templateId" value="${templateId}"/>
 		<table class="noborder">
 			<tr>
 				<td>章节名称:</td>
@@ -87,25 +88,25 @@
 				<td>显示顺序:</td>
 				<td><input type="text" id="displayOrder" name="displayOrder" value="${displayOrder}" size="40" maxlength="255"/></td>
 			</tr>
-			<%-- 
+			
 			<s:if test="%{parentId != null}">
 			<tr>
 				<td>父章节:</td>
 				<td>
 				<s:select id="parentId" 
 				          name="parentId"
-				          headerKey="" 
+				          headerKey="0" 
 				          headerValue="请选择" 
 				          list="%{allParentChapter}"  
-				          listKey="chapterName" 
-				          listValue="id"  
-				          value="%{parentId}" 
-				          required="true" theme="simple" />
+				          listKey="id" 
+				          listValue="chapterName"   
+				          required="true" 
+				          theme="simple" />
 
 				</td>
 			</tr>
 			</s:if>
-			--%>
+			
 			<tr>
 					<td>创建:</td>
 					<td>${createBy} <fmt:formatDate value="${createTime}" type="both"/></td>

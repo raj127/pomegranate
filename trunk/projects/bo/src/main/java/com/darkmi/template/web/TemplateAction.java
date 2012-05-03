@@ -23,7 +23,7 @@ import com.darkmi.util.CrudActionSupport;
 @Results({ @Result(name = CrudActionSupport.RELOAD, location = "template.action?page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}", type = "redirect") })
 public class TemplateAction extends CrudActionSupport<Template> {
 	private static final long serialVersionUID = -2907389496513631586L;
-	private Long id;
+	private Long id; //模板Id
 	private Template template;
 	private TemplateManager templateManager;
 	private Page<Template> page = new Page<Template>(20);
