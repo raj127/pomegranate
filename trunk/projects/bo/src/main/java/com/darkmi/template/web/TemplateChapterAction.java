@@ -11,6 +11,7 @@ import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springside.modules.orm.Page;
 
+import com.darkmi.SystemConfig;
 import com.darkmi.entity.template.TemplateChapter;
 import com.darkmi.template.service.TemplateChapterManager;
 import com.darkmi.util.CrudActionSupport;
@@ -28,8 +29,11 @@ public class TemplateChapterAction extends CrudActionSupport<TemplateChapter> {
 	private Long id;
 	private Integer templateId;
 	private Long parentId;
+	private String fileName;
 	private TemplateChapter templateChapter;
 	private TemplateChapterManager tcManager;
+	private SystemConfig systemConfig;
+
 	private Page<TemplateChapter> page = new Page<TemplateChapter>(20);
 
 	@Override
@@ -96,6 +100,10 @@ public class TemplateChapterAction extends CrudActionSupport<TemplateChapter> {
 	//@Action(value = "edit", results = { @Result(name = "success", location = "edit.jsp", type = "redirect") })
 	public String edit() {
 		logger.debug("编辑作业规程... begin{ ");
+		
+		String filePath = systemConfig.getTemplateDefault() + fileName;
+		logger.debug("filePath --> {}", filePath);
+		
 		logger.debug("编辑作业规程... end} ");
 		return "edit";
 	}
@@ -171,11 +179,26 @@ public class TemplateChapterAction extends CrudActionSupport<TemplateChapter> {
 	public void setParentId(Long parentId) {
 		this.parentId = parentId;
 	}
+	
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
 
 	/*~~~~~~~~~~~业务逻辑类注入~~~~~~~~~~~~~~~~~*/
 	@Autowired
 	public void setTemplateChapterManager(TemplateChapterManager templateChapterManager) {
 		this.tcManager = templateChapterManager;
 	}
+	
+	@Autowired
+	public void setSystemConfig(SystemConfig systemConfig) {
+		this.systemConfig = systemConfig;
+	}
+
 
 }

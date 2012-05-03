@@ -74,7 +74,7 @@
 				<s:iterator value="page.result">
 					<tr>
 						<td><s:if test="parentId!=0">&nbsp;&nbsp;&nbsp;&nbsp;</s:if> ${chapterName}&nbsp;</td>
-						<td>${fileName}&nbsp;</td>
+						<td><a href="template-chapter!edit.action?fileName=${fileName}" target="_blank">${fileName}</a>&nbsp;</td>
 						<td>${displayOrder}&nbsp;</td>
 						<td>${description}&nbsp;</td>
 						<td>${state}&nbsp;</td>
