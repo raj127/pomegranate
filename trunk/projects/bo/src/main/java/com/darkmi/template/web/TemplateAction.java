@@ -29,21 +29,6 @@ public class TemplateAction extends CrudActionSupport<Template> {
 	private Page<Template> page = new Page<Template>(20);
 
 	@Override
-	protected void prepareModel() throws Exception {
-		if (id != null) {
-			template = templateManager.getTemplate(id);
-		} else {
-			template = new Template();
-		}
-
-	}
-
-	@Override
-	public Template getModel() {
-		return template;
-	}
-
-	@Override
 	public String list() throws Exception {
 		List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(Struts2Utils.getRequest());
 		//设置默认排序方式
@@ -84,33 +69,36 @@ public class TemplateAction extends CrudActionSupport<Template> {
 		return "getChaptersucess";
 	}
 
-	/**
-	 * 支持使用Jquery.validate Ajax检验用户名是否重复.
-	 */
-	//	public String checkTaskName() {
-	//		HttpServletRequest request = ServletActionContext.getRequest();
-	//		String providerId = request.getParameter("employeeName");
-	//		String oldProviderId = request.getParameter("oldemployeeName");
-	//
-	//		if (templateManager.isTaskNameUnique(providerId, oldProviderId)) {
-	//			Struts2Utils.renderText("true");
-	//		} else {
-	//			Struts2Utils.renderText("false");
-	//		}
-	//		//因为直接输出内容而不经过jsp,因此返回null.
-	//		return null;
-	//	}
+	/*~~~~~~~~~~~ 重载方法 ~~~~~~~~~~~~~~~~~*/
+	@Override
+	protected void prepareModel() throws Exception {
+		if (id != null) {
+			template = templateManager.getTemplate(id);
+		} else {
+			template = new Template();
+		}
+
+	}
+
+	@Override
+	public Template getModel() {
+		return template;
+	}
+
+	/*~~~~~~~~~~~Setters And Getters ~~~~~~~~~~~~~~~~~*/
 
 	public Page<Template> getPage() {
 		return page;
 	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	/*~~~~~~~~~~~业务逻辑类注入~~~~~~~~~~~~~~~~~*/
 	@Autowired
 	public void setTemplateManager(TemplateManager templateManager) {
 		this.templateManager = templateManager;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
 }
