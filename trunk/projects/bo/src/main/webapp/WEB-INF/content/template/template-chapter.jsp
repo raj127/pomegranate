@@ -64,6 +64,8 @@
 			<table id="contentTable">
 				<tr>
 					<th><a href="javascript:sort('chapterName','asc')">章节名称</a></th>
+					<th><a href="javascript:sort('fileName','asc')">文件名称</a></th>
+					<th><a href="javascript:sort('displayOrder','asc')">显示顺序</a></th>
 					<th><a href="javascript:sort('description','asc')">章节描述</a></th>
 					<th><a href="javascript:sort('state','asc')">章节状态</a></th>
 					<th>操作</th>
@@ -71,7 +73,9 @@
 
 				<s:iterator value="page.result">
 					<tr>
-						<td>${chapterName}&nbsp;</td>
+						<td><s:if test="parentId!=0">&nbsp;&nbsp;&nbsp;&nbsp;</s:if> ${chapterName}&nbsp;</td>
+						<td>${fileName}&nbsp;</td>
+						<td>${displayOrder}&nbsp;</td>
 						<td>${description}&nbsp;</td>
 						<td>${state}&nbsp;</td>
 						<td>&nbsp;
