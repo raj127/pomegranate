@@ -73,7 +73,7 @@ public class TemplateChapterAction extends CrudActionSupport<TemplateChapter> {
 		if (StringUtils.isNotBlank(page.getOrder()) && StringUtils.isNotBlank(page.getOrderBy())) {
 			hqlBuilder.append(" order by ").append(page.getOrderBy()).append(" ").append(page.getOrder());
 		} else {
-			hqlBuilder.append(" order by t.id desc");
+			hqlBuilder.append(" order by t.displayOrder asc");
 		}
 	}
 
