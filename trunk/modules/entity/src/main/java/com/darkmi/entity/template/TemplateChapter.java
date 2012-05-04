@@ -2,27 +2,30 @@ package com.darkmi.entity.template;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
 import com.darkmi.entity.AuditableEntity;
+import com.darkmi.entity.StateEnum;
 
 /**
- * Description: 模板章节实体类.
- * Copyright (c) darkmi.com
- * @version 1.0  2012-4-13 下午01:25:14 DarkMi created.
+ * Description: 作业规程模板子级目录实体类.
+ * Copyright (c) www.darkmi.com
+ * All Rights Reserved.
+ * @version 1.0  2012-05-04 上午09:20:11 DarkMi created
  */
 @Entity
 @Table(name = "t_template_chapter")
 public class TemplateChapter extends AuditableEntity {
-
 	private String chapterId;
 	private String chapterName;
 	private String fileName;
 	private String description;
-	private Integer state;
 	private Integer templateId;
 	private Long parentId;
 	private Integer displayOrder;
+	private StateEnum state;
 
 	@Column(name = "chapter_id")
 	public String getChapterId() {
@@ -79,11 +82,12 @@ public class TemplateChapter extends AuditableEntity {
 	}
 
 	@Column(name = "state")
-	public Integer getState() {
+	@Enumerated(EnumType.STRING)
+	public StateEnum getState() {
 		return state;
 	}
 
-	public void setState(Integer state) {
+	public void setState(StateEnum state) {
 		this.state = state;
 	}
 

@@ -65,6 +65,7 @@
 					<th><a href="javascript:sort('templateName','asc')">模板名称</a></th>
 					<th><a href="javascript:sort('templateName','asc')">所属单位</a></th>
 					<th><a href="javascript:sort('path','asc')">保存路径</a></th>
+					<th><a href="javascript:sort('description','asc')">描述</a></th>
 					<th><a href="javascript:sort('state','asc')">状态</a></th>
 					<th>操作</th>
 				</tr>
@@ -74,18 +75,19 @@
 						<td>${templateName}&nbsp;</td>
 						<td>${company.companyName}&nbsp;</td>
 						<td>${path}&nbsp;</td>
+						<td>${description}&nbsp;</td>
 						<td>${state}&nbsp;</td>
 						<td>&nbsp;
 							<security:authorize ifAnyGranted="ROLE_模板浏览">
-								<a href="template!input.action?id=${id}">查看</a>&nbsp;
-							</security:authorize>
-							<security:authorize ifAnyGranted="ROLE_模板浏览">
-									<a href="template-chapter.action?templateId=${id}">查看模板目录</a>&nbsp;
+								<a href="template!input.action?id=${id}&viewOnly=true">查看</a>&nbsp;
 							</security:authorize>
 							<security:authorize ifAnyGranted="ROLE_模板修改">
 								<a href="template!input.action?id=${id}&page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}">修改</a>&nbsp;
 								<a href="#" onclick="if(confirm('确定要永久删除么?')){linkTo('template!delete.action?id=${id}');}">删除</a>
 							</security:authorize>
+							<security:authorize ifAnyGranted="ROLE_模板浏览">
+									<a href="template-chapter.action?templateId=${id}">查看模板目录</a>&nbsp;
+							</security:authorize>							
 						</td>
 					</tr>
 				</s:iterator>

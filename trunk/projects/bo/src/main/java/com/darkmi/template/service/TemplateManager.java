@@ -63,13 +63,13 @@ public class TemplateManager {
 	// return taskDao.findUniqueBy("id", id);
 	// }
 
-	// /**
-	// * 判断taskName是否唯一
-	// */
-	// @Transactional(readOnly = true)
-	// public boolean isTaskNameUnique(String newTaskName, String oldTaskName) {
-	// return taskDao.isPropertyUnique("name", newTaskName, oldTaskName);
-	// }
+	 /**
+	 * 判断taskName是否唯一
+	 */
+	 @Transactional(readOnly = true)
+	 public boolean isPathUnique(String newTaskName, String oldTaskName) {
+	 return templateDao.isPropertyUnique("path", newTaskName, oldTaskName);
+	 }
 
 	/**
 	* 根据属性查询模板信息.

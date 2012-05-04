@@ -43,6 +43,7 @@
 			$("#name").focus();
 			//为inputForm注册validate函数
 			$("#inputForm").validate({
+				
 				rules: {
 					name: {
 						required:true,
