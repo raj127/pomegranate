@@ -20,6 +20,7 @@ import org.apache.commons.io.filefilter.DirectoryFileFilter;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.NotFileFilter;
 import org.apache.commons.io.filefilter.SuffixFileFilter;
+import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -214,6 +215,19 @@ public class FileHelper {
 	 * @return
 	 */
 	public static String getAbsolutePath(ServletContext sc, String savePath) {
+		// 将相对路径转换成绝对路径
+		String aPath = sc.getRealPath(savePath);
+		logger.debug("绝对路径为 --> {}", aPath);
+		return aPath;
+	}
+
+	/**
+	 * 获得绝对路径.
+	 * @param savePath
+	 * @return
+	 */
+	public static String getAbsolutePath(ServletActionContext saContext, String savePath) {
+		ServletContext sc = ServletActionContext.getServletContext();
 		// 将相对路径转换成绝对路径
 		String aPath = sc.getRealPath(savePath);
 		logger.debug("绝对路径为 --> {}", aPath);

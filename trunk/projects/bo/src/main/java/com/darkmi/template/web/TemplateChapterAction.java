@@ -9,9 +9,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
@@ -25,6 +25,7 @@ import com.darkmi.entity.template.TemplateChapter;
 import com.darkmi.template.service.TemplateChapterManager;
 import com.darkmi.template.service.TemplateManager;
 import com.darkmi.util.CrudActionSupport;
+import com.darkmi.util.FileHelper;
 import com.darkmi.util.ServiceException;
 import com.google.common.collect.Lists;
 
@@ -91,8 +92,8 @@ public class TemplateChapterAction extends CrudActionSupport<TemplateChapter> {
 		//保存
 		tcManager.saveTemplateChapter(templateChapter);
 		File serverFile = new File(getSavePath());
-		FileUtils.touch(serverFile);
-		
+		//FileUtils.touch(serverFile);
+
 		uploadFile(tcFile, serverFile);
 		addActionMessage("保存作业规程模板目录成功！");
 		logger.debug("end save ...}");
@@ -130,8 +131,10 @@ public class TemplateChapterAction extends CrudActionSupport<TemplateChapter> {
 		if (null != tcFile) {
 			Template template = templateManager.getTemplate(templateId);
 			String savePath = template.getPath() + templateChapter.getChapterName() + ".doc";
-			logger.debug("savePath -->{}", savePath);
-			return savePath;
+			ServletContext sc = ServletActionContext.getServletContext();
+			String realPath = FileHelper.getAbsolutePath(sc, savePath);
+			logger.debug("realPath -->{}", realPath);
+			return realPath;
 		}
 		return null;
 	}
