@@ -2,6 +2,9 @@ package com.darkmi.template.web;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
@@ -16,7 +19,7 @@ import com.darkmi.template.service.TemplateManager;
 import com.darkmi.util.CrudActionSupport;
 
 /**
- * 模板管理Action.
+ * 作业规程模板管理Action.
  * @author darkmi
  */
 @Namespace("/template")
@@ -27,7 +30,12 @@ public class TemplateAction extends CrudActionSupport<Template> {
 	private Template template;
 	private TemplateManager templateManager;
 	private Page<Template> page = new Page<Template>(20);
+	private boolean viewOnly = false;
 
+	/**
+	 * 模板列表页面.
+	 * 默认入口.
+	 */
 	@Override
 	public String list() throws Exception {
 		List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(Struts2Utils.getRequest());
@@ -40,11 +48,17 @@ public class TemplateAction extends CrudActionSupport<Template> {
 		return SUCCESS;
 	}
 
+	/**
+	 * 进入模板信息录入页面.
+	 */
 	@Override
 	public String input() throws Exception {
 		return INPUT;
 	}
 
+	/**
+	 * 保存模板信息.
+	 */
 	@Override
 	public String save() throws Exception {
 		templateManager.saveTemplate(template);
@@ -65,9 +79,33 @@ public class TemplateAction extends CrudActionSupport<Template> {
 	}
 
 	public String getChapters() {
-
 		return "getChaptersucess";
 	}
+	
+	/*~~~~~~~~~~~ 校验函数 ~~~~~~~~~~~~~~~~~*/
+	
+	/**
+	 * 校验模板路径是否重复.
+	 */
+	public String checkPath() {
+		logger.debug("检查模板路径是否唯一  begin { ...");
+		HttpServletRequest request = ServletActionContext.getRequest();
+		String newPath = request.getParameter("path");
+		String oldPath = request.getParameter("oldPath");
+		logger.debug("newPath --> {}", newPath);
+		logger.debug("oldPath --> {}", oldPath);
+		if (templateManager.isPathUnique(newPath, oldPath)) {
+			logger.debug("没有重复项");
+			Struts2Utils.renderText("true");
+		} else {
+			logger.debug("有重复项");
+			Struts2Utils.renderText("false");
+		}
+		logger.debug("检查模板路径是否唯一  end ...}");
+		//因为直接输出内容而不经过jsp,因此返回null.
+		return null;
+	}
+
 
 	/*~~~~~~~~~~~ 重载方法 ~~~~~~~~~~~~~~~~~*/
 	@Override
@@ -87,12 +125,20 @@ public class TemplateAction extends CrudActionSupport<Template> {
 
 	/*~~~~~~~~~~~Setters And Getters ~~~~~~~~~~~~~~~~~*/
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public Page<Template> getPage() {
 		return page;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public boolean isViewOnly() {
+		return viewOnly;
+	}
+
+	public void setViewOnly(boolean viewOnly) {
+		this.viewOnly = viewOnly;
 	}
 
 	/*~~~~~~~~~~~业务逻辑类注入~~~~~~~~~~~~~~~~~*/

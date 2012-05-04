@@ -2,14 +2,23 @@ package com.darkmi.entity.template;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.darkmi.entity.AuditableEntity;
+import com.darkmi.entity.StateEnum;
 import com.darkmi.entity.system.Company;
 
+/**
+ * Description: 作业规程模板实体类.
+ * Copyright (c) www.darkmi.com
+ * All Rights Reserved.
+ * @version 1.0  2012-05-04 上午09:20:11 DarkMi created
+ */
 @Entity
 @Table(name = "t_template")
 public class Template extends AuditableEntity {
@@ -18,7 +27,7 @@ public class Template extends AuditableEntity {
 	private String path;
 	private Company company;
 	private String description;
-	private int state;
+	private StateEnum state;
 
 	@Column(name = "template_name")
 	public String getTemplateName() {
@@ -59,18 +68,18 @@ public class Template extends AuditableEntity {
 	}
 
 	@Column(name = "state")
-	public int getState() {
+	@Enumerated(EnumType.STRING)
+	public StateEnum getState() {
 		return state;
 	}
 
-	public void setState(int state) {
+	public void setState(StateEnum state) {
 		this.state = state;
 	}
 
 	@Override
 	public String toString() {
-		return "Template [templateName=" + templateName + ", path=" + path + ", desdescription=" + description
-				+ ", state=" + state + "]";
+		return "Template [templateName=" + templateName + ", path=" + path + ", company=" + company + ", description="
+				+ description + ", state=" + state + "]";
 	}
-
 }

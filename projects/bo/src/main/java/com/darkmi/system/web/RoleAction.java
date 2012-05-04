@@ -114,7 +114,8 @@ public class RoleAction extends CrudActionSupport<Role> {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		String newRoleName = request.getParameter("name");
 		String oldRoleName = request.getParameter("oldName");
-
+		logger.debug("newRoleName --> {}", newRoleName);
+		logger.debug("oldRoleName --> {}", oldRoleName);
 		if (accountManager.isRoleNameUnique(newRoleName, oldRoleName)) {
 			Struts2Utils.renderText("true");
 		} else {

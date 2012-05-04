@@ -11,7 +11,9 @@
 	<link href="${ctx}/js/validate/jquery.validate.css" type="text/css" rel="stylesheet"/>
 	<script src="${ctx}/js/jquery.js" type="text/javascript"></script>
 	<script src="${ctx}/js/validate/jquery.validate.js" type="text/javascript"></script>
-		<script>
+	
+	<script>
+		//菜单着色功能
 		$(document).ready(function() {
 			$(".mainNav a").attr("class","");
 			$("#n3").attr("class","actived");
@@ -22,35 +24,44 @@
 			});
 		});
 	</script>
+	
 	<script>
+		//当处于查看页时,除了button之外全部为disabled='true'
+		$(document).ready(function() {
+			if(${viewOnly}){
+				//设置所有除了type='button'的input标签的disabled属性
+				$("input[type!='button']").each(function(){
+					this.disabled = 'true';
+				});
+				//设置所有select标签的disabled属性
+				$("select").each(function(){
+					this.disabled = 'true';
+				});
+			}
+		});
+	</script>
+	
+	<script>
+		//表单校验功能
 		$(document).ready(function() {
 			//聚焦第一个输入框
-			$("#fullname").focus();
+			$("#templateName").focus();
 			//为inputForm注册validate函数
 			$("#inputForm").validate({
 				rules: {
-					providerId: {
+					templateName:"required",
+					path: {
 						required: true,
-						remote: "provider-info!checkProviderId.action?oldProviderId=" + encodeURIComponent('${providerId}')
-					},
-					name: {
-						required: true,
-						remote: "provider-info!checkProviderName.action?oldProviderName=" + encodeURIComponent('${name}')
-					},
-					state:"required",
-					checkedProductIds:"required"
+						remote: "template!checkPath.action?oldPath=" + encodeURIComponent('${path}')
+					}
 				},
 				messages: {
-					providerId: {
+					templateName:"不能为空",
+					path: {
 						required:"不能为空",
-						remote: "已存在"
+						remote: "目录已存在"
 					},
-					name: {
-						required:"不能为空",
-						remote: "已存在"
-					},
-					state:"不能为空",
-					checkedProductIds:"不能为空"
+					state:"不能为空"
 				}
 			});
 		});
@@ -74,19 +85,35 @@
 			<tr>
 				<td>模板名称:</td>
 				<td>
-					<input type="text" id="templateName" name="templateName" value="${templateName}" size="40" maxlength="50" <s:if test="id != null"> disabled="disabled"</s:if>/>
+					<input type="text" id="templateName" name="templateName" value="${templateName}" size="40" maxlength="50" class="required"/>
 				</td>
 			</tr>
+			<tr>
+				<td>保存路径:</td>
+				<td>
+					<input type="text" id="path" name="path" value="${path}" size="40" maxlength="50"/>
+				</td>
+			</tr>			
 			<tr>
 				<td>模板描述:</td>
 				<td><input type="text" id="description" name="description" value="${description}" size="40" maxlength="255"/></td>
 			</tr>
+			</tr>
+				<tr>
+				<td>状态:</td>
+				<td>
+					<s:select id="state" 
+					          name="state"  
+					          list='#{"DELETE":"不可用","NORMAL":"可用"}'   value="%{state}" required="true" headerKey="" headerValue="请选择" theme="simple"/>
+				</td>
+			</tr>
+			
 			<tr>
-					<td>创建:</td>
+					<td>创建时间:</td>
 					<td>${createBy} <fmt:formatDate value="${createTime}" type="both"/></td>
 				</tr>
 				<tr>
-					<td>最后修改:</td>
+					<td>修改时间:</td>
 					<td>${lastModifyBy} <fmt:formatDate value="${lastModifyTime}" type="both"/></td>
 				</tr>
 			<tr>
