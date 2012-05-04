@@ -49,18 +49,18 @@
 			//为inputForm注册validate函数
 			$("#inputForm").validate({
 				rules: {
-					templateName:"required",
-					path: {
+					templateName:"required"
+					/*path: {
 						required: true,
 						remote: "template!checkPath.action?oldPath=" + encodeURIComponent('${path}')
-					}
+					}*/
 				},
 				messages: {
 					templateName:"不能为空",
-					path: {
+					/*path: {
 						required:"不能为空",
 						remote: "目录已存在"
-					},
+					},*/
 					state:"不能为空"
 				}
 			});
@@ -88,26 +88,27 @@
 					<input type="text" id="templateName" name="templateName" value="${templateName}" size="40" maxlength="50" class="required"/>
 				</td>
 			</tr>
+			<%-- 
 			<tr>
 				<td>保存路径:</td>
 				<td>
 					<input type="text" id="path" name="path" value="${path}" size="40" maxlength="50"/>
 				</td>
-			</tr>			
+			</tr>
+			--%>			
 			<tr>
 				<td>模板描述:</td>
 				<td><input type="text" id="description" name="description" value="${description}" size="40" maxlength="255"/></td>
 			</tr>
 			</tr>
-				<tr>
+			<tr>
 				<td>状态:</td>
 				<td>
 					<s:select id="state" 
 					          name="state"  
 					          list='#{"DELETE":"不可用","NORMAL":"可用"}'   value="%{state}" required="true" headerKey="" headerValue="请选择" theme="simple"/>
 				</td>
-			</tr>
-			
+			</tr>			
 			<tr>
 					<td>创建时间:</td>
 					<td>${createBy} <fmt:formatDate value="${createTime}" type="both"/></td>
@@ -118,7 +119,7 @@
 				</tr>
 			<tr>
 				<td colspan="2">
-					<security:authorize ifAnyGranted="ROLE_修改内容供应商">
+					<security:authorize ifAnyGranted="ROLE_模板修改">
 						<input class="button" type="submit" value="提交"/>&nbsp;
 					</security:authorize>
 					<input class="button" type="button" value="返回" onclick="history.back()"/>

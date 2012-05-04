@@ -1,5 +1,8 @@
 package com.darkmi.entity.template;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -7,11 +10,13 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.darkmi.entity.AuditableEntity;
 import com.darkmi.entity.StateEnum;
 import com.darkmi.entity.system.Company;
+import com.google.common.collect.Lists;
 
 /**
  * Description: 作业规程模板实体类.
@@ -22,12 +27,12 @@ import com.darkmi.entity.system.Company;
 @Entity
 @Table(name = "t_template")
 public class Template extends AuditableEntity {
-
 	private String templateName;
 	private String path;
 	private Company company;
 	private String description;
 	private StateEnum state;
+	private List<TemplateChapter> tcList = Lists.newArrayList();
 
 	@Column(name = "template_name")
 	public String getTemplateName() {
@@ -46,7 +51,7 @@ public class Template extends AuditableEntity {
 	public void setPath(String path) {
 		this.path = path;
 	}
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "company_id")
 	public Company getCompany() {
@@ -56,7 +61,6 @@ public class Template extends AuditableEntity {
 	public void setCompany(Company company) {
 		this.company = company;
 	}
-
 
 	@Column(name = "description")
 	public String getDescription() {
@@ -75,6 +79,15 @@ public class Template extends AuditableEntity {
 
 	public void setState(StateEnum state) {
 		this.state = state;
+	}
+
+	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "template")
+	public List<TemplateChapter> getTcList() {
+		return tcList;
+	}
+
+	public void setTcList(List<TemplateChapter> tcList) {
+		this.tcList = tcList;
 	}
 
 	@Override

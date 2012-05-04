@@ -15,7 +15,10 @@ import com.darkmi.entity.template.TemplateChapter;
 import com.darkmi.template.dao.TemplateChapterDao;
 
 /**
- * 作业规程模板目录管理Manager
+ * Description: 作业规程模板目录管理Manager.
+ * Copyright (c) www.darkmi.com
+ * All Rights Reserved.
+ * @version 1.0  2012-05-04 上午09:20:11 DarkMi created
  */
 @Component
 @Transactional
@@ -56,19 +59,25 @@ public class TemplateChapterManager {
 	}
 
 	/**
+	 * 通过模板ID得到其所有章节.
+	 */
+	public List<TemplateChapter> getTcsByTemplateId(Long templateId) {
+		return tcDao.getTcsByTemplateId(templateId);
+	}
+
+	/**
 	 * 得到作业规程模板的一级目录.
 	 */
 	public List<TemplateChapter> getParentTemplateChapter() {
 		return tcDao.findBy("parentId", new Long(0));
 	}
-	
+
 	/**
 	 * 获得指定Id的二级目录.
 	 */
 	public List<TemplateChapter> getChildTemplateChapter(Long parentId) {
 		return tcDao.findBy("parentId", parentId);
 	}
-	
 
 	/**
 	 * 根据Id得到作业规程任务信息

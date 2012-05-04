@@ -14,7 +14,11 @@ import org.springside.modules.orm.PropertyFilter;
 import org.springside.modules.security.springsecurity.SpringSecurityUtils;
 import org.springside.modules.utils.web.struts2.Struts2Utils;
 
+import com.darkmi.SystemConfig;
+import com.darkmi.common.tools.Cn2Spell;
+import com.darkmi.entity.system.Company;
 import com.darkmi.entity.template.Template;
+import com.darkmi.system.service.AccountManager;
 import com.darkmi.template.service.TemplateManager;
 import com.darkmi.util.CrudActionSupport;
 
@@ -29,6 +33,8 @@ public class TemplateAction extends CrudActionSupport<Template> {
 	private Long id; //模板Id
 	private Template template;
 	private TemplateManager templateManager;
+	private AccountManager accountManager;
+	private SystemConfig systemConfig;
 	private Page<Template> page = new Page<Template>(20);
 	private boolean viewOnly = false;
 
@@ -57,10 +63,41 @@ public class TemplateAction extends CrudActionSupport<Template> {
 	}
 
 	/**
+	 * 获取用户公司的根目录.
+	 * @return
+	 */
+	private String getPath(String templateName) {
+		String companyNameEn = Cn2Spell.converterToSpell(templateName);
+		//获取当前工号所属单位
+		String loginName = SpringSecurityUtils.getCurrentUserName();
+		logger.debug("current user loginName is --> {}", loginName);
+		Company company = accountManager.getCompanyByLoginName(loginName);
+		
+		StringBuffer sb = new StringBuffer();
+		sb.append(ServletActionContext.getRequest().getContextPath());
+		sb.append("/");
+		sb.append(systemConfig.getCompanyFolder());
+		sb.append(company.getFolder());
+		sb.append(systemConfig.getTemplateFolder());
+		sb.append(companyNameEn);
+		sb.append("/");
+		String path = sb.toString();
+		logger.debug("template path is --> {}", path);
+	
+		return path;
+	}
+
+	/**
 	 * 保存模板信息.
 	 */
 	@Override
 	public String save() throws Exception {
+		template.setPath(getPath(template.getTemplateName()));
+		//获取当前工号所属单位
+		String loginName = SpringSecurityUtils.getCurrentUserName();
+		logger.debug("current user loginName is --> {}", loginName);
+		Company company = accountManager.getCompanyByLoginName(loginName);
+		template.setCompany(company);
 		templateManager.saveTemplate(template);
 		addActionMessage("保存作业规程模板信息成功！");
 		return RELOAD;
@@ -81,9 +118,9 @@ public class TemplateAction extends CrudActionSupport<Template> {
 	public String getChapters() {
 		return "getChaptersucess";
 	}
-	
+
 	/*~~~~~~~~~~~ 校验函数 ~~~~~~~~~~~~~~~~~*/
-	
+
 	/**
 	 * 校验模板路径是否重复.
 	 */
@@ -105,7 +142,6 @@ public class TemplateAction extends CrudActionSupport<Template> {
 		//因为直接输出内容而不经过jsp,因此返回null.
 		return null;
 	}
-
 
 	/*~~~~~~~~~~~ 重载方法 ~~~~~~~~~~~~~~~~~*/
 	@Override
@@ -145,6 +181,16 @@ public class TemplateAction extends CrudActionSupport<Template> {
 	@Autowired
 	public void setTemplateManager(TemplateManager templateManager) {
 		this.templateManager = templateManager;
+	}
+
+	@Autowired
+	public void setAccountManager(AccountManager accountManager) {
+		this.accountManager = accountManager;
+	}
+
+	@Autowired
+	public void setSystemConfig(SystemConfig systemConfig) {
+		this.systemConfig = systemConfig;
 	}
 
 }
