@@ -22,39 +22,6 @@
 			});
 		});
 	</script>
-	<script>
-		$(document).ready(function() {
-			//聚焦第一个输入框
-			$("#fullname").focus();
-			//为inputForm注册validate函数
-			$("#inputForm").validate({
-				rules: {
-					providerId: {
-						required: true,
-						remote: "provider-info!checkProviderId.action?oldProviderId=" + encodeURIComponent('${providerId}')
-					},
-					name: {
-						required: true,
-						remote: "provider-info!checkProviderName.action?oldProviderName=" + encodeURIComponent('${name}')
-					},
-					state:"required",
-					checkedProductIds:"required"
-				},
-				messages: {
-					providerId: {
-						required:"不能为空",
-						remote: "已存在"
-					},
-					name: {
-						required:"不能为空",
-						remote: "已存在"
-					},
-					state:"不能为空",
-					checkedProductIds:"不能为空"
-				}
-			});
-		});
-	</script>
 </head>
 
 <body>
@@ -65,7 +32,7 @@
 	<div id="yui-main">
 	<div class="yui-b">
 	<h2><s:if test="id == null">添加</s:if><s:else>修改</s:else>作业规程模板目录</h2>
-	<form id="inputForm" action="template-chapter!save.action" method="post">
+	<form id="inputForm" action="template-chapter!save.action" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="id" value="${id}"/>
 		<input type="hidden" name="page.pageNo" id="pageNo" value="${page.pageNo}"/>
 		<input type="hidden" name="page.orderBy" id="orderBy" value="${page.orderBy}"/>
@@ -106,6 +73,14 @@
 				</td>
 			</tr>
 			</s:if>
+			
+			<tr>
+				<td>文件:</td>
+				<td>
+				<s:file id ="tcFile" name="tcFile" label ="Word文件" cssStyle="border: 1px solid #266392;" theme="simple" />
+				</td>
+			</tr>
+			
 			<tr>
 				<td>状态:</td>
 				<td>

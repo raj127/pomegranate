@@ -1,9 +1,17 @@
 package com.darkmi.template.web;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
@@ -17,6 +25,7 @@ import com.darkmi.entity.template.TemplateChapter;
 import com.darkmi.template.service.TemplateChapterManager;
 import com.darkmi.template.service.TemplateManager;
 import com.darkmi.util.CrudActionSupport;
+import com.darkmi.util.ServiceException;
 import com.google.common.collect.Lists;
 
 /**
@@ -25,7 +34,7 @@ import com.google.common.collect.Lists;
  */
 @Namespace("/template")
 @Results({
-		@Result(name = CrudActionSupport.RELOAD, location = "template-chapter.action?templateId=${template.id}&page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}", type = "redirect"),
+		@Result(name = CrudActionSupport.RELOAD, location = "template-chapter.action?templateId=${template.id}", type = "redirect"),
 		@Result(name = "edit", location = "edit.jsp") })
 public class TemplateChapterAction extends CrudActionSupport<TemplateChapter> {
 	private static final long serialVersionUID = 4387918912684322626L;
@@ -34,6 +43,7 @@ public class TemplateChapterAction extends CrudActionSupport<TemplateChapter> {
 	private Long parentId; //目录的父Id
 	private String fileName; //模板文件名
 	private String filePath; //模板的保存路径
+	private File tcFile;
 	private TemplateChapter templateChapter;
 	private List<TemplateChapter> tcs = Lists.newArrayList();
 
@@ -80,9 +90,50 @@ public class TemplateChapterAction extends CrudActionSupport<TemplateChapter> {
 		}
 		//保存
 		tcManager.saveTemplateChapter(templateChapter);
+		File serverFile = new File(getSavePath());
+		FileUtils.touch(serverFile);
+		
+		uploadFile(tcFile, serverFile);
 		addActionMessage("保存作业规程模板目录成功！");
 		logger.debug("end save ...}");
 		return RELOAD;
+	}
+
+	//将文件流存在后台的本地磁盘
+	private void uploadFile(File src, File dst) {
+		try {
+			InputStream in = null;
+			OutputStream out = null;
+			try {
+				//输入到缓冲流
+				in = new BufferedInputStream(new FileInputStream(src), 16 * 1024);
+				out = new BufferedOutputStream(new FileOutputStream(dst), 16 * 1024);
+				byte[] buffer = new byte[16 * 1024];
+				while (in.read(buffer) > 0) {
+					out.write(buffer);
+				}
+			} finally {
+				if (in != null) {
+					in.close();
+				}
+				if (out != null) {
+					out.close();
+				}
+			}
+		} catch (Exception e) {
+			logger.error("文件上传过程中失败", e);
+			throw new ServiceException("文件上传过程中失败");
+		}
+	}
+
+	private String getSavePath() {
+		if (null != tcFile) {
+			Template template = templateManager.getTemplate(templateId);
+			String savePath = template.getPath() + templateChapter.getChapterName() + ".doc";
+			logger.debug("savePath -->{}", savePath);
+			return savePath;
+		}
+		return null;
 	}
 
 	/**
@@ -198,6 +249,14 @@ public class TemplateChapterAction extends CrudActionSupport<TemplateChapter> {
 
 	public List<TemplateChapter> getTcs() {
 		return tcs;
+	}
+
+	public File getTcFile() {
+		return tcFile;
+	}
+
+	public void setTcFile(File tcFile) {
+		this.tcFile = tcFile;
 	}
 
 	/*~~~~~~~~~~~业务逻辑类注入~~~~~~~~~~~~~~~~~*/
