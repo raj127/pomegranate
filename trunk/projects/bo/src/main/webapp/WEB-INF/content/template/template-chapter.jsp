@@ -53,10 +53,12 @@
 			&nbsp;&nbsp;
 			
 			<security:authorize ifAnyGranted="ROLE_用户修改">
-				<input type="button" value="增加新目录" onclick="linkTo('template-chapter!input.action?templateId=%{templateId}')" tabindex="6"/>
+				<input type="button" 
+				       value="增加一级目录" 
+				       onclick="linkTo('template-chapter!input.action?templateId=${templateId}')" tabindex="6"/>
 			</security:authorize>
 		</div>		
-
+${templateId}
 		<div id="content">
 		
 			<table id="contentTable">
@@ -69,7 +71,7 @@
 					<th>操作</th>
 				</tr>
 
-				<s:iterator value="page.result">
+				<s:iterator value="tcs">
 					<tr>
 						<td><s:if test="parentId!=0">&nbsp;&nbsp;&nbsp;&nbsp;</s:if> ${chapterName}&nbsp;</td>
 						<td><a href="template-chapter!edit.action?fileName=${fileName}" target="_blank">${fileName}</a>&nbsp;</td>

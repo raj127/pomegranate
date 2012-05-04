@@ -89,7 +89,7 @@
 				<td><input type="text" id="displayOrder" name="displayOrder" value="${displayOrder}" size="40" maxlength="255"/></td>
 			</tr>
 			
-			<s:if test="%{parentId != null}">
+			<s:if test="%{parentId != 0}">
 			<tr>
 				<td>父章节:</td>
 				<td>
@@ -106,6 +106,14 @@
 				</td>
 			</tr>
 			</s:if>
+			<tr>
+				<td>状态:</td>
+				<td>
+					<s:select id="state" 
+					          name="state"  
+					          list='#{"DELETE":"不可用","NORMAL":"可用"}'   value="%{state}" required="true" headerKey="" headerValue="请选择" theme="simple"/>
+				</td>
+			</tr>			
 			
 			<tr>
 					<td>创建:</td>

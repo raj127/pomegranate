@@ -4,6 +4,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.darkmi.entity.AuditableEntity;
@@ -22,7 +25,8 @@ public class TemplateChapter extends AuditableEntity {
 	private String chapterName;
 	private String fileName;
 	private String description;
-	private Integer templateId;
+	private Template template;
+
 	private Long parentId;
 	private Integer displayOrder;
 	private StateEnum state;
@@ -54,13 +58,14 @@ public class TemplateChapter extends AuditableEntity {
 		this.fileName = fileName;
 	}
 
-	@Column(name = "template_id")
-	public Integer getTemplateId() {
-		return templateId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "template_id")
+	public Template getTemplate() {
+		return template;
 	}
 
-	public void setTemplateId(Integer templateId) {
-		this.templateId = templateId;
+	public void setTemplate(Template template) {
+		this.template = template;
 	}
 
 	@Column(name = "description")
@@ -102,7 +107,9 @@ public class TemplateChapter extends AuditableEntity {
 
 	@Override
 	public String toString() {
-		return "TaskChapter [chapterId=" + chapterId + ", chapterName=" + chapterName + ", description=" + description
-				+ ", state=" + state + ", templateId=" + templateId + "]";
+		return "TemplateChapter [chapterId=" + chapterId + ", chapterName=" + chapterName + ", fileName=" + fileName
+				+ ", description=" + description + ", template=" + template + ", parentId=" + parentId
+				+ ", displayOrder=" + displayOrder + ", state=" + state + "]";
 	}
+
 }

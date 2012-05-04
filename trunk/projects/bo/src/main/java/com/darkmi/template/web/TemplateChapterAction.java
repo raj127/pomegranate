@@ -1,23 +1,23 @@
 package com.darkmi.template.web;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springside.modules.orm.Page;
 import org.springside.modules.security.springsecurity.SpringSecurityUtils;
 
 import com.darkmi.SystemConfig;
-import com.darkmi.entity.system.Company;
+import com.darkmi.entity.template.Template;
 import com.darkmi.entity.template.TemplateChapter;
-import com.darkmi.system.service.AccountManager;
 import com.darkmi.template.service.TemplateChapterManager;
+import com.darkmi.template.service.TemplateManager;
 import com.darkmi.util.CrudActionSupport;
+import com.google.common.collect.Lists;
 
 /**
  * 模板目录管理Action.
@@ -25,87 +25,39 @@ import com.darkmi.util.CrudActionSupport;
  */
 @Namespace("/template")
 @Results({
-		@Result(name = CrudActionSupport.RELOAD, location = "template-chapter.action?templateId=${templateId}&page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}", type = "redirect"),
+		@Result(name = CrudActionSupport.RELOAD, location = "template-chapter.action?templateId=${template.id}&page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}", type = "redirect"),
 		@Result(name = "edit", location = "edit.jsp") })
 public class TemplateChapterAction extends CrudActionSupport<TemplateChapter> {
 	private static final long serialVersionUID = 4387918912684322626L;
 	private Long id; //目录Id
-	private Integer templateId; //模板Id
+	private Long templateId; //模板Id
 	private Long parentId; //目录的父Id
 	private String fileName; //模板文件名
 	private String filePath; //模板的保存路径
 	private TemplateChapter templateChapter;
+	private List<TemplateChapter> tcs = Lists.newArrayList();
+
 	private TemplateChapterManager tcManager;
-	private AccountManager accountManager;
+	private TemplateManager templateManager;
 	private SystemConfig systemConfig;
-
-	private Page<TemplateChapter> page = new Page<TemplateChapter>(20);
-
-	@Override
-	protected void prepareModel() throws Exception {
-		logger.debug("prepareModel begin { ...");
-		if (id != null) {
-			templateChapter = tcManager.getTemplateChapter(id);
-		} else {
-			templateChapter = new TemplateChapter();
-		}
-		logger.debug("prepareModel end ...}");
-	}
-
-	@Override
-	public TemplateChapter getModel() {
-		return templateChapter;
-	}
 
 	/**
 	 * 显示目录列表.
 	 */
 	@Override
 	public String list() throws Exception {
-		logger.debug("list chapter begin { ...");
-		StringBuilder hqlBuilder = new StringBuilder();
-		Map<String, Object> map = new HashMap<String, Object>();
-		builerWhere(hqlBuilder, map);
-		builderOrder(hqlBuilder);
-		page = tcManager.searchTemplateChapter(page, hqlBuilder.toString(), map);
-		logger.debug("list chapter end ...} ");
-		return SUCCESS;
-	}
-
-	/**
-	 * 构建Where查询条件.
-	 * @param hqlBuilder
-	 * @param map
-	 */
-	private void builerWhere(StringBuilder hqlBuilder, Map<String, Object> map) {
-		if (templateId != null) {
-			logger.debug("templateId is --> " + templateId);
-			hqlBuilder.append(" and t.templateId=:templateId");
-			map.put("templateId", templateId);
-		}
-	}
-
-	/**
-	 * 构建查询中的order by子句.
-	 * @param hqlBuilder
-	 */
-	private void builderOrder(StringBuilder hqlBuilder) {
-		if (StringUtils.isNotBlank(page.getOrder()) && StringUtils.isNotBlank(page.getOrderBy())) {
-			hqlBuilder.append(" order by ").append(page.getOrderBy()).append(" ").append(page.getOrder());
+		//获取templateId
+		HttpServletRequest request = ServletActionContext.getRequest();
+		String templateIdStr = request.getParameter("templateId");
+		if (null == templateIdStr || "".equals(templateIdStr)) {
+			if (SpringSecurityUtils.getCurrentUserName().equals("admin")) {
+				tcs = tcManager.getAllTemplateChapter();
+			}
 		} else {
-			hqlBuilder.append(" order by t.displayOrder asc");
+			templateId = Long.parseLong(request.getParameter("templateId"));
+			tcs = tcManager.getTcsByTemplateId(templateId);
 		}
-	}
-
-	/**
-	 * 获取用户公司的根目录.
-	 * @return
-	 */
-	private String getFolder() {
-		String loginName = SpringSecurityUtils.getCurrentUserName();
-		logger.debug("current user loginName is --> {}", loginName);
-		Company company = accountManager.getCompanyByLoginName(loginName);
-		return company.getFolder();
+		return SUCCESS;
 	}
 
 	/**
@@ -114,8 +66,21 @@ public class TemplateChapterAction extends CrudActionSupport<TemplateChapter> {
 	@Override
 	public String save() throws Exception {
 		logger.debug("begin save { ...");
+		//设置上级目录
+		if (null == templateChapter.getParentId()) {
+			templateChapter.setParentId(new Long(0));
+		}
+		//设置所属模板
+		if (null == templateChapter.getTemplate()) {
+			logger.debug("templateChapter.getTemplate() is null.");
+			HttpServletRequest request = ServletActionContext.getRequest();
+			templateId = Long.parseLong(request.getParameter("templateId"));
+			Template template = templateManager.getTemplate(templateId);
+			templateChapter.setTemplate(template);
+		}
+		//保存
 		tcManager.saveTemplateChapter(templateChapter);
-		addActionMessage("保存作业规程任务成功！");
+		addActionMessage("保存作业规程模板目录成功！");
 		logger.debug("end save ...}");
 		return RELOAD;
 	}
@@ -125,8 +90,9 @@ public class TemplateChapterAction extends CrudActionSupport<TemplateChapter> {
 	 */
 	@Override
 	public String input() throws Exception {
+		logger.debug("templateId --> {}", templateId);
 		if (templateId == null) {
-			templateId = 0;
+			templateId = new Long(0);
 		}
 		return INPUT;
 	}
@@ -175,16 +141,34 @@ public class TemplateChapterAction extends CrudActionSupport<TemplateChapter> {
 
 	}
 
+	/*~~~~~~~~~~~ 重载方法 ~~~~~~~~~~~~~~~~~*/
+
+	@Override
+	protected void prepareModel() throws Exception {
+		logger.debug("prepareModel begin { ...");
+		if (id != null) {
+			templateChapter = tcManager.getTemplateChapter(id);
+		} else {
+			templateChapter = new TemplateChapter();
+		}
+		logger.debug("prepareModel end ...}");
+	}
+
+	@Override
+	public TemplateChapter getModel() {
+		return templateChapter;
+	}
+
 	/*~~~~~~~~~~~Setters And Getters ~~~~~~~~~~~~~~~~~*/
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public Integer getTemplateId() {
+	public Long getTemplateId() {
 		return templateId;
 	}
 
-	public void setTemplateId(Integer templateId) {
+	public void setTemplateId(Long templateId) {
 		this.templateId = templateId;
 	}
 
@@ -212,8 +196,8 @@ public class TemplateChapterAction extends CrudActionSupport<TemplateChapter> {
 		this.filePath = filePath;
 	}
 
-	public Page<TemplateChapter> getPage() {
-		return page;
+	public List<TemplateChapter> getTcs() {
+		return tcs;
 	}
 
 	/*~~~~~~~~~~~业务逻辑类注入~~~~~~~~~~~~~~~~~*/
@@ -228,8 +212,8 @@ public class TemplateChapterAction extends CrudActionSupport<TemplateChapter> {
 	}
 
 	@Autowired
-	public void setAccountManager(AccountManager accountManager) {
-		this.accountManager = accountManager;
+	public void setTemplateManager(TemplateManager templateManager) {
+		this.templateManager = templateManager;
 	}
 
 }
