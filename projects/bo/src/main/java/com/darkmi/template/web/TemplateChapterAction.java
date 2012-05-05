@@ -12,6 +12,7 @@ import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.cxf.helpers.FileUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
@@ -44,9 +45,14 @@ public class TemplateChapterAction extends CrudActionSupport<TemplateChapter> {
 	private Long parentId; //目录的父Id
 	private String fileName; //模板文件名
 	private String filePath; //模板的保存路径
-	private File tcFile;
-	private TemplateChapter templateChapter;
+	private TemplateChapter tc;
 	private List<TemplateChapter> tcs = Lists.newArrayList();
+
+	private File upload; //上传文件
+	private String uploadFileName;//上传文件名
+	private String uploadContentType;//上传文件类型
+
+	private boolean viewOnly = false;
 
 	private TemplateChapterManager tcManager;
 	private TemplateManager templateManager;
@@ -77,31 +83,94 @@ public class TemplateChapterAction extends CrudActionSupport<TemplateChapter> {
 	@Override
 	public String save() throws Exception {
 		logger.debug("begin save { ...");
-		//设置上级目录
-		if (null == templateChapter.getParentId()) {
-			templateChapter.setParentId(new Long(0));
-		}
+		logger.debug("文件名称为--{}", uploadFileName);
+		logger.debug("文件类型为--{}", uploadContentType);
+
 		//设置所属模板
-		if (null == templateChapter.getTemplate()) {
-			logger.debug("templateChapter.getTemplate() is null.");
+		if (null == tc.getTemplate()) {
+			logger.debug("tc.getTemplate() is null.");
 			HttpServletRequest request = ServletActionContext.getRequest();
 			templateId = Long.parseLong(request.getParameter("templateId"));
 			Template template = templateManager.getTemplate(templateId);
-			templateChapter.setTemplate(template);
+			tc.setTemplate(template);
 		}
-		//保存
-		tcManager.saveTemplateChapter(templateChapter);
-		File serverFile = new File(getSavePath());
-		//FileUtils.touch(serverFile);
+		tc.setFileName(uploadFileName);
+		//保存目录信息
+		tcManager.saveTemplateChapter(tc);
 
-		uploadFile(tcFile, serverFile);
+		//上传目录文件
+		if (parentId != 0) {
+			File serverFile = new File(getAbsolutePath());
+			saveFileToDisk(upload, serverFile);
+		}
+
 		addActionMessage("保存作业规程模板目录成功！");
 		logger.debug("end save ...}");
 		return RELOAD;
 	}
 
-	//将文件流存在后台的本地磁盘
-	private void uploadFile(File src, File dst) {
+	/**
+	 * 进入目录录入界面.
+	 */
+	@Override
+	public String input() throws Exception {
+		logger.debug("templateId --> {}", templateId);
+		if (true == viewOnly) {
+			filePath = tc.getTemplate().getPath() + tc.getFileName();
+		}
+		return INPUT;
+	}
+
+	/**
+	 * 删除指定目录.
+	 */
+	@Override
+	public String delete() throws Exception {
+		int size = tcManager.getChildTemplateChapter(id).size();
+		if (size > 0) {
+			addActionMessage("该目录下有二级目录,不能删除！");
+			return RELOAD;
+		} else {
+			tc = tcManager.getTemplateChapter(id);
+			//删除DB中的信息
+			tcManager.deleteTemplateChapter(id);
+
+			//删除文件
+			if (!tc.getParentId().equals(new Long(0))) {
+				logger.debug("parentId -->{}", tc.getParentId());
+				String savePath = tc.getTemplate().getPath() + tc.getFileName();
+				ServletContext sc = ServletActionContext.getServletContext();
+				String aPath = FileHelper.getAbsolutePath(sc, savePath);
+				logger.debug("准备删除文件的绝对路径为 -->{}", aPath);
+				FileUtils.delete(new File(aPath));
+			}
+
+			addActionMessage("删除作业规程模板目录成功！");
+			return RELOAD;
+		}
+	}
+
+	/**
+	 * 进入模板编辑页面
+	 * @return
+	 */
+	//@Action(value = "edit", results = { @Result(name = "success", location = "edit.jsp", type = "redirect") })
+	public String edit() {
+		logger.debug("编辑作业规程... begin{ ");
+
+		filePath = systemConfig.getTemplateDefault() + fileName;
+		logger.debug("filePath --> {}", filePath);
+
+		logger.debug("编辑作业规程... end} ");
+		return "edit";
+	}
+
+	/**
+	 * 将文件流存在后台的本地磁盘.
+	 * @param src
+	 * @param dst
+	 */
+	private void saveFileToDisk(File src, File dst) {
 		try {
 			InputStream in = null;
 			OutputStream out = null;
@@ -127,59 +196,20 @@ public class TemplateChapterAction extends CrudActionSupport<TemplateChapter> {
 		}
 	}
 
-	private String getSavePath() {
-		if (null != tcFile) {
-			Template template = templateManager.getTemplate(templateId);
-			String savePath = template.getPath() + templateChapter.getChapterName() + ".doc";
-			ServletContext sc = ServletActionContext.getServletContext();
-			String realPath = FileHelper.getAbsolutePath(sc, savePath);
-			logger.debug("realPath -->{}", realPath);
-			return realPath;
-		}
-		return null;
-	}
-
 	/**
-	 * 进入目录录入界面.
-	 */
-	@Override
-	public String input() throws Exception {
-		logger.debug("templateId --> {}", templateId);
-		if (templateId == null) {
-			templateId = new Long(0);
-		}
-		return INPUT;
-	}
-
-	/**
-	 * 删除指定目录.
-	 */
-	@Override
-	public String delete() throws Exception {
-		int size = tcManager.getChildTemplateChapter(id).size();
-		if (size > 0) {
-			addActionMessage("该目录下有二级目录,不能删除！");
-			return RELOAD;
-		} else {
-			tcManager.deleteTemplateChapter(id);
-			addActionMessage("删除作业规程模板目录成功！");
-			return RELOAD;
-		}
-	}
-
-	/**
-	 * 进入模板编辑页面
+	 * 获取文件保存的绝对路径.
 	 * @return
 	 */
-	//@Action(value = "edit", results = { @Result(name = "success", location = "edit.jsp", type = "redirect") })
-	public String edit() {
-		logger.debug("编辑作业规程... begin{ ");
-
-		filePath = systemConfig.getTemplateDefault() + fileName;
-		logger.debug("filePath --> {}", filePath);
-
-		logger.debug("编辑作业规程... end} ");
-		return "edit";
+	private String getAbsolutePath() {
+		if (null != upload) {
+			Template template = templateManager.getTemplate(templateId);
+			String savePath = template.getPath() + uploadFileName;
+			ServletContext sc = ServletActionContext.getServletContext();
+			String aPath = FileHelper.getAbsolutePath(sc, savePath);
+			logger.debug("文件保存的绝对路径为 -->{}", aPath);
+			return aPath;
+		}
+		return null;
 	}
 
 	/**
@@ -201,16 +231,16 @@ public class TemplateChapterAction extends CrudActionSupport<TemplateChapter> {
 	protected void prepareModel() throws Exception {
 		logger.debug("prepareModel begin { ...");
 		if (id != null) {
-			templateChapter = tcManager.getTemplateChapter(id);
+			tc = tcManager.getTemplateChapter(id);
 		} else {
-			templateChapter = new TemplateChapter();
+			tc = new TemplateChapter();
 		}
 		logger.debug("prepareModel end ...}");
 	}
 
 	@Override
 	public TemplateChapter getModel() {
-		return templateChapter;
+		return tc;
 	}
 
 	/*~~~~~~~~~~~Setters And Getters ~~~~~~~~~~~~~~~~~*/
@@ -254,12 +284,36 @@ public class TemplateChapterAction extends CrudActionSupport<TemplateChapter> {
 		return tcs;
 	}
 
-	public File getTcFile() {
-		return tcFile;
+	public File getUpload() {
+		return upload;
 	}
 
-	public void setTcFile(File tcFile) {
-		this.tcFile = tcFile;
+	public void setUpload(File upload) {
+		this.upload = upload;
+	}
+
+	public String getUploadFileName() {
+		return uploadFileName;
+	}
+
+	public void setUploadFileName(String uploadFileName) {
+		this.uploadFileName = uploadFileName;
+	}
+
+	public String getUploadContentType() {
+		return uploadContentType;
+	}
+
+	public void setUploadContentType(String uploadContentType) {
+		this.uploadContentType = uploadContentType;
+	}
+
+	public boolean isViewOnly() {
+		return viewOnly;
+	}
+
+	public void setViewOnly(boolean viewOnly) {
+		this.viewOnly = viewOnly;
 	}
 
 	/*~~~~~~~~~~~业务逻辑类注入~~~~~~~~~~~~~~~~~*/

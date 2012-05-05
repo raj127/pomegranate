@@ -22,6 +22,23 @@
 			});
 		});
 	</script>
+	
+	<script>
+		//当处于查看页时,除了button之外全部为disabled='true'
+		$(document).ready(function() {
+			if(${viewOnly}){
+				//设置所有除了type='button'的input标签的disabled属性
+				$("input[type!='button']").each(function(){
+					this.disabled = 'true';
+				});
+				//设置所有select标签的disabled属性
+				$("select").each(function(){
+					this.disabled = 'true';
+				});
+			}
+		});
+	</script>
+	
 </head>
 
 <body>
@@ -39,6 +56,9 @@
 		<input type="hidden" name="page.order" id="order" value="${page.order}"/>
 		<input type="hidden" name="page.pageSize" id="pageSize" value="${page.pageSize}"/>
 		<input type="hidden" name="templateId" id="templateId" value="${templateId}"/>
+		<s:if test="%{parentId == 0}">
+		<input type="hidden" name="parentId" id="parentId" value="${parentId}"/>
+		</s:if>
 		<table class="noborder">
 			<tr>
 				<td>章节名称:</td>
@@ -72,15 +92,22 @@
 
 				</td>
 			</tr>
+			<s:if test="%{filePath != null}">
+			<tr>
+				<td>文件路径:</td>
+				<td>
+				<input type="text" id="filePath" name="filePath" value="${filePath}" size="40" maxlength="255" disabled/>
+				</td>
+			</tr>
 			</s:if>
-			
 			<tr>
 				<td>文件:</td>
 				<td>
-				<s:file id ="tcFile" name="tcFile" label ="Word文件" cssStyle="border: 1px solid #266392;" theme="simple" />
+				<s:file id ="upload" name="upload" label ="Word文件" cssStyle="border: 1px solid #266392;" theme="simple" />
 				</td>
 			</tr>
-			
+			</s:if>
+						
 			<tr>
 				<td>状态:</td>
 				<td>

@@ -71,6 +71,14 @@ public class TemplateChapterManager {
 	public List<TemplateChapter> getParentTemplateChapter() {
 		return tcDao.findBy("parentId", new Long(0));
 	}
+	
+	/**
+	 * 获得指定作业规程模板的一级目录.
+	 */
+	public List<TemplateChapter> getParentTemplateChapter(Long templateId) {
+		
+		return tcDao.findBy("parentId", new Long(0));
+	}
 
 	/**
 	 * 获得指定Id的二级目录.
