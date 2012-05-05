@@ -36,12 +36,7 @@
 <div id="bd">
 	<div id="yui-main">
 	<div class="yui-b">
-	<form id="mainForm" action="tast-chapter.action" method="get">
-		<input type="hidden" name="page.pageNo" id="pageNo" value="${page.pageNo}"/>
-		<input type="hidden" name="page.orderBy" id="orderBy" value="${page.orderBy}"/>
-		<input type="hidden" name="page.order" id="order" value="${page.order}"/>
-		<input type="hidden" name="page.pageSize" id="pageSize" value="${page.pageSize}"/>
-
+	<form id="mainForm" action="tast-chapter.action" method="get">		
 		<div id="message"><s:actionmessage theme="custom" cssClass="success"/></div>
 		<div id="filter">
 			目录名称: <input type="text" 
@@ -58,7 +53,6 @@
 				       onclick="linkTo('template-chapter!input.action?templateId=${templateId}')" tabindex="6"/>
 			</security:authorize>
 		</div>		
-${templateId}
 		<div id="content">
 		
 			<table id="contentTable">
@@ -82,7 +76,7 @@ ${templateId}
 							<security:authorize ifAnyGranted="ROLE_模板修改">
 								<a href="template-chapter!input.action?id=${id}">编辑目录</a>&nbsp;
 								<a href="template-chapter!input.action?parentId=${id}&templateId=${templateId}" <s:if test="parentId!=0">disabled</s:if>>添加子目录</a>&nbsp;
-								<a href="template-chapter!delete.action?id=${id}">删除</a>&nbsp;
+								<a href="template-chapter!delete.action?id=${id}&templateId=${templateId}">删除</a>&nbsp;
 							</security:authorize>
 						</td>
 					</tr>
