@@ -35,7 +35,7 @@ import com.google.common.collect.Lists;
  */
 @Namespace("/template")
 @Results({
-		@Result(name = CrudActionSupport.RELOAD, location = "template-chapter.action?templateId=${template.id}", type = "redirect"),
+		@Result(name = CrudActionSupport.RELOAD, location = "template-chapter.action?templateId=${templateId}", type = "redirect"),
 		@Result(name = "edit", location = "edit.jsp") })
 public class TemplateChapterAction extends CrudActionSupport<TemplateChapter> {
 	private static final long serialVersionUID = 4387918912684322626L;
