@@ -234,6 +234,21 @@ public class FileHelper {
 		return aPath;
 	}
 
+	/**
+	 * 根据相对路径来创建目录.
+	 * @param saContext
+	 * @param relativePath
+	 */
+	public static void mkDir(ServletContext sc, String relativePath) {
+		// 将相对路径转换成绝对路径
+		String aPath = sc.getRealPath(relativePath);
+		try {
+			FileUtils.forceMkdir(new File(aPath));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public static void main(String[] args) {
 
 		//System.out.println(getAbsolutePath("/task/"));

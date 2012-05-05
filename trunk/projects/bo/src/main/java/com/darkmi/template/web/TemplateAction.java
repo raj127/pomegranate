@@ -21,6 +21,7 @@ import com.darkmi.entity.template.Template;
 import com.darkmi.system.service.AccountManager;
 import com.darkmi.template.service.TemplateManager;
 import com.darkmi.util.CrudActionSupport;
+import com.darkmi.util.FileHelper;
 
 /**
  * 作业规程模板管理Action.
@@ -63,6 +64,36 @@ public class TemplateAction extends CrudActionSupport<Template> {
 	}
 
 	/**
+	 * 保存模板信息.
+	 */
+	@Override
+	public String save() throws Exception {
+		template.setPath(getPath(template.getTemplateName()));
+		//获取当前工号所属单位
+		String loginName = SpringSecurityUtils.getCurrentUserName();
+		logger.debug("current user loginName is --> {}", loginName);
+		Company company = accountManager.getCompanyByLoginName(loginName);
+		template.setCompany(company);
+		templateManager.saveTemplate(template);
+		FileHelper.mkDir(ServletActionContext.getServletContext(), template.getPath());
+		addActionMessage("保存作业规程模板信息成功！");
+		return RELOAD;
+	}
+
+	/**
+	 * 删除模板信息.
+	 */
+	@Override
+	public String delete() throws Exception {
+		template = templateManager.getTemplate(id);
+		templateManager.deleteTemplate(id);
+		dbLogger.info(SpringSecurityUtils.getCurrentUserName() + ":删除" + template.getTemplateName() + "作业规程模板！");
+		addActionMessage("删除作业规程模板信息成功！");
+		return RELOAD;
+	}
+
+
+	/**
 	 * 获取用户公司的根目录.
 	 * @return
 	 */
@@ -85,38 +116,6 @@ public class TemplateAction extends CrudActionSupport<Template> {
 		logger.debug("template path is --> {}", path);
 	
 		return path;
-	}
-
-	/**
-	 * 保存模板信息.
-	 */
-	@Override
-	public String save() throws Exception {
-		template.setPath(getPath(template.getTemplateName()));
-		//获取当前工号所属单位
-		String loginName = SpringSecurityUtils.getCurrentUserName();
-		logger.debug("current user loginName is --> {}", loginName);
-		Company company = accountManager.getCompanyByLoginName(loginName);
-		template.setCompany(company);
-		templateManager.saveTemplate(template);
-		addActionMessage("保存作业规程模板信息成功！");
-		return RELOAD;
-	}
-
-	/**
-	 * 删除模板信息.
-	 */
-	@Override
-	public String delete() throws Exception {
-		template = templateManager.getTemplate(id);
-		templateManager.deleteTemplate(id);
-		dbLogger.info(SpringSecurityUtils.getCurrentUserName() + ":删除" + template.getTemplateName() + "作业规程模板！");
-		addActionMessage("删除作业规程模板信息成功！");
-		return RELOAD;
-	}
-
-	public String getChapters() {
-		return "getChaptersucess";
 	}
 
 	/*~~~~~~~~~~~ 校验函数 ~~~~~~~~~~~~~~~~~*/
