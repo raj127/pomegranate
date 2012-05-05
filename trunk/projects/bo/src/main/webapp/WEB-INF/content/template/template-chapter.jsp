@@ -50,7 +50,7 @@
 			<security:authorize ifAnyGranted="ROLE_用户修改">
 				<input type="button" 
 				       value="增加一级目录" 
-				       onclick="linkTo('template-chapter!input.action?templateId=${templateId}')" tabindex="6"/>
+				       onclick="linkTo('template-chapter!input.action?templateId=${templateId}&parentId=0')" tabindex="6"/>
 			</security:authorize>
 		</div>		
 		<div id="content">
@@ -74,9 +74,10 @@
 						<td>${state}&nbsp;</td>
 						<td>&nbsp;
 							<security:authorize ifAnyGranted="ROLE_模板修改">
-								<a href="template-chapter!input.action?id=${id}">编辑目录</a>&nbsp;
+								<a href="template-chapter!input.action?id=${id}&viewOnly=true">查看</a>&nbsp;
+								<a href="template-chapter!input.action?id=${id}&templateId=${templateId}">编辑</a>&nbsp;
 								<a href="template-chapter!input.action?parentId=${id}&templateId=${templateId}" <s:if test="parentId!=0">disabled</s:if>>添加子目录</a>&nbsp;
-								<a href="template-chapter!delete.action?id=${id}&templateId=${templateId}">删除</a>&nbsp;
+								<a href="template-chapter!delete.action?id=${id}&templateId=${templateId}" onclick="return confirm('确定删除吗？')">删除</a>&nbsp;
 							</security:authorize>
 						</td>
 					</tr>
