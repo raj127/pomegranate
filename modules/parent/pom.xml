@@ -28,6 +28,7 @@
 		<slf4j.version>1.6.1</slf4j.version>
 		<selenium.version>2.0a5</selenium.version>
 		<compass.version>2.2.0</compass.version>
+		<lucene.version>3.6.0</lucene.version>
 		<!--<h2.version>1.2.142</h2.version>-->
 		<!--<quartz.version>1.8.4</quartz.version>-->
 		<!-- Plugin的属性定义  -->
@@ -110,7 +111,7 @@
 	</distributionManagement>
 	-->
 	
-	<!-- 预定义依赖项的version,scope与exclusions,子项目中只需定义groupId 和 artifactId 即可 -->
+	<!-- 预定义依赖项的version,scope与exclusions,子项目中只需定义groupId 和 artifactId 即可 -->	
 	<dependencyManagement>
 		<dependencies>
 			<!-- rose modules begin -->
@@ -748,12 +749,37 @@
 				<version>${jackson.version}</version>
 			</dependency>
 			
+			<!-- pinyin4j -->
 			<dependency>
 				<groupId>pinyin4j</groupId>
 				<artifactId>pinyin4j</artifactId>
 				<version>2.5.0</version>
 			</dependency>
 			
+			<!-- lucene -->
+			<dependency>
+				<groupId>org.apache.lucene</groupId>
+				<artifactId>lucene-core</artifactId>
+				<version>${lucene.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.lucene</groupId>
+				<artifactId>lucene-analyzers</artifactId>
+				<version>${lucene.version}</version>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.lucene</groupId>
+				<artifactId>lucene-highlighter</artifactId>
+				<version>${lucene.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.lucene</groupId>
+				<artifactId>lucene-memory</artifactId>
+				<version>${lucene.version}</version>
+				<scope>compile</scope>
+			</dependency>
+						
 			<!--<dependency>
 				<groupId>com.h2database</groupId>
 				<artifactId>h2</artifactId>
