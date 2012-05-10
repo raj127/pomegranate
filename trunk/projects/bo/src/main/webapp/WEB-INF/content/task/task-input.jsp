@@ -82,6 +82,19 @@
 				<td><input type="text" id="description" name="description" value="${description}" size="40" maxlength="255"/></td>
 			</tr>
 			<tr>
+				<td>
+				创建类型:
+				</td>
+				<td>
+				<select>
+					<option>新建</option>
+					<option>使用模板</option>
+					<option>复制已有模板</option>
+				</select>
+				</td>
+			</tr>
+
+			<tr>
 					<td>创建:</td>
 					<td>${createBy} <fmt:formatDate value="${createTime}" type="both"/></td>
 				</tr>

@@ -20,6 +20,12 @@ import com.darkmi.entity.task.Task;
 import com.darkmi.task.service.TaskManager;
 import com.darkmi.util.CrudActionSupport;
 
+/**
+ * Description: 作业规程任务管理Action.
+ * Copyright (c) www.darkmi.com
+ * All Rights Reserved.
+ * @version 1.0  2012-05-10 上午09:20:11 DarkMi created
+ */
 @Namespace("/task")
 @Results({ @Result(name = CrudActionSupport.RELOAD, location = "task.action?page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}", type = "redirect") })
 public class TaskAction extends CrudActionSupport<Task> {
