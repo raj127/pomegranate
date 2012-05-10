@@ -47,32 +47,43 @@
 	            <security:authorize ifAnyGranted="ROLE_任务管理"> 
 		            <table align="center">
 		            <tr><td>
-		            <a href="${ctx}/cms/movie.action" ><img src="${ctx}/images/index-01.png" border="0px" align="top" /></a>
+		            <a href="${ctx}/task/task.action" ><img src="${ctx}/images/index-01.png" border="0px" align="top" /></a>
 		            </td></tr>
-		            <tr><td align="center"><a style="font-size:15px" href="${ctx}/cms/movie.action" >任务管理</a></td></tr>
+		            <tr><td align="center"><a style="font-size:15px" href="${ctx}/task/task.action" >任务管理</a></td></tr>
 		            </table>
 	            </security:authorize>
 	            </td>
 	            <td width="240" height="120"> 
 	            <security:authorize ifAnyGranted="ROLE_作业规程编制">
-	            <table align="center"><tr><td><a href="${ctx}/rtm/recording.action?state=normal"><img src="${ctx}/images/index-02.png" border="0px" align="top" /></a></td></tr><tr><td align="center"><a style="font-size:15px" href="${ctx}/rtm/recording.action?state=normal">规程编制</a></td></tr></table>
+	            <table align="center">
+	            	<tr><td><a href="${ctx}/edit/task-chapter.action"><img src="${ctx}/images/index-02.png" border="0px" align="top" /></a></td></tr>
+	            	<tr><td align="center"><a style="font-size:15px" href="${ctx}/edit/task-chapter.action">规程编制</a></td></tr>
+	            </table>
 	            </security:authorize>
 	            </td>
 	        </tr>
 	         <tr>
 	         <td width="240" height="120">
 	         <security:authorize ifAnyGranted="ROLE_作业规程审批"> 
-	         <table align="center"><tr><td><a href="${ctx}/apm/package-asset.action"><img src="${ctx}/images/index-03.png" border="0px" align="top" /></a></td></tr><tr><td align="center"><a style="font-size:15px" href="${ctx}/apm/package-asset.action">规程审批</a></td></tr></table>
+	         <table align="center">
+	         	<tr><td><a href="${ctx}/approve/approve.action"><img src="${ctx}/images/index-03.png" border="0px" align="top" /></a></td></tr>
+	         	<tr><td align="center"><a style="font-size:15px" href="${ctx}/approve/approve.action">规程审批</a></td></tr>
+	         </table>
 	         </security:authorize>
 	         </td>
 	         <td width="240" height="120">
 	         <security:authorize ifAnyGranted="ROLE_作业规程查询">
-	         <table align="center"><tr><td><a href="${ctx}/odm/offering.action"><img src="${ctx}/images/index-04.png" border="0px" align="top" /></a></td></tr><tr><td align="center"><a style="font-size:15px" href="${ctx}/odm/offering.action">规程查询</a></td></tr></table>
+	         <table align="center">
+	         	<tr><td><a href="${ctx}/query/query.action"><img src="${ctx}/images/index-04.png" border="0px" align="top" /></a></td></tr>
+	         	<tr><td align="center"><a style="font-size:15px" href="${ctx}/query/query.action">规程查询</a></td></tr>
+	         </table>
 	         </security:authorize>
 	         </td>
 	         <td width="240" height="120">
 	         <security:authorize ifAnyGranted="ROLE_作业规程快讯">
-	         <table align="center"><tr><td><a href="${ctx}/ens/customer.action"><img src="${ctx}/images/index-05.png" border="0px" align="top" /></a></td></tr><tr><td align="center"><a style="font-size:15px" href="${ctx}/ens/customer.action">规程快讯</a></td></tr></table>
+	         <table align="center">
+	         	<tr><td><a href="${ctx}/news/news.action"><img src="${ctx}/images/index-05.png" border="0px" align="top" /></a></td></tr>
+	         	<tr><td align="center"><a style="font-size:15px" href="${ctx}/news/news.action">规程快讯</a></td></tr></table>
 	         </security:authorize>
 	         </td>
 	        </tr>
