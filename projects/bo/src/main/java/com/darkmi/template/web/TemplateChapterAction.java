@@ -20,7 +20,6 @@ import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springside.modules.security.springsecurity.SpringSecurityUtils;
 
-import com.darkmi.SystemConfig;
 import com.darkmi.entity.template.Template;
 import com.darkmi.entity.template.TemplateChapter;
 import com.darkmi.template.service.TemplateChapterManager;
@@ -56,7 +55,6 @@ public class TemplateChapterAction extends CrudActionSupport<TemplateChapter> {
 
 	private TemplateChapterManager tcManager;
 	private TemplateManager templateManager;
-	private SystemConfig systemConfig;
 
 	/**
 	 * 显示目录列表.
@@ -157,8 +155,14 @@ public class TemplateChapterAction extends CrudActionSupport<TemplateChapter> {
 	//@Action(value = "edit", results = { @Result(name = "success", location = "edit.jsp", type = "redirect") })
 	public String edit() {
 		logger.debug("编辑作业规程... begin{ ");
+		tc = tcManager.getTemplateChapter(id);
+		String path = tc.getTemplate().getPath();
 
-		filePath = systemConfig.getTemplateDefault() + fileName;
+		//获取模板的相对路径
+		filePath = path + tc.getFileName();
+		//获取的模板的绝对路径
+		//ServletContext sc = ServletActionContext.getServletContext();
+		//String filePath = FileHelper.getAbsolutePath(sc, relativePath);
 		logger.debug("filePath --> {}", filePath);
 
 		logger.debug("编辑作业规程... end} ");
@@ -320,11 +324,6 @@ public class TemplateChapterAction extends CrudActionSupport<TemplateChapter> {
 	@Autowired
 	public void setTemplateChapterManager(TemplateChapterManager templateChapterManager) {
 		this.tcManager = templateChapterManager;
-	}
-
-	@Autowired
-	public void setSystemConfig(SystemConfig systemConfig) {
-		this.systemConfig = systemConfig;
 	}
 
 	@Autowired
