@@ -302,7 +302,11 @@
 		</dependency>
 		<!-- pinyin4j end -->
 		
-
+		<dependency>
+			<groupId>jacob</groupId>
+			<artifactId>jacob</artifactId>
+		</dependency>	
+		
 		<!-- lucene -->
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
