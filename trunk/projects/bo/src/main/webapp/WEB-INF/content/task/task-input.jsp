@@ -11,18 +11,63 @@
 	<link href="${ctx}/js/validate/jquery.validate.css" type="text/css" rel="stylesheet"/>
 	<script src="${ctx}/js/jquery.js" type="text/javascript"></script>
 	<script src="${ctx}/js/validate/jquery.validate.js" type="text/javascript"></script>
-		<script>
+	<script>
+	//菜单着色功能
+	$(document).ready(function() {
+		$(".mainNav a").attr("class","");
+		$("#n4").attr("class","actived");
+		$("#subNav402").attr("class","actived");
+		$(".secondNav div").each(function(){
+			$(this).hide();
+			$("#subNav4").show();
+		});
+		
+		 //$("#copy").hide("slow");
+		 //$("#useTemplate").hide("slow");
+		 $("#copy").hide();
+		 $("#useTemplate").hide();
+
+
+	});
+	</script>
+	
+	<script>
+		//当处于查看页时,除了button之外全部为disabled='true'
 		$(document).ready(function() {
-			$(".mainNav a").attr("class","");
-			$("#n4").attr("class","actived");
-			$("#subNav402").attr("class","actived");
-			$(".secondNav div").each(function(){
-				$(this).hide();
-				$("#subNav4").show();
-			});
+			if(${viewOnly}){
+				//设置所有除了type='button'的input标签的disabled属性
+				$("input[type!='button']").each(function(){
+					this.disabled = 'true';
+				});
+				//设置所有select标签的disabled属性
+				$("select").each(function(){
+					this.disabled = 'true';
+				});
+			}
 		});
 	</script>
+	
 	<script>
+		//当处于查看页时,除了button之外全部为disabled='true'
+		$(document).ready(function() {
+			$("#createType").change(function(){
+				var createType =$("#createType").val();
+				if(createType == "useTemplate"){
+					$("#useTemplate").show();
+					$("#copy").hide();
+				}else if(createType == "copy"){
+					$("#useTemplate").hide();
+					$("#copy").show();
+				}else if(createType == "new"){
+					$("#useTemplate").hide();
+					$("#copy").hide();					
+				}
+			}); 
+		});
+	</script>
+	
+	<script>
+		//表单校验功能
 		$(document).ready(function() {
 			//聚焦第一个输入框
 			$("#fullname").focus();
@@ -86,10 +131,34 @@
 				创建类型:
 				</td>
 				<td>
+				<select id="createType">
+					<option value="new">新建</option>
+					<option value="useTemplate">使用模板</option>
+					<option value="copy">复制已有规程</option>
+				</select>
+				</td>
+			</tr>
+			<tr id="useTemplate">
+				<td>
+				选择模板:
+				</td>
+				<td>
 				<select>
-					<option>新建</option>
-					<option>使用模板</option>
-					<option>复制已有模板</option>
+					<option>默认模板</option>
+					<option>测试模板</option>
+					<option>其他模板</option>
+				</select>
+				</td>
+			</tr>
+			<tr id="copy">
+				<td>
+				已有规程:
+				</td>
+				<td>
+				<select>
+					<option>已有规程一</option>
+					<option>已有规程二</option>
+					<option>已有规程三</option>
 				</select>
 				</td>
 			</tr>
@@ -104,9 +173,7 @@
 				</tr>
 			<tr>
 				<td colspan="2">
-					<security:authorize ifAnyGranted="ROLE_修改内容供应商">
-						<input class="button" type="submit" value="提交"/>&nbsp;
-					</security:authorize>
+					<input class="button" type="submit" value="提交"/>&nbsp;
 					<input class="button" type="button" value="返回" onclick="history.back()"/>
 				</td>
 			</tr>
