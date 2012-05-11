@@ -34,21 +34,7 @@ public class TaskAction extends CrudActionSupport<Task> {
 	private Task task;
 	private TaskManager taskManager;
 	private Page<Task> page = new Page<Task>(20);
-
-	@Override
-	protected void prepareModel() throws Exception {
-		if (id != null) {
-			task = taskManager.getTask(id);
-		} else {
-			task = new Task();
-		}
-
-	}
-
-	@Override
-	public Task getModel() {
-		return task;
-	}
+	private boolean viewOnly = false;
 
 	@Override
 	public String list() throws Exception {
@@ -111,16 +97,44 @@ public class TaskAction extends CrudActionSupport<Task> {
 		return null;
 	}
 
-	public Page<Task> getPage() {
-		return page;
+	/*~~~~~~~~~~~ 重载方法 ~~~~~~~~~~~~~~~~~*/
+
+	@Override
+	protected void prepareModel() throws Exception {
+		if (id != null) {
+			task = taskManager.getTask(id);
+		} else {
+			task = new Task();
+		}
+
 	}
 
-	@Autowired
-	public void setTaskManager(TaskManager taskManager) {
-		this.taskManager = taskManager;
+	@Override
+	public Task getModel() {
+		return task;
+	}
+
+	/*~~~~~~~~~~~Setters And Getters ~~~~~~~~~~~~~~~~~*/
+	public Page<Task> getPage() {
+		return page;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+	public boolean isViewOnly() {
+		return viewOnly;
+	}
+
+	public void setViewOnly(boolean viewOnly) {
+		this.viewOnly = viewOnly;
+	}
+
+	/*~~~~~~~~~~~业务逻辑类注入~~~~~~~~~~~~~~~~~*/
+	@Autowired
+	public void setTaskManager(TaskManager taskManager) {
+		this.taskManager = taskManager;
+	}
+
 }
