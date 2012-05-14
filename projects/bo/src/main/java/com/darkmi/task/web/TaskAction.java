@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
@@ -57,6 +56,10 @@ public class TaskAction extends CrudActionSupport<Task> {
 	private AccountManager accountManager;
 	private SystemConfig systemConfig;
 
+	/**
+	 * 作业规程列表页面.
+	 * 默认入口.
+	 */
 	@Override
 	public String list() throws Exception {
 		List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(Struts2Utils.getRequest());
@@ -74,12 +77,9 @@ public class TaskAction extends CrudActionSupport<Task> {
 		return SUCCESS;
 	}
 
-	@Action("/task/chapter")
-	public String viewChapter() {
-		System.out.println("aaa");
-		return SUCCESS;
-	}
-
+	/**
+	 * 进入模板信息录入页面.
+	 */
 	@Override
 	public String input() throws Exception {
 		return INPUT;
@@ -131,6 +131,18 @@ public class TaskAction extends CrudActionSupport<Task> {
 		return RELOAD;
 	}
 
+	/**
+	 * 删除作业规程.
+	 */
+	@Override
+	public String delete() throws Exception {
+		task = taskManager.getTask(id);
+		taskManager.deleteTask(id);
+		dbLogger.info(SpringSecurityUtils.getCurrentUserName() + ":删除" + task.getTaskName() + "任务！");
+		addActionMessage("删除作业规任务成功！");
+		return RELOAD;
+	}
+
 	private Company getCompany() {
 		//获取当前工号所属单位
 		String loginName = SpringSecurityUtils.getCurrentUserName();
@@ -162,15 +174,6 @@ public class TaskAction extends CrudActionSupport<Task> {
 		logger.debug("task path is --> {}", path);
 
 		return path;
-	}
-
-	@Override
-	public String delete() throws Exception {
-		task = taskManager.getTask(id);
-		taskManager.deleteTask(id);
-		dbLogger.info(SpringSecurityUtils.getCurrentUserName() + ":删除" + task.getTaskName() + "任务！");
-		addActionMessage("删除作业规任务成功！");
-		return RELOAD;
 	}
 
 	/**
@@ -240,7 +243,7 @@ public class TaskAction extends CrudActionSupport<Task> {
 	public void setViewOnly(boolean viewOnly) {
 		this.viewOnly = viewOnly;
 	}
-	
+
 	public boolean isUpdate() {
 		return update;
 	}
@@ -248,7 +251,6 @@ public class TaskAction extends CrudActionSupport<Task> {
 	public void setUpdate(boolean update) {
 		this.update = update;
 	}
-
 
 	public Long getTemplateId() {
 		return templateId;
