@@ -14,7 +14,10 @@ import com.darkmi.entity.template.Template;
 import com.darkmi.template.dao.TemplateDao;
 
 /**
- * 作业规程任务管理Manager
+ * Description: 作业规程模板管理Manager.
+ * Copyright (c) www.darkmi.com
+ * All Rights Reserved.
+ * @version 1.0  2012-05-04 上午09:20:11 DarkMi created
  */
 @Component
 @Transactional
@@ -54,6 +57,20 @@ public class TemplateManager {
 		return templateDao.getAll();
 	}
 
+	/**
+	 * 得到系统的默认模板信息.
+	 */
+	public List<Template> getAllDefaultTemplate() {
+		return templateDao.findBy("company.id", new Long(0));
+	}
+
+	/**
+	 * 得到公司的默认模板信息.
+	 */
+	public List<Template> getAllCompanyTemplate(Long companyId) {
+		return templateDao.findBy("company.id", companyId);
+	}
+
 	// /**
 	// * 根据Id得到作业规程任务信息
 	// * @return
@@ -63,13 +80,13 @@ public class TemplateManager {
 	// return taskDao.findUniqueBy("id", id);
 	// }
 
-	 /**
-	 * 判断taskName是否唯一
-	 */
-	 @Transactional(readOnly = true)
-	 public boolean isPathUnique(String newTaskName, String oldTaskName) {
-	 return templateDao.isPropertyUnique("path", newTaskName, oldTaskName);
-	 }
+	/**
+	* 判断taskName是否唯一
+	*/
+	@Transactional(readOnly = true)
+	public boolean isPathUnique(String newTaskName, String oldTaskName) {
+		return templateDao.isPropertyUnique("path", newTaskName, oldTaskName);
+	}
 
 	/**
 	* 根据属性查询模板信息.

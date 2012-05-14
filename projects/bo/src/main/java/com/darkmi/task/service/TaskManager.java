@@ -14,7 +14,10 @@ import com.darkmi.entity.task.Task;
 import com.darkmi.task.dao.TaskDao;
 
 /**
- * 作业规程任务管理Manager
+ * Description: 作业规程任务管理Manager.
+ * Copyright (c) www.darkmi.com
+ * All Rights Reserved.
+ * @version 1.0  2012-05-04 上午09:20:11 DarkMi created
  */
 @Component
 @Transactional
@@ -68,7 +71,7 @@ public class TaskManager {
 	 */
 	@Transactional(readOnly = true)
 	public boolean isTaskNameUnique(String newTaskName, String oldTaskName) {
-		return taskDao.isPropertyUnique("name", newTaskName, oldTaskName);
+		return taskDao.isPropertyUnique("taskName", newTaskName, oldTaskName);
 	}
 
 	/**

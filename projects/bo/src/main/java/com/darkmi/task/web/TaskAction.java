@@ -16,9 +16,21 @@ import org.springside.modules.orm.PropertyFilter;
 import org.springside.modules.security.springsecurity.SpringSecurityUtils;
 import org.springside.modules.utils.web.struts2.Struts2Utils;
 
+import com.darkmi.SystemConfig;
+import com.darkmi.common.tools.Cn2Spell;
+import com.darkmi.edit.service.TaskChapterManager;
+import com.darkmi.entity.StateEnum;
+import com.darkmi.entity.system.Company;
 import com.darkmi.entity.task.Task;
+import com.darkmi.entity.task.TaskChapter;
+import com.darkmi.entity.template.Template;
+import com.darkmi.entity.template.TemplateChapter;
+import com.darkmi.system.service.AccountManager;
 import com.darkmi.task.service.TaskManager;
+import com.darkmi.template.service.TemplateChapterManager;
+import com.darkmi.template.service.TemplateManager;
 import com.darkmi.util.CrudActionSupport;
+import com.google.common.collect.Lists;
 
 /**
  * Description: 作业规程任务管理Action.
@@ -32,9 +44,18 @@ public class TaskAction extends CrudActionSupport<Task> {
 	private static final long serialVersionUID = -2907389496513631586L;
 	private Long id;
 	private Task task;
-	private TaskManager taskManager;
+
 	private Page<Task> page = new Page<Task>(20);
 	private boolean viewOnly = false;
+	private String createType;
+	private Long templateId;
+
+	private TaskManager taskManager;
+	private TaskChapterManager taskChapterManager;
+	private TemplateManager templateManager;
+	private TemplateChapterManager tcManager;
+	private AccountManager accountManager;
+	private SystemConfig systemConfig;
 
 	@Override
 	public String list() throws Exception {
@@ -64,11 +85,83 @@ public class TaskAction extends CrudActionSupport<Task> {
 		return INPUT;
 	}
 
+	/**
+	 * 创建作业规程.
+	 * 有三种方式:
+	 * (1)新建;
+	 * (2)使用模板;
+	 * (3)复制已有规程.
+	 */
 	@Override
 	public String save() throws Exception {
-		taskManager.saveTask(task);
+		if ("new".equals(createType)) { //新建
+			taskManager.saveTask(task);
+		} else if ("useTemplate".equals(createType)) { //使用模板
+			if (templateId == null) {
+				addActionMessage("请选择作业规程模板！");
+			} else {
+				//Template template = templateManager.getTemplate(templateId);
+				List<TemplateChapter> list = tcManager.getTcsByTemplateId(templateId);
+
+				//设置作业规程的保存路径
+				task.setPath(getPath(task.getTaskName()));
+				task.setCompany(getCompany());
+				task.setState(StateEnum.NORMAL);
+				taskManager.saveTask(task);
+
+				for (Iterator<TemplateChapter> iterator = list.iterator(); iterator.hasNext();) {
+					TemplateChapter tc = (TemplateChapter) iterator.next();
+					TaskChapter taskChapter = new TaskChapter();
+					taskChapter.setChapterName(tc.getChapterName());
+					taskChapter.setFileName(tc.getFileName());
+					taskChapter.setDisplayOrder(tc.getDisplayOrder());
+					taskChapter.setParentId(tc.getParentId());
+					taskChapter.setState(StateEnum.NORMAL);
+					taskChapter.setDescription(tc.getDescription());
+					taskChapter.setTask(task);
+					taskChapterManager.saveTaskChapter(taskChapter);
+				}
+			}
+
+		} else if ("copy".equals(createType)) { //复制已有规程
+
+		}
+
 		addActionMessage("保存作业规程任务成功！");
 		return RELOAD;
+	}
+
+	private Company getCompany() {
+		//获取当前工号所属单位
+		String loginName = SpringSecurityUtils.getCurrentUserName();
+		logger.debug("current user loginName is --> {}", loginName);
+		Company company = accountManager.getCompanyByLoginName(loginName);
+		return company;
+	}
+
+	/**
+	 * 获取用户公司的根目录.
+	 * @return
+	 */
+	private String getPath(String taskName) {
+		String companyNameEn = Cn2Spell.converterToSpell(taskName);
+		//获取当前工号所属单位
+		String loginName = SpringSecurityUtils.getCurrentUserName();
+		logger.debug("current user loginName is --> {}", loginName);
+		Company company = accountManager.getCompanyByLoginName(loginName);
+
+		StringBuffer sb = new StringBuffer();
+		sb.append(ServletActionContext.getRequest().getContextPath());
+		sb.append("/");
+		sb.append(systemConfig.getCompanyFolder());
+		sb.append(company.getFolder());
+		sb.append(systemConfig.getTaskFolder());
+		sb.append(companyNameEn);
+		sb.append("/");
+		String path = sb.toString();
+		logger.debug("task path is --> {}", path);
+
+		return path;
 	}
 
 	@Override
@@ -81,20 +174,38 @@ public class TaskAction extends CrudActionSupport<Task> {
 	}
 
 	/**
-	 * 支持使用Jquery.validate Ajax检验用户名是否重复.
+	 * 校验作业规程名称是否重复.
 	 */
 	public String checkTaskName() {
 		HttpServletRequest request = ServletActionContext.getRequest();
-		String providerId = request.getParameter("employeeName");
-		String oldProviderId = request.getParameter("oldemployeeName");
+		String newTaskName = request.getParameter("taskName");
+		String oldTaskName = request.getParameter("oldTaskName");
 
-		if (taskManager.isTaskNameUnique(providerId, oldProviderId)) {
+		if (taskManager.isTaskNameUnique(newTaskName, oldTaskName)) {
 			Struts2Utils.renderText("true");
 		} else {
 			Struts2Utils.renderText("false");
 		}
 		//因为直接输出内容而不经过jsp,因此返回null.
 		return null;
+	}
+
+	/**
+	 * 获取该用户可使用的作业规程模板.
+	 * @return
+	 */
+	public List<Template> getAllTemplate() {
+		logger.debug("获得可用作业规程模板 begin { ...");
+		List<Template> list = Lists.newArrayList();
+		List<Template> defaultList = templateManager.getAllDefaultTemplate();
+		list.addAll(defaultList);
+		if (!getCompany().getId().equals(new Long(0))) {
+			List<Template> companyList = templateManager.getAllCompanyTemplate(getCompany().getId());
+			list.addAll(companyList);
+		}
+		logger.debug("获取到一级目录数量为 --》 {}", list.size());
+		logger.debug("获得可用作业规程模板 end ...}");
+		return list;
 	}
 
 	/*~~~~~~~~~~~ 重载方法 ~~~~~~~~~~~~~~~~~*/
@@ -106,7 +217,6 @@ public class TaskAction extends CrudActionSupport<Task> {
 		} else {
 			task = new Task();
 		}
-
 	}
 
 	@Override
@@ -131,10 +241,51 @@ public class TaskAction extends CrudActionSupport<Task> {
 		this.viewOnly = viewOnly;
 	}
 
+	public String getCreateType() {
+		return createType;
+	}
+
+	public void setCreateType(String createType) {
+		this.createType = createType;
+	}
+
+	public Long getTemplateId() {
+		return templateId;
+	}
+
+	public void setTemplateId(Long templateId) {
+		this.templateId = templateId;
+	}
+
 	/*~~~~~~~~~~~业务逻辑类注入~~~~~~~~~~~~~~~~~*/
 	@Autowired
 	public void setTaskManager(TaskManager taskManager) {
 		this.taskManager = taskManager;
+	}
+
+	@Autowired
+	public void setTemplateManager(TemplateManager templateManager) {
+		this.templateManager = templateManager;
+	}
+
+	@Autowired
+	public void setAccountManager(AccountManager accountManager) {
+		this.accountManager = accountManager;
+	}
+
+	@Autowired
+	public void setSystemConfig(SystemConfig systemConfig) {
+		this.systemConfig = systemConfig;
+	}
+
+	@Autowired
+	public void setTaskChapterManager(TaskChapterManager taskChapterManager) {
+		this.taskChapterManager = taskChapterManager;
+	}
+
+	@Autowired
+	public void setTcManager(TemplateChapterManager tcManager) {
+		this.tcManager = tcManager;
 	}
 
 }

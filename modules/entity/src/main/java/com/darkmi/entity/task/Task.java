@@ -2,12 +2,15 @@ package com.darkmi.entity.task;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.darkmi.entity.AuditableEntity;
+import com.darkmi.entity.StateEnum;
 import com.darkmi.entity.system.Company;
 
 /**
@@ -19,22 +22,11 @@ import com.darkmi.entity.system.Company;
 @Entity
 @Table(name = "t_task")
 public class Task extends AuditableEntity {
-
-	private String taskId;
 	private String taskName;
 	private String description;
-	private Integer state;
+	private StateEnum state;
 	private String path;
 	private Company company;
-
-	@Column(name = "task_id")
-	public String getTaskId() {
-		return taskId;
-	}
-
-	public void setTaskId(String taskId) {
-		this.taskId = taskId;
-	}
 
 	@Column(name = "task_name")
 	public String getTaskName() {
@@ -55,11 +47,12 @@ public class Task extends AuditableEntity {
 	}
 
 	@Column(name = "state")
-	public Integer getState() {
+	@Enumerated(EnumType.STRING)
+	public StateEnum getState() {
 		return state;
 	}
 
-	public void setState(Integer state) {
+	public void setState(StateEnum state) {
 		this.state = state;
 	}
 
@@ -71,7 +64,7 @@ public class Task extends AuditableEntity {
 	public void setPath(String path) {
 		this.path = path;
 	}
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "company_id")
 	public Company getCompany() {
@@ -82,11 +75,10 @@ public class Task extends AuditableEntity {
 		this.company = company;
 	}
 
-
 	@Override
 	public String toString() {
-		return "Task [taskId=" + taskId + ", taskName=" + taskName + ", desdescription=" + description + ", state="
-				+ state + ", path=" + path + "]";
+		return "Task [taskName=" + taskName + ", description=" + description + ", state=" + state + ", path=" + path
+				+ ", company=" + company + "]";
 	}
 
 }

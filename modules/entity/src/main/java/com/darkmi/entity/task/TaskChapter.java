@@ -2,9 +2,15 @@ package com.darkmi.entity.task;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.darkmi.entity.AuditableEntity;
+import com.darkmi.entity.StateEnum;
 
 /**
  * Description: 目录实体类.
@@ -14,12 +20,15 @@ import com.darkmi.entity.AuditableEntity;
 @Entity
 @Table(name = "t_task_chapter")
 public class TaskChapter extends AuditableEntity {
-
 	private String chapterId;
 	private String chapterName;
+	private String fileName;
 	private String description;
-	private Integer state;
-	private Integer taskId;
+	private Task task;
+
+	private Long parentId;
+	private Integer displayOrder;
+	private StateEnum state;
 
 	@Column(name = "chapter_id")
 	public String getChapterId() {
@@ -39,13 +48,23 @@ public class TaskChapter extends AuditableEntity {
 		this.chapterName = chapterName;
 	}
 
-	@Column(name = "task_id")
-	public Integer getTaskId() {
-		return taskId;
+	@Column(name = "file_name")
+	public String getFileName() {
+		return fileName;
 	}
 
-	public void setTaskId(Integer taskId) {
-		this.taskId = taskId;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "task_id")
+	public Task getTask() {
+		return task;
+	}
+
+	public void setTask(Task task) {
+		this.task = task;
 	}
 
 	@Column(name = "description")
@@ -57,18 +76,39 @@ public class TaskChapter extends AuditableEntity {
 		this.description = description;
 	}
 
+	@Column(name = "parent_id")
+	public Long getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
+	}
+
 	@Column(name = "state")
-	public Integer getState() {
+	@Enumerated(EnumType.STRING)
+	public StateEnum getState() {
 		return state;
 	}
 
-	public void setState(Integer state) {
+	public void setState(StateEnum state) {
 		this.state = state;
+	}
+
+	@Column(name = "display_order")
+	public Integer getDisplayOrder() {
+		return displayOrder;
+	}
+
+	public void setDisplayOrder(Integer displayOrder) {
+		this.displayOrder = displayOrder;
 	}
 
 	@Override
 	public String toString() {
-		return "TaskChapter [chapterId=" + chapterId + ", chapterName=" + chapterName + ", description=" + description
-				+ ", state=" + state + ", taskId=" + taskId + "]";
+		return "TemplateChapter [chapterId=" + chapterId + ", chapterName=" + chapterName + ", fileName=" + fileName
+				+ ", description=" + description + ", template=" + task + ", parentId=" + parentId + ", displayOrder="
+				+ displayOrder + ", state=" + state + "]";
 	}
+
 }

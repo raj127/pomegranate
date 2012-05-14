@@ -217,14 +217,14 @@ public class TemplateChapterAction extends CrudActionSupport<TemplateChapter> {
 	}
 
 	/**
-	 * 获取该模板的所有一级目录
+	 * 获取当前用户可使用的作业规程模板.
 	 * @return
 	 */
 	public List<TemplateChapter> getAllParentChapter() {
-		logger.debug("获得一级目录 begin { ...");
+		logger.debug("获取作业规程模板 begin { ...");
 		List<TemplateChapter> list = tcManager.getParentTemplateChapter();
 		logger.debug("获取到一级目录数量为 --》 {}", list.size());
-		logger.debug("获得一级目录 end ...}");
+		logger.debug("获取作业规程模板 end } ...");
 		return list;
 
 	}

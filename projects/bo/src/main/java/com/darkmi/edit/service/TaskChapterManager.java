@@ -15,7 +15,10 @@ import com.darkmi.edit.dao.TaskChapterDao;
 import com.darkmi.entity.task.TaskChapter;
 
 /**
- * 作业规程任务管理Manager
+ * Description: 作业规程任务章节管理Manager.
+ * Copyright (c) www.darkmi.com
+ * All Rights Reserved.
+ * @version 1.0  2012-05-04 上午09:20:11 DarkMi created
  */
 @Component
 @Transactional
@@ -24,10 +27,10 @@ public class TaskChapterManager {
 	private TaskChapterDao taskChapterDao;
 
 	/**
-	 * 保存作业规程任务信息
+	 * 保存作业规程目录信息.
 	 */
 	public void saveTaskChapter(TaskChapter taskChapter) {
-		//taskDao.save(task);
+		taskChapterDao.save(taskChapter);
 		logger.debug("保存TaskChapter信息成功.");
 	}
 
