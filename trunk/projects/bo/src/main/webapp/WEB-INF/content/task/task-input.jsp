@@ -44,6 +44,14 @@
 					this.disabled = 'true';
 				});
 			}
+			if(${update}){
+				//设置所有select标签的disabled属性
+				$("select").each(function(){
+					this.disabled = 'true';
+				});
+			}
+			
+			
 		});
 	</script>
 	
@@ -53,13 +61,13 @@
 			$("#createType").change(function(){
 				var createType =$("#createType").val();
 				if(createType == "useTemplate"){
-					$("#useTemplate").show();
+					$("#template").show();
 					$("#copy").hide();
 				}else if(createType == "copy"){
-					$("#useTemplate").hide();
+					$("#template").hide();
 					$("#copy").show();
 				}else if(createType == "new"){
-					$("#useTemplate").hide();
+					$("#template").hide();
 					$("#copy").hide();					
 				}
 			}); 
@@ -119,14 +127,17 @@
 				创建类型:
 				</td>
 				<td>
-				<select id="createType" name="createType">
-					<option value="new">新建</option>
-					<option value="useTemplate">使用模板</option>
-					<option value="copy">复制已有规程</option>
-				</select>
+				<s:select id="createType" 
+						  name="createType"
+						  list="@com.darkmi.entity.task.CreateTypeEnum@values()"
+						  value="%{createType}" 
+						  listValue="label"
+						  headerValue="@com.darkmi.entity.task.CreateTypeEnum@NEW"
+						  required="true" 
+						  theme="simple" />
 				</td>
 			</tr>
-			<tr id="useTemplate">
+			<tr id="template">
 				<td>
 				选择模板:
 				</td>

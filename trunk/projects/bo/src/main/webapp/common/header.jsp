@@ -80,8 +80,10 @@
 			<security:authorize ifAnyGranted="ROLE_任务管理">
 					<div id="subNav4" class="subNav4">
 						<a id="subNav401" href="${ctx}/task/task.action" >作业规程任务列表</a>
-						<a id="subNav402" href="${ctx}/task/task!input.action" >新建作业规程任务</a>
-						<a id="subNav403" href="${ctx}/task/authority.action" >权限管理</a>
+						<a id="subNav402" href="${ctx}/task/task!input.action" >新建作业规程</a>
+						<a id="subNav403" href="${ctx}/task/task-chapter.action" >作业规程章节列表</a>
+						<a id="subNav404" href="${ctx}/task/task-chapter.action" >新建作业规程章节</a>
+						<a id="subNav405" href="${ctx}/task/authority.action" >权限管理</a>
 					</div>
 			</security:authorize>
 			<security:authorize ifAnyGranted="ROLE_作业规程编制">
