@@ -1,14 +1,12 @@
 package com.darkmi.edit.service;
 
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.Page;
 import org.springside.modules.orm.PropertyFilter;
 
 import com.darkmi.edit.dao.TaskChapterDao;
@@ -53,6 +51,14 @@ public class TaskChapterManager {
 	}
 
 	/**
+	 * 根据作业规程任务ID获取其下所有章节.
+	 */
+	@Transactional(readOnly = true)
+	public List<TaskChapter> getTcsByTaskId(Long taskId) {
+		return taskChapterDao.getTcsByTaskId(taskId);
+	}
+
+	/**
 	 * 得到所有的作业规程任务列表
 	 */
 	public List<TaskChapter> getAllTaskChapter() {
@@ -72,13 +78,8 @@ public class TaskChapterManager {
 	 * 根据属性查询任务信息
 	 */
 	@Transactional(readOnly = true)
-	public Page<TaskChapter> searchTaskChapter(Page<TaskChapter> page, List<PropertyFilter> filters) {
-		return taskChapterDao.findPage(page, filters);
-	}
-
-	@Transactional(readOnly = true)
-	public Page<TaskChapter> searchTaskChapter(Page<TaskChapter> page, String where, Map<String, Object> values) {
-		return taskChapterDao.findPageByWhere(page, where, values);
+	public List<TaskChapter> searchTaskChapter(List<PropertyFilter> filters) {
+		return taskChapterDao.find(filters);
 	}
 
 	@Autowired

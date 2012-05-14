@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>任务管理</title>
+	<title>作业规程任务管理</title>
 	<%@ include file="/common/meta.jsp" %>
 	<link href="${ctx}/css/yui.css" type="text/css" rel="stylesheet"/>
 	<link href="${ctx}/css/style.css" type="text/css" rel="stylesheet"/>
@@ -63,10 +63,10 @@
 						<td>${state}&nbsp;</td>
 						<td>&nbsp;
 							<security:authorize ifAnyGranted="ROLE_任务浏览">
-								<a href="task!input.action?id=${id}">查看</a>&nbsp;
+								<a href="task!input.action?id=${id}&viewOnly=true">查看</a>&nbsp;
 							</security:authorize>
 							<security:authorize ifAnyGranted="ROLE_任务修改">
-								<a href="task!input.action?id=${id}&page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}">修改</a>&nbsp;
+								<a href="task!input.action?id=${id}&update=true&page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}">修改</a>&nbsp;
 							</security:authorize>
 							<security:authorize ifAnyGranted="ROLE_任务浏览">
 							<a href="task-chapter.action?taskId=${id}">查看目录</a>&nbsp;

@@ -1,72 +1,69 @@
 package com.darkmi.task.web;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springside.modules.orm.Page;
+import org.springside.modules.security.springsecurity.SpringSecurityUtils;
 
 import com.darkmi.edit.service.TaskChapterManager;
 import com.darkmi.entity.task.TaskChapter;
 import com.darkmi.util.CrudActionSupport;
+import com.google.common.collect.Lists;
 
+/**
+ * Description: 作业规程章节管理Action.
+ * Copyright (c) www.darkmi.com
+ * All Rights Reserved.
+ * @version 1.0  2012-05-10 上午09:20:11 DarkMi created
+ */
 @Namespace("/task")
 @Results({
-		@Result(name = CrudActionSupport.RELOAD, location = "chapter.action?page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}", type = "redirect"),
-		@Result(name = "success", location = "chapter.jsp") })
+		@Result(name = CrudActionSupport.RELOAD, location = "task-chapter.action?taskId=${taskId}", type = "redirect"),
+		@Result(name = "edit", location = "edit.jsp") })
 public class TaskChapterAction extends CrudActionSupport<TaskChapter> {
-	private static final long serialVersionUID = 7117372628753539453L;
+	private static final long serialVersionUID = 8559745143820907960L;
 	private Long id;
-	private Integer taskId;
-	private String chapterName;
-	private TaskChapter chapter;
+	private Long taskId;
+	private Long parentId;
+
+	private TaskChapter taskChapter;
+	private List<TaskChapter> tcs = Lists.newArrayList();
+
 	private TaskChapterManager taskChapterManager;
 
-	private Page<TaskChapter> page = new Page<TaskChapter>(20);
-
-	@Override
-	protected void prepareModel() throws Exception {
-		if (id != null) {
-			chapter = taskChapterManager.getTaskChapter(id);
-		} else {
-			chapter = new TaskChapter();
-		}
-
-	}
-
-	@Override
-	public TaskChapter getModel() {
-		return chapter;
-	}
-
+	/**
+	 * 模板列表页面.
+	 * 默认入口.
+	 */
 	@Override
 	public String list() throws Exception {
-		StringBuilder hqlBuilder = new StringBuilder();
-		Map<String, Object> map = new HashMap<String, Object>();
-		builerWhere(hqlBuilder, map);
-		builderOrder(hqlBuilder);
-		page = taskChapterManager.searchTaskChapter(page, hqlBuilder.toString(), map);
+		logger.debug("task.taskChapter.list begin{ ... ");
+		//获取taskId
+		HttpServletRequest request = ServletActionContext.getRequest();
+		String taskIdStr = request.getParameter("taskId");
+		if (null == taskIdStr || "".equals(taskIdStr)) {
+			if (SpringSecurityUtils.getCurrentUserName().equals("admin")) {
+				tcs = taskChapterManager.getAllTaskChapter();
+			}
+		} else {
+			taskId = Long.parseLong(request.getParameter("taskId"));
+			tcs = taskChapterManager.getTcsByTaskId(taskId);
+		}
+		logger.debug("task.taskChapter.list end ...} ");
 		return SUCCESS;
 	}
 
-	private void builerWhere(StringBuilder hqlBuilder, Map<String, Object> map) {
-		if (taskId != null) {
-			logger.debug("taskId is --> " + taskId);
-			hqlBuilder.append(" and t.taskId=:taskId");
-			map.put("taskId", taskId);
-		}
-	}
-
-	private void builderOrder(StringBuilder hqlBuilder) {
-		if (StringUtils.isNotBlank(page.getOrder()) && StringUtils.isNotBlank(page.getOrderBy())) {
-			hqlBuilder.append(" order by ").append(page.getOrderBy()).append(" ").append(page.getOrder());
-		} else {
-			hqlBuilder.append(" order by t.id desc");
-		}
+	//@Action(value = "edit", results = { @Result(name = "edit", location = "edit.jsp", type = "redirect") })
+	public String edit() {
+		logger.debug("编辑作业规程... begin{ ");
+		logger.debug("编辑作业规程... end} ");
+		return "edit";
 	}
 
 	@Override
@@ -76,60 +73,66 @@ public class TaskChapterAction extends CrudActionSupport<TaskChapter> {
 
 	@Override
 	public String save() throws Exception {
-		taskChapterManager.saveTaskChapter(chapter);
-		addActionMessage("保存章节信息成功！");
+		//designManager.saveTask(taskChapter);
+		addActionMessage("保存作业规程任务成功！");
 		return RELOAD;
 	}
 
 	@Override
 	public String delete() throws Exception {
-		//		task = taskManager.getTask(id);
-		//		taskManager.deleteTask(id);
-		//		dbLogger.info(SpringSecurityUtils.getCurrentUserName() + ":删除" + task.getTaskName() + "员工！");
-		//		addActionMessage("删除员工信息成功！");
+		//taskChapter = designManager.getTask(id);
+		//designManager.deleteTask(id);
+		//dbLogger.info(SpringSecurityUtils.getCurrentUserName() + ":删除" + taskChapter.getTaskName() + "任务！");
+		//addActionMessage("删除作业规任务成功！");
 		return RELOAD;
 	}
 
-	//	/**
-	//	 * 支持使用Jquery.validate Ajax检验用户名是否重复.
-	//	 */
-	//	public String checkTaskName() {
-	//		HttpServletRequest request = ServletActionContext.getRequest();
-	//		String providerId = request.getParameter("employeeName");
-	//		String oldProviderId = request.getParameter("oldemployeeName");
-	//
-	//		if (taskManager.isTaskNameUnique(providerId, oldProviderId)) {
-	//			Struts2Utils.renderText("true");
-	//		} else {
-	//			Struts2Utils.renderText("false");
-	//		}
-	//		//因为直接输出内容而不经过jsp,因此返回null.
-	//		return null;
-	//	}
-
-	public Page<TaskChapter> getPage() {
-		return page;
+	/*~~~~~~~~~~~ 重载方法 ~~~~~~~~~~~~~~~~~*/
+	@Override
+	protected void prepareModel() throws Exception {
+		if (id != null) {
+			taskChapter = taskChapterManager.getTaskChapter(id);
+		} else {
+			taskChapter = new TaskChapter();
+		}
 	}
+
+	@Override
+	public TaskChapter getModel() {
+		return taskChapter;
+	}
+
+	/*~~~~~~~~~~~Setters And Getters ~~~~~~~~~~~~~~~~~*/
 
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public String getChapterName() {
-		return chapterName;
-	}
-
-	public void setChapterName(String chapterName) {
-		this.chapterName = chapterName;
-	}
-
-	public int getTaskId() {
+	public Long getTaskId() {
 		return taskId;
 	}
 
-	public void setTaskId(Integer taskId) {
+	public void setTaskId(Long taskId) {
 		this.taskId = taskId;
 	}
+
+	public Long getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
+	}
+
+	public List<TaskChapter> getTcs() {
+		return tcs;
+	}
+
+	public void setTcs(List<TaskChapter> tcs) {
+		this.tcs = tcs;
+	}
+
+	/*~~~~~~~~~~~业务逻辑类注入~~~~~~~~~~~~~~~~~*/
 
 	@Autowired
 	public void setTaskChapterManager(TaskChapterManager taskChapterManager) {

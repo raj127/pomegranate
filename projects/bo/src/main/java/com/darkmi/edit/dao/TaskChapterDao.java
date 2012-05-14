@@ -1,9 +1,8 @@
 package com.darkmi.edit.dao;
 
-import java.util.Map;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
-import org.springside.modules.orm.Page;
 import org.springside.modules.orm.hibernate.HibernateDao;
 
 import com.darkmi.entity.task.TaskChapter;
@@ -14,10 +13,14 @@ import com.darkmi.entity.task.TaskChapter;
 @Component
 public class TaskChapterDao extends HibernateDao<TaskChapter, Long> {
 
-	private static final String GET_BY_WHERE = "from TaskChapter t where 1=1 ";
+	private static final String GET_BY_TID = "from TaskChapter t where t.task.id=? order by displayOrder asc";
 
-	public Page<TaskChapter> findPageByWhere(Page<TaskChapter> page, String where, Map<String, Object> values) {
-		return this.findPage(page, GET_BY_WHERE + where, values);
+	/**
+	 * 通过任务ID得到其下所有章节.
+	 */
+	public List<TaskChapter> getTcsByTaskId(Long taskId) {
+		return find(GET_BY_TID, taskId);
 	}
+
 }
 

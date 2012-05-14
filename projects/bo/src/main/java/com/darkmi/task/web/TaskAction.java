@@ -21,6 +21,7 @@ import com.darkmi.common.tools.Cn2Spell;
 import com.darkmi.edit.service.TaskChapterManager;
 import com.darkmi.entity.StateEnum;
 import com.darkmi.entity.system.Company;
+import com.darkmi.entity.task.CreateTypeEnum;
 import com.darkmi.entity.task.Task;
 import com.darkmi.entity.task.TaskChapter;
 import com.darkmi.entity.template.Template;
@@ -44,11 +45,10 @@ public class TaskAction extends CrudActionSupport<Task> {
 	private static final long serialVersionUID = -2907389496513631586L;
 	private Long id;
 	private Task task;
-
-	private Page<Task> page = new Page<Task>(20);
-	private boolean viewOnly = false;
-	private String createType;
 	private Long templateId;
+	private boolean viewOnly = false;
+	private boolean update = false;
+	private Page<Task> page = new Page<Task>(20);
 
 	private TaskManager taskManager;
 	private TaskChapterManager taskChapterManager;
@@ -94,9 +94,9 @@ public class TaskAction extends CrudActionSupport<Task> {
 	 */
 	@Override
 	public String save() throws Exception {
-		if ("new".equals(createType)) { //新建
+		if (CreateTypeEnum.NEW.equals(task.getCreateType())) { //新建
 			taskManager.saveTask(task);
-		} else if ("useTemplate".equals(createType)) { //使用模板
+		} else if (CreateTypeEnum.TEMPLATE.equals(task.getCreateType())) { //使用模板
 			if (templateId == null) {
 				addActionMessage("请选择作业规程模板！");
 			} else {
@@ -123,7 +123,7 @@ public class TaskAction extends CrudActionSupport<Task> {
 				}
 			}
 
-		} else if ("copy".equals(createType)) { //复制已有规程
+		} else if (CreateTypeEnum.COPY.equals(task.getCreateType())) { //复制已有规程
 
 		}
 
@@ -240,14 +240,15 @@ public class TaskAction extends CrudActionSupport<Task> {
 	public void setViewOnly(boolean viewOnly) {
 		this.viewOnly = viewOnly;
 	}
-
-	public String getCreateType() {
-		return createType;
+	
+	public boolean isUpdate() {
+		return update;
 	}
 
-	public void setCreateType(String createType) {
-		this.createType = createType;
+	public void setUpdate(boolean update) {
+		this.update = update;
 	}
+
 
 	public Long getTemplateId() {
 		return templateId;

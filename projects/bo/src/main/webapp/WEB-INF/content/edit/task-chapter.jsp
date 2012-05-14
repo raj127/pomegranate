@@ -46,11 +46,6 @@
 	<div id="yui-main">
 	<div class="yui-b">
 	<form id="mainForm" action="tast-chapter.action" method="get">
-		<input type="hidden" name="page.pageNo" id="pageNo" value="${page.pageNo}"/>
-		<input type="hidden" name="page.orderBy" id="orderBy" value="${page.orderBy}"/>
-		<input type="hidden" name="page.order" id="order" value="${page.order}"/>
-		<input type="hidden" name="page.pageSize" id="pageSize" value="${page.pageSize}"/>
-
 		<div id="message"><s:actionmessage theme="custom" cssClass="success"/></div>
 
 		<div id="content">
@@ -62,7 +57,7 @@
 					<th>操作</th>
 				</tr>
 
-				<s:iterator value="page.result">
+				<s:iterator value="tcs">
 					<tr>
 						<td>${chapterName}&nbsp;</td>
 						<td>${description}&nbsp;</td>
