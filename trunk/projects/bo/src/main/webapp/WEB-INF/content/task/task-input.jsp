@@ -74,28 +74,16 @@
 			//为inputForm注册validate函数
 			$("#inputForm").validate({
 				rules: {
-					providerId: {
+					taskName: {
 						required: true,
-						remote: "provider-info!checkProviderId.action?oldProviderId=" + encodeURIComponent('${providerId}')
-					},
-					name: {
-						required: true,
-						remote: "provider-info!checkProviderName.action?oldProviderName=" + encodeURIComponent('${name}')
-					},
-					state:"required",
-					checkedProductIds:"required"
+						remote: "task!checkTaskName.action?oldTaskName=" + encodeURIComponent('${taskName}')
+					}
 				},
 				messages: {
-					providerId: {
+					taskName: {
 						required:"不能为空",
 						remote: "已存在"
-					},
-					name: {
-						required:"不能为空",
-						remote: "已存在"
-					},
-					state:"不能为空",
-					checkedProductIds:"不能为空"
+					}
 				}
 			});
 		});
@@ -131,7 +119,7 @@
 				创建类型:
 				</td>
 				<td>
-				<select id="createType">
+				<select id="createType" name="createType">
 					<option value="new">新建</option>
 					<option value="useTemplate">使用模板</option>
 					<option value="copy">复制已有规程</option>
@@ -143,11 +131,13 @@
 				选择模板:
 				</td>
 				<td>
-				<select>
-					<option>默认模板</option>
-					<option>测试模板</option>
-					<option>其他模板</option>
-				</select>
+				<s:select id="templateId" 
+				          name="templateId"
+				          list="%{allTemplate}"  
+				          listKey="id" 
+				          listValue="templateName"   
+				          required="true" 
+				          theme="simple" />
 				</td>
 			</tr>
 			<tr id="copy">
