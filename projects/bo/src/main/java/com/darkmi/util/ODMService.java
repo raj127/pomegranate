@@ -101,7 +101,7 @@ public interface ODMService {
 //	 * @return
 //	 * @throws ServiceException
 //	 */
-//	List<Category> getCategoryList(Long parentId) throws ServiceException;
+//	List<SpecificationChapter> getCategoryList(Long parentId) throws ServiceException;
 //
 //	/**
 //	 * 
@@ -129,5 +129,5 @@ public interface ODMService {
 //	 * @return
 //	 * @throws ServiceException
 //	 */
-//	Category getCategory(Long id) throws ServiceException;
+//	SpecificationChapter getCategory(Long id) throws ServiceException;
 }
