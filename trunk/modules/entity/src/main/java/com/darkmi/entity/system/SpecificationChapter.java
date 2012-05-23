@@ -93,7 +93,7 @@ public class SpecificationChapter extends AuditableEntity {
 		return chapterList;
 	}
 
-	public void setCategoryList(List<SpecificationChapter> chapterList) {
+	public void setChapterList(List<SpecificationChapter> chapterList) {
 		this.chapterList = chapterList;
 	}
 
