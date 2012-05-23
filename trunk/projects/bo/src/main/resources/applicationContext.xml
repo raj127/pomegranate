@@ -68,7 +68,7 @@
 				<entry key="save-update">
 					<list>
 						<bean class="com.darkmi.entity.AuditListener" />
-						<!--  <bean class="com.darkmi.entity.TreeListener" />-->
+						<bean class="com.darkmi.entity.TreeListener" />
 						<bean class="org.hibernate.event.def.DefaultSaveOrUpdateEventListener" />
 					</list>
 				</entry>
