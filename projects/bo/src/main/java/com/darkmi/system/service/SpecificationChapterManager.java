@@ -54,7 +54,6 @@ public class SpecificationChapterManager {
 
 	/**
 	 * Description: 
-	 * @Version1.0 2010-12-17 下午05:25:59 laojiang created
 	 * @param Chapter
 	 */
 	public void saveChapter(SpecificationChapter Chapter) {
@@ -82,19 +81,16 @@ public class SpecificationChapterManager {
 
 	@Transactional(readOnly = true)
 	public List<SpecificationChapter> getChapterByName(String name) {
-
 		return ChapterDao.findByName(name);
 	}
 
 	/**
 	 * Description: 根据主键查询分类
-	 * @Version1.0 2010-12-8 上午09:44:18 laojiang created
 	 * @param id
 	 * @return
 	 */
 	@Transactional(readOnly = true)
 	public SpecificationChapter getChapter(Long id) {
-
 		return ChapterDao.get(id);
 	}
 
@@ -105,7 +101,6 @@ public class SpecificationChapterManager {
 
 	/**
 	 * Description: 查询根分类
-	 * @Version1.0 2010-12-8 上午09:44:30 laojiang created
 	 * @return
 	 */
 	@Transactional(readOnly = true)
@@ -117,5 +112,4 @@ public class SpecificationChapterManager {
 	public void setChapterDao(SpecificationChapterDao ChapterDao) {
 		this.ChapterDao = ChapterDao;
 	}
-
 }

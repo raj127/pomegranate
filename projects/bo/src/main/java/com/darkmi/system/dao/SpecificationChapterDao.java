@@ -16,7 +16,7 @@ import com.darkmi.entity.system.SpecificationChapter;
 @Component
 public class SpecificationChapterDao extends HibernateDao<SpecificationChapter, Long> {
 
-	private final static String FIND_ROOT_CATEGORY = " from SpecificationChapter c where c.parentCategory is null";
+	private final static String FIND_ROOT_CATEGORY = " from SpecificationChapter c where c.parentChapter is null";
 	private final static String FIND_BY_NAME = "from SpecificationChapter c where c.name like ?";
 
 	public SpecificationChapter findRootChapter() {
