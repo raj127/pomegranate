@@ -365,6 +365,22 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>jsonlib</groupId>
+			<artifactId>jsonlib</artifactId>
+			<version>2.3</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>		
+		
+		<dependency>
+			<groupId>jsonplugin</groupId>
+			<artifactId>jsonplugin</artifactId>
+			<version>0.32</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>		
+		
 	</dependencies>
 
 	<build>

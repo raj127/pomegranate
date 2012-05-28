@@ -51,6 +51,16 @@
 	</action>
 
 	</package>
+	
+	<!--  
+    <package name="specification-chapter" extends="json-default">
+         <action name="specification-chapter" class="com.darkmi.system.web.SpecificationChapterAction" method="loadDepartmentTree">
+             <result name="success" type="json"> 
+                     <param name="root">json</param> 
+             </result>
+         </action>
+    </package>
+    -->
 
 	<!-- 使用Convention插件,实现约定大于配置的零配置文件风格. 特殊的Result路径在Action类中使用@Result设定. -->
 </struts>
