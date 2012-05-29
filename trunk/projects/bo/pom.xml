@@ -306,6 +306,30 @@
 			<groupId>jacob</groupId>
 			<artifactId>jacob</artifactId>
 		</dependency>	
+
+		<dependency>
+			<groupId>jsonlib</groupId>
+			<artifactId>jsonlib</artifactId>
+			<version>2.3</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>		
+		
+		<dependency>
+			<groupId>jsonplugin</groupId>
+			<artifactId>jsonplugin</artifactId>
+			<version>0.32</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>		
+
+		<dependency>
+			<groupId>org.htmlparser</groupId>
+			<artifactId>htmlparser</artifactId>
+			<version>2.1</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
 		
 		<!-- lucene -->
 		<dependency>
@@ -323,6 +347,31 @@
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-memory</artifactId>
+		</dependency>
+
+		<!-- solr -->
+		<dependency>
+			<groupId>org.apache.solr</groupId>
+			<artifactId>solr-core</artifactId>
+			<version>3.6.0</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.solr</groupId>
+			<artifactId>solr-solrj</artifactId>
+			<version>3.6.0</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.1.1</version>
+			<type>jar</type>
+			<scope>compile</scope>
 		</dependency>
 
 		<!-- flexjson -->
@@ -351,35 +400,6 @@
 			<artifactId>mina-core</artifactId>
 		</dependency>-->
 			
-		<dependency>
-			<groupId>org.htmlparser</groupId>
-			<artifactId>htmlparser</artifactId>
-			<version>2.1</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.solr</groupId>
-			<artifactId>solr-core</artifactId>
-			<version>3.6.0</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>jsonlib</groupId>
-			<artifactId>jsonlib</artifactId>
-			<version>2.3</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>		
-		
-		<dependency>
-			<groupId>jsonplugin</groupId>
-			<artifactId>jsonplugin</artifactId>
-			<version>0.32</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>		
 		
 	</dependencies>
 
