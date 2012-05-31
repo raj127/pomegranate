@@ -365,7 +365,7 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
@@ -373,7 +373,15 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
-
+		
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpmime</artifactId>
+			<version>4.1.1</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		
 		<!-- flexjson -->
 		<!--<dependency>
 			<groupId>net.sf.flexjson</groupId>

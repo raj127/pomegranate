@@ -17,20 +17,11 @@ import org.apache.solr.common.SolrInputDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * Description:
- * @author  LiChunming
- * @version V1.0 
- * @createDateTime：2012-2-27 下午03:49:04 
- * @Company: MSD. 
- * @Copyright: Copyright (c) 2011
- **/
-@SuppressWarnings("deprecation")
 public class SolrServer {
 	private static Logger logger = LoggerFactory.getLogger(SolrServer.class);
 	private static SolrServer solrServer = null;
 	private static HttpSolrServer server = null;
-	private static String url = "http://localhost:8080/solr/core2/";
+	private static String url = "http://localhost:8080/solr/core3/";
 
 	public static synchronized SolrServer getInstance() {
 		if (solrServer == null) {
