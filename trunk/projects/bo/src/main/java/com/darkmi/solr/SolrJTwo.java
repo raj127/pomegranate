@@ -14,7 +14,7 @@ import org.apache.solr.common.SolrDocumentList;
  *
  */
 public class SolrJTwo {
-	public static void main(String[] args) {		
+	public static void main(String[] args) {	
 		String url = "http://localhost:8983/solr";
 		HttpSolrServer server;
 		try{
