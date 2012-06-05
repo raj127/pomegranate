@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springside.modules.orm.Page;
+import org.springside.modules.orm.PropertyFilter;
 
 import com.darkmi.entity.system.SpecificationChapter;
 import com.darkmi.system.dao.SpecificationChapterDao;
@@ -78,6 +80,15 @@ public class SpecificationChapterManager {
 		ChapterDao.delete(id);
 		logger.debug("删除分类 {}", id);
 	}
+	
+	/**
+	 * 根据条件查询Company的信息
+	 */
+	@Transactional(readOnly = true)
+	public Page<SpecificationChapter> searchChapter(Page<SpecificationChapter> page, List<PropertyFilter> filters) {
+		return ChapterDao.findPage(page, filters);
+	}
+
 
 	@Transactional(readOnly = true)
 	public List<SpecificationChapter> getChapterByName(String name) {
