@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 
 import com.darkmi.entity.AuditableEntity;
 import com.google.common.collect.Lists;
@@ -30,8 +31,10 @@ public class SpecificationChapter extends AuditableEntity {
 	private Integer sort;//排序
 	private Boolean isLeaf;//是否叶子节点
 	private Boolean state;//状态
+	private String content;
 	//子类实体列表
 	private List<SpecificationChapter> chapterList = Lists.newArrayList();
+	private Integer version;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "parent_id")
@@ -96,6 +99,26 @@ public class SpecificationChapter extends AuditableEntity {
 	public void setChapterList(List<SpecificationChapter> chapterList) {
 		this.chapterList = chapterList;
 	}
+
+	@Version
+	@Column(name = "version")
+	public Integer getVersion() {
+		return this.version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+	
+	@Column(name = "content")
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
 
 	@Transient
 	public void calculateTreeIndex() {
