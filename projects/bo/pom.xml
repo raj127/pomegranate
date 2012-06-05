@@ -306,7 +306,7 @@
 			<groupId>jacob</groupId>
 			<artifactId>jacob</artifactId>
 		</dependency>	
-
+		<!--  
 		<dependency>
 			<groupId>jsonlib</groupId>
 			<artifactId>jsonlib</artifactId>
@@ -322,7 +322,7 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>		
-
+		-->
 		<dependency>
 			<groupId>org.htmlparser</groupId>
 			<artifactId>htmlparser</artifactId>

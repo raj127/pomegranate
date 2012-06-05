@@ -59,16 +59,16 @@
 		<div id="content">
 			<table id="contentTable">
 				<tr>
-					<th><a href="javascript:sort('chapterName','asc')">章节名称</a></th>
-					<th><a href="javascript:sort('description','asc')">章节描述</a></th>
-					<th><a href="javascript:sort('state','asc')">作者</a></th>
+					<th><a href="javascript:sort('id','asc')">id</a></th>
+					<th><a href="javascript:sort('name','asc')">标题</a></th>
+					<th><a href="javascript:sort('content','asc')">内容</a></th>
 				</tr>
 
-				<s:iterator value="srs">
+				<s:iterator value="scList">
 					<tr>
-						<td>${title}&nbsp;</td>
-						<td>${description}&nbsp;</td>
-						<td>${author}&nbsp;</td>
+						<td>${id}&nbsp;</td>
+						<td>${name}&nbsp;</td>
+						<td>${content}&nbsp;</td>
 					</tr>
 				</s:iterator>
 			</table>
