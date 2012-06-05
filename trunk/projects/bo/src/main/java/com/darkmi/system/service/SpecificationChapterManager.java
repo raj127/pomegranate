@@ -25,6 +25,10 @@ import com.darkmi.util.ServiceException;
 public class SpecificationChapterManager {
 	private static Logger logger = LoggerFactory.getLogger(SpecificationChapterManager.class);
 	private SpecificationChapterDao ChapterDao;
+	
+	public List<SpecificationChapter> getAllChapter(){
+		return ChapterDao.getAll();
+	}
 
 	/**
 	 * Description: 保存章节

@@ -12,6 +12,7 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.darkmi.entity.system.SpecificationChapter;
 import com.google.common.collect.Lists;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -27,7 +28,7 @@ public class TaskVerifyAction extends ActionSupport {
 	protected Logger logger = LoggerFactory.getLogger(TaskVerifyAction.class);
 	private String keyWords;
 
-	private List<SearchResult> srs = Lists.newArrayList();
+	private List<SpecificationChapter> scList = Lists.newArrayList();
 
 	@Override
 	public String execute() throws Exception {
@@ -36,15 +37,16 @@ public class TaskVerifyAction extends ActionSupport {
 
 	public String search() {
 		logger.debug("search begin{ ... ");		
-		String url = "http://localhost:8983/solr";
+		logger.debug("检索关键字为 --> " + keyWords);
+		String url = "http://localhost:8080/solr/core0";
 		HttpSolrServer server;
 		try{
 			server = new HttpSolrServer(url);
 			SolrQuery query = new SolrQuery();
-			query.setQuery("description:锄");
-			query.addField("title");
-			query.addField("author");
-			query.addField("description");
+			query.setQuery("content:" + keyWords);
+			query.addField("id");
+			query.addField("chapterName");
+			query.addField("content");
 			
 			query.setStart(0);
 			query.setRows(10);
@@ -53,11 +55,11 @@ public class TaskVerifyAction extends ActionSupport {
 			SolrDocumentList list = response.getResults();
 			for (Iterator<SolrDocument> iterator = list.iterator(); iterator.hasNext();) {
 				SolrDocument solrDocument = (SolrDocument) iterator.next();
-				SearchResult sr = new SearchResult();
-				sr.setTitle(solrDocument.getFieldValue("title").toString());
-				sr.setDescription(solrDocument.getFieldValue("description").toString());
-				sr.setAuthor(solrDocument.getFieldValue("author").toString());
-				srs.add(sr);
+				SpecificationChapter chpater = new SpecificationChapter();
+				chpater.setId(Long.parseLong(solrDocument.getFieldValue("id").toString()));
+				chpater.setName(solrDocument.getFieldValue("chapterName").toString());
+				chpater.setContent(solrDocument.getFieldValue("content").toString());
+				scList.add(chpater);
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -79,12 +81,14 @@ public class TaskVerifyAction extends ActionSupport {
 		this.keyWords = keyWords;
 	}
 	
-	public List<SearchResult> getSrs() {
-		return srs;
+	public List<SpecificationChapter> getScList() {
+		return scList;
 	}
 
-	public void setSrs(List<SearchResult> srs) {
-		this.srs = srs;
+	public void setScList(List<SpecificationChapter> scList) {
+		this.scList = scList;
 	}
+
+	
 
 }
