@@ -21,6 +21,7 @@
 		myLayout = $('body').layout({
 			// enable showOverflow on west-pane so popups will overlap north pane
 			//west__showOverflowOnHover: true,
+			applyDefaultStyles: true,//应用默认样式
 			west__size:710
 
 		//,	west__fxSettings_open: { easing: "easeOutBounce", duration: 750 }
@@ -131,6 +132,11 @@
 
 </head>
 <body>
+<div id="doc3">
+<%@ include file="/common/header.jsp" %>
+<div id="bd">
+	<div id="yui-main">
+	<div class="yui-b">
 
 
 <!-- manually attach allowOverflow method to pane -->
@@ -160,5 +166,10 @@
 </div>
 
 
+	</div>
+	</div>
+</div>
+<%@ include file="/common/footer.jsp" %>
+</div>
 </body>
 </html>
