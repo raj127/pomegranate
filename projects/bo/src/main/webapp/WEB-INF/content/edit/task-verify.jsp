@@ -2,34 +2,52 @@
 <%@ page import="org.springside.modules.security.springsecurity.SpringSecurityUtils" %>
 <%@ include file="/common/taglibs.jsp" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>作业规程校验</title>
-	<%@ include file="/common/meta.jsp" %>
-	<link href="${ctx}/css/yui.css" type="text/css" rel="stylesheet"/>
-	<link href="${ctx}/css/style.css" type="text/css" rel="stylesheet"/>
-
+	<title>Simple Layout Demo</title>
 	<script type="text/javascript" src="${ctx}/js/jquery.js"></script>
 	<script type="text/javascript" src="${ctx}/js/jquery.ui.all.js"></script>
 	<script type="text/javascript" src="${ctx}/js/jquery.layout.js"></script>
-	<script type="text/javascript">
 	
+	<script type="text/javascript">
 	var myLayout; // a var is required because this page utilizes: myLayout.allowOverflow() method
-
 	$(document).ready(function () {
 		myLayout = $('body').layout({
 			// enable showOverflow on west-pane so popups will overlap north pane
 			//west__showOverflowOnHover: true,
 			applyDefaultStyles: true,//应用默认样式
 			west__size:710
-
 		//,	west__fxSettings_open: { easing: "easeOutBounce", duration: 750 }
 		});
+		
+		//给所有的超链接添加click方法
+		$('a').click(function(){
+			doSearch($(this).html());
+		});
+		
  	});
-
+	
+	
 	</script>
-
+	
+	<script type="text/javascript">
+	
+	//提交请求
+    function doSearch(selectedSentence){
+		//alert(selectedSentence);
+        var url = 'task-verify!search.action';
+        var params = {sentence:selectedSentence};
+        
+        jQuery.post(url, params, callbackFun);
+    }
+    
+    //回调函数
+    function callbackFun(data){
+    	$('.ui-layout-center').html(data); 
+    }
+	
+	</script>
 
 	<style type="text/css">
 	/**
@@ -38,7 +56,6 @@
 	 *	This theme uses the default layout class-names for all classes
 	 *	Add any 'custom class-names', from options: paneClass, resizerClass, togglerClass
 	 */
-
 	.ui-layout-pane { /* all 'panes' */ 
 		background: #FFF; 
 		border: 1px solid #BBB; 
@@ -58,10 +75,6 @@
 
 
 	<style type="text/css">
-	/**
-	 *	ALL CSS below is only for cosmetic and demo purposes
-	 *	Nothing here affects the appearance of the layout
-	 */
 
 	body {
 		font-family: Arial, sans-serif;
@@ -70,19 +83,14 @@
 	p {
 		margin: 1em 0;
 	}
-
-	/*
-	 *	Rules below are for simulated drop-down/pop-up lists
-	 */
+	
 	ul {
-		/* rules common to BOTH inner and outer UL */
 		z-index:	100000;
 		margin:		1ex 0;
 		padding:	0;
 		list-style:	none;
 		cursor:		pointer;
 		border:		1px solid Black;
-		/* rules for outer UL only */
 		width:		15ex;
 		position:	relative;
 	}
@@ -95,13 +103,11 @@
 		position:	absolute;
 		width:		100%;
 		left:		-1px;
-		/* Pop-Up */
 		bottom:		0;
 		margin:		0;
 		margin-bottom: 1.55em;
 	}
 	.ui-layout-north ul ul {
-		/* Drop-Down */
 		bottom:		auto;
 		margin:		0;
 		margin-top:	1.45em;
@@ -132,12 +138,6 @@
 
 </head>
 <body>
-<div id="doc3">
-<%@ include file="/common/header.jsp" %>
-<div id="bd">
-	<div id="yui-main">
-	<div class="yui-b">
-
 
 <!-- manually attach allowOverflow method to pane -->
 <div class="ui-layout-north" onmouseover="myLayout.allowOverflow('north')" onmouseout="myLayout.resetOverflow(this)">
@@ -165,11 +165,5 @@
 <div class="ui-layout-center">
 </div>
 
-
-	</div>
-	</div>
-</div>
-<%@ include file="/common/footer.jsp" %>
-</div>
 </body>
 </html>
