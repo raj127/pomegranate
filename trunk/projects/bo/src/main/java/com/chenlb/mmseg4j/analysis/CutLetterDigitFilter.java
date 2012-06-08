@@ -18,6 +18,7 @@ import com.chenlb.mmseg4j.Word;
  * 
  * @author chenlb 2009-10-14 下午04:03:18
  */
+@SuppressWarnings("deprecation")
 public class CutLetterDigitFilter extends TokenFilter {
 
 	protected Queue<Token> tokenQueue = new LinkedList<Token>();
