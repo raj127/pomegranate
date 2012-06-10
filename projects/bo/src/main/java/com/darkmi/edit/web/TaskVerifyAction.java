@@ -2,6 +2,7 @@ package com.darkmi.edit.web;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -40,54 +41,75 @@ public class TaskVerifyAction extends ActionSupport {
 		logger.debug("end execute() ...} ");
 		return super.execute();
 	}
-	
-	public void testSearch() throws Exception{
-		logger.debug("begin testSearch() { ...");
-		HttpServletResponse response = ServletActionContext.getResponse(); 
-        response.setCharacterEncoding("UTF-8");      
-        response.getWriter().write(sentence);
-        logger.debug("end testSearch() ...} ");
-	}
 
-	public void search() throws Exception{
-		logger.debug("search begin{ ... ");		
+	/**
+	 * 查询
+	 * @throws Exception
+	 */
+	public void search() throws Exception {
+		logger.debug("search begin{ ... ");
 		//logger.debug("检索关键字为 --> " + keyWords);
-		StringBuffer reMessage = new StringBuffer(); 
+		StringBuffer reMessage = new StringBuffer();
 		String url = "http://localhost:8080/solr/core0";
 		HttpSolrServer server;
-		try{
+		try {
 			server = new HttpSolrServer(url);
-			SolrQuery query = new SolrQuery();
-			query.setQuery("content:" + "安全");
-			query.addField("id");
-			query.addField("chapterName");
-			query.addField("content");
-			
+
+			//SolrQuery query = new SolrQuery(getKey("安全"));
+			SolrQuery query = new SolrQuery("content:安全");
+			query.setHighlight(true); //开启高亮组件 
+			query.addHighlightField("id");
+			query.addHighlightField("chapterName");//高亮字段  
+			query.addHighlightField("content");
+			query.setHighlightSimplePre("<font color='red'>");//前缀  
+			query.setHighlightSimplePost("</font>");//后缀  
+			query.set("hl.usePhraseHighlighter", true);
+			query.set("hl.highlightMultiTerm", true);
+			query.set("hl.snippets", 3);//三个片段,默认是1  
+			query.set("hl.fragsize", 50);//每个片段50个字，默认是100  
+
 			query.setStart(0);
 			query.setRows(10);
-			
+
 			QueryResponse response = server.query(query);
 			SolrDocumentList list = response.getResults();
+			Map<String, Map<String, List<String>>> highlightMap = response.getHighlighting();
+
 			for (Iterator<SolrDocument> iterator = list.iterator(); iterator.hasNext();) {
-				SolrDocument solrDocument = (SolrDocument) iterator.next();
-				reMessage.append("<p>").append(solrDocument.getFieldValue("content").toString()).append("</p>");
-				
-				//SpecificationChapter chpater = new SpecificationChapter();
-				//chpater.setId(Long.parseLong(solrDocument.getFieldValue("id").toString()));
-				//chpater.setName(solrDocument.getFieldValue("chapterName").toString());
-				//chpater.setContent(solrDocument.getFieldValue("content").toString());
-				//scList.add(chpater);
+				SolrDocument doc = (SolrDocument) iterator.next();
+				String id = doc.getFieldValue("id").toString();
+				String hlContent = highlightMap.get(id).get("content").get(0).toString();
+				logger.debug(hlContent);
+
+				//logger.debug("-->" + doc.getFieldValue("content").toString());
+				reMessage.append("<p>").append(hlContent).append("</p>");
+
 			}
-		}catch(Exception e){
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		HttpServletResponse response = ServletActionContext.getResponse(); 
-        response.setCharacterEncoding("UTF-8");      
-        response.getWriter().write(reMessage.toString());
 
+		HttpServletResponse response = ServletActionContext.getResponse();
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(reMessage.toString());
 
 		logger.debug("search end ...} ");
+
+	}
+
+	public String getKey(String strWord) {
+		if (strWord.indexOf(" ") > 0) {
+			String wordAnd = strWord.replace(" ", "* AND *");
+			String wordOr = strWord.replace(" ", "* *");
+			String rt = "(*" + wordAnd + "*) *" + wordOr + "* " + strWord;
+			logger.debug("查询字符为 --> {}", rt);
+			return rt;
+		} else {
+			String rt = "*" + strWord + "* " + strWord;
+			logger.debug("查询字符为 --> {}", rt);
+			return rt;
+		}
 
 	}
 
@@ -101,7 +123,6 @@ public class TaskVerifyAction extends ActionSupport {
 		this.sentence = sentence;
 	}
 
-	
 	public List<SpecificationChapter> getScList() {
 		return scList;
 	}
@@ -109,7 +130,5 @@ public class TaskVerifyAction extends ActionSupport {
 	public void setScList(List<SpecificationChapter> scList) {
 		this.scList = scList;
 	}
-
-	
 
 }
