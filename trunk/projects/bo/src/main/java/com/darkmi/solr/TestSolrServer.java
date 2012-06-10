@@ -17,15 +17,15 @@ import org.apache.solr.common.SolrInputDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SolrServer {
-	private static Logger logger = LoggerFactory.getLogger(SolrServer.class);
-	private static SolrServer solrServer = null;
+public class TestSolrServer {
+	private static Logger logger = LoggerFactory.getLogger(TestSolrServer.class);
+	private static TestSolrServer solrServer = null;
 	private static HttpSolrServer server = null;
 	private static String url = "http://localhost:8080/solr/core3/";
 
-	public static synchronized SolrServer getInstance() {
+	public static synchronized TestSolrServer getInstance() {
 		if (solrServer == null) {
-			solrServer = new SolrServer();
+			solrServer = new TestSolrServer();
 		}
 		return solrServer;
 	}
@@ -54,7 +54,7 @@ public class SolrServer {
 		try {
 			blog.setId(SerialNumberUtil.getRandomNum(4));
 			//获取连接服务
-			HttpSolrServer solrServer = SolrServer.getInstance().getServer();
+			HttpSolrServer solrServer = TestSolrServer.getInstance().getServer();
 			SolrInputDocument doc1 = new SolrInputDocument();
 			doc1.addField("id", SerialNumberUtil.getRandomNum(4));
 			doc1.addField("blogId", blog.getBlogsId());
@@ -78,7 +78,7 @@ public class SolrServer {
 			throws Exception {
 		List<BlogsDO> blogList = new ArrayList<BlogsDO>();
 		BlogsDO blogsDO = null;
-		HttpSolrServer solrServer = SolrServer.getInstance().getServer();
+		HttpSolrServer solrServer = TestSolrServer.getInstance().getServer();
 		SolrQuery sQuery = new SolrQuery();
 		String para = "";
 		//OR 或者  OR 一定要大写
@@ -149,26 +149,31 @@ public class SolrServer {
 			Map<String, Map<String, List<String>>> highlightMap = response.getHighlighting();
 			String blogId = "";
 			for (SolrDocument solrDocument : list) {
+				
 				blogsDO = new BlogsDO();
 				blogId = solrDocument.getFieldValue("blogId").toString();
 				blogsDO.setBlogsId(Integer.valueOf(blogId));
 				blogsDO.setbTypeId(solrDocument.getFieldValue("bTypeId").toString());
 				blogsDO.setbTypeName(solrDocument.getFieldValue("bTypeName").toString());
 				blogsDO.setNickName(solrDocument.getFieldValue("nickName").toString());
+				
 				List<String> titleList = highlightMap.get(blogId).get("title");
 				List<String> contentList = highlightMap.get(blogId).get("content");
+				
 				if (titleList != null && titleList.size() > 0) {
 					blogsDO.setTitle(titleList.get(0));
 				} else {
 					//获取并设置高亮的字段title
 					blogsDO.setTitle(solrDocument.getFieldValue("title").toString());
 				}
+				
 				if (contentList != null && contentList.size() > 0) {
 					blogsDO.setContent(contentList.get(0));
 				} else {
 					//获取并设置高亮的字段content
 					blogsDO.setContent(solrDocument.getFieldValue("content").toString());
 				}
+				
 				blogsDO.setRevDate(solrDocument.getFieldValue("createTime").toString());
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 				try {
