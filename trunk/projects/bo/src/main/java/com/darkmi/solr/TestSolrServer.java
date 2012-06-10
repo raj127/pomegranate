@@ -54,6 +54,7 @@ public class TestSolrServer {
 		try {
 			blog.setId(SerialNumberUtil.getRandomNum(4));
 			//获取连接服务
+			@SuppressWarnings("static-access")
 			HttpSolrServer solrServer = TestSolrServer.getInstance().getServer();
 			SolrInputDocument doc1 = new SolrInputDocument();
 			doc1.addField("id", SerialNumberUtil.getRandomNum(4));
@@ -78,6 +79,7 @@ public class TestSolrServer {
 			throws Exception {
 		List<BlogsDO> blogList = new ArrayList<BlogsDO>();
 		BlogsDO blogsDO = null;
+		@SuppressWarnings("static-access")
 		HttpSolrServer solrServer = TestSolrServer.getInstance().getServer();
 		SolrQuery sQuery = new SolrQuery();
 		String para = "";
