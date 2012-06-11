@@ -16,7 +16,9 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.chenlb.mmseg4j.example.Complex;
 import com.darkmi.entity.system.SpecificationChapter;
+import com.darkmi.solr.SolrClient;
 import com.google.common.collect.Lists;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -48,7 +50,9 @@ public class TaskVerifyAction extends ActionSupport {
 	 */
 	public void search() throws Exception {
 		logger.debug("search begin{ ... ");
-		//logger.debug("检索关键字为 --> " + keyWords);
+		String keyWords = new Complex().doit(sentence);
+		
+		logger.debug("检索关键字为 --> " + keyWords);
 		StringBuffer reMessage = new StringBuffer();
 		String url = "http://localhost:8080/solr/core0";
 		HttpSolrServer server;
@@ -56,7 +60,7 @@ public class TaskVerifyAction extends ActionSupport {
 			server = new HttpSolrServer(url);
 
 			//SolrQuery query = new SolrQuery(getKey("安全"));
-			SolrQuery query = new SolrQuery("content:安全");
+			SolrQuery query = new SolrQuery(SolrClient.prepareKeyWords(keyWords));
 			query.setHighlight(true); //开启高亮组件 
 			query.addHighlightField("id");
 			query.addHighlightField("chapterName");//高亮字段  
