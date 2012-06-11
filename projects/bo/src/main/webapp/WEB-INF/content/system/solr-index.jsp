@@ -83,12 +83,15 @@
 						<td>${id}&nbsp;</td>
 						<td>${chapterName}&nbsp;</td>
 						<td>
+							${content}
+							<%-- 
 							<s:if test="%{content != null && content.length()>70}">
 	                      			<s:property value='%{content.substring(0, 59)+"......"}' />
 				           	</s:if>
 				           	<s:else>
 				            	<s:property value="%{content}" default="-" />
 				          	</s:else>
+				          	--%>
 			          	</td>
 						<td>&nbsp;
 							<security:authorize ifAnyGranted="ROLE_用户浏览">

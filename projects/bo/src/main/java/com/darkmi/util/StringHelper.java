@@ -207,6 +207,21 @@ public final class StringHelper {
 		return resStr;
 	}
 
+	/**
+	 * 判断一个字符串是否为空字符串.
+	 * @param resStr
+	 * @return
+	 */
+	public static boolean isEmpty(String resStr) {
+		if (resStr == null) {
+			return true;
+		} else if (" ".equals(resStr)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public static void main(String[] args) {
 		System.out.println(System.getProperty("file.separator"));
 		System.out.println(formatPath("C:///\\xxxx\\\\\\\\\\///\\\\R5555555.txt"));

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
@@ -181,8 +182,11 @@ public class SolrClient {
 		HttpSolrServer solrServer = SolrClient.getInstance().connect();
 		//创建一个查询实体
 		SolrQuery sQuery = new SolrQuery();
+
+		//预处理关键词
+		String queryStr = prepareKeyWords(keyWords);
 		//查询参数处理
-		sQuery.setQuery("content:" + keyWords);
+		sQuery.setQuery(queryStr);
 		//分页设置
 		sQuery.setStart(page.getFirst() - 1);
 		sQuery.setRows(page.getPageSize());
@@ -229,6 +233,22 @@ public class SolrClient {
 		}
 		page.setResult(scList);
 		return page;
+	}
+
+	private static String prepareKeyWords(String keyWords) {
+		String result = "";
+		if (StringUtils.isBlank(keyWords)) {
+			logger.debug("关键词为空,输出所有索引..........");
+			return "content";
+		} else {
+			String[] words = StringUtils.split(keyWords, ' ');
+			for (String word : words) {
+				result = result + "content:" + word + " AND ";
+			}
+			result = StringUtils.substringBeforeLast(result, " AND ");
+			logger.debug("查询字符串为 --> {}", result);
+			return result;
+		}
 	}
 
 	/*~~~~~~~~~~~业务逻辑类注入~~~~~~~~~~~~~~~~~*/
