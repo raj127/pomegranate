@@ -3,6 +3,7 @@ package com.darkmi.solr;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class SolrClient {
 	private HttpSolrServer server = null;
@@ -12,7 +13,7 @@ public class SolrClient {
 	/**
 	 * 启动Solr客户端 
 	 */
-	public void init(){
+	public void start(){
 		logger.debug("开始启动Solr客服端  {");
 		try {
 			if (server == null) {
@@ -34,17 +35,31 @@ public class SolrClient {
 	}
 	
 	/**
-	 * 创建索引
+	 * 创建索引.
 	 */
 	public void createIndex(){
 		
 	}
 	
 	/**
-	 * 删除索引
+	 * 删除索引.
 	 */
 	public void deleteIndex(){
 		
 	}
+	
+	/**
+	 * 检索.
+	 */
+	public void search(){
+		
+	}
+	
+	/*~~~~~~~~~~~业务逻辑类注入~~~~~~~~~~~~~~~~~*/
+	@Autowired
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
 
 }

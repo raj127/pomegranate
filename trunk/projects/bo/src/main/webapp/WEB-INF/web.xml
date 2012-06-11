@@ -143,7 +143,11 @@
 	<listener>
 		<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
 	</listener>
-
+	
+	<listener>
+		<listener-class>com.darkmi.listener.StartListener</listener-class>
+	</listener>
+	
 	<!-- session超时定义,单位为分钟 -->
 	<session-config>
 		<session-timeout>20</session-timeout>

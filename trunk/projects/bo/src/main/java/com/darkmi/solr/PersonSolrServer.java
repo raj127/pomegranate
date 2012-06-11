@@ -10,8 +10,6 @@ import org.apache.solr.client.solrj.impl.CommonsHttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrInputDocument;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /** 
  * @author Sam 时间：2011-9-16 下午3:25:15 
@@ -20,13 +18,13 @@ import org.slf4j.LoggerFactory;
 public class PersonSolrServer {
 
 	private final static String URL = "http://localhost/solr/person";
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	private final static Integer SOCKE_TTIMEOUT = 1000; // socket read timeout  
 	private final static Integer CONN_TIMEOUT = 100;
 	private final static Integer MAXCONN_DEFAULT = 100;
 	private final static Integer MAXCONN_TOTAL = 100;
 	private final static Integer MAXRETRIES = 1;
 	private CommonsHttpSolrServer server = null;
+	@SuppressWarnings("unused")
 	private final static String ASC = "asc";
 
 	public PersonSolrServer() throws MalformedURLException {
