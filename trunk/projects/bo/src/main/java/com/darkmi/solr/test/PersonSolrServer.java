@@ -1,4 +1,4 @@
-package com.darkmi.solr;
+package com.darkmi.solr.test;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;

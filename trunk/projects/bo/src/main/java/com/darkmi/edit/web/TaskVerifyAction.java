@@ -29,7 +29,7 @@ import com.opensymphony.xwork2.ActionSupport;
 @Namespace("/edit")
 public class TaskVerifyAction extends ActionSupport {
 	private static final long serialVersionUID = -2907389496513631586L;
-	protected Logger logger = LoggerFactory.getLogger(TaskVerifyAction.class);
+	private Logger logger = LoggerFactory.getLogger(TaskVerifyAction.class);
 	private String sentence;
 
 	private List<SpecificationChapter> scList = Lists.newArrayList();
