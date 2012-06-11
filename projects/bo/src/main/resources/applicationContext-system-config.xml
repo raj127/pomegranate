@@ -22,5 +22,8 @@
 		<property name="templateDefault" value="${template.default}"></property>
 		<property name="attachmentDefault" value="${attachment.default}"></property>
 	</bean>
-
+	
+	<bean id="solrClient" class="com.darkmi.solr.SolrClient">
+		<property name="url" value="${solr.server.host}"></property> 
+	</bean>
 </beans>

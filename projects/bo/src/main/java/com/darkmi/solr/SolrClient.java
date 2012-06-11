@@ -15,9 +15,10 @@ import org.apache.solr.common.SolrInputDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springside.modules.orm.Page;
 
 import com.darkmi.solr.dto.SpecificationChapterDto;
-import com.darkmi.solr.test.StringUtils;
+import com.google.common.collect.Lists;
 
 /**
  * Description: Solr客户端.
@@ -28,8 +29,8 @@ import com.darkmi.solr.test.StringUtils;
 public class SolrClient {
 	private static SolrClient solrClient = null;
 	private static HttpSolrServer server = null;
-	private String url;
-	private Logger logger = LoggerFactory.getLogger(SolrClient.class);
+	private String url = "http://localhost:8080/solr/core0/";
+	private static Logger logger = LoggerFactory.getLogger(SolrClient.class);
 
 	/**
 	 * 获取Solr客户端.<br>
@@ -48,8 +49,10 @@ public class SolrClient {
 	 * @return
 	 */
 	public HttpSolrServer connect() {
+		logger.debug("开始连接 {...");
 		try {
 			if (server == null) {
+				logger.debug("url -->{}", url);
 				server = new HttpSolrServer(url);
 				server.setSoTimeout(1000); // socket read timeout
 				server.setConnectionTimeout(1000);
@@ -64,6 +67,7 @@ public class SolrClient {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		logger.debug("结束连接...}");
 		return server;
 	}
 
@@ -72,27 +76,11 @@ public class SolrClient {
 	 */
 	public void start() {
 		logger.debug("开始启动Solr客服端  {");
-		//		try {
-		//			if (server == null) {
-		//				server = new HttpSolrServer(url);
-		//				server.setSoTimeout(1000); // socket read timeout
-		//				server.setConnectionTimeout(1000);
-		//				server.setDefaultMaxConnectionsPerHost(100);
-		//				server.setMaxTotalConnections(100);
-		//				server.setFollowRedirects(false); // defaults to false
-		//				//allowCompression defaults to false.
-		//				//Server side must support gzip or deflate for this to have any effect.
-		//				server.setAllowCompression(true);
-		//				server.setMaxRetries(1); // defaults to 0.  > 1 not recommended.
-		//			}
-		//		} catch (Exception e) {
-		//			e.printStackTrace();
-		//		}
 		logger.debug("结束启动Solr客服端  }");
 	}
 
 	/**
-	 * 创建索引.
+	 * 为单个文档创建索引.
 	 */
 	public static void createIndex(SpecificationChapterDto scDto) {
 		try {
@@ -103,6 +91,31 @@ public class SolrClient {
 			doc1.addField("blogId", scDto.getChapterName());
 			doc1.addField("title", scDto.getContent());
 			solrServer.add(doc1);
+			solrServer.commit();
+		} catch (SolrServerException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 为单个文档创建索引.
+	 */
+	public static void createIndex(List<SpecificationChapterDto> scDtos) {
+		try {
+			List<SolrInputDocument> siDocs = Lists.newArrayList();
+			for (SpecificationChapterDto scDto : scDtos) {
+				SolrInputDocument doc = new SolrInputDocument();
+				doc.addField("id", scDto.getId());
+				doc.addField("blogId", scDto.getChapterName());
+				doc.addField("title", scDto.getContent());
+				siDocs.add(doc);
+			}
+
+			//获取连接服务
+			HttpSolrServer solrServer = SolrClient.getInstance().connect();
+			solrServer.add(siDocs);
 			solrServer.commit();
 		} catch (SolrServerException e) {
 			e.printStackTrace();
@@ -159,50 +172,39 @@ public class SolrClient {
 	/**
 	 * 检索.
 	 */
-	public List<SpecificationChapterDto> search(String sentence) {
+	public static Page<SpecificationChapterDto> search(Page<SpecificationChapterDto> page, String keyWords) {
 		List<SpecificationChapterDto> scList = new ArrayList<SpecificationChapterDto>();
 		SpecificationChapterDto scDto = null;
 
+		//获取Solr Server实例
 		HttpSolrServer solrServer = SolrClient.getInstance().connect();
+		//创建一个查询实体
 		SolrQuery sQuery = new SolrQuery();
-		String para = "";
-		//OR 或者  OR 一定要大写
-		if (StringUtils.isNotEmpty(sentence)) {
-		}
+		//查询参数处理
+		sQuery.setQuery("content:" + keyWords);
+		//分页设置
+		sQuery.setStart(page.getFirst() - 1);
+		sQuery.setRows(page.getPageSize());
 
-		//AND 并且  AND一定要大写
-
-		// 查询关键词，*:*代表所有属性、所有值，即所有index
-		if (!StringUtils.isNotEmpty(para)) {
-			para = "*:*";
-		}
-
-		logger.info("para:" + para);
-		sQuery.setQuery(para);
-		//设置分页  start=0就是从0开始，，rows=5当前返回5条记录，第二页就是变化start这个值为5就可以了。
-		//sQuery.setStart((page.getCurrentPage() - 1) * page.getPerPageSize());
-		//sQuery.setRows(page.getPerPageSize());
-		//排序 如果按照blogId 排序，，那么将blogId desc(or asc) 改成 id desc(or asc)
+		//设置排序字段
 		//sQuery.addSortField("blogId", ORDER.asc);
 
 		//设置高亮
 		sQuery.setHighlight(true); // 开启高亮组件
 		sQuery.addHighlightField("content");// 高亮字段
-		sQuery.addHighlightField("title");// 高亮字段
 		sQuery.setHighlightSimplePre("<font color='red'>");//标记，高亮关键字前缀
 		sQuery.setHighlightSimplePost("</font>");//后缀
 		sQuery.setHighlightSnippets(2);//结果分片数，默认为1
 		sQuery.setHighlightFragsize(1000);//每个分片的最大长度，默认为100
-
 		//分片信息
 		sQuery.setFacet(true).setFacetMinCount(1).setFacetLimit(5).addFacetField("content");//分片字段
 
 		try {
 			QueryResponse response = solrServer.query(sQuery);
 			SolrDocumentList list = response.getResults();
-			Integer counts = (int) list.getNumFound();
-			logger.info("counts:" + counts);
-			//page.setCounts(counts);
+			Integer totalCount = (int) list.getNumFound();
+			logger.debug("totalCount:" + totalCount);
+			page.setTotalCount(totalCount);
 			//获取所有高亮的字段
 			Map<String, Map<String, List<String>>> highlightMap = response.getHighlighting();
 			String scId = "";
@@ -211,7 +213,6 @@ public class SolrClient {
 				scId = solrDocument.getFieldValue("id").toString();
 				scDto.setId(scId);
 				scDto.setChapterName(solrDocument.getFieldValue("chapterName").toString());
-				scDto.setChapterName(solrDocument.getFieldValue("content").toString());
 
 				List<String> contentList = highlightMap.get(scId).get("content");
 				if (contentList != null && contentList.size() > 0) {
@@ -225,13 +226,14 @@ public class SolrClient {
 		} catch (SolrServerException e) {
 			e.printStackTrace();
 		}
-		return scList;
-
+		page.setResult(scList);
+		return page;
 	}
 
 	/*~~~~~~~~~~~业务逻辑类注入~~~~~~~~~~~~~~~~~*/
 	@Autowired
 	public void setUrl(String url) {
+		logger.debug("set url --> {}", url);
 		this.url = url;
 	}
 

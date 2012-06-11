@@ -8,9 +8,7 @@
 package org.springside.modules.orm;
 
 import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
-
 import com.google.common.collect.Lists;
 
 /**
@@ -28,10 +26,10 @@ public class Page<T> {
 	public static final String DESC = "desc";
 
 	//-- 分页参数 --//
-	protected int pageNo = 1;
-	protected int pageSize = -1;
-	protected String orderBy = null;
-	protected String order = null;
+	protected int pageNo = 1; //当前页的页号
+	protected int pageSize = -1; //每页的记录数量
+	protected String orderBy = null; //排序字段
+	protected String order = null; //排序方向
 	protected boolean autoCount = true;
 
 	//-- 返回结果 --//
