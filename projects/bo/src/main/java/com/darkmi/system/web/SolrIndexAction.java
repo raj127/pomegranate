@@ -61,6 +61,7 @@ public class SolrIndexAction extends ActionSupport {
 	 */
 	public String deleteAllIndex() throws Exception {
 		logger.debug("begin 删除所有索引 {...");
+		SolrClient.deleteAllIndex();
 		logger.debug("end 删除所有索引 ... }");
 		return SUCCESS;
 	}
