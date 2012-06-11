@@ -1,4 +1,4 @@
-package com.darkmi.solr;
+package com.darkmi.solr.test;
 
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.common.SolrInputDocument;
