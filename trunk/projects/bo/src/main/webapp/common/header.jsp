@@ -69,6 +69,7 @@
 					<a id="subNav205" href="${ctx}/system/log.action" >日志列表</a>
 					<a id="subNav206" href="${ctx}/system/specification-chapter.action" >查看规范</a>
 					<a id="subNav207" href="${ctx}/system/ztree.action" >ztree</a>
+					<a id="subNav208" href="${ctx}/system/solr-index.action" >索引维护</a>
 				</div>
 			</security:authorize>
 			

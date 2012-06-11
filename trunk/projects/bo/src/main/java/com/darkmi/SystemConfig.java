@@ -15,6 +15,8 @@ public class SystemConfig {
 	private String taskDefault;
 	private String templateDefault;
 	private String attachmentDefault;
+	
+	
 
 	public String getCompanyFolder() {
 		return companyFolder;
