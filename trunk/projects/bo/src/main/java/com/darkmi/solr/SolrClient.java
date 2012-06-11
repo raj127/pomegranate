@@ -235,7 +235,7 @@ public class SolrClient {
 		return page;
 	}
 
-	private static String prepareKeyWords(String keyWords) {
+	public static String prepareKeyWords(String keyWords) {
 		String result = "";
 		if (StringUtils.isBlank(keyWords)) {
 			logger.debug("关键词为空,输出所有索引..........");
