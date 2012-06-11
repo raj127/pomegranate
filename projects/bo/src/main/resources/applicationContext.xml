@@ -85,7 +85,7 @@
 	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
 	
 	<bean id="solrClient" class="com.darkmi.solr.SolrClient">
-		<property name="sessionFactory" ref="sessionFactory" />
+		<property name="url" value="${solr.server.host}" />
 	</bean>
 	
 </beans>
