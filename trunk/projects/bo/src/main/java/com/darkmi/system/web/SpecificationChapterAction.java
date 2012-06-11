@@ -3,8 +3,6 @@ package com.darkmi.system.web;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.solr.client.solrj.impl.HttpSolrServer;
-import org.apache.solr.common.SolrInputDocument;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
@@ -15,6 +13,8 @@ import org.springside.modules.orm.PropertyFilter;
 import org.springside.modules.utils.web.struts2.Struts2Utils;
 
 import com.darkmi.entity.system.SpecificationChapter;
+import com.darkmi.solr.SolrClient;
+import com.darkmi.solr.dto.SpecificationChapterDto;
 import com.darkmi.system.service.SpecificationChapterManager;
 import com.darkmi.util.CrudActionSupport;
 import com.google.common.collect.Lists;
@@ -79,29 +79,17 @@ public class SpecificationChapterAction extends CrudActionSupport<SpecificationC
 
 	public String index() {
 		logger.debug("更新索引 begin { ... ");
-
-		List<SolrInputDocument> docs = Lists.newArrayList();
+		List<SpecificationChapterDto> scDtos = Lists.newArrayList();
 		List<SpecificationChapter> scs = chapterManager.getAllChapter();
 		for (Iterator<SpecificationChapter> iterator = scs.iterator(); iterator.hasNext();) {
 			SpecificationChapter chapter = (SpecificationChapter) iterator.next();
-
-			SolrInputDocument doc = new SolrInputDocument();
-			doc.addField("id", chapter.getId());
-			doc.addField("chapterName", chapter.getName());
-			doc.addField("content", chapter.getContent());
-			docs.add(doc);
+			SpecificationChapterDto scDto = new SpecificationChapterDto();
+			scDto.setId(String.valueOf(chapter.getId()));
+			scDto.setChapterName(chapter.getName());
+			scDto.setContent(chapter.getContent());
+			scDtos.add(scDto);
 		}
-
-		String url = "http://localhost:8080/solr/core0";
-		HttpSolrServer server;
-		try {
-			server = new HttpSolrServer(url);
-			server.add(docs);
-			server.commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+		SolrClient.createIndex(scDtos);
 		logger.debug("更新索引 end ... }");
 		return RELOAD;
 	}

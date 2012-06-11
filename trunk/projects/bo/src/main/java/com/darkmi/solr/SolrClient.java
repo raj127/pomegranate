@@ -88,8 +88,8 @@ public class SolrClient {
 			HttpSolrServer solrServer = SolrClient.getInstance().connect();
 			SolrInputDocument doc1 = new SolrInputDocument();
 			doc1.addField("id", scDto.getId());
-			doc1.addField("blogId", scDto.getChapterName());
-			doc1.addField("title", scDto.getContent());
+			doc1.addField("chapterName", scDto.getChapterName());
+			doc1.addField("content", scDto.getContent());
 			solrServer.add(doc1);
 			solrServer.commit();
 		} catch (SolrServerException e) {
@@ -108,8 +108,8 @@ public class SolrClient {
 			for (SpecificationChapterDto scDto : scDtos) {
 				SolrInputDocument doc = new SolrInputDocument();
 				doc.addField("id", scDto.getId());
-				doc.addField("blogId", scDto.getChapterName());
-				doc.addField("title", scDto.getContent());
+				doc.addField("chapterName", scDto.getChapterName());
+				doc.addField("content", scDto.getContent());
 				siDocs.add(doc);
 			}
 
@@ -162,6 +162,7 @@ public class SolrClient {
 		try {
 			solrServer.deleteByQuery("*:*");
 			solrServer.commit();
+			logger.debug("所有索引删除完毕..............");
 		} catch (SolrServerException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
