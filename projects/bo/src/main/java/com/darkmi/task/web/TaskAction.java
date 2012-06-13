@@ -33,7 +33,7 @@ import com.darkmi.util.CrudActionSupport;
 import com.google.common.collect.Lists;
 
 /**
- * Description: 作业规程任务管理Action.
+ * Description: 任务管理Action.
  * Copyright (c) www.darkmi.com
  * All Rights Reserved.
  * @version 1.0  2012-05-10 上午09:20:11 DarkMi created

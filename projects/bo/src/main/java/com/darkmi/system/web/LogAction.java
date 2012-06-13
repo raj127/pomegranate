@@ -16,10 +16,10 @@ import com.darkmi.system.service.LogManager;
 import com.darkmi.util.CrudActionSupport;
 
 /**
- * Description: 日志管理Action
- * Copyright (c) 永新视博
+ * Description: 日志管理Action.
+ * Copyright (c) darkmi
  * All Rights Reserved.
- * @version 1.0  2010-12-7 上午10:29:47 laojiang created
+ * @version 1.0  2012-05-23 下午01:36:31 darkmi created
  */
 @Namespace("/system")
 @Results({ @Result(name = CrudActionSupport.RELOAD, location = "log.action", type = "redirect") })

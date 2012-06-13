@@ -41,8 +41,8 @@
 
 		<div id="message"><s:actionmessage theme="custom" cssClass="success"/></div>
 		<div id="filter">
-			章节名称: <input type="text" name="filter_LIKES_chapterName" 
-			                            value="${param['filter_LIKES_chapterName']}" 
+			章节名称: <input type="text" name="filter_LIKES_name" 
+			                            value="${param['filter_LIKES_name']}" 
 			                            size="9" tabindex="1" 
 			                            onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
 			章节内容: <input type="text" name="filter_LIKES_content"

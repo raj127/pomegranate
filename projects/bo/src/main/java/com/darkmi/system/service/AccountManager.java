@@ -24,9 +24,10 @@ import com.darkmi.system.dao.UserDao;
 import com.darkmi.util.ServiceException;
 
 /**
- * 安全相关实体的管理类, 包括用户,角色,资源与授权类.
- * 
- * @author calvin
+ * Description: 安全相关实体的管理类, 包括用户,角色,资源与授权类..
+ * Copyright (c) darkmi
+ * All Rights Reserved.
+ * @version 1.0  2012-05-23 下午01:36:31 darkmi created
  */
 //Spring Bean的标识.
 @Component

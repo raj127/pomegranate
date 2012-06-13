@@ -24,8 +24,10 @@ import com.darkmi.util.CrudActionSupport;
 import com.darkmi.util.FileHelper;
 
 /**
- * 作业规程模板管理Action.
- * @author darkmi
+ * Description: 模板管理Action.
+ * Copyright (c) www.darkmi.com
+ * All Rights Reserved.
+ * @version 1.0  2012-05-10 上午09:20:11 DarkMi created
  */
 @Namespace("/template")
 @Results({ @Result(name = CrudActionSupport.RELOAD, location = "template.action?page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}", type = "redirect") })

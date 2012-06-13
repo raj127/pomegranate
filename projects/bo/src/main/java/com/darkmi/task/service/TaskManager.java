@@ -14,7 +14,7 @@ import com.darkmi.entity.task.Task;
 import com.darkmi.task.dao.TaskDao;
 
 /**
- * Description: 作业规程任务管理Manager.
+ * Description: 任务管理Manager.
  * Copyright (c) www.darkmi.com
  * All Rights Reserved.
  * @version 1.0  2012-05-04 上午09:20:11 DarkMi created

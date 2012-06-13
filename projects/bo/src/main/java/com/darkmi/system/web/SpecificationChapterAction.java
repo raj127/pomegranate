@@ -20,9 +20,10 @@ import com.darkmi.util.CrudActionSupport;
 import com.google.common.collect.Lists;
 
 /**
- * 规范章节管理Action.
- * 
- * @author darkmi
+ * Description: 规范章节管理Action.
+ * Copyright (c) darkmi
+ * All Rights Reserved.
+ * @version 1.0  2012-05-23 下午01:36:31 darkmi created
  */
 @Namespace("/system")
 @Results({ @Result(name = CrudActionSupport.RELOAD, location = "specification-chapter.action?page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}", type = "redirect") })

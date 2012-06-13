@@ -21,9 +21,10 @@ import com.darkmi.entity.system.User;
 import com.google.common.collect.Sets;
 
 /**
- * 实现SpringSecurity的UserDetailsService接口,实现获取用户Detail信息的回调函数.
- * 
- * @author calvin
+ * Description: 实现SpringSecurity的UserDetailsService接口,实现获取用户Detail信息的回调函数.
+ * Copyright (c) darkmi
+ * All Rights Reserved.
+ * @version 1.0  2012-05-23 下午01:36:31 darkmi created
  */
 @Transactional(readOnly = true)
 public class UserDetailsServiceImpl implements UserDetailsService {

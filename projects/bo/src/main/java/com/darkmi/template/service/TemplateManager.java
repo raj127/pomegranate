@@ -14,7 +14,7 @@ import com.darkmi.entity.template.Template;
 import com.darkmi.template.dao.TemplateDao;
 
 /**
- * Description: 作业规程模板管理Manager.
+ * Description: 模板管理Manager.
  * Copyright (c) www.darkmi.com
  * All Rights Reserved.
  * @version 1.0  2012-05-04 上午09:20:11 DarkMi created

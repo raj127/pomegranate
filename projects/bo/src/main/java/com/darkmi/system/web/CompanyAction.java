@@ -27,13 +27,12 @@ import com.darkmi.util.FileHelper;
 import com.darkmi.util.ServiceException;
 
 /**
- * 公司信息管理Action.
- * 
- * @author darkmi
+ * Description: 公司信息管理Action.
+ * Copyright (c) darkmi
+ * All Rights Reserved.
+ * @version 1.0  2012-05-23 下午01:36:31 darkmi created
  */
-//定义URL映射对应/system/Company.action
 @Namespace("/system")
-//定义名为reload的result重定向到Company.action, 其他result则按照convention默认.
 @Results({ @Result(name = CrudActionSupport.RELOAD, location = "company.action?page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}", type = "redirect") })
 public class CompanyAction extends CrudActionSupport<Company> {
 

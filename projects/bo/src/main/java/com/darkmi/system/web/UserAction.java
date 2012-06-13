@@ -25,15 +25,12 @@ import com.darkmi.util.HibernateUtils;
 import com.darkmi.util.ServiceException;
 
 /**
- * 用户管理Action.
- * 
- * 使用Struts2 convention-plugin annotation定义Action参数.
- * 
- * @author calvin
+ * Description: 用户管理Action.
+ * Copyright (c) darkmi
+ * All Rights Reserved.
+ * @version 1.0  2012-05-23 下午01:36:31 darkmi created
  */
-//定义URL映射对应/system/user.action
 @Namespace("/system")
-//定义名为reload的result重定向到user.action, 其他result则按照convention默认.
 @Results({ @Result(name = CrudActionSupport.RELOAD, location = "user.action?page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}", type = "redirect") })
 public class UserAction extends CrudActionSupport<User> {
 
@@ -112,12 +109,12 @@ public class UserAction extends CrudActionSupport<User> {
 	public String delete() throws Exception {
 		try {
 			User user = accountManager.getUser(id);
-			
-			if(user.getId() == 1){
+
+			if (user.getId() == 1) {
 				addActionMessage("创始人账号不能删除");
 				return RELOAD;
 			}
-			
+
 			accountManager.deleteUser(id);
 			dbLogger.info(SpringSecurityUtils.getCurrentUserName() + ":删除" + user.getName() + "用户！");
 			addActionMessage("删除用户成功");

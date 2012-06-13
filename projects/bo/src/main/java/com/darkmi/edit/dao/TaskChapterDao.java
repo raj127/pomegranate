@@ -8,7 +8,10 @@ import org.springside.modules.orm.hibernate.HibernateDao;
 import com.darkmi.entity.task.TaskChapter;
 
 /**
- * 章节管理DAO
+ * Description: 任务章节管理DAO.
+ * Copyright (c) darkmi
+ * All Rights Reserved.
+ * @version 1.0  2012-05-23 下午01:36:31 darkmi created
  */
 @Component
 public class TaskChapterDao extends HibernateDao<TaskChapter, Long> {

@@ -22,10 +22,10 @@ import com.darkmi.util.CrudActionSupport;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
- * Description: 修改个人密码的Action
- * Copyright (c) 永新视博
+ * Description: 修改个人密码的Action.
+ * Copyright (c) darkmi
  * All Rights Reserved.
- * @version 1.0  2010-12-6 下午02:29:45 laojiang created
+ * @version 1.0  2012-05-23 下午01:36:31 darkmi created
  */
 @Namespace("/system")
 @Results({ @Result(name = CrudActionSupport.RELOAD, location = "modify-password.action", type = "redirect") })
