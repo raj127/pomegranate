@@ -13,7 +13,7 @@ import com.darkmi.edit.dao.TaskChapterDao;
 import com.darkmi.entity.task.TaskChapter;
 
 /**
- * Description: 作业规程任务章节管理Manager.
+ * Description: 任务章节管理Manager.
  * Copyright (c) www.darkmi.com
  * All Rights Reserved.
  * @version 1.0  2012-05-04 上午09:20:11 DarkMi created

@@ -6,10 +6,10 @@ import org.springside.modules.orm.hibernate.HibernateDao;
 import com.darkmi.entity.system.Log;
 
 /**
- * Description: 日志对象的泛型DAO
- * Copyright (c) 永新视博
+ * Description: 日志对象的泛型DAO.
+ * Copyright (c) darkmi
  * All Rights Reserved.
- * @version 1.0  2010-12-6 上午08:31:09 laojiang created
+ * @version 1.0  2012-05-23 下午01:36:31 darkmi created
  */
 @Component
 public class LogDao extends HibernateDao<Log, Long> {

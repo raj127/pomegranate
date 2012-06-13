@@ -22,10 +22,10 @@ import com.darkmi.util.CrudActionSupport;
 import com.darkmi.util.HibernateUtils;
 
 /**
- * 角色管理Action.
- * 
- * 
- * @author calvin
+ * Description: 角色管理Action.
+ * Copyright (c) darkmi
+ * All Rights Reserved.
+ * @version 1.0  2012-05-23 下午01:36:31 darkmi created
  */
 @Namespace("/system")
 @Results({ @Result(name = CrudActionSupport.RELOAD, location = "role.action", type = "redirect") })

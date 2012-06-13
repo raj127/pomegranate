@@ -13,10 +13,10 @@ import com.darkmi.system.service.AccountManager;
 import com.darkmi.util.CrudActionSupport;
 
 /**
- * Description: 修改用户的密码的Action
- * Copyright (c) 永新视博
+ * Description: 修改用户的密码的Action.
+ * Copyright (c) darkmi
  * All Rights Reserved.
- * @version 1.0  2010-12-6 下午02:33:52 laojiang created
+ * @version 1.0  2012-05-23 下午01:36:31 darkmi created
  */
 @Namespace("/system")
 @Results({ @Result(name = CrudActionSupport.RELOAD, location = "user.action", type = "redirect") })

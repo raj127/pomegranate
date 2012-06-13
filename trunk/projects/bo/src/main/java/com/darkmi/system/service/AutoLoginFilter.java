@@ -16,9 +16,10 @@ import org.springframework.web.filter.GenericFilterBean;
 import org.springside.modules.security.springsecurity.SpringSecurityUtils;
 
 /**
- * 自动以默认用户名登录的filter, 用于开发时不需要每次进入登录页面.
- * 
- * @author kevin@ericsson.com
+ * Description: 自动以默认用户名登录的filter, 用于开发时不需要每次进入登录页面..
+ * Copyright (c) darkmi
+ * All Rights Reserved.
+ * @version 1.0  2012-05-23 下午01:36:31 darkmi created
  */
 public class AutoLoginFilter extends GenericFilterBean {
 

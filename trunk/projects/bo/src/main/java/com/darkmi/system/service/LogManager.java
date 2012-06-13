@@ -13,12 +13,11 @@ import org.springside.modules.orm.PropertyFilter;
 import com.darkmi.entity.system.Log;
 import com.darkmi.system.dao.LogDao;
 
-
 /**
- * Description: 日志相关的管理类
- * Copyright (c) 永新视博
+ * Description: 日志相关的管理类.
+ * Copyright (c) darkmi
  * All Rights Reserved.
- * @version 1.0  2010-12-7 上午08:50:33 laojiang created
+ * @version 1.0  2012-05-23 下午01:36:31 darkmi created
  */
 @Component
 @Transactional

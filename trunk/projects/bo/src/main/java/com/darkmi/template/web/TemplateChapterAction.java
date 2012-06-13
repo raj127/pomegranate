@@ -30,8 +30,10 @@ import com.darkmi.util.ServiceException;
 import com.google.common.collect.Lists;
 
 /**
- * 模板目录管理Action.
- * @author darkmi
+ * Description: 模板章节管理Action.
+ * Copyright (c) www.darkmi.com
+ * All Rights Reserved.
+ * @version 1.0  2012-05-10 上午09:20:11 DarkMi created
  */
 @Namespace("/template")
 @Results({

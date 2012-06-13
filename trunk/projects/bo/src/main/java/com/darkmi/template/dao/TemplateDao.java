@@ -9,10 +9,10 @@ import org.springside.modules.orm.hibernate.HibernateDao;
 import com.darkmi.entity.template.Template;
 
 /**
- * Description: 作业规程模板DAO.
+ * Description: 模板管理DAO.
  * Copyright (c) www.darkmi.com
  * All Rights Reserved.
- * @version 1.0  2012-05-04 上午09:20:11 DarkMi created
+ * @version 1.0  2012-05-10 上午09:20:11 DarkMi created
  */
 @Component
 public class TemplateDao extends HibernateDao<Template, Long> {

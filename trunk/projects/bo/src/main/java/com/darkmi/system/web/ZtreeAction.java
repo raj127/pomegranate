@@ -5,7 +5,7 @@ import org.apache.struts2.convention.annotation.Namespace;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
- * Description: 规范模板管理的Action
+ * Description: 规范树状展示Action.
  * Copyright (c) darkmi
  * All Rights Reserved.
  * @version 1.0  2012-05-23 下午01:36:31 darkmi created
