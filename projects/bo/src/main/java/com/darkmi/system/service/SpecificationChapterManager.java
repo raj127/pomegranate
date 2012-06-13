@@ -24,14 +24,60 @@ import com.darkmi.util.ServiceException;
 @Transactional
 public class SpecificationChapterManager {
 	private static Logger logger = LoggerFactory.getLogger(SpecificationChapterManager.class);
-	private SpecificationChapterDao ChapterDao;
-	
-	public List<SpecificationChapter> getAllChapter(){
-		return ChapterDao.getAll();
+	private SpecificationChapterDao scDao;
+
+	/**
+	 * 根据条件查询规范章节.
+	 */
+	@Transactional(readOnly = true)
+	public Page<SpecificationChapter> searchChapter(Page<SpecificationChapter> page, List<PropertyFilter> filters) {
+		return scDao.findPage(page, filters);
 	}
 
 	/**
-	 * Description: 保存章节
+	 * 通过章节名称查询章节信息.
+	 */
+	@Transactional(readOnly = true)
+	public List<SpecificationChapter> getChapterByName(String chapterName) {
+		return scDao.findByName(chapterName);
+	}
+
+	/**
+	 * 根据主键查询规范章节.
+	 */
+	@Transactional(readOnly = true)
+	public SpecificationChapter getChapter(Long id) {
+		return scDao.get(id);
+	}
+
+	/**
+	 * 根据treeIndex获取章节信息.
+	 */
+	@Transactional(readOnly = true)
+	public SpecificationChapter getChapter(String treeIndex) {
+		return scDao.findUniqueBy("treeIndex", treeIndex);
+	}
+
+	/**
+	 * 查询根章节.
+	 */
+	@Transactional(readOnly = true)
+	public SpecificationChapter getRootChapter() {
+		return scDao.findRootChapter();
+	}
+
+	/**
+	 * 获取所有章节信息.
+	 * @return
+	 */
+	public List<SpecificationChapter> getAllChapter() {
+		return scDao.getAll();
+	}
+
+	/*~~~~~~~~~~~ 更新及删除类方法 ~~~~~~~~~~~~~~~~~*/
+
+	/**
+	 * 保存章节.
 	 */
 	public void saveChapter(SpecificationChapter Chapter, Long parentId) {
 		Chapter.setParentChapter(getChapter(parentId));
@@ -46,10 +92,7 @@ public class SpecificationChapterManager {
 	}
 
 	/**
-	 * Description: 
-	 * @param Chapter
-	 * @param parentId
-	 * @param isLeaf
+	 * 保存章节. 
 	 */
 	public void saveChapter(SpecificationChapter Chapter, Long parentId, boolean isLeaf) {
 		Chapter.setParentChapter(getChapter(parentId));
@@ -59,72 +102,34 @@ public class SpecificationChapterManager {
 	}
 
 	/**
-	 * Description: 
-	 * @param Chapter
+	 * 保存章节. 
 	 */
 	public void saveChapter(SpecificationChapter Chapter) {
-		ChapterDao.save(Chapter);
+		scDao.save(Chapter);
 	}
 
 	/**
-	 * Description: 根据主键删除分类
-	 * @param id
+	 * 根据主键删除章节.
 	 */
 	public void deleteChapter(Long id) {
 		SpecificationChapter Chapter = getChapter(id);
 		if (Chapter.getTreeIndex().length() <= 9) {
-			throw new ServiceException("该分类不能删除");
+			throw new ServiceException("该章节不能删除");
 		}
+
 		SpecificationChapter parentChapter = Chapter.getParentChapter();
 		parentChapter.getChapterList().remove(Chapter);
 		Chapter.setParentChapter(null);
 		if (parentChapter.getChapterList().size() == 0) {
 			Chapter.setIsLeaf(true);
 		}
-		ChapterDao.delete(id);
-		logger.debug("删除分类 {}", id);
-	}
-	
-	/**
-	 * 根据条件查询Company的信息
-	 */
-	@Transactional(readOnly = true)
-	public Page<SpecificationChapter> searchChapter(Page<SpecificationChapter> page, List<PropertyFilter> filters) {
-		return ChapterDao.findPage(page, filters);
+		scDao.delete(id);
+		logger.debug("删除章节{}", id);
 	}
 
-
-	@Transactional(readOnly = true)
-	public List<SpecificationChapter> getChapterByName(String name) {
-		return ChapterDao.findByName(name);
-	}
-
-	/**
-	 * Description: 根据主键查询分类
-	 * @param id
-	 * @return
-	 */
-	@Transactional(readOnly = true)
-	public SpecificationChapter getChapter(Long id) {
-		return ChapterDao.get(id);
-	}
-
-	@Transactional(readOnly = true)
-	public SpecificationChapter getChapter(String treeIndex) {
-		return ChapterDao.findUniqueBy("treeIndex", treeIndex);
-	}
-
-	/**
-	 * Description: 查询根分类
-	 * @return
-	 */
-	@Transactional(readOnly = true)
-	public SpecificationChapter getRootChapter() {
-		return ChapterDao.findRootChapter();
-	}
-
+	/*~~~~~~~~~~~业务逻辑类注入~~~~~~~~~~~~~~~~~*/
 	@Autowired
-	public void setChapterDao(SpecificationChapterDao ChapterDao) {
-		this.ChapterDao = ChapterDao;
+	public void setScDao(SpecificationChapterDao scDao) {
+		this.scDao = scDao;
 	}
 }

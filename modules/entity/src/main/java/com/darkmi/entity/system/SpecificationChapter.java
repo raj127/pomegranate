@@ -109,7 +109,7 @@ public class SpecificationChapter extends AuditableEntity {
 	public void setVersion(Integer version) {
 		this.version = version;
 	}
-	
+
 	@Column(name = "content")
 	public String getContent() {
 		return content;
@@ -118,7 +118,6 @@ public class SpecificationChapter extends AuditableEntity {
 	public void setContent(String content) {
 		this.content = content;
 	}
-
 
 	@Transient
 	public void calculateTreeIndex() {
@@ -134,7 +133,7 @@ public class SpecificationChapter extends AuditableEntity {
 
 	@Override
 	public String toString() {
-		return "SpecificationChapter [parentChapter=" + parentChapter + ", name=" + name + ", treeIndex=" + treeIndex
-				+ ", sort=" + sort + ", isLeaf=" + isLeaf + ", state=" + state + ", chapterList=" + chapterList + "]";
+		return "SpecificationChapter [name=" + name + ", treeIndex=" + treeIndex + ", sort=" + sort + ", isLeaf="
+				+ isLeaf + ", state=" + state + "]";
 	}
 }

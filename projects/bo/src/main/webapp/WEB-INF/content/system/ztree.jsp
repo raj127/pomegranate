@@ -38,7 +38,7 @@
 		<input type="hidden" name="page.orderBy" id="orderBy" value="${page.orderBy}"/>
 		<input type="hidden" name="page.order" id="order" value="${page.order}"/>
 		<input type="hidden" name="page.pageSize" id="pageSize" value="${page.pageSize}"/>
-
+		<p>该功能准备使用ztree来做.</p>
 		<div id="message"><s:actionmessage theme="custom" cssClass="success"/></div>
 		<div id="filter">
 			章节名称: <input type="text" name="filter_LIKES_chapterName" 
