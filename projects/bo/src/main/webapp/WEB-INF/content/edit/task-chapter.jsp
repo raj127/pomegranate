@@ -51,22 +51,29 @@
 		<div id="content">
 			<table id="contentTable">
 				<tr>
-					<th><a href="javascript:sort('chapterName','asc')">章节名称</a></th>
-					<th><a href="javascript:sort('description','asc')">章节描述</a></th>
-					<th><a href="javascript:sort('state','asc')">章节状态</a></th>
+					<th>章节名称</th>
+					<th>文件名称</th>
+					<th>章节描述</th>
+					<th>章节状态</th>
+					<th>审批状态</th>
+					<th>章节类型</th>
 					<th>操作</th>
 				</tr>
 
 				<s:iterator value="tcs">
 					<tr>
-						<td>${chapterName}&nbsp;</td>
+						<td><s:if test="parentId!=0">&nbsp;&nbsp;&nbsp;&nbsp;</s:if>${chapterName}&nbsp;</td>
+						<td>${fileName}&nbsp;</td>
 						<td>${description}&nbsp;</td>
 						<td>${state}&nbsp;</td>
+						<td>未审批&nbsp;</td>
+						<td>模板创建&nbsp;</td>
 						<td>&nbsp;
 							<security:authorize ifAnyGranted="ROLE_作业规程编制">
 								<a href="javascript:void(0)" onclick="showWin();return false;" target="_blank">编辑</a>&nbsp;
 							</security:authorize>
 							<a href="task-chapter!testUpload.action">上传测试</a>&nbsp;
+							<a href="task-verify.action" target="_blank">规程校验</a>&nbsp;
 						</td>
 					</tr>
 				</s:iterator>

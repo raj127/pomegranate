@@ -50,6 +50,7 @@ public class SolrIndexAction extends ActionSupport {
 	 */
 	public String updateIndex() throws Exception {
 		logger.debug("begin 更新索引 {...");
+		addActionMessage("成功更新所有索引");
 		logger.debug("end 更新索引 ... }");
 		return SUCCESS;
 	}
@@ -62,6 +63,7 @@ public class SolrIndexAction extends ActionSupport {
 	public String deleteAllIndex() throws Exception {
 		logger.debug("begin 删除所有索引 {...");
 		SolrClient.deleteAllIndex();
+		addActionMessage("成功删除所有索引");
 		logger.debug("end 删除所有索引 ... }");
 		return SUCCESS;
 	}

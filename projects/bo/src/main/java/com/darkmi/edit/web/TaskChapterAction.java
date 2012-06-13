@@ -30,7 +30,7 @@ public class TaskChapterAction extends CrudActionSupport<TaskChapter> {
 	private static final long serialVersionUID = -2907389496513631586L;
 	private Long id;
 	private Long taskId;
-	
+
 	private TaskChapter taskChapter;
 	private List<TaskChapter> tcs = Lists.newArrayList();
 
@@ -68,17 +68,12 @@ public class TaskChapterAction extends CrudActionSupport<TaskChapter> {
 
 	@Override
 	public String save() throws Exception {
-		//designManager.saveTask(taskChapter);
 		addActionMessage("保存作业规程任务成功！");
 		return RELOAD;
 	}
 
 	@Override
 	public String delete() throws Exception {
-		//taskChapter = designManager.getTask(id);
-		//designManager.deleteTask(id);
-		//dbLogger.info(SpringSecurityUtils.getCurrentUserName() + ":删除" + taskChapter.getTaskName() + "任务！");
-		//addActionMessage("删除作业规任务成功！");
 		return RELOAD;
 	}
 
@@ -102,7 +97,7 @@ public class TaskChapterAction extends CrudActionSupport<TaskChapter> {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	public List<TaskChapter> getTcs() {
 		return tcs;
 	}
