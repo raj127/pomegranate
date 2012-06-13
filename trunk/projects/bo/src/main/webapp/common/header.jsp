@@ -68,7 +68,7 @@
 					<a id="subNav204" href="${ctx}/system/config.action" >配置列表</a>
 					<a id="subNav205" href="${ctx}/system/log.action" >日志列表</a>
 					<a id="subNav206" href="${ctx}/system/specification-chapter.action" >查看规范</a>
-					<a id="subNav207" href="${ctx}/system/ztree.action" >ztree</a>
+					<%--<a id="subNav207" href="${ctx}/system/ztree.action" >ztree</a>--%>
 					<a id="subNav208" href="${ctx}/system/solr-index.action" >索引维护</a>
 				</div>
 			</security:authorize>
@@ -93,8 +93,8 @@
 				<div id="subNav5" class="subNav5">
 					<a id="subNav501" href="${ctx}/edit/task-chapter.action" >作业规程列表</a>
 					<a id="subNav502" href="${ctx}/edit/task-chapter!input.action" >新建作业规程</a>
-					<a id="subNav503" href="${ctx}/edit/task-verify.action" target="_blank">校验作业规程</a>
-					<a id="subNav504" href="${ctx}/edit/task-verify.action" >校验作业规程2</a>
+					<%-- <a id="subNav503" href="${ctx}/edit/task-verify.action" target="_blank">校验作业规程</a>
+					<a id="subNav504" href="${ctx}/edit/task-verify.action" >校验作业规程2</a>--%>
 				</div>
 			</security:authorize>
 			

@@ -33,7 +33,7 @@
 <div id="bd">
 	<div id="yui-main">
 	<div class="yui-b">
-	<form id="mainForm" action="company.action" method="get">
+	<form id="mainForm" action="specification-chapter.action" method="post">
 		<input type="hidden" name="page.pageNo" id="pageNo" value="${page.pageNo}"/>
 		<input type="hidden" name="page.orderBy" id="orderBy" value="${page.orderBy}"/>
 		<input type="hidden" name="page.order" id="order" value="${page.order}"/>
@@ -41,14 +41,19 @@
 
 		<div id="message"><s:actionmessage theme="custom" cssClass="success"/></div>
 		<div id="filter">
-			规范名称: <input type="text" name="filter_LIKES_companyName" value="${param['filter_LIKES_companyName']}" size="9" tabindex="1" onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
-			规范内容: <input type="text" name="filter_LIKES_email"
-							 value="${param['filter_LIKES_email']}" size="9" tabindex="3" onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
+			章节名称: <input type="text" name="filter_LIKES_chapterName" 
+			                            value="${param['filter_LIKES_chapterName']}" 
+			                            size="9" tabindex="1" 
+			                            onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
+			章节内容: <input type="text" name="filter_LIKES_content"
+							             value="${param['filter_LIKES_content']}" 
+							             size="9" tabindex="3" 
+							             onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
 			<input type="button" value="搜索" onclick="search();" tabindex="5"/>
 			&nbsp;&nbsp;
 			
-
 			<input type="button" value="更新索引" onclick="linkTo('specification-chapter!index.action')" tabindex="6"/>
+			<input type="button" value="树状结构" onclick="linkTo('ztree.action')" tabindex="6"/>
 
 		</div>
 		<div id="content">
