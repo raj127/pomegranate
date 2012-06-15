@@ -1,4 +1,4 @@
-package com.darkmi.verify;
+package com.darkmi.lucene;
 
 /**
  * 这个实例包含了lucene所有核心用法

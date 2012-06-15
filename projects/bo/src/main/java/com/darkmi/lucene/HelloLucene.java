@@ -1,4 +1,4 @@
-package com.darkmi.verify;
+package com.darkmi.lucene;
 
 import java.io.IOException;
 
