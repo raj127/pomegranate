@@ -1,4 +1,4 @@
-package com.darkmi.verify;
+package com.darkmi.lucene;
 
 public class TxtFileIndexer {
 	public static void main(String[] args) throws Exception {
