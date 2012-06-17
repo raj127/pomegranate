@@ -86,8 +86,8 @@ public class SpecificationChapterAction extends CrudActionSupport<SpecificationC
 	 * 创建索引.
 	 * @return
 	 */
-	public String index() {
-		logger.debug("更新索引 begin { ... ");
+	public String createIndex() {
+		logger.debug("生成索引 begin { ... ");
 		List<SpecificationChapterDto> scDtos = Lists.newArrayList();
 		List<SpecificationChapter> scs = scManager.getAllChapter();
 		for (Iterator<SpecificationChapter> iterator = scs.iterator(); iterator.hasNext();) {
@@ -99,7 +99,8 @@ public class SpecificationChapterAction extends CrudActionSupport<SpecificationC
 			scDtos.add(scDto);
 		}
 		SolrClient.createIndex(scDtos);
-		logger.debug("更新索引 end ... }");
+		addActionMessage("索引创建成功");
+		logger.debug("生成索引 end ... }");
 		return RELOAD;
 	}
 

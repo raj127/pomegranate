@@ -10,7 +10,7 @@ import com.darkmi.solr.dto.SpecificationChapterDto;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
- * Description: 规范模板管理的Action.
+ * Description: 规范索引管理Action.
  * Copyright (c) darkmi
  * All Rights Reserved.
  * @version 1.0  2012-05-23 下午01:36:31 darkmi created

@@ -50,18 +50,14 @@
 
 		<div id="message"><s:actionmessage theme="custom" cssClass="success"/></div>
 		<div id="filter">
-			关键词: <input type="text" name="keyWords" value="" size="9" tabindex="1" onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
+			关键词: <input type="text" name="keyWords" value="${keyWords}" size="9" tabindex="1" onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
 			<input type="button" value="搜索" onclick="search();" tabindex="5"/>
 			&nbsp;&nbsp;
-
-			<security:authorize ifAnyGranted="ROLE_用户修改">
-			<input type="button" value="创建索引" onclick="linkTo('solr-index!deleteAllIndex.action')" tabindex="6"/>
-			</security:authorize>
-			
+			&nbsp;&nbsp;
 			<security:authorize ifAnyGranted="ROLE_用户修改">
 			<input type="button" value="更新索引" onclick="linkTo('solr-index!updateIndex.action')" tabindex="6"/>
 			</security:authorize>
-			
+			&nbsp;&nbsp;
 			<security:authorize ifAnyGranted="ROLE_用户修改">
 			<input type="button" value="删除所有索引" onclick="linkTo('solr-index!deleteAllIndex.action')" tabindex="6"/>
 			</security:authorize>
