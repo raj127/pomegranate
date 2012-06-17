@@ -2,7 +2,6 @@ package com.darkmi.edit.web;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
 
 import com.chenlb.mmseg4j.example.Complex;
 import com.darkmi.entity.system.SpecificationChapter;
-import com.darkmi.solr.SolrClient;
 import com.google.common.collect.Lists;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -59,8 +57,8 @@ public class TaskVerifyAction extends ActionSupport {
 		try {
 			server = new HttpSolrServer(url);
 
-			//SolrQuery query = new SolrQuery(getKey("安全"));
-			SolrQuery query = new SolrQuery(SolrClient.prepareKeyWords(keyWords));
+			SolrQuery query = new SolrQuery("content:安全");
+			//SolrQuery query = new SolrQuery(SolrClient.prepareKeyWords(keyWords));
 			query.setHighlight(true); //开启高亮组件 
 			query.addHighlightField("id");
 			query.addHighlightField("chapterName");//高亮字段  
@@ -77,16 +75,18 @@ public class TaskVerifyAction extends ActionSupport {
 
 			QueryResponse response = server.query(query);
 			SolrDocumentList list = response.getResults();
-			Map<String, Map<String, List<String>>> highlightMap = response.getHighlighting();
+			
+			//Map<String, Map<String, List<String>>> highlightMap = response.getHighlighting();
 
 			for (Iterator<SolrDocument> iterator = list.iterator(); iterator.hasNext();) {
 				SolrDocument doc = (SolrDocument) iterator.next();
-				String id = doc.getFieldValue("id").toString();
-				String hlContent = highlightMap.get(id).get("content").get(0).toString();
-				logger.debug(hlContent);
+				//String id = doc.getFieldValue("id").toString();
+				String content = doc.getFieldValue("content").toString();
+				//String hlContent = highlightMap.get(id).get("content").get(0).toString();
+				//logger.debug(hlContent);
 
 				//logger.debug("-->" + doc.getFieldValue("content").toString());
-				reMessage.append("<p>").append(hlContent).append("</p>");
+				reMessage.append("<p>").append(content).append("</p>");
 
 			}
 

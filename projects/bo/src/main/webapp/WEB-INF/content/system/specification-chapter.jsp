@@ -51,8 +51,10 @@
 							             onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
 			<input type="button" value="搜索" onclick="search();" tabindex="5"/>
 			&nbsp;&nbsp;
-			<input type="button" value="添加" onclick="linkTo('specification-chapter!input.action')" tabindex="6"/>
-			<input type="button" value="更新索引" onclick="linkTo('specification-chapter!index.action')" tabindex="6"/>
+			<input type="button" value="添加章节" onclick="linkTo('specification-chapter!input.action')" tabindex="6"/>
+			&nbsp;&nbsp;
+			<input type="button" value="创建索引" onclick="linkTo('specification-chapter!createIndex.action')" tabindex="6"/>
+			&nbsp;&nbsp;
 			<input type="button" value="树状结构" onclick="linkTo('ztree.action')" tabindex="6"/>
 
 		</div>
