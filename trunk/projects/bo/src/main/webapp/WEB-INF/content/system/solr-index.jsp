@@ -96,7 +96,6 @@
 
 							<security:authorize ifAnyGranted="ROLE_用户修改">
 								<a href="user!input.action?id=${id}&page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}">修改</a>&nbsp;
-								<a href="user-pass!input.action?id=${id}&page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}">修改密码</a>&nbsp;
 								<a href="#" onclick="deleteUser('${loginName}',${id})">删除</a>
 							</security:authorize>
 						</td>
