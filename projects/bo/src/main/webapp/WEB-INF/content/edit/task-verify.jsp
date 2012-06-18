@@ -78,7 +78,7 @@
 
 	body {
 		font-family: Arial, sans-serif;
-		font-size: 0.85em;
+		font-size: 12px;
 	}
 	p {
 		margin: 1em 0;
