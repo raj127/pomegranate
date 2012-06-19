@@ -134,6 +134,12 @@
 	text-decoration: none;
 	background: #FF9933;
 	}
+	
+	.searchResult{
+		border:1px solid red;
+		margin-bottom:10px;
+		padding:5px;
+	}
 	</style>
 
 </head>

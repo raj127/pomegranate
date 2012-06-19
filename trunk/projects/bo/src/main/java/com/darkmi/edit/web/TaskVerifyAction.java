@@ -15,7 +15,6 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.chenlb.mmseg4j.example.Complex;
 import com.darkmi.entity.system.SpecificationChapter;
 import com.google.common.collect.Lists;
 import com.opensymphony.xwork2.ActionSupport;
@@ -48,9 +47,9 @@ public class TaskVerifyAction extends ActionSupport {
 	 */
 	public void search() throws Exception {
 		logger.debug("search begin{ ... ");
-		String keyWords = new Complex().doit(sentence);
+		//String keyWords = new Complex().doit(sentence);
 		
-		logger.debug("检索关键字为 --> " + keyWords);
+		//logger.debug("检索关键字为 --> " + keyWords);
 		StringBuffer reMessage = new StringBuffer();
 		String url = "http://localhost:8080/solr/core0";
 		HttpSolrServer server;
@@ -79,6 +78,7 @@ public class TaskVerifyAction extends ActionSupport {
 			//Map<String, Map<String, List<String>>> highlightMap = response.getHighlighting();
 
 			for (Iterator<SolrDocument> iterator = list.iterator(); iterator.hasNext();) {
+				reMessage.append("<div class=\"searchResult\">");
 				SolrDocument doc = (SolrDocument) iterator.next();
 				//String id = doc.getFieldValue("id").toString();
 				String content = doc.getFieldValue("content").toString();
@@ -87,6 +87,9 @@ public class TaskVerifyAction extends ActionSupport {
 
 				//logger.debug("-->" + doc.getFieldValue("content").toString());
 				reMessage.append("<p>").append(content).append("</p>");
+				reMessage.append("<p>章节：第一节</p>");
+				reMessage.append("<p>来源：煤矿安全作业规范（2010版）</p>");
+				reMessage.append("</div>");
 
 			}
 
