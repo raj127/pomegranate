@@ -1,0 +1,24 @@
+.fieldsmenu {
+	BORDER-BOTTOM: #ccc 2px solid; POSITION: absolute; BORDER-LEFT: #ccc 1px solid; BACKGROUND-COLOR: #eee; MARGIN-TOP: 0px; PADDING-LEFT: 3px; WIDTH: 400px; DISPLAY: none; FLOAT: right; BORDER-TOP: #ccc 1px solid; MARGIN-RIGHT: 100px; BORDER-RIGHT: #ccc 2px solid
+}
+.fieldsmenu UL {
+	PADDING-BOTTOM: 0px; LIST-STYLE-TYPE: none; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.fieldsmenu UL LI {
+	WIDTH: 200px; FLOAT: left
+}
+#field_menu A {
+	DISPLAY: block
+}
+#field_menu A:hover {
+	BACKGROUND-COLOR: #ccc; DISPLAY: block
+}
+#field_menu A:active {
+	DISPLAY: block; COLOR: blue
+}
+A.disabled {
+	COLOR: gray
+}
+A.disabled:active {
+	COLOR: gray
+}

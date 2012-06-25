@@ -73,7 +73,7 @@
 								<a href="javascript:void(0)" onclick="showWin();return false;" target="_blank">编辑</a>&nbsp;
 							</security:authorize>
 							<a href="task-chapter!testUpload.action">上传测试</a>&nbsp;
-							<a href="task-verify.action" target="_blank">规程校验</a>&nbsp;
+							<a href="task-verify!main.action" target="_blank">规程校验</a>&nbsp;
 						</td>
 					</tr>
 				</s:iterator>

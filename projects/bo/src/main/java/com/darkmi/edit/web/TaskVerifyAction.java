@@ -12,6 +12,8 @@ import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.Results;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +28,10 @@ import com.opensymphony.xwork2.ActionSupport;
  * @version 1.0  2012-05-10 上午09:20:11 DarkMi created
  */
 @Namespace("/edit")
+@Results({ @Result(name = "main-success", location = "task-verify-main.jsp"),
+	@Result(name = "top-success", location = "task-verify-top.jsp"),
+	@Result(name = "left-success", location = "task-verify-left.jsp"),
+	@Result(name = "right-success", location = "task-verify-right.jsp")})
 public class TaskVerifyAction extends ActionSupport {
 	private static final long serialVersionUID = -2907389496513631586L;
 	private Logger logger = LoggerFactory.getLogger(TaskVerifyAction.class);
@@ -40,6 +46,35 @@ public class TaskVerifyAction extends ActionSupport {
 		logger.debug("end execute() ...} ");
 		return super.execute();
 	}
+	
+	public String main() throws Exception {
+		logger.debug("begin main() { ...");
+		logger.debug("end main() ...} ");
+		return "main-success";
+	}
+	
+	public String top() throws Exception {
+		logger.debug("begin top() { ...");
+		
+		logger.debug("end top() ...} ");
+		return "top-success";
+	}
+	
+	public String left() throws Exception {
+		logger.debug("begin left() { ...");
+		
+		logger.debug("end left() ...} ");
+		return "left-success";
+	}
+	
+	public String right() throws Exception {
+		logger.debug("begin right() { ...");
+		
+		logger.debug("end right() ...} ");
+		return "right-success";
+	}
+
+
 
 	/**
 	 * 查询
