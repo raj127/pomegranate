@@ -17,11 +17,12 @@
 	FONT-FAMILY: 'Courier New', Arial; FONT-SIZE: 12px
 }
 BODY {
-	PADDING-BOTTOM: 0px; 
+	background-color:#FFFFFF;
+	PADDING-BOTTOM: 10px; 
 	MARGIN: 0px; 
-	PADDING-LEFT: 0px; 
-	PADDING-RIGHT: 0px; 
-	PADDING-TOP: 0px
+	PADDING-LEFT: 10px; 
+	PADDING-RIGHT: 10px; 
+	PADDING-TOP: 10px
 }
 A {
 	LINE-HEIGHT: 1.5; 
@@ -62,84 +63,83 @@ A {
 </style>
 
 <script language="javascript">
-            $(document).ready(function(){
-                //---Init Layout
-                var wsize=250;
-                $('body').layout({
-                    defaults: {
-                        applyDefaultStyles: false
+$(document).ready(function(){
+    //---Init Layout
+    var wsize=250;
+    $('body').layout({
+        defaults: {
+            applyDefaultStyles: false
 
-                    },
-                    north :{
-                        closable:true,
-                        slidable:false
-                    },
-                    west: {
-                        minSize: 2*wsize,
-                        maxSize: 3*wsize,
-                        size: wsize,
-                        resizable: true,
-                        closable:true,
-                        slidable:true
-                    }
+        },
+        north :{
+            closable:true,
+            slidable:false
+        },
+        west: {
+            minSize: wsize,
+            maxSize: 4*wsize,
+            size: 3*wsize,
+            resizable:true,
+            closable: false,
+            slidable: false
+        }
+    });
+});
 
-                });
-            });
+/** show manual links **/
+function setManualPosition(className, x, y) {
+    if ($(className).is(":visible")) {
+        $(className).hide();
+    }
+    else {
+        window.setTimeout(function () {
+            $(className).show();
+            $(className).css("left", x);
+            $(className).css("top", y)
+        }, 100);
+        $(className).find("a").click(function () {
+            hideMenus();
+        });
+    }
+}
 
-            /** show manual links **/
-            function setManualPosition(className, x, y) {
-                if ($(className).is(":visible")) {
-                    $(className).hide();
-                }
-                else {
-                    window.setTimeout(function () {
-                        $(className).show();
-                        $(className).css("left", x);
-                        $(className).css("top", y)
-                    }, 100);
-                    $(className).find("a").click(function () {
-                        hideMenus();
-                    });
-                }
-            }
- 
-            /** hide menus **/
-            function hideMenus() {
-                $(".manual").hide();
-                $(".server-menu").hide();
-            }
-        </script>
+/** hide menus **/
+function hideMenus() {
+    $(".manual").hide();
+    $(".server-menu").hide();
+}
+</script>
 </head>
 
 <body>
 <!-- top bar -->
 <div id="top-pane" class="ui-layout-north" style="OVERFLOW: hidden" >
 <iframe name="top"
-              src="task-verify!top.action"
-              height="20"
-              width="100%" 
-              marginHeight="0"
-              frameBorder="0"
+        src="task-verify!top.action"
+        height="20"
+        width="100%" 
+        marginHeight="0"
+        frameBorder="0"
 	    scrolling="no">
 </iframe>
 </div>
 <div id="left-pane" class="ui-layout-west"><!-- left bar -->
 <iframe name="left"
-              src="task-verify!left.action"
-              height="99%"
-              width="100%" 
-              marginHeight="0"
-              frameBorder="0"
+        src="task-verify!left.action"
+        height="100%"
+        width="100%" 
+        marginHeight="0"
+        frameBorder="0"
 	    scrolling="no">
 </iframe>
 </div>
 <div id="right-pane" class="ui-layout-center"><!-- right bar -->
 <iframe name="right"
-              src="task-verify!right.action"
-              height="99%"
-              width="100%" 
-              marginHeight="0"
-              frameBorder="0"
+        src="task-verify!right.action"
+        height="100%"
+        width="100%" 
+        marginHeight="0"
+        frameBorder="0"
 	    scrolling="no">
 </iframe>
 </div>

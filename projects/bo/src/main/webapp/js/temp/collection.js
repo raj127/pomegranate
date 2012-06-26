@@ -21,18 +21,20 @@ function hideOperationButtons(id) {
 
 /** expand text area **/
 function expandText(id) {
-	var text = $("#text_" +id);
-	if (text.attr("expand") == "true") {
-		text.css("height", "");
-		text.css("max-height", 150);
+	var text = $("#text_" +id);	
+	if (text.attr("expand") == "true" || text.attr("expand") == undefined) {
+		//text.css("height", "");
+		//text.css("max-height", 150);
+		text.hide();
 		text.attr("expand", "false");
-		$("#expand_" + id).html("Expand");
+		$("#expand_" + id).html("显示");
 	}
 	else {
-		text.css("height", text[0].scrollHeight);
-		text.css("max-height", text[0].scrollHeight);
+		//text.css("height", text[0].scrollHeight);
+		//text.css("max-height", text[0].scrollHeight);
+		text.show();
 		text.attr("expand", "true");
-		$("#expand_" + id).html("Collapse");
+		$("#expand_" + id).html("隐藏");
 	}
 }
 
