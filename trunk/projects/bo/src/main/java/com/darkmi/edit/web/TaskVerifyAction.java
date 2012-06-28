@@ -29,9 +29,9 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 @Namespace("/edit")
 @Results({ @Result(name = "main-success", location = "task-verify-main.jsp"),
-	@Result(name = "top-success", location = "task-verify-top.jsp"),
-	@Result(name = "left-success", location = "task-verify-left.jsp"),
-	@Result(name = "right-success", location = "task-verify-right.jsp")})
+		@Result(name = "top-success", location = "task-verify-top.jsp"),
+		@Result(name = "left-success", location = "task-verify-left.jsp"),
+		@Result(name = "right-success", location = "task-verify-right.jsp") })
 public class TaskVerifyAction extends ActionSupport {
 	private static final long serialVersionUID = -2907389496513631586L;
 	private Logger logger = LoggerFactory.getLogger(TaskVerifyAction.class);
@@ -46,35 +46,33 @@ public class TaskVerifyAction extends ActionSupport {
 		logger.debug("end execute() ...} ");
 		return super.execute();
 	}
-	
+
 	public String main() throws Exception {
 		logger.debug("begin main() { ...");
 		logger.debug("end main() ...} ");
 		return "main-success";
 	}
-	
+
 	public String top() throws Exception {
 		logger.debug("begin top() { ...");
-		
+
 		logger.debug("end top() ...} ");
 		return "top-success";
 	}
-	
+
 	public String left() throws Exception {
 		logger.debug("begin left() { ...");
-		
+
 		logger.debug("end left() ...} ");
 		return "left-success";
 	}
-	
+
 	public String right() throws Exception {
 		logger.debug("begin right() { ...");
-		
+
 		logger.debug("end right() ...} ");
 		return "right-success";
 	}
-
-
 
 	/**
 	 * 查询
@@ -83,7 +81,7 @@ public class TaskVerifyAction extends ActionSupport {
 	public void search() throws Exception {
 		logger.debug("search begin{ ... ");
 		//String keyWords = new Complex().doit(sentence);
-		
+
 		//logger.debug("检索关键字为 --> " + keyWords);
 		StringBuffer reMessage = new StringBuffer();
 		String url = "http://localhost:8080/solr/core0";
@@ -109,29 +107,52 @@ public class TaskVerifyAction extends ActionSupport {
 
 			QueryResponse response = server.query(query);
 			SolrDocumentList list = response.getResults();
-			
+
 			//Map<String, Map<String, List<String>>> highlightMap = response.getHighlighting();
 
+			int id = 0;
 			for (Iterator<SolrDocument> iterator = list.iterator(); iterator.hasNext();) {
-				reMessage.append("<div class=\"searchResult\">");
-				SolrDocument doc = (SolrDocument) iterator.next();
+				//------------------
 				//String id = doc.getFieldValue("id").toString();
-				String content = doc.getFieldValue("content").toString();
 				//String hlContent = highlightMap.get(id).get("content").get(0).toString();
 				//logger.debug(hlContent);
-
 				//logger.debug("-->" + doc.getFieldValue("content").toString());
-				reMessage.append("<p>").append(content).append("</p>");
-				reMessage.append("<p>章节：第一节</p>");
-				reMessage.append("<p>来源：煤矿安全作业规范（2010版）</p>");
-				reMessage.append("</div>");
+				//reMessage.append("<p>").append(content).append("</p>");
+				//reMessage.append("<p>章节：第一节</p>");
+				//reMessage.append("<p>来源：煤矿安全作业规范（2010版）</p>");
+				//reMessage.append("</div>");
+				//------------------
+				SolrDocument doc = (SolrDocument) iterator.next();
+				String content = doc.getFieldValue("content").toString();
 
+				reMessage.append("<div class=\"record\" onmouseover=\"showOperationButtons('" + id
+						+ "')\" onmouseout=\"hideOperationButtons('" + id + "')\">");
+				reMessage.append("<table id=\"object_" + id + "\" border=\"0\" width=\"100%\">");
+				reMessage.append("<tbody>");
+				reMessage.append("<tr>");
+				reMessage.append("<td vAlign=\"top\" width=\"50\">#" + id + "</td>");
+				reMessage.append("<td vAlign=\"top\">");
+				reMessage.append("<div id=\"operate_" + id + "\" class=\"operation\">");
+				reMessage.append("<a href=\"#\">复制</a> | <a id=\"expand_" + id + "\" onclick=\"expandText('" + id
+						+ "');return false;\" href=\"#\">隐藏</a>");
+				reMessage.append("</div>");
+				reMessage.append("<div id=\"text_" + id + "\" class=\"record_row\">");
+				reMessage.append("<font color=\"#dd0000\">" + content + "</font><br><br>");
+				reMessage.append("<font color=\"green\">" + "章节：第一节" + "</font><br>");
+				reMessage.append("<font color=\"green\">" + "来源：煤矿安全作业规范（2010版）" + "</font><br>");
+				reMessage.append("</div>");
+				reMessage.append("</td>");
+				reMessage.append("</tr>");
+				reMessage.append("</tbody>");
+				reMessage.append("</table>");
+				reMessage.append("</div>");
+				id++;
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		logger.debug(reMessage.toString());
 		HttpServletResponse response = ServletActionContext.getResponse();
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(reMessage.toString());
