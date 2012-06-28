@@ -27,13 +27,13 @@
 	            closable:true,
 	            slidable:false
 	        },
-	        west: {
+	        east: {
 	            minSize: wsize,
-	            maxSize: 4*wsize,
-	            size: 3*wsize,
+	            maxSize: 3*wsize,
+	            size: 350,
 	            resizable:true,
-	            closable: false,
-	            slidable: false
+	            closable: true,
+	            slidable: true
 	        }
 	    });
 	});
@@ -80,7 +80,7 @@
 	    scrolling="no">
 </iframe>
 </div>
-<div id="left-pane" class="ui-layout-west"><!-- left bar -->
+<div id="left-pane" class="ui-layout-center"><!-- left bar -->
 <iframe name="left"
         id="left"
         src="task-verify!left.action"
@@ -91,7 +91,7 @@
 	    scrolling="no">
 </iframe>
 </div>
-<div id="right-pane" class="ui-layout-center"><!-- right bar -->
+<div id="right-pane" class="ui-layout-east"><!-- right bar -->
 <iframe name="right"
         id="right"
         src="task-verify!right.action"

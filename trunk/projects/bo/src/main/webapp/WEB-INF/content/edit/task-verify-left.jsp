@@ -7,16 +7,19 @@
 <head>
 	<title>作业规程校验</title>
 	<%@ include file="/common/meta.jsp" %>
-	<script type="text/javascript" src="${ctx}/js/temp/jquery-1.4.2.min.js"></SCRIPT>
-	<script type="text/javascript" src="${ctx}/js/temp/jquery.textarea.js"></SCRIPT>
+	<link href="${ctx}/css/edit.css" rel="stylesheet" type="text/css" />
+	<link href="${ctx}/css/edit.office.css" rel="stylesheet" type="text/css" />
 	<link rel="stylesheet" type="text/css" href="${ctx}/js/temp/global.css" media="all">
+	<script type="text/javascript" src="${ctx}/js/temp/jquery-1.4.2.min.js"></script>
+	<script type="text/javascript" src="${ctx}/js/temp/jquery.textarea.js"></script>
+	<script type="text/javascript" src="${ctx}/js/OfficeContorlFunctions.js"></script>
 	<script type="text/javascript">
 	var myLayout; // a var is required because this page utilizes: myLayout.allowOverflow() method
 	$(document).ready(function () {
 		//给所有的超链接添加click方法
-		$('a').click(function(){
-			doSearch($(this).html());
-		});
+		//$('a').click(function(){
+		//	doSearch($(this).html());
+		//});
 		
  	});
 	
@@ -36,20 +39,8 @@
     
     //回调函数
     function callbackFun(data){
-    	//alert(data);
-    	//alert($(window.parent.frames["right"].document));
-    	//$(window.parent.frames["right"].document).html(data);
-    	//alert(top.right.location);
-    	//alert(top.left.location);
-    	//alert(top.top.location);
-    	
-    	//self.parent.frames["right"].test();
-    	
-    	alert($("#right",parent.document.body).contents().find("#result").text());
-    	alert($("#right",parent.document.body).contents().find("#result").html(data));
-
-    	//window.parent.frames["right"].
-    	//$('.ui-layout-center').html(data); 
+    	//alert($("#right",parent.document.body).contents().find("#result").text());
+    	$("#right",parent.document.body).contents().find("#result").html(data);
     }
 	
 	</script>
@@ -62,19 +53,104 @@
 	</style>
 </head>
 
-<body>
-	<div style="BORDER-BOTTOM: #ccc 1px solid; MARGIN-BOTTOM: 10px"></div>
-	<p>
-	<a href="#">第一条 为保障煤矿安全生产和职工人身安全，防止煤矿事故，根据《煤炭法》、《矿山安全法》和《煤矿安全监察条例》，制定本规程。</a></p>
-	
-	<p><a>一、地面位置及标高 </a></p>
-	<p><a>3302轨道顺槽开门口相对地面位置位于许厂煤矿自备电厂北院墙以北364m的农田里，杨家河南北穿过巷道，巷道布置方向与杨家河呈70°夹角，停头位置位于杨家河河堤以西837m处的农田里，施工区域相对地面位置均为农田及田间小路。</a><a>巷道掘进范围内地面标高在+39.8～+42.9m之间。 </a></p>
-	<p><a>二、井下位置及标高</a></p>
-	<p><a>3302轨道顺槽开门口位置位于330西翼采区轨道大巷内353导线点以北31m处巷道的西帮，按方位角311°布置，巷道停头位置西距F5断层为5m。</a><a>巷道底板标高在-317.32～-241.0m之间。</a><p>
-	<p><a>三、四邻采掘情况</a></p>
-	<p>
-	<a>巷道施工区域除已施工的330西翼采区轨道大巷外，其余区域均未采掘。</a>
-	</p>
-	<div style="BORDER-BOTTOM: #ccc 1px solid; MARGIN-BOTTOM: 10px"></div>	
+<body onload='intializePage("${ctx}/company/default/task/default/01-01.docx")' onunload="onPageClose()">
+	<form id="form1" method="post" action="upload.action" enctype="multipart/form-data">
+	<input id="fileName" name="fileName" type="hidden" value="测试" />
+	<input id="fileId" name="fileId" type="hidden" value="" />
+	<div id="officecontrol">
+		<script type="text/javascript" src="${ctx}/officecontrol/ntkoofficecontrol.js"></script>
+	</div><!--officecontrol-->
+	</form>
+
 </body>
 </html>
+
+<script type="text/javascript" for="TANGER_OCX" event="OnDocumentClosed()">
+	setFileOpenedOrClosed(false);
+</script>
+
+<script type="text/javascript" for="TANGER_OCX" event="OnDocumentOpened(TANGER_OCX_str,TANGER_OCX_obj)">
+	//saved属性用来判断文档是否被修改过,文档打开的时候设置成ture,当文档被修改,自动被设置为false,该属性由office提供.
+	OFFICE_CONTROL_OBJ.activeDocument.saved=true;
+	
+	//设置标题
+	OFFICE_CONTROL_OBJ.Caption= "haha";
+	
+	//水平滚动条
+	OFFICE_CONTROL_OBJ.ActiveDocument.ActiveWindow.DisplayHorizontalScrollBar =0; 
+	//OFFICE_CONTROL_OBJ.ActiveDocument.ActiveWindow.DisplayHorizontalScrollBar;
+	//垂直滚动条
+	OFFICE_CONTROL_OBJ.ActiveDocument.ActiveWindow.DisplayVerticalScrollBar =0;
+	//OFFICE_CONTROL_OBJ.ActiveDocument.ActiveWindow.DisplayVerticalScrollBar;
+
+	
+	//获取文档控件中打开的文档的文档类型
+	switch (OFFICE_CONTROL_OBJ.doctype){
+		case 1:
+			fileType = "Word.Document";
+			fileTypeSimple = "word";
+			break;
+		case 2:
+			fileType = "Excel.Sheet";
+			fileTypeSimple="excel";
+			break;
+		case 3:
+			fileType = "PowerPoint.Show";
+			fileTypeSimple = "ppt";
+			break;
+		case 4:
+			fileType = "Visio.Drawing";
+			break;
+		case 5:
+			fileType = "MSProject.Project";
+			break;
+		case 6:
+			fileType = "WPS Doc";
+			fileTypeSimple="wps";
+			break;
+		case 7:
+			fileType = "Kingsoft Sheet";
+			fileTypeSimple="et";
+			break;
+		default :
+			fileType = "unkownfiletype";
+			fileTypeSimple="unkownfiletype";
+	}
+	setFileOpenedOrClosed(true);
+</script>
+
+<script type="text/javascript" for="TANGER_OCX" event="BeforeOriginalMenuCommand(TANGER_OCX_str,TANGER_OCX_obj)">
+	alert("BeforeOriginalMenuCommand事件被触发");
+</script>
+
+<script type="text/javascript" for="TANGER_OCX" event="OnFileCommand(TANGER_OCX_str,TANGER_OCX_obj)">
+	if (TANGER_OCX_str == 3){
+		alert("不能保存！");
+		CancelLastCommand = true;
+	}
+</script>
+
+<script type="text/javascript" for="TANGER_OCX" event="AfterPublishAsPDFToURL(result,code)">
+	result=trim(result);
+	alert(result);
+	document.all("statusBar").innerHTML="服务器返回信息:"+result;
+	if(result=="文档保存成功。")
+	{window.close();}
+</script>
+
+<script type="text/javascript" for="TANGER_OCX" event="OnCustomMenuCmd2(menuPos,submenuPos,subsubmenuPos,menuCaption,menuID)">
+	//alert("第" + menuPos +","+ submenuPos +","+ subsubmenuPos +"个菜单项,menuID="+menuID+",菜单标题为\""+menuCaption+"\"的命令被执行.");
+	if(menuID == 555){
+		//alert("校验 begin {...");
+		//OFFICE_CONTROL_OBJ.ActiveDocument.Application.Selection.GoTo(3,1,1,"");//第三个参数指定要查找的行号
+		//OFFICE_CONTROL_OBJ.ActiveDocument.Application.Selection.MoveDown(5,1,1);
+		//alert(OFFICE_CONTROL_OBJ.ActiveDocument.Application.Selection.Range.Text);
+		var selection = OFFICE_CONTROL_OBJ.ActiveDocument.Application.Selection.Text 
+		alert(selection);
+		doSearch(selection);
+		//alert("校验 end ...}");
+	}
+	
+</script>
+
+
