@@ -14,19 +14,6 @@
 	<script type="text/javascript" src="${ctx}/js/temp/jquery.textarea.js"></script>
 	<script type="text/javascript" src="${ctx}/js/OfficeContorlFunctions.js"></script>
 	<script type="text/javascript">
-	var myLayout; // a var is required because this page utilizes: myLayout.allowOverflow() method
-	$(document).ready(function () {
-		//给所有的超链接添加click方法
-		//$('a').click(function(){
-		//	doSearch($(this).html());
-		//});
-		
- 	});
-	
-	
-	</script>
-	
-	<script type="text/javascript">
 	
 	//提交请求
     function doSearch(selectedSentence){
