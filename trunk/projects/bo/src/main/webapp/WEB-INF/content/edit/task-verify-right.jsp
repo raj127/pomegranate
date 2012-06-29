@@ -43,6 +43,6 @@
 </head>
 
 <body>
-	<div id="result"></div>
+	<div id="result">在编辑器中选中一行文件，点击菜单栏的内容工具-》校验本行，可以插件校验结果。</div>
 </body>
 </html>

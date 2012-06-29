@@ -32,8 +32,7 @@ function setFileOpenedOrClosed(bool){
 	fileType = OFFICE_CONTROL_OBJ.DocType ;
 }
 
-function trim(str)
-{ // 删除左右两端的空格
+function trim(str){ // 删除左右两端的空格
 　　return str.replace(/(^\s*)|(\s*$)/g, "");
 }
 
@@ -98,8 +97,7 @@ function saveFileToUrl(){
  * 
  * @returns
  */
-function saveFileAsHtmlToUrl()
-{
+function saveFileAsHtmlToUrl(){
 	var myUrl = "upLoadHtmlFile.jsp"	;
 	var htmlFileName = document.all("fileName").value+".html";
 	var result;
@@ -118,8 +116,7 @@ function saveFileAsHtmlToUrl()
  * 
  * @returns
  */
-function saveFileAsPdfToUrl()
-{
+function saveFileAsPdfToUrl(){
 	var myUrl = "upLoadPdfFile.jsp"	;
 	var pdfFileName = document.all("fileName").value+".pdf";
 	if(IsFileOpened)
@@ -127,13 +124,11 @@ function saveFileAsPdfToUrl()
 		OFFICE_CONTROL_OBJ.PublishAsPdfToURL(myUrl,"uploadPdf","PdfFileName="+pdfFileName,pdfFileName,"","",true,false);
 	}
 }
-function testFunction()
-{
+function testFunction(){
 	alert(IsFileOpened);
 }
 
-function addServerSecSign()
-{
+function addServerSecSign(){
 	var signUrl=document.all("secSignFileUrl").options[document.all("secSignFileUrl").selectedIndex].value;
 	if(IsFileOpened)
 	{
@@ -150,8 +145,7 @@ function addServerSecSign()
 	}	
 }
 
-function addLocalSecSign()
-{
+function addLocalSecSign(){
 	if(IsFileOpened)
 	{
 		if(OFFICE_CONTROL_OBJ.doctype==1||OFFICE_CONTROL_OBJ.doctype==2)
@@ -165,8 +159,7 @@ function addLocalSecSign()
 	}	
 }
 
-function addEkeySecSign()
-{
+function addEkeySecSign(){
 	if(IsFileOpened)
 	{
 		if(OFFICE_CONTROL_OBJ.doctype==1||OFFICE_CONTROL_OBJ.doctype==2)
@@ -179,8 +172,8 @@ function addEkeySecSign()
 		{alert("不能在该类型文档中使用安全签名印章.");}
 	}
 }
-function addHandSecSign()
-{
+
+function addHandSecSign(){
 	if(IsFileOpened)
 	{
 		if(OFFICE_CONTROL_OBJ.doctype==1||OFFICE_CONTROL_OBJ.doctype==2)
@@ -194,8 +187,7 @@ function addHandSecSign()
 	}
 }
 
-function addServerSign(signUrl)
-{
+function addServerSign(signUrl){
 	if(IsFileOpened)
 	{
 			try
@@ -215,8 +207,7 @@ function addServerSign(signUrl)
 	}		
 }
 
-function addLocalSign()
-{
+function addLocalSign(){
 	if(IsFileOpened)
 	{
 			try
@@ -235,8 +226,8 @@ function addLocalSign()
 			catch(error){}
 	}
 }
-function addPicFromUrl(picURL)
-{
+
+function addPicFromUrl(picURL){
 	if(IsFileOpened)
 	{
 		if(OFFICE_CONTROL_OBJ.doctype==1||OFFICE_CONTROL_OBJ.doctype==2)
@@ -259,6 +250,7 @@ function addPicFromUrl(picURL)
 		{alert("不能在该类型文档中使用安全签名印章.");}
 	}		
 }
+
 function addPicFromLocal()
 {
 	if(IsFileOpened)
@@ -279,8 +271,7 @@ function addPicFromLocal()
 	}
 }
 
-function TANGER_OCX_AddDocHeader(strHeader)
-{
+function TANGER_OCX_AddDocHeader(strHeader){
 	if(!IsFileOpened)
 	{return;}
 	var i,cNum = 30;
@@ -340,17 +331,17 @@ function TANGER_OCX_AddDocHeader(strHeader)
 	}
 }
 
-function insertRedHeadFromUrl(headFileURL)
-{
+function insertRedHeadFromUrl(headFileURL){
 	if(OFFICE_CONTROL_OBJ.doctype!=1)// OFFICE_CONTROL_OBJ.doctype=1为word文档
 	{return;}
 	OFFICE_CONTROL_OBJ.ActiveDocument.Application.Selection.HomeKey(6,0);// 光标移动到文档开头
 	OFFICE_CONTROL_OBJ.addtemplatefromurl(headFileURL);// 在光标位置插入红头文档
 }
-function openTemplateFileFromUrl(templateUrl)
-{
+
+function openTemplateFileFromUrl(templateUrl){
 	OFFICE_CONTROL_OBJ.openFromUrl(templateUrl);
 }
+
 function doHandSign()
 {
 	/*
@@ -366,41 +357,39 @@ function doHandSign()
 									100);
 	// }
 }
-function SetReviewMode(boolvalue)
-{
+
+function SetReviewMode(boolvalue){
 	if(OFFICE_CONTROL_OBJ.doctype==1)
 	{
 		OFFICE_CONTROL_OBJ.ActiveDocument.TrackRevisions = boolvalue;// 设置是否保留痕迹
 	}
 } 
 
-function setShowRevisions(boolevalue)
-{
+function setShowRevisions(boolevalue){
 	if(OFFICE_CONTROL_OBJ.doctype==1)
 	{
 		OFFICE_CONTROL_OBJ.ActiveDocument.ShowRevisions =boolevalue;// 设置是否显示痕迹
 	}
 }
-function setFilePrint(boolvalue)
-{
+
+function setFilePrint(boolvalue){
 	OFFICE_CONTROL_OBJ.fileprint=boolvalue;// 是否允许打印
 }
-function setFileNew(boolvalue)
-{
+
+function setFileNew(boolvalue){
 	OFFICE_CONTROL_OBJ.FileNew=boolvalue;// 是否允许新建
 }
-function setFileSaveAs(boolvalue)
-{
+
+function setFileSaveAs(boolvalue){
 	OFFICE_CONTROL_OBJ.FileSaveAs=boolvalue;// 是否允许另存为
 }
 
-function setIsNoCopy(boolvalue)
-{
+function setIsNoCopy(boolvalue){
 	OFFICE_CONTROL_OBJ.IsNoCopy=boolvalue;// 是否禁止粘贴
 }
+
 // 验证文档控件自带印章功能盖的章
-function DoCheckSign()
-{
+function DoCheckSign(){
    if(IsFileOpened)
    {	
 			var ret = OFFICE_CONTROL_OBJ.DoCheckSign
@@ -439,58 +428,74 @@ function setToolMenu(){
 	
 // 自定义菜单功能函数
 function initCustomMenus(){
-	var myobj = OFFICE_CONTROL_OBJ;	
+	var myobj = OFFICE_CONTROL_OBJ;
+	myobj.AddCustomMenu2(0," 内容工具 ");
+	myobj.AddCustomMenuItem2(0,0,-1,false,"校验本行",false,0);
+
+	myobj.AddCustomMenu2(1," 图片工具 ");
+	myobj.AddCustomMenuItem2(1,0,-1,false,"插入远程图片",false,10);
 	
-	for(var menuPos=0; menuPos<3; menuPos++){
-		myobj.AddCustomMenu2(menuPos,"菜单"+menuPos+"(&"+menuPos+")");
-		for(var submenuPos=0;submenuPos<10;submenuPos++){
-			if(1 ==(submenuPos % 3)){ // 主菜单增加分隔符。第3个参数是-1是在主菜单增加
-				myobj.AddCustomMenuItem2(menuPos,submenuPos,-1,false,"-",true);
-			}else if(0 == (submenuPos % 2)){ // 主菜单增加子菜单，第3个参数是-1是在主菜单增加
-				myobj.AddCustomMenuItem2(menuPos,submenuPos,-1,true,"子菜单"+menuPos+"-"+submenuPos,false);
-				// 增加子菜单项目
-				for(var subsubmenuPos=0;subsubmenuPos<9;subsubmenuPos++)
-				{
-					if(0 == (subsubmenuPos % 2))// 增加子菜单项目
-					{
-						myobj.AddCustomMenuItem2(menuPos,
-								                 submenuPos,
-								                 subsubmenuPos,
-								                 false,
-							                     "子菜单项目"+menuPos+"-"+submenuPos+"-"+subsubmenuPos,
-							                     false,
-							                     menuPos*100+submenuPos*20+subsubmenuPos);
-					}
-					else // 增加子菜单分隔
-					{
-						myobj.AddCustomMenuItem2(menuPos,submenuPos,subsubmenuPos,false,
-							"-"+subsubmenuPos,true);
-					}
-					// 测试禁用和启用
-					if(2 == (subsubmenuPos % 4))
-					{
-						myobj.EnableCustomMenuItem2(menuPos,submenuPos,subsubmenuPos,false);
-					}
-				}				
-			}else{ // 主菜单增加项目，第3个参数是-1是在主菜单增加
-			
-				myobj.AddCustomMenuItem2(menuPos,
-						                 submenuPos,
-						                 -1,
-						                 false,
-						                 "菜单项目"+menuPos+"-"+submenuPos,
-						                 false,
-						                 menuPos*100+submenuPos);
-			}
-			
-			// 测试禁用和启用
-			if(1 == (submenuPos % 4))
-			{
-				myobj.EnableCustomMenuItem2(menuPos,submenuPos,-1,false);
-			}
-		}
-	}
+	myobj.AddCustomMenu2(2," 表格工具 ");
+	myobj.AddCustomMenuItem2(2,0,-1,false,"插入表格",false,22);
 	
-	myobj.AddCustomMenu2(3,"自定义工具");
-	myobj.AddCustomMenuItem2(3,0,-1,false,"校验本行",false,555);
+	myobj.AddCustomMenu2(3," 公式 ");
+	myobj.AddCustomMenuItem2(3,0,-1,false,"插入公式",false,30);
+	
+	myobj.AddCustomMenu2(4," 信息统计 ");
+	myobj.AddCustomMenuItem2(4,0,-1,false,"文字总数",false,40);
+	myobj.AddCustomMenuItem2(4,1,-1,false,"句子总数",false,42);
+	myobj.AddCustomMenuItem2(4,2,-1,false,"段落总数",false,43);
+	myobj.AddCustomMenuItem2(4,3,-1,false,"图片总数",false,44);
+	myobj.AddCustomMenuItem2(4,4,-1,false,"表格总数",false,45);
+	
+	
+//	for(var menuPos=0; menuPos<3; menuPos++){
+//		myobj.AddCustomMenu2(menuPos,"菜单"+menuPos+"(&"+menuPos+")");
+//		for(var submenuPos=0;submenuPos<10;submenuPos++){
+//			if(1 ==(submenuPos % 3)){ // 主菜单增加分隔符。第3个参数是-1是在主菜单增加
+//				myobj.AddCustomMenuItem2(menuPos,submenuPos,-1,false,"-",true);
+//			}else if(0 == (submenuPos % 2)){ // 主菜单增加子菜单，第3个参数是-1是在主菜单增加
+//				myobj.AddCustomMenuItem2(menuPos,submenuPos,-1,true,"子菜单"+menuPos+"-"+submenuPos,false);
+//				// 增加子菜单项目
+//				for(var subsubmenuPos=0;subsubmenuPos<9;subsubmenuPos++)
+//				{
+//					if(0 == (subsubmenuPos % 2))// 增加子菜单项目
+//					{
+//						myobj.AddCustomMenuItem2(menuPos,
+//								                 submenuPos,
+//								                 subsubmenuPos,
+//								                 false,
+//							                     "子菜单项目"+menuPos+"-"+submenuPos+"-"+subsubmenuPos,
+//							                     false,
+//							                     menuPos*100+submenuPos*20+subsubmenuPos);
+//					}
+//					else // 增加子菜单分隔
+//					{
+//						myobj.AddCustomMenuItem2(menuPos,submenuPos,subsubmenuPos,false,
+//							"-"+subsubmenuPos,true);
+//					}
+//					// 测试禁用和启用
+//					if(2 == (subsubmenuPos % 4))
+//					{
+//						myobj.EnableCustomMenuItem2(menuPos,submenuPos,subsubmenuPos,false);
+//					}
+//				}				
+//			}else{ // 主菜单增加项目，第3个参数是-1是在主菜单增加
+//			
+//				myobj.AddCustomMenuItem2(menuPos,
+//						                 submenuPos,
+//						                 -1,
+//						                 false,
+//						                 "菜单项目"+menuPos+"-"+submenuPos,
+//						                 false,
+//						                 menuPos*100+submenuPos);
+//			}
+//			
+//			// 测试禁用和启用
+//			if(1 == (submenuPos % 4))
+//			{
+//				myobj.EnableCustomMenuItem2(menuPos,submenuPos,-1,false);
+//			}
+//		}
+//	}
 }
