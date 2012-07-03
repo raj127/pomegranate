@@ -67,7 +67,7 @@
 	OFFICE_CONTROL_OBJ.ActiveDocument.ActiveWindow.DisplayHorizontalScrollBar =0; 
 	//OFFICE_CONTROL_OBJ.ActiveDocument.ActiveWindow.DisplayHorizontalScrollBar;
 	//垂直滚动条
-	OFFICE_CONTROL_OBJ.ActiveDocument.ActiveWindow.DisplayVerticalScrollBar =0;
+	OFFICE_CONTROL_OBJ.ActiveDocument.ActiveWindow.DisplayVerticalScrollBar;
 	//OFFICE_CONTROL_OBJ.ActiveDocument.ActiveWindow.DisplayVerticalScrollBar;
 
 	
@@ -127,14 +127,50 @@
 
 <script type="text/javascript" for="TANGER_OCX" event="OnCustomMenuCmd2(menuPos,submenuPos,subsubmenuPos,menuCaption,menuID)">
 	//alert("第" + menuPos +","+ submenuPos +","+ subsubmenuPos +"个菜单项,menuID="+menuID+",菜单标题为\""+menuCaption+"\"的命令被执行.");
+	
+	switch(menuID){
+    	case 0:
+     		alert("");
+    		var selection = OFFICE_CONTROL_OBJ.ActiveDocument.Application.Selection.Text 
+    		alert(selection);
+    		doSearch(selection);     		
+     		break;
+   		case 10:
+   			alert("");
+     	break;
+   		case 20:
+   			alert("");
+     	break;
+   		case 30:
+   			alert("");
+     	break;
+   		case 31:
+   			alert("");
+     	break;
+   		case 40:
+   			alert("文字总数");
+     	break;
+   		case 41:
+   			alert("句子总数");
+     	break;
+   		case 42:
+   			alert("段落总数");
+     	break;
+   		case 43:
+   			alert("图片总数");
+     	break;
+   		case 44:
+   			alert("表格总数");
+     	break;
+   		default:
+   			alert("default");
+   }
+
 	if(menuID == 555){
 		//alert("校验 begin {...");
 		//OFFICE_CONTROL_OBJ.ActiveDocument.Application.Selection.GoTo(3,1,1,"");//第三个参数指定要查找的行号
 		//OFFICE_CONTROL_OBJ.ActiveDocument.Application.Selection.MoveDown(5,1,1);
 		//alert(OFFICE_CONTROL_OBJ.ActiveDocument.Application.Selection.Range.Text);
-		var selection = OFFICE_CONTROL_OBJ.ActiveDocument.Application.Selection.Text 
-		alert(selection);
-		doSearch(selection);
 		//alert("校验 end ...}");
 	}
 	

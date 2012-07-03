@@ -436,17 +436,17 @@ function initCustomMenus(){
 	myobj.AddCustomMenuItem2(1,0,-1,false,"插入远程图片",false,10);
 	
 	myobj.AddCustomMenu2(2," 表格工具 ");
-	myobj.AddCustomMenuItem2(2,0,-1,false,"插入表格",false,22);
+	myobj.AddCustomMenuItem2(2,0,-1,false,"插入表格",false,20);
 	
 	myobj.AddCustomMenu2(3," 公式 ");
 	myobj.AddCustomMenuItem2(3,0,-1,false,"插入公式",false,30);
 	
 	myobj.AddCustomMenu2(4," 信息统计 ");
 	myobj.AddCustomMenuItem2(4,0,-1,false,"文字总数",false,40);
-	myobj.AddCustomMenuItem2(4,1,-1,false,"句子总数",false,42);
-	myobj.AddCustomMenuItem2(4,2,-1,false,"段落总数",false,43);
-	myobj.AddCustomMenuItem2(4,3,-1,false,"图片总数",false,44);
-	myobj.AddCustomMenuItem2(4,4,-1,false,"表格总数",false,45);
+	myobj.AddCustomMenuItem2(4,1,-1,false,"句子总数",false,41);
+	myobj.AddCustomMenuItem2(4,2,-1,false,"段落总数",false,42);
+	myobj.AddCustomMenuItem2(4,3,-1,false,"图片总数",false,43);
+	myobj.AddCustomMenuItem2(4,4,-1,false,"表格总数",false,44);
 	
 	
 //	for(var menuPos=0; menuPos<3; menuPos++){
