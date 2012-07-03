@@ -89,7 +89,7 @@ public class TaskVerifyAction extends ActionSupport {
 		try {
 			server = new HttpSolrServer(url);
 
-			SolrQuery query = new SolrQuery("content:安全");
+			SolrQuery query = new SolrQuery("content:煤矿");
 			//SolrQuery query = new SolrQuery(SolrClient.prepareKeyWords(keyWords));
 			query.setHighlight(true); //开启高亮组件 
 			query.addHighlightField("id");
