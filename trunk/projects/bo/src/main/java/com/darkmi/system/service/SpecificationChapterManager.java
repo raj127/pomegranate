@@ -34,13 +34,13 @@ public class SpecificationChapterManager {
 		return scDao.findPage(page, filters);
 	}
 
-	/**
-	 * 通过章节名称查询章节信息.
-	 */
-	@Transactional(readOnly = true)
-	public List<SpecificationChapter> getChapterByName(String chapterName) {
-		return scDao.findByName(chapterName);
-	}
+	//	/**
+	//	 * 通过章节名称查询章节信息.
+	//	 */
+	//	@Transactional(readOnly = true)
+	//	public List<SpecificationChapter> getChapterByName(String chapterName) {
+	//		return scDao.findByName(chapterName);
+	//	}
 
 	/**
 	 * 根据主键查询规范章节.
@@ -51,12 +51,73 @@ public class SpecificationChapterManager {
 	}
 
 	/**
-	 * 根据treeIndex获取章节信息.
+	 * 返回规范名称.
+	 * @param chapter
+	 * @return
 	 */
-	@Transactional(readOnly = true)
-	public SpecificationChapter getChapter(String treeIndex) {
-		return scDao.findUniqueBy("treeIndex", treeIndex);
+	public String getSpecificationName(SpecificationChapter chapter) {
+		String[] temp = new String[5];
+		for (int i = 0; i < 5; i++) {
+			if (chapter.equals(getRootChapter())) {
+				break;
+			} else {
+				temp[i] = chapter.getName();
+			}
+			chapter = chapter.getParentChapter();
+		}
+		for (int i = 4; i >= 0; i--) {
+			if (null != temp[i]) {
+				logger.debug("规范名称 --> {}", temp[i]);
+				return temp[i];
+			}
+		}
+		return null;
 	}
+
+	/**
+	 * 返回章节名称.
+	 * @param chapter
+	 * @return
+	 */
+	public String getParentChapterName(SpecificationChapter chapter) {
+		String names = makeSource(chapter);
+		logger.debug("章节名称-->" + names);
+		return names;
+	}
+
+	/**
+	 * 拼接章节名称.
+	 * @param chapter
+	 * @return
+	 */
+	private String makeSource(SpecificationChapter chapter) {
+		String[] temp = new String[5];
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < 5; i++) {
+			if (chapter.equals(getRootChapter())) {
+				break;
+			} else {
+				temp[i] = chapter.getName();
+			}
+			chapter = chapter.getParentChapter();
+		}
+		for (int i = 4; i >= 0; i--) {
+			if (temp[i] == null) {
+
+			} else {
+				sb.append(temp[i] + " ");
+			}
+		}
+		return sb.toString();
+	}
+
+	//	/**
+	//	 * 根据treeIndex获取章节信息.
+	//	 */
+	//	@Transactional(readOnly = true)
+	//	public SpecificationChapter getChapter(String treeIndex) {
+	//		return scDao.findUniqueBy("treeIndex", treeIndex);
+	//	}
 
 	/**
 	 * 查询根章节.

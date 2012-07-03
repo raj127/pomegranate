@@ -69,6 +69,7 @@
 			<table id="contentTable">
 				<tr>
 					<th width="5%">id</th>
+					<th width="5%">specificationName</th>
 					<th width="5%">chapterName</th>
 					<th width="10%">conent</th>
 					<th width="15%">操作</th>
@@ -77,6 +78,7 @@
 				<s:iterator value="page.result">
 					<tr>
 						<td>${id}&nbsp;</td>
+						<td>${specificationName}&nbsp;</td>
 						<td>${chapterName}&nbsp;</td>
 						<td>
 							${content}

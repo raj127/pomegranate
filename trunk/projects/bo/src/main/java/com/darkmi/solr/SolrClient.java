@@ -30,7 +30,7 @@ import com.google.common.collect.Lists;
 public class SolrClient {
 	private static SolrClient solrClient = null;
 	private static HttpSolrServer server = null;
-	private String url = "http://localhost:8080/solr/core0/";
+	private String url = "http://localhost:8080/solr/core1/";
 	private static Logger logger = LoggerFactory.getLogger(SolrClient.class);
 
 	/**
@@ -91,6 +91,8 @@ public class SolrClient {
 			doc1.addField("id", scDto.getId());
 			doc1.addField("chapterName", scDto.getChapterName());
 			doc1.addField("content", scDto.getContent());
+			doc1.addField("specificationName", scDto.getSpecificationName());
+			logger.debug("doc -->{}", doc1.toString());
 			solrServer.add(doc1);
 			solrServer.commit();
 		} catch (SolrServerException e) {
@@ -111,6 +113,8 @@ public class SolrClient {
 				doc.addField("id", scDto.getId());
 				doc.addField("chapterName", scDto.getChapterName());
 				doc.addField("content", scDto.getContent());
+				doc.addField("specificationName", scDto.getSpecificationName());
+				//logger.debug("doc -->{}", doc.toString());				
 				siDocs.add(doc);
 			}
 
@@ -217,7 +221,8 @@ public class SolrClient {
 				scDto = new SpecificationChapterDto();
 				scId = solrDocument.getFieldValue("id").toString();
 				scDto.setId(scId);
-				scDto.setChapterName(solrDocument.getFieldValue("chapterName").toString());
+				scDto.setSpecificationName(solrDocument.getFieldValue("chapterName").toString());
+				scDto.setChapterName(solrDocument.getFieldValue("specificationName").toString());
 
 				List<String> contentList = highlightMap.get(scId).get("content");
 				if (contentList != null && contentList.size() > 0) {

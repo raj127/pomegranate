@@ -16,6 +16,7 @@ public class SpecificationChapterDto implements Serializable {
 	private String id;
 	private String chapterName;
 	private String content;
+	private String specificationName;
 
 	public String getId() {
 		return id;
@@ -41,4 +42,17 @@ public class SpecificationChapterDto implements Serializable {
 		this.content = content;
 	}
 
+	public String getSpecificationName() {
+		return specificationName;
+	}
+
+	public void setSpecificationName(String specificationName) {
+		this.specificationName = specificationName;
+	}
+
+	@Override
+	public String toString() {
+		return "SpecificationChapterDto [id=" + id + ", chapterName=" + chapterName + ", content=" + content
+				+ ", specificationName=" + specificationName + "]";
+	}
 }

@@ -31,7 +31,7 @@ public class SpecificationChapter extends AuditableEntity {
 	private Integer sort;//排序
 	private Boolean isLeaf;//是否叶子节点
 	private Boolean state;//状态
-	private String content;
+	private String content; //内容
 	//子类实体列表
 	private List<SpecificationChapter> chapterList = Lists.newArrayList();
 	private Integer version;
@@ -91,6 +91,15 @@ public class SpecificationChapter extends AuditableEntity {
 		this.state = state;
 	}
 
+	@Column(name = "content")
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "parentChapter")
 	public List<SpecificationChapter> getChapterList() {
 		return chapterList;
@@ -109,16 +118,7 @@ public class SpecificationChapter extends AuditableEntity {
 	public void setVersion(Integer version) {
 		this.version = version;
 	}
-
-	@Column(name = "content")
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
+	
 	@Transient
 	public void calculateTreeIndex() {
 		if (getParentChapter() == null) {
