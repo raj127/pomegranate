@@ -92,11 +92,17 @@ public class SpecificationChapterAction extends CrudActionSupport<SpecificationC
 		List<SpecificationChapter> scs = scManager.getAllChapter();
 		for (Iterator<SpecificationChapter> iterator = scs.iterator(); iterator.hasNext();) {
 			SpecificationChapter chapter = (SpecificationChapter) iterator.next();
-			SpecificationChapterDto scDto = new SpecificationChapterDto();
-			scDto.setId(String.valueOf(chapter.getId()));
-			scDto.setChapterName(chapter.getName());
-			scDto.setContent(chapter.getContent());
-			scDtos.add(scDto);
+			
+			if(null ==chapter.getContent()|| "".equals(chapter.getContent())){
+				logger.debug("content is null.");
+			}else{
+				SpecificationChapterDto scDto = new SpecificationChapterDto();
+				scDto.setId(String.valueOf(chapter.getId()));
+				scDto.setChapterName(scManager.getParentChapterName(chapter));
+				scDto.setContent(chapter.getContent());
+				scDto.setSpecificationName(scManager.getSpecificationName(chapter));
+				scDtos.add(scDto);				
+			}
 		}
 		SolrClient.createIndex(scDtos);
 		addActionMessage("索引创建成功");
