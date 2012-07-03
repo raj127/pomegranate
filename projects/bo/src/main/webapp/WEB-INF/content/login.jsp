@@ -44,7 +44,7 @@
 	<form id="loginForm" action="${ctx}/j_spring_security_check" method="post" style="margin-top:1em">
 		<table class="noborder" align="center">
 				<tr>
-					<td>用户名:</td>
+					<td style="text-align:right">用户名:</td>
 					<td>
 						<input type='text' name='j_username' size='10'
 						<s:if test="not empty param.error">
@@ -54,7 +54,7 @@
 
 				</tr>
 				<tr>
-					<td>密码:</td>
+					<td style="text-align:right">密码:</td>
 					<td><input type='password' size='10' name='j_password'/></td>
 				</tr>
 				<!--<tr>
@@ -64,13 +64,17 @@
 				-->
 				
 				<tr>
-					<td colspan='3'><input type="checkbox" name="_spring_security_remember_me"/>
+					<td>&nbsp;</td>
+					<td style="text-align:left"><input type="checkbox" name="_spring_security_remember_me"/>
 						两周内记住我<!--<span style="margin-left:25px"><a href="javascript:refreshCaptcha()">看不清楚换一张</a></span>-->
 					</td>
+					
 				</tr>
 				
 				<tr>
-					<td colspan='3'><input value="登录" type="submit"/></td>
+					<td>&nbsp;</td>
+					<td style="text-align:left"><input value="登录" type="submit"/></td>
+					
 				</tr>
 			</table>
 	</form>

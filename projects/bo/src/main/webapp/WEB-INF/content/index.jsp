@@ -31,22 +31,27 @@
 	<div id="yui-main">
 	<div class="yui-b">
 	   <table align="center" class="noborder">
-	   	   <tr><td height="60"></td></tr>
 	       <tr>
 	       		<td width="240" height="120">	
 	       		<security:authorize ifAnyGranted="ROLE_系统管理"> 
 		       		<table align="center">
-		       		<tr><td>
-		       		<a href="${ctx}/system/user.action" ><img src="${ctx}/images/index-00.png" border="0px" align="top" /></a>
-		       		</td></tr>
-		       		<tr><td align="center" ><a style="font-size:15px" href="${ctx}/system/user.action" >系统管理</a></td></tr>
+			       		<tr>
+			       		<td align="center">
+			       		<a href="${ctx}/system/user.action" ><img src="${ctx}/images/index-00.png" border="0px" align="top" /></a>
+			       		</td>
+			       		</tr>
+			       		<tr>
+			       		<td align="center">
+			       		<a style="font-size:15px" href="${ctx}/system/user.action" >系统管理</a>
+			       		</td>
+			       		</tr>
 		       		</table>
 	       		</security:authorize>
 	       		</td>
 	            <td width="240" height="120">	
 	            <security:authorize ifAnyGranted="ROLE_任务管理"> 
 		            <table align="center">
-		            <tr><td>
+		            <tr><td align="center">
 		            <a href="${ctx}/task/task.action" ><img src="${ctx}/images/index-01.png" border="0px" align="top" /></a>
 		            </td></tr>
 		            <tr><td align="center"><a style="font-size:15px" href="${ctx}/task/task.action" >任务管理</a></td></tr>
@@ -56,8 +61,15 @@
 	            <td width="240" height="120"> 
 	            <security:authorize ifAnyGranted="ROLE_作业规程编制">
 	            <table align="center">
-	            	<tr><td><a href="${ctx}/edit/task-chapter.action"><img src="${ctx}/images/index-02.png" border="0px" align="top" /></a></td></tr>
-	            	<tr><td align="center"><a style="font-size:15px" href="${ctx}/edit/task-chapter.action">规程编制</a></td></tr>
+	            	<tr>
+	            	<td align="center">
+	            	<a href="${ctx}/edit/task-chapter.action"><img src="${ctx}/images/index-02.png" border="0px" align="top" /></a>
+	            	</td>
+	            	</tr>
+	            	<tr>
+	            	<td align="center"><a style="font-size:15px" href="${ctx}/edit/task-chapter.action">规程编制</a>
+	            	</td>
+	            	</tr>
 	            </table>
 	            </security:authorize>
 	            </td>
@@ -66,15 +78,23 @@
 	         <td width="240" height="120">
 	         <security:authorize ifAnyGranted="ROLE_作业规程审批"> 
 	         <table align="center">
-	         	<tr><td><a href="${ctx}/approve/approve.action"><img src="${ctx}/images/index-03.png" border="0px" align="top" /></a></td></tr>
-	         	<tr><td align="center"><a style="font-size:15px" href="${ctx}/approve/approve.action">规程审批</a></td></tr>
+	         	<tr>
+	         	<td align="center">
+	         	<a href="${ctx}/approve/approve.action"><img src="${ctx}/images/index-03.png" border="0px" align="top" /></a>
+	         	</td>
+	         	</tr>
+	         	<tr>
+	         	<td align="center">
+	         	<a style="font-size:15px" href="${ctx}/approve/approve.action">规程审批</a>
+	         	</td>
+	         	</tr>
 	         </table>
 	         </security:authorize>
 	         </td>
 	         <td width="240" height="120">
 	         <security:authorize ifAnyGranted="ROLE_作业规程查询">
 	         <table align="center">
-	         	<tr><td><a href="${ctx}/query/query.action"><img src="${ctx}/images/index-04.png" border="0px" align="top" /></a></td></tr>
+	         	<tr><td align="center"><a href="${ctx}/query/query.action"><img src="${ctx}/images/index-04.png" border="0px" align="top" /></a></td></tr>
 	         	<tr><td align="center"><a style="font-size:15px" href="${ctx}/query/query.action">规程查询</a></td></tr>
 	         </table>
 	         </security:authorize>
@@ -82,13 +102,11 @@
 	         <td width="240" height="120">
 	         <security:authorize ifAnyGranted="ROLE_作业规程快讯">
 	         <table align="center">
-	         	<tr><td><a href="${ctx}/news/news.action"><img src="${ctx}/images/index-05.png" border="0px" align="top" /></a></td></tr>
+	         	<tr><td align="center"><a href="${ctx}/news/news.action"><img src="${ctx}/images/index-05.png" border="0px" align="top" /></a></td></tr>
 	         	<tr><td align="center"><a style="font-size:15px" href="${ctx}/news/news.action">规程快讯</a></td></tr></table>
 	         </security:authorize>
 	         </td>
 	        </tr>
-
-	   
 	   </table>
 	</div>
 	</div>
