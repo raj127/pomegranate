@@ -23,22 +23,21 @@ import com.google.common.collect.Lists;
  * @version 1.0  2012-05-10 上午09:20:11 DarkMi created
  */
 @Namespace("/edit")
-@Results({
-		@Result(name = CrudActionSupport.RELOAD, location = "task-chapter.action?taskId=${taskId}", type = "redirect"),
-		@Result(name = "edit", location = "edit.jsp") })
+@Results({ @Result(name = CrudActionSupport.RELOAD, location = "task-chapter.action?taskId=${taskId}", type = "redirect") })
 public class TaskChapterAction extends CrudActionSupport<TaskChapter> {
 	private static final long serialVersionUID = -2907389496513631586L;
 	private Long id;
 	private Long taskId;
-
 	private TaskChapter taskChapter;
 	private List<TaskChapter> tcs = Lists.newArrayList();
 
 	private TaskChapterManager taskChapterManager;
 
+	/**
+	 * 根据当前工号权限获取所有的章节目录.
+	 */
 	@Override
 	public String list() throws Exception {
-		logger.debug("edit.taskChapter.list begin{ ... ");
 		//获取taskId
 		HttpServletRequest request = ServletActionContext.getRequest();
 		String taskIdStr = request.getParameter("taskId");
@@ -50,16 +49,15 @@ public class TaskChapterAction extends CrudActionSupport<TaskChapter> {
 			taskId = Long.parseLong(request.getParameter("taskId"));
 			tcs = taskChapterManager.getTcsByTaskId(taskId);
 		}
-		logger.debug("edit.taskChapter.list end ...} ");
 		return SUCCESS;
 	}
 
 	//@Action(value = "edit", results = { @Result(name = "edit", location = "edit.jsp", type = "redirect") })
-	public String edit() {
-		logger.debug("编辑作业规程... begin{ ");
-		logger.debug("编辑作业规程... end} ");
-		return "edit";
-	}
+	//	public String edit() {
+	//		logger.debug("编辑作业规程... begin{ ");
+	//		logger.debug("编辑作业规程... end} ");
+	//		return "edit";
+	//	}
 
 	@Override
 	public String input() throws Exception {
