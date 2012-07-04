@@ -27,11 +27,11 @@
 	</script>
 	<script type="text/javascript">
 	function showWin(){
-		var height = screen.availHeight;
-		var width  = screen.availWidth;
+		var height = screen.height;
+		var width  = screen.width;
 		//var top    = (screen.availHeight - height)/2;
 		//var left   = (screen.availWidth - width)/2;
-		var param  = 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=auto,resizable=yes,' + 
+		var param  = 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=auto,resizable=yes,fullscreen=yes' + 
 		             'width=' + width + ',height=' + height + ',left=0,top=0';
 		window.open('task-chapter!edit.action?id=${id}', 'win_name', param);
 		return false;
@@ -73,7 +73,7 @@
 								<a href="javascript:void(0)" onclick="showWin();return false;" target="_blank">编辑</a>&nbsp;
 							</security:authorize>
 							<a href="task-chapter!testUpload.action">上传测试</a>&nbsp;
-							<a href="task-verify!main.action" target="_blank">规程校验</a>&nbsp;
+							<a href="task-verify!main.action?id=${id}" target="_blank">规程校验</a>&nbsp;
 						</td>
 					</tr>
 				</s:iterator>

@@ -42,12 +42,11 @@ public class TaskChapterManager {
 	}
 
 	/**
-	 * 根据主键得到作业规程任务信息
+	 * 根据主键得到作业规程的具体章节信息.
 	 */
 	@Transactional(readOnly = true)
 	public TaskChapter getTaskChapter(Long id) {
-		//return taskDao.get(id);
-		return null;
+		return taskChapterDao.get(id);
 	}
 
 	/**

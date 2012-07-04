@@ -16,8 +16,11 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import com.darkmi.edit.service.TaskChapterManager;
 import com.darkmi.entity.system.SpecificationChapter;
+import com.darkmi.entity.task.TaskChapter;
 import com.google.common.collect.Lists;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -30,14 +33,19 @@ import com.opensymphony.xwork2.ActionSupport;
 @Namespace("/edit")
 @Results({ @Result(name = "main-success", location = "task-verify-main.jsp"),
 		@Result(name = "top-success", location = "task-verify-top.jsp"),
-		@Result(name = "left-success", location = "task-verify-left.jsp"),
+		/*@Result(name = "left-success", location = "task-verify-left.jsp"),*/
 		@Result(name = "right-success", location = "task-verify-right.jsp") })
 public class TaskVerifyAction extends ActionSupport {
 	private static final long serialVersionUID = -2907389496513631586L;
 	private Logger logger = LoggerFactory.getLogger(TaskVerifyAction.class);
-	private String sentence;
+	private Long id; //作业规程的ID
+	private String sentence; //选中的一行文本
+	private List<SpecificationChapter> scList = Lists.newArrayList(); //检索的结果
 
-	private List<SpecificationChapter> scList = Lists.newArrayList();
+	private String taskName;
+	private String chapterName;
+
+	private TaskChapterManager tcManager;
 
 	@Override
 	public String execute() throws Exception {
@@ -49,23 +57,34 @@ public class TaskVerifyAction extends ActionSupport {
 
 	public String main() throws Exception {
 		logger.debug("begin main() { ...");
+		logger.debug("id --> {}", id);
+		TaskChapter tc = tcManager.getTaskChapter(id);
+		logger.debug(tc.toString());
+		chapterName = tc.getChapterName();
+		taskName = tc.getTask().getTaskName();
+		logger.debug("chapterName --> {}", chapterName);
+		logger.debug("taskName --> {}", taskName);
 		logger.debug("end main() ...} ");
 		return "main-success";
 	}
 
 	public String top() throws Exception {
-		logger.debug("begin top() { ...");
-
-		logger.debug("end top() ...} ");
+		logger.debug("id --> {}", id);
+		TaskChapter tc = tcManager.getTaskChapter(id);
+		logger.debug(tc.toString());
+		chapterName = tc.getChapterName();
+		taskName = tc.getTask().getTaskName();
+		logger.debug("chapterName --> {}", chapterName);
+		logger.debug("taskName --> {}", taskName);
 		return "top-success";
 	}
 
-	public String left() throws Exception {
-		logger.debug("begin left() { ...");
-
-		logger.debug("end left() ...} ");
-		return "left-success";
-	}
+	//	public String left() throws Exception {
+	//		logger.debug("begin left() { ...");
+	//
+	//		logger.debug("end left() ...} ");
+	//		return "left-success";
+	//	}
 
 	public String right() throws Exception {
 		logger.debug("begin right() { ...");
@@ -178,6 +197,14 @@ public class TaskVerifyAction extends ActionSupport {
 
 	/*~~~~~~~~~~~Setters And Getters ~~~~~~~~~~~~~~~~~*/
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public String getSentence() {
 		return sentence;
 	}
@@ -192,6 +219,28 @@ public class TaskVerifyAction extends ActionSupport {
 
 	public void setScList(List<SpecificationChapter> scList) {
 		this.scList = scList;
+	}
+
+	public String getTaskName() {
+		return taskName;
+	}
+
+	public void setTaskName(String taskName) {
+		this.taskName = taskName;
+	}
+
+	public String getChapterName() {
+		return chapterName;
+	}
+
+	public void setChapterName(String chapterName) {
+		this.chapterName = chapterName;
+	}
+
+	/*~~~~~~~~~~~业务逻辑类注入~~~~~~~~~~~~~~~~~*/
+	@Autowired
+	public void setTcManager(TaskChapterManager tcManager) {
+		this.tcManager = tcManager;
 	}
 
 }
