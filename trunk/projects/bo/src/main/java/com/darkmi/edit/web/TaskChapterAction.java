@@ -43,6 +43,7 @@ public class TaskChapterAction extends CrudActionSupport<TaskChapter> {
 		String taskIdStr = request.getParameter("taskId");
 		if (null == taskIdStr || "".equals(taskIdStr)) {
 			if (SpringSecurityUtils.getCurrentUserName().equals("admin")) {
+				
 				tcs = taskChapterManager.getAllTaskChapter();
 			}
 		} else {
