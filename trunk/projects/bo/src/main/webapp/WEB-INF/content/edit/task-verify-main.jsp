@@ -18,6 +18,16 @@
 	<%--############ --%>
 	<script language="javascript">
 	$(document).ready(function(){
+		//-----------------------
+		//alert('$(window).height() ==> ' + $(window).height()); //浏览器当前窗口可视区域高度 
+		//alert('$(document).height() ==> ' + $(document).height()); //浏览器当前窗口文档的高度 
+		//alert('$(document.body).height() ==> ' + $(document.body).height());//浏览器当前窗口文档body的高度 
+		//alert('$(document.body).outerHeight(true) ==> ' + $(document.body).outerHeight(true));//浏览器当前窗口文档body的总高度 包括border padding margin 
+		//alert($(window).width()); //浏览器当前窗口可视区域宽度 
+		//alert($(document).width());//浏览器当前窗口文档对象宽度 
+		//alert($(document.body).width());//浏览器当前窗口文档body的高度 
+		//alert($(document.body).outerWidth(true));//浏览器当前窗口文档body的总宽度 包括border padding margin 
+		//-----------------------
 	    //---Init Layout
 	    var wsize=250;
 	    $('body').layout({
@@ -93,6 +103,7 @@
 <body onload='intializePage("${ctx}/company/default/task/default/01-01.docx")' onunload="onPageClose()">
 <!-- top bar -->
 <div id="top-pane" class="ui-layout-north" style="OVERFLOW: hidden" >
+<!--  
 <iframe name="top"
         id="top"
         src="task-verify!top.action"
@@ -102,6 +113,28 @@
         frameBorder="0"
 	    scrolling="no">
 </iframe>
+-->
+<div class="top">
+	<div class="left">
+	  当前编辑的作业规程名称：${taskName} &nbsp;|&nbsp;
+	当前编辑的章节：${chapterName}
+	<!--  <a href="#" onclick="showServerMenu(this);return false;">工具1 </a>| 
+	<a href="#" onclick="showServerMenu(this);return false;">工具2</a>--> 
+	</div>
+	<div class="right">
+	<% if(!"anonymousUser".equals(SpringSecurityUtils.getCurrentUserName())){ %>
+	当前用户： <%=SpringSecurityUtils.getCurrentUserName()%> | 
+	<% } %>
+	<a href="#" onclick="javascript:parent.window.opener=null;parent.window.close();">退出</a>
+	<!--
+	<a href="#" onclick="showServerMenu(this);return false;">工具3 </a>| 
+	<a href="#" onclick="showServerMenu(this);return false;">工具4</a> 		
+	<a href="#" onclick="showManuals(this);return false;">工具3 <span style="font-size: 11px">▼</span></a> | 
+	<a href="#" onclick="showServerMenu(this);return false;">退出</a>-->  
+	</div>
+	<div class=clear></div>
+</div>
+	
 </div>
 <div id="left-pane" class="ui-layout-center"><!-- left bar -->
 <%-- 
