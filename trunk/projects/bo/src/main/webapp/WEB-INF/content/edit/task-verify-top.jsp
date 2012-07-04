@@ -1,8 +1,8 @@
 ﻿<%@ page contentType="text/html;charset=UTF-8" %>
 <div class="top">
 	<div class="left">
-	  当前编辑的作业规程名称：${taskName} &nbsp;|&nbsp;
-	当前编辑的章节：${chapterName}
+	  当前编辑的作业规程名称：${tc.task.taskName} &nbsp;|&nbsp;
+	当前编辑的章节：${tc.chapterName}
 	<!--
 	<a href="#" onclick="showServerMenu(this);return false;">工具1 </a>| 
 	<a href="#" onclick="showServerMenu(this);return false;">工具2</a>

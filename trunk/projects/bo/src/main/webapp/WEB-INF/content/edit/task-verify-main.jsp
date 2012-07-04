@@ -100,7 +100,7 @@
 	</script>	
 </head>
 
-<body onload='intializePage("${ctx}/company/default/task/default/01-01.docx")' onunload="onPageClose()">
+<body onload='intializePage("${ctx}${tc.task.path}${tc.fileName}")' onunload="onPageClose()">
 <!-- top bar -->
 <div id="top-pane" class="ui-layout-north" style="overflow:hidden" >
 <%@ include file="task-verify-top.jsp"%>

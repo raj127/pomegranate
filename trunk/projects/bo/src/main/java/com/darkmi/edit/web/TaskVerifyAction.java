@@ -38,10 +38,8 @@ public class TaskVerifyAction extends ActionSupport {
 	private Logger logger = LoggerFactory.getLogger(TaskVerifyAction.class);
 	private Long id; //作业规程的ID
 	private String sentence; //选中的一行文本
-	private List<SpecificationChapter> scList = Lists.newArrayList(); //检索的结果
-	private String taskName;
-	private String chapterName;
 	private TaskChapter tc;
+	private List<SpecificationChapter> scList = Lists.newArrayList(); //检索的结果
 	private TaskChapterManager tcManager;
 
 	@Override
@@ -62,14 +60,15 @@ public class TaskVerifyAction extends ActionSupport {
 		logger.debug("id --> {}", id);
 		tc = tcManager.getTaskChapter(id);
 		logger.debug(tc.toString());
-		chapterName = tc.getChapterName();
-		taskName = tc.getTask().getTaskName();
-		logger.debug("chapterName --> {}", chapterName);
-		logger.debug("taskName --> {}", taskName);
 		logger.debug("end main() ...} ");
 		return "main-success";
 	}
-
+	
+	/**
+	 * 进入右帧.
+	 * @return
+	 * @throws Exception
+	 */
 	public String right() throws Exception {
 		logger.debug("begin right() { ...");
 		logger.debug("end right() ...} ");
@@ -202,22 +201,6 @@ public class TaskVerifyAction extends ActionSupport {
 
 	public void setScList(List<SpecificationChapter> scList) {
 		this.scList = scList;
-	}
-
-	public String getTaskName() {
-		return taskName;
-	}
-
-	public void setTaskName(String taskName) {
-		this.taskName = taskName;
-	}
-
-	public String getChapterName() {
-		return chapterName;
-	}
-
-	public void setChapterName(String chapterName) {
-		this.chapterName = chapterName;
 	}
 	
 	public TaskChapter getTc() {
