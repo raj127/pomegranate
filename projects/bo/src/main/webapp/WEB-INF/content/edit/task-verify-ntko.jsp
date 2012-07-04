@@ -11,7 +11,7 @@
 	OFFICE_CONTROL_OBJ.Caption= "haha";
 	
 	//水平滚动条
-	OFFICE_CONTROL_OBJ.ActiveDocument.ActiveWindow.DisplayHorizontalScrollBar =0; 
+	OFFICE_CONTROL_OBJ.ActiveDocument.ActiveWindow.DisplayHorizontalScrollBar; 
 	//OFFICE_CONTROL_OBJ.ActiveDocument.ActiveWindow.DisplayHorizontalScrollBar;
 	//垂直滚动条
 	OFFICE_CONTROL_OBJ.ActiveDocument.ActiveWindow.DisplayVerticalScrollBar;

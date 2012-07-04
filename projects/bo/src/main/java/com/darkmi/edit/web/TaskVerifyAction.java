@@ -32,8 +32,6 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 @Namespace("/edit")
 @Results({ @Result(name = "main-success", location = "task-verify-main.jsp"),
-		@Result(name = "top-success", location = "task-verify-top.jsp"),
-		/*@Result(name = "left-success", location = "task-verify-left.jsp"),*/
 		@Result(name = "right-success", location = "task-verify-right.jsp") })
 public class TaskVerifyAction extends ActionSupport {
 	private static final long serialVersionUID = -2907389496513631586L;
@@ -41,10 +39,9 @@ public class TaskVerifyAction extends ActionSupport {
 	private Long id; //作业规程的ID
 	private String sentence; //选中的一行文本
 	private List<SpecificationChapter> scList = Lists.newArrayList(); //检索的结果
-
 	private String taskName;
 	private String chapterName;
-
+	private TaskChapter tc;
 	private TaskChapterManager tcManager;
 
 	@Override
@@ -55,10 +52,15 @@ public class TaskVerifyAction extends ActionSupport {
 		return super.execute();
 	}
 
+	/**
+	 * 进入规程校验页面.
+	 * @return
+	 * @throws Exception
+	 */
 	public String main() throws Exception {
 		logger.debug("begin main() { ...");
 		logger.debug("id --> {}", id);
-		TaskChapter tc = tcManager.getTaskChapter(id);
+		tc = tcManager.getTaskChapter(id);
 		logger.debug(tc.toString());
 		chapterName = tc.getChapterName();
 		taskName = tc.getTask().getTaskName();
@@ -68,27 +70,8 @@ public class TaskVerifyAction extends ActionSupport {
 		return "main-success";
 	}
 
-	public String top() throws Exception {
-		logger.debug("id --> {}", id);
-		TaskChapter tc = tcManager.getTaskChapter(id);
-		logger.debug(tc.toString());
-		chapterName = tc.getChapterName();
-		taskName = tc.getTask().getTaskName();
-		logger.debug("chapterName --> {}", chapterName);
-		logger.debug("taskName --> {}", taskName);
-		return "top-success";
-	}
-
-	//	public String left() throws Exception {
-	//		logger.debug("begin left() { ...");
-	//
-	//		logger.debug("end left() ...} ");
-	//		return "left-success";
-	//	}
-
 	public String right() throws Exception {
 		logger.debug("begin right() { ...");
-
 		logger.debug("end right() ...} ");
 		return "right-success";
 	}
@@ -236,7 +219,14 @@ public class TaskVerifyAction extends ActionSupport {
 	public void setChapterName(String chapterName) {
 		this.chapterName = chapterName;
 	}
+	
+	public TaskChapter getTc() {
+		return tc;
+	}
 
+	public void setTc(TaskChapter tc) {
+		this.tc = tc;
+	}
 	/*~~~~~~~~~~~业务逻辑类注入~~~~~~~~~~~~~~~~~*/
 	@Autowired
 	public void setTcManager(TaskChapterManager tcManager) {

@@ -70,10 +70,13 @@
 						<td>模板创建&nbsp;</td>
 						<td>&nbsp;
 							<security:authorize ifAnyGranted="ROLE_作业规程编制">
-								<a href="javascript:void(0)" onclick="showWin();return false;" target="_blank">编辑</a>&nbsp;
+								<s:if test='fileName!=""'>
+								<a href="task-verify!main.action?id=${id}" target="_blank">编辑</a>&nbsp;
+								<a href="task-verify!main.action?id=${id}" target="_blank" <s:if test='fileName==""'>disabled</s:if>>提交审核</a>&nbsp;
+								</s:if>
 							</security:authorize>
-							<a href="task-chapter!testUpload.action">上传测试</a>&nbsp;
-							<a href="task-verify!main.action?id=${id}" target="_blank">规程校验</a>&nbsp;
+							<%--<a href="task-chapter!testUpload.action">上传测试</a>&nbsp;--%>
+							<%--<a href="task-verify!main.action?id=${id}" target="_blank">规程校验</a>&nbsp;--%>
 						</td>
 					</tr>
 				</s:iterator>

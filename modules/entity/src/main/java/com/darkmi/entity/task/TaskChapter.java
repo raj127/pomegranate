@@ -106,9 +106,8 @@ public class TaskChapter extends AuditableEntity {
 
 	@Override
 	public String toString() {
-		return "TemplateChapter [chapterId=" + chapterId + ", chapterName=" + chapterName + ", fileName=" + fileName
-				+ ", description=" + description + ", template=" + task + ", parentId=" + parentId + ", displayOrder="
+		return "TaskChapter [chapterId=" + chapterId + ", chapterName=" + chapterName + ", fileName=" + fileName
+				+ ", description=" + description + ", task=" + task + ", parentId=" + parentId + ", displayOrder="
 				+ displayOrder + ", state=" + state + "]";
 	}
-
 }
