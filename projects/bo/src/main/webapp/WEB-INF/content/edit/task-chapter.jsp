@@ -9,10 +9,19 @@
 	<%@ include file="/common/meta.jsp" %>
 	<link href="${ctx}/css/yui.css" type="text/css" rel="stylesheet"/>
 	<link href="${ctx}/css/style.css" type="text/css" rel="stylesheet"/>
-	<link href="${ctx}/css/pagination.css" type="text/css" rel="stylesheet"/>
+	<link href="${ctx}/css/treetable/jquery.treeTable.css" rel="stylesheet" type="text/css" />
+	<link href="${ctx}/css/treetable/master.css" rel="stylesheet" type="text/css" />
 	<script src="${ctx}/js/jquery.js" type="text/javascript"></script>
 	<script src="${ctx}/js/table.js" type="text/javascript"></script>
-	<script src="${ctx}/js/jquery.pagination.js" type="text/javascript"></script>
+	<script src="${ctx}/js/treetable/jquery.ui.js" type="text/javascript"></script>
+	<script src="${ctx}/js/treetable/jquery.treeTable.js" type="text/javascript"></script>
+	
+	<script type="text/javascript">
+	$(document).ready(function() {
+	   $("#taskTree").treeTable({expandable: true,defaultPaddingLeft: 50});
+	});
+	</script>
+  	
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$(".mainNav a").attr("class","");
@@ -49,42 +58,7 @@
 		<div id="message"><s:actionmessage theme="custom" cssClass="success"/></div>
 
 		<div id="content">
-			<table id="contentTable">
-				<tr>
-					<th>章节名称</th>
-					<th>文件名称</th>
-					<th>章节描述</th>
-					<th>章节状态</th>
-					<th>审批状态</th>
-					<th>章节类型</th>
-					<th>操作</th>
-				</tr>
-
-				<s:iterator value="tcs">
-					<tr>
-						<td><s:if test="parentId!=0">&nbsp;&nbsp;&nbsp;&nbsp;</s:if>${chapterName}&nbsp;</td>
-						<td>${fileName}&nbsp;</td>
-						<td>${description}&nbsp;</td>
-						<td>${state}&nbsp;</td>
-						<td>未审批&nbsp;</td>
-						<td>模板创建&nbsp;</td>
-						<td>&nbsp;
-							<security:authorize ifAnyGranted="ROLE_作业规程编制">
-								<s:if test='fileName!=""'>
-								<a href="task-verify!main.action?id=${id}" target="_blank">编辑</a>&nbsp;
-								<a href="task-verify!main.action?id=${id}" target="_blank" <s:if test='fileName==""'>disabled</s:if>>提交审核</a>&nbsp;
-								</s:if>
-							</security:authorize>
-							<%--<a href="task-chapter!testUpload.action">上传测试</a>&nbsp;--%>
-							<%--<a href="task-verify!main.action?id=${id}" target="_blank">规程校验</a>&nbsp;--%>
-						</td>
-					</tr>
-				</s:iterator>
-			</table>
-		</div>
-
-		<div class="pagination">
-		    <%@ include file="/common/page.jsp" %>
+		${taskTree}
 		</div>
 	</form>
 	</div>

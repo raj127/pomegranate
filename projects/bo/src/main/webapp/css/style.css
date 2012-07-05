@@ -13,12 +13,21 @@ th {
 	color: #000000;
 }
 
-th,td {
+th{
+	border-color: #cccccc;
+	word-break: break-all;
+	word-wrap: break-word;
+	white-space: nowrap;	
+}
+
+td {
 	border-color: #cccccc;
 	word-break: break-all;
 	word-wrap: break-word;
 	white-space: nowrap;
+  	padding: 1em 1.5em;	
 }
+
 
 table.noborder th,table.noborder td {
 	border: none;
