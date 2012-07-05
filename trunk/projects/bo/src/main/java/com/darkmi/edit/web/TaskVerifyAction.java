@@ -63,7 +63,7 @@ public class TaskVerifyAction extends ActionSupport {
 		logger.debug("end main() ...} ");
 		return "main-success";
 	}
-	
+
 	/**
 	 * 进入右帧.
 	 * @return
@@ -82,32 +82,35 @@ public class TaskVerifyAction extends ActionSupport {
 	public void search() throws Exception {
 		logger.debug("search begin{ ... ");
 		//String keyWords = new Complex().doit(sentence);
-
 		//logger.debug("检索关键字为 --> " + keyWords);
+
+		String queryStr = "content:" + sentence;
+		logger.debug("查询字符串为-->" + queryStr);
 		StringBuffer reMessage = new StringBuffer();
-		String url = "http://localhost:8080/solr/core0";
+		String url = "http://localhost:8080/solr/core1";
 		HttpSolrServer server;
 		try {
 			server = new HttpSolrServer(url);
-
-			SolrQuery query = new SolrQuery("content:煤矿");
+			SolrQuery query = new SolrQuery(queryStr);
 			//SolrQuery query = new SolrQuery(SolrClient.prepareKeyWords(keyWords));
 			query.setHighlight(true); //开启高亮组件 
-			query.addHighlightField("id");
-			query.addHighlightField("chapterName");//高亮字段  
+			//query.addHighlightField("id");
+			//query.addHighlightField("chapterName");  
 			query.addHighlightField("content");
-			query.setHighlightSimplePre("<font color='red'>");//前缀  
-			query.setHighlightSimplePost("</font>");//后缀  
+			query.setHighlightSimplePre("<font color='red'>");
+			query.setHighlightSimplePost("</font>");
 			query.set("hl.usePhraseHighlighter", true);
 			query.set("hl.highlightMultiTerm", true);
-			query.set("hl.snippets", 3);//三个片段,默认是1  
-			query.set("hl.fragsize", 50);//每个片段50个字，默认是100  
+			query.set("hl.snippets", 3);
+			query.set("hl.fragsize", 50);
 
 			query.setStart(0);
 			query.setRows(10);
 
 			QueryResponse response = server.query(query);
 			SolrDocumentList list = response.getResults();
+
+			logger.debug("检索结果的数量为 --》{}", list.size());
 
 			//Map<String, Map<String, List<String>>> highlightMap = response.getHighlighting();
 
@@ -124,7 +127,10 @@ public class TaskVerifyAction extends ActionSupport {
 				//reMessage.append("</div>");
 				//------------------
 				SolrDocument doc = (SolrDocument) iterator.next();
-				String content = doc.getFieldValue("content").toString();
+				String content = prepareResult(doc.getFieldValue("content").toString());
+				String chapterName = prepareResult(doc.getFieldValue("chapterName").toString());
+				String specificationName = prepareResult(doc.getFieldValue("specificationName").toString());
+				logger.debug("conent --> {}", content);
 
 				reMessage.append("<div class=\"record\" onmouseover=\"showOperationButtons('" + id
 						+ "')\" onmouseout=\"hideOperationButtons('" + id + "')\">");
@@ -138,9 +144,10 @@ public class TaskVerifyAction extends ActionSupport {
 						+ "');return false;\" href=\"#\">隐藏</a>");
 				reMessage.append("</div>");
 				reMessage.append("<div id=\"text_" + id + "\" class=\"record_row\">");
-				reMessage.append("<font color=\"#dd0000\">" + content + "</font><br><br>");
-				reMessage.append("<font color=\"green\">" + "章节：第一节" + "</font><br>");
-				reMessage.append("<font color=\"green\">" + "来源：煤矿安全作业规范（2010版）" + "</font><br>");
+				//reMessage.append("<font color=\"#FFF\">" + content + "</font><br><br>");
+				reMessage.append(content + "<br><br>");
+				reMessage.append("<font color=\"green\">" + "章节：" + chapterName + "</font><br>");
+				reMessage.append("<font color=\"green\">" + "来源：" + specificationName + "</font><br>");
 				reMessage.append("</div>");
 				reMessage.append("</td>");
 				reMessage.append("</tr>");
@@ -160,6 +167,10 @@ public class TaskVerifyAction extends ActionSupport {
 
 		logger.debug("search end ...} ");
 
+	}
+	
+	private String prepareResult(String result){
+		return result.replace("[", "").replace("]", "");
 	}
 
 	public String getKey(String strWord) {
@@ -202,7 +213,7 @@ public class TaskVerifyAction extends ActionSupport {
 	public void setScList(List<SpecificationChapter> scList) {
 		this.scList = scList;
 	}
-	
+
 	public TaskChapter getTc() {
 		return tc;
 	}
@@ -210,6 +221,7 @@ public class TaskVerifyAction extends ActionSupport {
 	public void setTc(TaskChapter tc) {
 		this.tc = tc;
 	}
+
 	/*~~~~~~~~~~~业务逻辑类注入~~~~~~~~~~~~~~~~~*/
 	@Autowired
 	public void setTcManager(TaskChapterManager tcManager) {
