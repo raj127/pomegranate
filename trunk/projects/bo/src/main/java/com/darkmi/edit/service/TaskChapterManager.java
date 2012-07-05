@@ -56,6 +56,24 @@ public class TaskChapterManager {
 	public List<TaskChapter> getTcsByTaskId(Long taskId) {
 		return taskChapterDao.getTcsByTaskId(taskId);
 	}
+	
+	/**
+	 * 获取一级目录.
+	 */
+	@Transactional(readOnly = true)
+	public List<TaskChapter> getLevelOne(Long taskId) {
+		return taskChapterDao.getLevelOne(taskId);
+	}
+	
+	/**
+	 * 获取二级目录.
+	 */
+	@Transactional(readOnly = true)
+	public List<TaskChapter> getLevelTwo(Long parentId) {
+		logger.debug("parentId -->{}",parentId);
+		return taskChapterDao.findBy("parentId", parentId);
+	}
+
 
 	/**
 	 * 得到所有的作业规程任务列表

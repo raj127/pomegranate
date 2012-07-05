@@ -18,6 +18,8 @@ public class TaskChapterDao extends HibernateDao<TaskChapter, Long> {
 
 	private static final String GET_BY_TID = "from TaskChapter t where t.task.id=? order by displayOrder asc";
 
+	private static final String GET_LEVEL_ONE = "from TaskChapter t where t.task.id=? and parentId=? order by displayOrder asc";
+
 	/**
 	 * 通过任务ID得到其下所有章节.
 	 */
@@ -25,5 +27,11 @@ public class TaskChapterDao extends HibernateDao<TaskChapter, Long> {
 		return find(GET_BY_TID, taskId);
 	}
 
-}
+	/**
+	 * 通过任务ID得到其下所有章节.
+	 */
+	public List<TaskChapter> getLevelOne(Long taskId) {
+		return find(GET_LEVEL_ONE, taskId, new Long(0));
+	}
 
+}
