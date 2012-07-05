@@ -2,6 +2,7 @@ package com.darkmi.edit.web;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -102,23 +103,22 @@ public class TaskVerifyAction extends ActionSupport {
 			query.set("hl.usePhraseHighlighter", true);
 			query.set("hl.highlightMultiTerm", true);
 			query.set("hl.snippets", 3);
-			query.set("hl.fragsize", 50);
+			query.set("hl.fragsize", 9000);
 
 			query.setStart(0);
 			query.setRows(10);
 
 			QueryResponse response = server.query(query);
 			SolrDocumentList list = response.getResults();
-
 			logger.debug("检索结果的数量为 --》{}", list.size());
 
-			//Map<String, Map<String, List<String>>> highlightMap = response.getHighlighting();
+			Map<String, Map<String, List<String>>> highlightMap = response.getHighlighting();
 
-			int id = 0;
+			int counter = 0;
 			for (Iterator<SolrDocument> iterator = list.iterator(); iterator.hasNext();) {
 				//------------------
 				//String id = doc.getFieldValue("id").toString();
-				//String hlContent = highlightMap.get(id).get("content").get(0).toString();
+				
 				//logger.debug(hlContent);
 				//logger.debug("-->" + doc.getFieldValue("content").toString());
 				//reMessage.append("<p>").append(content).append("</p>");
@@ -127,25 +127,29 @@ public class TaskVerifyAction extends ActionSupport {
 				//reMessage.append("</div>");
 				//------------------
 				SolrDocument doc = (SolrDocument) iterator.next();
+				String id = prepareResult(doc.getFieldValue("id").toString());
+				logger.debug("id --> {}", id);
 				String content = prepareResult(doc.getFieldValue("content").toString());
+				logger.debug("conent --> {}", content);
 				String chapterName = prepareResult(doc.getFieldValue("chapterName").toString());
 				String specificationName = prepareResult(doc.getFieldValue("specificationName").toString());
-				logger.debug("conent --> {}", content);
+				String hlContent = prepareResult(highlightMap.get(id).get("content").get(0).toString());
+				logger.debug("hlContent --> {}", hlContent);
 
-				reMessage.append("<div class=\"record\" onmouseover=\"showOperationButtons('" + id
-						+ "')\" onmouseout=\"hideOperationButtons('" + id + "')\">");
-				reMessage.append("<table id=\"object_" + id + "\" border=\"0\" width=\"100%\">");
+				reMessage.append("<div class=\"record\" onmouseover=\"showOperationButtons('" + counter
+						+ "')\" onmouseout=\"hideOperationButtons('" + counter + "')\">");
+				reMessage.append("<table id=\"object_" + counter + "\" border=\"0\" width=\"100%\">");
 				reMessage.append("<tbody>");
 				reMessage.append("<tr>");
-				reMessage.append("<td vAlign=\"top\" width=\"50\">#" + id + "</td>");
+				reMessage.append("<td vAlign=\"top\" width=\"50\">#" + counter + "</td>");
 				reMessage.append("<td vAlign=\"top\">");
-				reMessage.append("<div id=\"operate_" + id + "\" class=\"operation\">");
-				reMessage.append("<a href=\"#\">复制</a> | <a id=\"expand_" + id + "\" onclick=\"expandText('" + id
+				reMessage.append("<div id=\"operate_" + counter + "\" class=\"operation\">");
+				reMessage.append("<a href=\"#\">复制</a> | <a id=\"expand_" + counter + "\" onclick=\"expandText('" + counter
 						+ "');return false;\" href=\"#\">隐藏</a>");
 				reMessage.append("</div>");
-				reMessage.append("<div id=\"text_" + id + "\" class=\"record_row\">");
+				reMessage.append("<div id=\"text_" + counter + "\" class=\"record_row\">");
 				//reMessage.append("<font color=\"#FFF\">" + content + "</font><br><br>");
-				reMessage.append(content + "<br><br>");
+				reMessage.append(hlContent + "<br><br>");
 				reMessage.append("<font color=\"green\">" + "章节：" + chapterName + "</font><br>");
 				reMessage.append("<font color=\"green\">" + "来源：" + specificationName + "</font><br>");
 				reMessage.append("</div>");
@@ -154,7 +158,7 @@ public class TaskVerifyAction extends ActionSupport {
 				reMessage.append("</tbody>");
 				reMessage.append("</table>");
 				reMessage.append("</div>");
-				id++;
+				counter++;
 			}
 
 		} catch (Exception e) {
