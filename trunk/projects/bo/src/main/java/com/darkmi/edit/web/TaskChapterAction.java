@@ -98,7 +98,7 @@ public class TaskChapterAction extends ActionSupport {
 				sb.append("<td>&nbsp;</td>");
 				sb.append("<td>&nbsp;</td>");
 				sb.append("</tr>");
-				
+
 				//获取二级目录
 				List<TaskChapter> levelTwos = taskChapterManager.getLevelTwo(levelOne.getId());
 				int levelTwoCounter = 1;
@@ -110,11 +110,12 @@ public class TaskChapterAction extends ActionSupport {
 					sb.append("<td>" + levelTwo.getDescription() + "</td>");
 					sb.append("<td>&nbsp;</td>");
 					sb.append("<td>&nbsp;</td>");
-					sb.append("<td>&nbsp;</td>");
+					sb.append("<td>" + "<a href=\"task-verify!main.action?id=" + levelTwo.getId()
+							+ "\" target=\"_blank\">编辑</a>" + "</td>");
 					sb.append("</tr>");
 					levelTwoCounter++;
 				}
-				
+
 				levelOneCounter++;
 				//----------
 			}
