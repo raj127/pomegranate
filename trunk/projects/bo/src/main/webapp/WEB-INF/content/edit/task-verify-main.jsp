@@ -52,44 +52,14 @@
 	        }
 	    });
 	});
-	
-	/** show manual links **/
-	/*function setManualPosition(className, x, y) {
-	    if ($(className).is(":visible")) {
-	        $(className).hide();
-	    }
-	    else {
-	        window.setTimeout(function () {
-	            $(className).show();
-	            $(className).css("left", x);
-	            $(className).css("top", y)
-	        }, 100);
-	        $(className).find("a").click(function () {
-	            hideMenus();
-	        });
-	    }
-	}*/
-	
-	/** hide menus **/
-	/*function hideMenus() {
-	    $(".manual").hide();
-	    //$(".server-menu").hide();
-	}
-	
-	function test(){
-		alert("main");
-	}*/
 	</script>
 	
 	<script type="text/javascript">
 	
 	//提交请求
     function doSearch(selectedSentence){
-		//alert("doSearch...");
-		//alert(selectedSentence);
         var url = 'task-verify!search.action';
         var params = {sentence:selectedSentence};
-        
         jQuery.post(url, params, callbackFun);
     }
     
