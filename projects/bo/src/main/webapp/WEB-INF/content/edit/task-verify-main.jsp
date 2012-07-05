@@ -7,12 +7,15 @@
 <head>
 	<title>作业规程校验</title>
 	<%@ include file="/common/meta.jsp" %>
-	<link rel="stylesheet" type="text/css" href="${ctx}/js/temp/layout-default-1.3.0.css" />
 	<link rel="stylesheet" type="text/css" href="${ctx}/js/temp/global.css" />
+	<link rel="stylesheet" type="text/css" href="${ctx}/js/temp/layout-default-1.3.0.css" />
+	<link rel="stylesheet" type="text/css" href="${ctx}/js/temp/collection.css" media="all" />
 	<script type="text/javascript" src="${ctx}/js/temp/jquery-1.4.2.min.js"></script>
-	<script type="text/javascript" src="${ctx}/js/temp/jquery.textarea.js"></script>
+	<!--<script type="text/javascript" src="${ctx}/js/temp/jquery.textarea.js"></script>-->
 	<script type="text/javascript" src="${ctx}/js/temp/jquery-ui-1.8.4.custom.min.js"></script>
 	<script type="text/javascript" src="${ctx}/js/temp/jquery.layout.min-1.3.0.js"></script>
+	<script type="text/javascript" src="${ctx}/js/temp/collection.js"></script>
+	
 	<%--############ --%>
 	<script type="text/javascript" src="${ctx}/js/OfficeContorlFunctions.js"></script>
 	<%--############ --%>
@@ -51,7 +54,7 @@
 	});
 	
 	/** show manual links **/
-	function setManualPosition(className, x, y) {
+	/*function setManualPosition(className, x, y) {
 	    if ($(className).is(":visible")) {
 	        $(className).hide();
 	    }
@@ -65,25 +68,25 @@
 	            hideMenus();
 	        });
 	    }
-	}
+	}*/
 	
 	/** hide menus **/
-	function hideMenus() {
+	/*function hideMenus() {
 	    $(".manual").hide();
 	    //$(".server-menu").hide();
 	}
 	
 	function test(){
 		alert("main");
-	}
+	}*/
 	</script>
 	
 	<script type="text/javascript">
 	
 	//提交请求
     function doSearch(selectedSentence){
-		alert("doSearch...");
-		alert(selectedSentence);
+		//alert("doSearch...");
+		//alert(selectedSentence);
         var url = 'task-verify!search.action';
         var params = {sentence:selectedSentence};
         
@@ -92,12 +95,28 @@
     
     //回调函数
     function callbackFun(data){
-    	alert(data);
-    	alert($("#right",parent.document.body).contents().find("#result").text());
-    	$("#right",parent.document.body).contents().find("#result").html(data);
+    	//alert(data);
+    	//alert($("#right",parent.document.body).contents().find("#result").text());
+    	$("#result").html(data);
     }
 	
-	</script>	
+	</script>
+	<style type="text/css">
+	body {
+		background-color:#FFFFFF;
+		padding: 5px 
+	}
+	
+	div.record{
+		border: #ccc 1px solid;  
+		margin-bottom: 5px; 
+	}
+	
+	div.record_row{
+		WIDTH: 99%;
+	}
+	</style>
+	
 </head>
 
 <body onload='intializePage("${ctx}${tc.task.path}${tc.fileName}")' onunload="onPageClose()">
@@ -109,15 +128,7 @@
 <%@ include file="task-verify-left.jsp"%>
 </div>
 <div id="right-pane" class="ui-layout-east"><!-- right bar -->
-<iframe name="right"
-        id="right"
-        src="task-verify!right.action"
-        height="100%"
-        width="100%" 
-        marginHeight="0"
-        frameBorder="0"
-	    scrolling="no">
-</iframe>
+<div id="result">在编辑器中选中一行文件，点击菜单栏的内容工具-》校验本行，可以插件校验结果。</div>
 </div>
 </body>
 </html>

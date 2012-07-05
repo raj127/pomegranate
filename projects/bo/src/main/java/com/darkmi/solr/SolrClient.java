@@ -103,7 +103,7 @@ public class SolrClient {
 	}
 
 	/**
-	 * 为单个文档创建索引.
+	 * 为文档列表创建索引.
 	 */
 	public static void createIndex(List<SpecificationChapterDto> scDtos) {
 		try {
