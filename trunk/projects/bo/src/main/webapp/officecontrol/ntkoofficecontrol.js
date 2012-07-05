@@ -2,7 +2,12 @@
 document.write('<!-- 用来产生编辑状态的ActiveX控件的JS脚本-->   ');
 document.write('<!-- 因为微软的ActiveX新机制，需要一个外部引入的js-->   ');
 document.write('<object id="TANGER_OCX" classid="clsid:A39F1330-3322-4a1d-9BF0-0BA2BB90E970"    ');
-document.write('codebase="officecontrol/OfficeControl.cab#version=5,0,1,2" width="100%" height="'+($(window).height()-33)+'px">   ');
+//home
+//document.write('codebase="officecontrol/OfficeControl.cab#version=5,0,1,1" width="100%" height="578px">   ');
+document.write('codebase="officecontrol/OfficeControl.cab#version=5,0,1,6" width="100%" height="'+($(window).height()-33)+'px">   ');
+//work
+//document.write('codebase="officecontrol/OfficeControl.cab#version=5,0,1,2" width="100%" height="700px">   ');
+//document.write('codebase="officecontrol/OfficeControl.cab#version=5,0,1,2" width="100%" height="'+($(window).height()-33)+'px">   ');
 document.write('<param name="IsUseUTF8URL" value="-1">   ');
 document.write('<param name="IsUseUTF8Data" value="-1">   ');
 document.write('<param name="BorderStyle" value="1">   ');
