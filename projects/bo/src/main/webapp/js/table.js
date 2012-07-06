@@ -65,6 +65,7 @@ $(document).ready(function(){
 			$("#subNav"+currentMenuNo).show();
 		});
 	});
+	
 	$("#contentTable tr:odd").addClass("color1");
 	$("#contentTable tr:even").addClass("color2");
 	$("#contentTable tr").hover(function(){
