@@ -19,7 +19,10 @@ function hideOperationButtons(id) {
 	row.css("border", "0");
 }
 
-/** expand text area **/
+/**
+ * 显示或隐藏一行.
+ * @param id
+ */
 function expandText(id) {
 	var text = $("#text_" +id);	
 	if (text.attr("expand") == "true" || text.attr("expand") == undefined) {
@@ -36,6 +39,21 @@ function expandText(id) {
 		text.attr("expand", "true");
 		$("#expand_" + id).html("隐藏");
 	}
+}
+
+/**
+ * 复制一行到剪贴板.
+ * @param id
+ */
+function copyText(id) {
+	var text = $("#content_" +id).html();
+	alert(text);
+	text.replace("/<^.>$/","");
+	text.replace("</FONT>","");
+	text.replace("</BR>","");
+	alert(text);
+	window.clipboardData.setData("Text", text);
+	alert("成功到剪贴板");   
 }
 
 //change command - findAll, modify, remove
@@ -1116,7 +1134,7 @@ function switchDataFormat(input, select) {
  * @param object button "more" button
  * @param integer index document index
  */
-function showMoreDocMenus(button, index) {
+/*function showMoreDocMenus(button, index) {
 	var obj = $(button);
 	var className = ".doc_menu_" + index;
 	var x = obj.position().left;
@@ -1140,4 +1158,4 @@ $(function () {
 	$(document).click(function () {
 		$(".doc_menu").hide();
 	});
-});
+});*/
