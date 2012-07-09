@@ -118,7 +118,7 @@ public class TaskVerifyAction extends ActionSupport {
 			for (Iterator<SolrDocument> iterator = list.iterator(); iterator.hasNext();) {
 				//------------------
 				//String id = doc.getFieldValue("id").toString();
-				
+
 				//logger.debug(hlContent);
 				//logger.debug("-->" + doc.getFieldValue("content").toString());
 				//reMessage.append("<p>").append(content).append("</p>");
@@ -144,12 +144,12 @@ public class TaskVerifyAction extends ActionSupport {
 				reMessage.append("<td vAlign=\"top\" width=\"50\">#" + counter + "</td>");
 				reMessage.append("<td vAlign=\"top\">");
 				reMessage.append("<div id=\"operate_" + counter + "\" class=\"operation\">");
-				reMessage.append("<a href=\"#\">复制</a> | <a id=\"expand_" + counter + "\" onclick=\"expandText('" + counter
-						+ "');return false;\" href=\"#\">隐藏</a>");
+				reMessage.append("<a href=\"#\" onclick=\"copyText('" + counter + "');return false;\">复制</a> | ");
+				reMessage.append("<a id=\"expand_" + counter + "\" onclick=\"expandText('" + counter + "');return false;\" href=\"#\">隐藏</a>");
 				reMessage.append("</div>");
 				reMessage.append("<div id=\"text_" + counter + "\" class=\"record_row\">");
 				//reMessage.append("<font color=\"#FFF\">" + content + "</font><br><br>");
-				reMessage.append(hlContent + "<br><br>");
+				reMessage.append("<div id=\"content_"+counter + "\">" + hlContent + "</div><br><br>");
 				reMessage.append("<font color=\"green\">" + "章节：" + chapterName + "</font><br>");
 				reMessage.append("<font color=\"green\">" + "来源：" + specificationName + "</font><br>");
 				reMessage.append("</div>");
@@ -172,8 +172,8 @@ public class TaskVerifyAction extends ActionSupport {
 		logger.debug("search end ...} ");
 
 	}
-	
-	private String prepareResult(String result){
+
+	private String prepareResult(String result) {
 		return result.replace("[", "").replace("]", "");
 	}
 
