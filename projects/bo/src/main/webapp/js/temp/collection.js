@@ -43,17 +43,16 @@ function expandText(id) {
 
 /**
  * 复制一行到剪贴板.
+ * 
  * @param id
  */
 function copyText(id) {
-	var text = $("#content_" +id).html();
-	alert(text);
-	text.replace("/<^.>$/","");
-	text.replace("</FONT>","");
-	text.replace("</BR>","");
-	alert(text);
+	var text = $("#content_" + id).html();
+	var regEx = /<[^>]*>/g;
+	text = text.replace(regEx, "");
 	window.clipboardData.setData("Text", text);
-	alert("成功到剪贴板");   
+	alert("成功到剪贴板");
+
 }
 
 //change command - findAll, modify, remove
