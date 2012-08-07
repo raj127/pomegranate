@@ -9,9 +9,10 @@
 	<%@ include file="/common/meta.jsp" %>
 	<link href="${ctx}/css/yui.css" type="text/css" rel="stylesheet"/>
 	<link href="${ctx}/css/style.css" type="text/css" rel="stylesheet"/>
-	<link href="${ctx}/css/pagination.css" type="text/css" rel="stylesheet"/>
+	<link href="${ctx}/css/zTreeStyle/zTreeStyle.css" type="text/css" rel="stylesheet"/>
 	<script src="${ctx}/js/jquery.js" type="text/javascript"></script>
 	<script src="${ctx}/js/table.js" type="text/javascript"></script>
+	<script src="${ctx}/js/ztree/jquery.ztree.core-3.3.js" type="text/javascript"></script>
 	<script src="${ctx}/js/jquery.pagination.js" type="text/javascript"></script>
 	<script>
 		$(document).ready(function() {
@@ -25,12 +26,86 @@
 		});
 		
 	</script>
+	<script type="text/javascript">
+		<!--
+		var setting = {	};
+
+		var zNodes =[
+			{ name:"父节点1 - 展开", open:true,
+				children: [
+					{ name:"父节点11 - 折叠",
+						children: [
+							{ name:"叶子节点111"},
+							{ name:"叶子节点112"},
+							{ name:"叶子节点113"},
+							{ name:"叶子节点114"}
+						]},
+					{ name:"父节点12 - 折叠",
+						children: [
+							{ name:"叶子节点121"},
+							{ name:"叶子节点122"},
+							{ name:"叶子节点123"},
+							{ name:"叶子节点124"}
+						]},
+					{ name:"父节点13 - 没有子节点", isParent:true}
+				]},
+			{ name:"父节点2 - 折叠",
+				children: [
+					{ name:"父节点21 - 展开", open:true,
+						children: [
+							{ name:"叶子节点211"},
+							{ name:"叶子节点212"},
+							{ name:"叶子节点213"},
+							{ name:"叶子节点214"}
+						]},
+					{ name:"父节点22 - 折叠",
+						children: [
+							{ name:"叶子节点221"},
+							{ name:"叶子节点222"},
+							{ name:"叶子节点223"},
+							{ name:"叶子节点224"}
+						]},
+					{ name:"父节点23 - 折叠",
+						children: [
+							{ name:"叶子节点231"},
+							{ name:"叶子节点232"},
+							{ name:"叶子节点233"},
+							{ name:"叶子节点234"}
+						]}
+				]},
+			{ name:"父节点3 - 没有子节点", isParent:true}
+
+		];
+
+
+		$(document).ready(function() {
+			$.ajax({
+				type : "Get",
+				url : 'GetTree',
+				dataType : "text",
+				global : false,
+				async : false,
+				success : function(strReult) {
+					zNodes = eval(strReult);
+				},
+				error : function() {
+					alert("Ajax请求数据失败!");
+				}
+			});
+
+			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+		});
+	//-->
+	</script>
+	
 </head>
 
 <body>
 <div id="doc3">
 <%@ include file="/common/header.jsp" %>
 <div id="bd">
+
+
 	<div id="yui-main">
 	<div class="yui-b">
 	<form id="mainForm" action="specification-chapter.action" method="post">
@@ -57,6 +132,11 @@
 
 		</div>
 		<div id="content">
+		
+		<div class="zTreeDemoBackground left">
+			<ul id="treeDemo" class="ztree"></ul>
+		</div>
+		
 			<table id="contentTable">
 				<tr>
 					<th width="5%"><a href="javascript:sort('name','asc')">章节名称</a></th>
@@ -84,10 +164,6 @@
 					</tr>
 				</s:iterator>
 			</table>
-		</div>
-
-		<div class="pagination">
-		    <%@ include file="/common/page.jsp" %>
 		</div>
 	</form>
 	</div>
