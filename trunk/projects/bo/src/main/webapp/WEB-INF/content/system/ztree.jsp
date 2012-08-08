@@ -26,7 +26,7 @@
 		});
 		
 	</script>
-	<SCRIPT type="text/javascript">
+	<script type="text/javascript">
 		<!--
 		var tree1;
 		var zNodes =[];
@@ -46,7 +46,6 @@
 					rootPId : ""
 				}
 			},
-
 			async : {
 				enable : true,
 				url : "ztree!getTree.action",
@@ -58,34 +57,61 @@
 			},
 			callback : {
 				beforeAsync : zTreeBeforeAsync,
-				onAsyncSuccess : zTreeOnAsyncSuccess
-
+				onAsyncSuccess : zTreeOnAsyncSuccess,
+				onClick: onClick
 			}
 		};
 
 		$(document).ready(function() {
-			//alert("begin");
 			refreshTree();
-			//alert("end");
 		});
 
 		function refreshTree() {
 			tree1 = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
-			alert(tree1);
-			//tree1 = $("#treeDemo").zTree(setting, zNodes);
 		}
 
 
 		function zTreeBeforeAsync(treeId, treeNode) {
-			alert("zTreeBeforeAsync");
+			//alert("zTreeBeforeAsync");
 		}
 
 		function zTreeOnAsyncSuccess(event, treeId, treeNode, msg) {
 			//alert("event -->" + event);
 			//alert("treeId -->" + treeId);
 			//alert("treeNode -->" + treeNode);
-			alert("msg -->" + msg);
+			//alert("msg -->" + msg);
 		};
+		
+		function onClick(event, treeId, treeNode, clickFlag) {
+			if(treeNode.isParent == true){
+				
+			}else{
+				//alert(treeNode.scdata);
+				getTreeData(treeNode.id);
+				//alert(treeNode.id + ", " + treeNode.name);	
+			}
+			
+			//alert("event -->" + event);
+			//alert("treeId -->" + treeId);
+			//alert("treeNode -->" + treeNode);
+			//alert("clickFlag -->" + clickFlag);	
+		}
+		
+		//提交请求
+	    function getTreeData(treeId){
+	        var url = 'ztree!getTreeData.action';
+	        var params = {id:treeId};
+	        jQuery.post(url, params, callbackFun);
+	    }
+	    
+	    //回调函数
+	    function callbackFun(data){
+	    	alert(data);
+	    	//alert($("#right",parent.document.body).contents().find("#result").text());
+	    	$("#treeData").html(data);
+	    }
+
+
 
 
 		function filter(treeId, parentNode, childNodes) {
@@ -98,25 +124,16 @@
 		}
 
 	//-->
-	</SCRIPT>
-
-
+	</script>
 </head>
 
 <body>
 <div id="doc3">
 <%@ include file="/common/header.jsp" %>
 <div id="bd">
-
-
 	<div id="yui-main">
 	<div class="yui-b">
 	<form id="mainForm" action="specification-chapter.action" method="post">
-		<input type="hidden" name="page.pageNo" id="pageNo" value="${page.pageNo}"/>
-		<input type="hidden" name="page.orderBy" id="orderBy" value="${page.orderBy}"/>
-		<input type="hidden" name="page.order" id="order" value="${page.order}"/>
-		<input type="hidden" name="page.pageSize" id="pageSize" value="${page.pageSize}"/>
-		<p>该功能准备使用ztree来做.</p>
 		<div id="message"><s:actionmessage theme="custom" cssClass="success"/></div>
 		<div id="filter">
 			章节名称: <input type="text" name="filter_LIKES_chapterName" 
@@ -129,44 +146,22 @@
 							             onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
 			<input type="button" value="搜索" onclick="search();" tabindex="5"/>
 			&nbsp;&nbsp;
-			
 			<input type="button" value="更新索引" onclick="linkTo('specification-chapter!index.action')" tabindex="6"/>
 			<input type="button" value="树状结构" onclick="linkTo('ztree.action')" tabindex="6"/>
-
 		</div>
 		<div id="content">
-		
-		<div class="zTreeDemoBackground left">
-			<ul id="treeDemo" class="ztree"></ul>
-		</div>
-		
-			<table id="contentTable">
-				<tr>
-					<th width="5%"><a href="javascript:sort('name','asc')">章节名称</a></th>
-					<th width="10%"><a href="javascript:sort('content','asc')">章节内容</a></th>
-					<th width="10%"><a href="javascript:sort('isLeaf','asc')">叶子节点</a></th>
-					<th width="15%">操作</th>
-				</tr>
-
-				<s:iterator value="page.result">
-					<tr>
-						<td>${name}&nbsp;</td>
-						<td>
-						<s:if test="%{content != null && content.length()>70}">
-	                    	<s:property value='%{content.substring(0, 59)+"......"}' />
-				        </s:if>
-			           	<s:else>
-			            	<s:property value="%{content}" default="-" />
-			          	</s:else>						
-						</td>
-						<td>${isLeaf}&nbsp;</td>
-						<td>&nbsp;
-						<a href="specification-chapter!input.action?id=${id}&viewOnly=true">查看</a>&nbsp;
-						<a href="specification-chapter!input.action?id=${id}&page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}">修改</a>&nbsp;
-						</td>
-					</tr>
-				</s:iterator>
-			</table>
+		<table width="100%">
+			<tr>
+			<td>
+				<div class="zTreeDemoBackground left">
+					<ul id="treeDemo" class="ztree"></ul>
+				</div>			
+			</td>
+			<td>
+			<div id="treeData"></div>
+			</td>			
+			</tr>
+		</table>
 		</div>
 	</form>
 	</div>

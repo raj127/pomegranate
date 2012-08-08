@@ -52,7 +52,7 @@ public class ZtreeAction extends ActionSupport {
 			List<SpecificationChapter> scs = scManager.getSpecifications();
 			for (Iterator<SpecificationChapter> iterator = scs.iterator(); iterator.hasNext();) {
 				SpecificationChapter sc = (SpecificationChapter) iterator.next();
-				sb.append("{id:" + sc.getId() + ", pId:1, name: \"" + sc.getName() + "\", isParent:true},");
+				sb.append("{id:" + sc.getId() + ", pId:1, name: \"" + sc.getName() + "\", isParent:true, click:false},");
 			}
 			sb.deleteCharAt(sb.length() - 1);
 			sb.append("]");
@@ -62,9 +62,11 @@ public class ZtreeAction extends ActionSupport {
 				SpecificationChapter sc = (SpecificationChapter) iterator.next();
 				List<SpecificationChapter> childSCS = scManager.getChildSC(sc.getId());
 				if (childSCS.size() > 0) {
-					sb.append("{id:" + sc.getId() + ", pId:1, name: \"" + sc.getName() + "\", isParent:true},");
+					sb.append("{id:" + sc.getId() + ", pId:1, name: \"" + sc.getName()
+							+ "\", isParent:true, click:false},");
 				} else {
-					sb.append("{id:" + sc.getId() + ", pId:1, name: \"" + sc.getName() + "\", isParent:false},");
+					sb.append("{id:" + sc.getId() + ", pId:1, name: \"" + sc.getName()
+							+ "\", isParent:false, click:true},");
 				}
 			}
 			sb.deleteCharAt(sb.length() - 1);
@@ -77,6 +79,16 @@ public class ZtreeAction extends ActionSupport {
 		response.getWriter().write(sb.toString());
 
 		logger.debug("get tree end ...}");
+	}
+
+	public void getTreeData() throws Exception {
+		logger.debug("get tree data begin {...");
+		logger.debug("id --> " + id);
+		SpecificationChapter sc = scManager.getChapter(id);
+		HttpServletResponse response = ServletActionContext.getResponse();
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(sc.getContent());
+		logger.debug("get tree data end ...}");
 	}
 
 	/*~~~~~~~~~~~ Getter And Setter ~~~~~~~~~~~~~~~~~*/
