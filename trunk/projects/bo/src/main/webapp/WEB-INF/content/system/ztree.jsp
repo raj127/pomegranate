@@ -26,78 +26,81 @@
 		});
 		
 	</script>
-	<script type="text/javascript">
+	<SCRIPT type="text/javascript">
 		<!--
-		var setting = {	};
+		var tree1;
+		var zNodes =[];
 
-		var zNodes =[
-			{ name:"父节点1 - 展开", open:true,
-				children: [
-					{ name:"父节点11 - 折叠",
-						children: [
-							{ name:"叶子节点111"},
-							{ name:"叶子节点112"},
-							{ name:"叶子节点113"},
-							{ name:"叶子节点114"}
-						]},
-					{ name:"父节点12 - 折叠",
-						children: [
-							{ name:"叶子节点121"},
-							{ name:"叶子节点122"},
-							{ name:"叶子节点123"},
-							{ name:"叶子节点124"}
-						]},
-					{ name:"父节点13 - 没有子节点", isParent:true}
-				]},
-			{ name:"父节点2 - 折叠",
-				children: [
-					{ name:"父节点21 - 展开", open:true,
-						children: [
-							{ name:"叶子节点211"},
-							{ name:"叶子节点212"},
-							{ name:"叶子节点213"},
-							{ name:"叶子节点214"}
-						]},
-					{ name:"父节点22 - 折叠",
-						children: [
-							{ name:"叶子节点221"},
-							{ name:"叶子节点222"},
-							{ name:"叶子节点223"},
-							{ name:"叶子节点224"}
-						]},
-					{ name:"父节点23 - 折叠",
-						children: [
-							{ name:"叶子节点231"},
-							{ name:"叶子节点232"},
-							{ name:"叶子节点233"},
-							{ name:"叶子节点234"}
-						]}
-				]},
-			{ name:"父节点3 - 没有子节点", isParent:true}
+		var setting = {
+			view : {
+				dblClickExpand : false,
+				showLine : true,
+				selectedMulti : false,
+				expandSpeed : ($.browser.msie && parseInt($.browser.version) <= 6) ? "" : "fast"
+			},
+			data : {
+				simpleData : {
+					enable : true,
+					idKey : "id",
+					pIdKey : "pId",
+					rootPId : ""
+				}
+			},
 
-		];
+			async : {
+				enable : true,
+				url : "ztree!getTree.action",
+				autoParam : [ "id", "name", "level" ],
+				otherParam : {
+					"otherParam" : "zTreeAsyncTest"
+				},
+				dataFilter : filter
+			},
+			callback : {
+				beforeAsync : zTreeBeforeAsync,
+				onAsyncSuccess : zTreeOnAsyncSuccess
 
+			}
+		};
 
 		$(document).ready(function() {
-			$.ajax({
-				type : "Get",
-				url : 'GetTree',
-				dataType : "text",
-				global : false,
-				async : false,
-				success : function(strReult) {
-					zNodes = eval(strReult);
-				},
-				error : function() {
-					alert("Ajax请求数据失败!");
-				}
-			});
-
-			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+			//alert("begin");
+			refreshTree();
+			//alert("end");
 		});
+
+		function refreshTree() {
+			tree1 = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+			alert(tree1);
+			//tree1 = $("#treeDemo").zTree(setting, zNodes);
+		}
+
+
+		function zTreeBeforeAsync(treeId, treeNode) {
+			alert("zTreeBeforeAsync");
+		}
+
+		function zTreeOnAsyncSuccess(event, treeId, treeNode, msg) {
+			//alert("event -->" + event);
+			//alert("treeId -->" + treeId);
+			//alert("treeNode -->" + treeNode);
+			alert("msg -->" + msg);
+		};
+
+
+		function filter(treeId, parentNode, childNodes) {
+			if (!childNodes)
+				return null;
+			for ( var i = 0, l = childNodes.length; i < l; i++) {
+				childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
+			}
+			return childNodes;
+		}
+
 	//-->
-	</script>
-	
+	</SCRIPT>
+
+
 </head>
 
 <body>
