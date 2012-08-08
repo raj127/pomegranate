@@ -128,6 +128,26 @@ public class SpecificationChapterManager {
 	}
 
 	/**
+	 * 获取规范名称.
+	 * 目前有两本规范.
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public List<SpecificationChapter> getSpecifications() {
+		return scDao.getSpecifications();
+	}
+	
+	/**
+	 * 获得下一级的所有章节.
+	 * 
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public List<SpecificationChapter> getChildSC(Long parentId) {
+		return scDao.getChildSC(parentId);
+	}
+
+	/**
 	 * 获取所有章节信息.
 	 * @return
 	 */
