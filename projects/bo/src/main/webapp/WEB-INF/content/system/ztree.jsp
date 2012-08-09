@@ -23,6 +23,11 @@
 				$(this).hide();
 				$("#subNav2").show();
 			});
+			
+	        $("#treeName").attr('disabled','disabled');
+	        $("#treeData").attr('disabled','disabled');
+	        $("#btnSubmit").attr('disabled','disabled');
+
 		});
 		
 	</script>
@@ -32,6 +37,7 @@
 		var zTree;
 		var zNodes =[];
 		var selectedId;
+		var op;
 
 		/*---------- 参数定义 -----------*/
 		var setting = {
@@ -132,11 +138,15 @@
 		 * 单击的回调事件.
 		 */
 		function zTreeOnClick(event, treeId, treeNode, clickFlag) {
-			//alert("click");
+	        $("#treeName").attr('disabled','disabled');
+	        $("#treeData").attr('disabled','disabled');
+	        $("#btnSubmit").attr('disabled','disabled');
+
 			selectedId = treeNode.id;
-			if(treeNode.isParent == true){	
+			if(treeNode.isParent == true){
+				$("#treeName").val(treeNode.name);
 			}else{
-				//alert(treeNode.id);
+				$("#treeName").val(treeNode.name);
 				getTreeData(treeNode.id);
 			}			
 		}
@@ -200,29 +210,27 @@
 		}
 		
 		/**
-		 * 添加树节点.
+		 * 点击添加节点按钮激活该方法.
 		 */
 		function addTreeNode(){
-			//alert("begin addTreeNode{...");
-	        var url = 'ztree!addTreeNode.action';
-	        //alert($("#treeName").attr("value"));
-	        //alert($("#treeData").attr("value"));
-	        var params = {id:selectedId, name:$("#treeName").attr("value"), content:$("#treeData").attr("value")};
-	        //alert(params);
-	        jQuery.post(url, params, addTreeNodeCallbackFun);
-	        //alert("end addTreeNode ...}");
+			alert("begin addTreeNode{...");
+			if(selectedId == null){
+				alert("请选择一个节点");
+				return;
+			}
+			//将表单置为空值
+	        $("#treeName").val("");
+	        $("#treeData").val("");
+	        
+	        $("#treeName").removeAttr("disabled");
+	        $("#treeData").removeAttr("disabled");
+	        $("#btnSubmit").removeAttr("disabled");
+
+	        op = "add";
+	        alert("end addTreeNode ...}");
+
 		}
-		
-		/**
-		 *添加树节点的回调函数.
-		 */
-		function addTreeNodeCallbackFun(data){
-			alert(data);
-			var selectedNode = zTree.getNodeByParam("id", selectedId, null);
-			alert("selectedNode --> " + selectedNode);
-			zTree.addNodes(selectedNode, {id:1001, pId:selectedNode.id, name:"new node"});
-		}
-		
+				
 		/**
 		 * 修改树节点.
 		 */
@@ -254,6 +262,36 @@
 		function delTreeNodeCallbackFun(data){
 			alert(data);
 		}
+		
+		/**
+		 * 点击提交按钮激活该方法.
+		 */
+		function doSubmit(){
+			alert("doSubmit {...");
+			alert(op);
+			if(op == "add"){
+				alert("add");
+				var selectedNode = zTree.getNodeByParam("id", selectedId, null);
+		        var url = 'ztree!addTreeNode.action';
+		        var params = {id:selectedId, name:$("#treeName").attr("value"), content:$("#treeData").attr("value")};
+		        jQuery.post(url, params, addTreeNodeCallbackFun);
+			}else if(op == "mod"){
+				alert("mod");
+			}else if(op == "del"){
+				alert("del");
+			}
+			alert("doSubmit ...}");
+		}
+		
+		/**
+		 *添加树节点的回调函数.
+		 */
+		function addTreeNodeCallbackFun(data){
+			//alert(data);
+			var selectedNode = zTree.getNodeByParam("id", selectedId, null);
+			alert("selectedNode --> " + selectedNode);
+			zTree.addNodes(selectedNode, {id:1001, pId:selectedNode.id, name:"new node"});
+		}		
 	//-->
 	</script>
 	<style type="text/css">
@@ -326,7 +364,7 @@
 					</tr>
 					<tr>
 						<td colspan="2">
-							<input class="button" type="submit" value="提交"/>&nbsp;
+							<input type="button" class="button" id="btnSubmit" onclick="doSubmit();" value="提交"/>&nbsp;
 						</td>
 					</tr>
 				</table>
