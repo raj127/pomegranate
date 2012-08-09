@@ -28,7 +28,6 @@
 	</script>
 	<script type="text/javascript">
 		<!--
-		
 		/*---------- 全局变量定义 -----------*/
 		var zTree;
 		var zNodes =[];
@@ -77,6 +76,7 @@
 			}
 		};
 
+		/*---------- 初始化树 -----------*/
 		$(document).ready(function() {
 			refreshTree();
 		});
@@ -88,17 +88,6 @@
 			zTree = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
 			zTree.setting.edit.showRemoveBtn = true;
 			zTree.setting.edit.showRenameBtn = true;
-			//zTree.setting.edit.removeTitle = removeTitle;
-			//zTree.setting.edit.renameTitle = renameTitle;
-			//----------
-			//setEdit();
-			//$("#remove").bind("change", setEdit);
-			//$("#rename").bind("change", setEdit);
-			//$("#removeTitle").bind("propertychange", setEdit)
-			//.bind("input", setEdit);
-			//$("#renameTitle").bind("propertychange", setEdit)
-			//.bind("input", setEdit);
-			//----------
 		}
 		
 		var newCount = 1;
@@ -147,7 +136,7 @@
 			selectedId = treeNode.id;
 			if(treeNode.isParent == true){	
 			}else{
-				alert(treeNode.id);
+				//alert(treeNode.id);
 				getTreeData(treeNode.id);
 			}			
 		}
@@ -162,8 +151,8 @@
 		 * 单击的回调事件.
 		 */
 		function zTreeOnRemove(event, treeId, treeNode, clickFlag) {
-			alert("zTreeOnRemove");
-			alert("treeNode --> " + treeNode);
+			//alert("zTreeOnRemove");
+			//alert("treeNode --> " + treeNode);
 			if(treeNode.isParent == true){
 			}else{
 			}			
@@ -180,7 +169,7 @@
 		 * 单击的回调事件.
 		 */
 		function zTreeOnRename(event, treeId, treeNode, clickFlag) {
-			alert("zTreeOnRename");
+			//alert("zTreeOnRename");
 			if(treeNode.isParent == true){
 				
 			}else{
@@ -196,7 +185,7 @@
 	    
 	    //回调函数
 	    function callbackFun(data){
-	    	alert(data);
+	    	//alert(data);
 	    	//alert($("#right",parent.document.body).contents().find("#result").text());
 	    	$("#treeData").html(data);
 	    }
@@ -214,9 +203,14 @@
 		 * 添加树节点.
 		 */
 		function addTreeNode(){
+			//alert("begin addTreeNode{...");
 	        var url = 'ztree!addTreeNode.action';
-	        var params = {id:selectedId};
+	        //alert($("#treeName").attr("value"));
+	        //alert($("#treeData").attr("value"));
+	        var params = {id:selectedId, name:$("#treeName").attr("value"), content:$("#treeData").attr("value")};
+	        //alert(params);
 	        jQuery.post(url, params, addTreeNodeCallbackFun);
+	        //alert("end addTreeNode ...}");
 		}
 		
 		/**
@@ -224,6 +218,9 @@
 		 */
 		function addTreeNodeCallbackFun(data){
 			alert(data);
+			var selectedNode = zTree.getNodeByParam("id", selectedId, null);
+			alert("selectedNode --> " + selectedNode);
+			zTree.addNodes(selectedNode, {id:1001, pId:selectedNode.id, name:"new node"});
 		}
 		
 		/**
@@ -311,12 +308,12 @@
 				<table class="noborder">
 					<tr valign="top">
 						<td>名称:</td>
-						<td><input type="text" id="name" name="name" size="40" value="" maxlength="50"/></td>
+						<td><input type="text" id="treeName" name="treeName" size="40" value="" maxlength="50"/></td>
 					</tr>
 					<tr valign="top">
 						<td>内容:</td>
 						<td>
-							<textarea rows="5" cols="40" id="treeData" name="treeData" ></textarea>
+							<textarea id="treeData" name="treeData" rows="5" cols="40"></textarea>
 						</td>
 					</tr>
 					<tr valign="top">
