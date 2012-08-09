@@ -26,8 +26,8 @@ public class ZtreeAction extends ActionSupport {
 	private static final long serialVersionUID = -1832062843458845519L;
 	private Logger logger = LoggerFactory.getLogger(ZtreeAction.class);
 	private Long id;
-	private String level;
-	private String otherParam;
+	private String name;
+	private String content;
 	private SpecificationChapter sc;
 	private SpecificationChapterManager scManager;
 
@@ -47,8 +47,6 @@ public class ZtreeAction extends ActionSupport {
 	public void getTree() throws Exception {
 		logger.debug("get tree begin {...");
 		logger.debug("id --> " + id);
-		logger.debug("level --> " + level);
-		logger.debug("otherParam --> " + otherParam);
 
 		StringBuffer sb = new StringBuffer();
 		sb.append("[");
@@ -107,6 +105,8 @@ public class ZtreeAction extends ActionSupport {
 	public void addTreeNode() throws Exception {
 		logger.debug("addTreeNode begin {...");
 		logger.debug("id --> " + id);
+		logger.debug("name --> " + name);
+		logger.debug("content --> " + content);
 		scManager.addSC(id, sc);
 		
 		//返回响应
@@ -158,22 +158,24 @@ public class ZtreeAction extends ActionSupport {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	public String getLevel() {
-		return level;
+	
+	public String getName() {
+		return name;
 	}
 
-	public void setLevel(String level) {
-		this.level = level;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getOtherParam() {
-		return otherParam;
+	public String getContent() {
+		return content;
 	}
 
-	public void setOtherParam(String otherParam) {
-		this.otherParam = otherParam;
+	public void setContent(String content) {
+		this.content = content;
 	}
+
+
 
 	public SpecificationChapter getSc() {
 		return sc;
