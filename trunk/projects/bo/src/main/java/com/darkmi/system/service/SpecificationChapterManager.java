@@ -136,7 +136,7 @@ public class SpecificationChapterManager {
 	public List<SpecificationChapter> getSpecifications() {
 		return scDao.getSpecifications();
 	}
-	
+
 	/**
 	 * 获得下一级的所有章节.
 	 * 
@@ -153,6 +153,33 @@ public class SpecificationChapterManager {
 	 */
 	public List<SpecificationChapter> getAllChapter() {
 		return scDao.getAll();
+	}
+
+	/**
+	 * 添加章节.
+	 * @param parentId
+	 * @param sc
+	 */
+	public void addSC(Long parentId, SpecificationChapter sc) {
+
+	}
+
+	/**
+	 * 修改章节.
+	 * @param parentId
+	 * @param sc
+	 */
+	public void modSC(Long id, SpecificationChapter sc) {
+
+	}
+
+	/**
+	 * 删除章节.
+	 * @param parentId
+	 * @param sc
+	 */
+	public void delSC(Long id) {
+
 	}
 
 	/*~~~~~~~~~~~ 更新及删除类方法 ~~~~~~~~~~~~~~~~~*/
