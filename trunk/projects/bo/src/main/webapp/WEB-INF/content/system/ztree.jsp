@@ -10,8 +10,10 @@
 	<link href="${ctx}/css/yui.css" type="text/css" rel="stylesheet"/>
 	<link href="${ctx}/css/style.css" type="text/css" rel="stylesheet"/>
 	<link href="${ctx}/css/zTreeStyle/zTreeStyle.css" type="text/css" rel="stylesheet"/>
+	<link href="${ctx}/css/textarearesizer/textarearesizer.css" type="text/css" rel="stylesheet"/>
 	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css" />
 	<link href="${ctx}/css/jnotify/jquery.jnotify.css" type="text/css" rel="stylesheet"/>
+	
 	<script src="${ctx}/js/jquery.js" type="text/javascript"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="http://jqueryui.com/themeroller/themeswitchertool/"></script>	
@@ -19,6 +21,8 @@
 	<script src="${ctx}/js/ztree/jquery.ztree.excheck-3.3.js" type="text/javascript"></script>
 	<script src="${ctx}/js/ztree/jquery.ztree.exedit-3.3.js" type="text/javascript"></script>
 	<script src="${ctx}/js/jnotify/jquery.jnotify.js" type="text/javascript"></script>
+	<script src="${ctx}/js/textarearesizer/jquery.textarearesizer.compressed.js" type="text/javascript"></script>
+	<!--<script src="${ctx}/js/artDialog/artDialog.js?skin=default" type="text/javascript"></script>-->
 	<script>
 		<!--		
 		/*---------- 全局变量定义 -----------*/
@@ -148,7 +152,7 @@
 			//alert("treeNode --> " + treeNode);
 			if(treeNode.isParent == true){
 			}else{
-			}			
+			}
 		}
 		
 		/**
@@ -198,6 +202,7 @@
 		function addTreeNode(){
 			if(selectedId == null){
 				alert("请选择一个节点");
+				//$.dialog({content:'hello world!'});
 				return;
 			}
 			//将表单置为空值
@@ -380,6 +385,7 @@
             });
             // -----------------------------------------------------
 	        
+			$('textarea.resizable:not(.processed)').TextAreaResizer();
 
 		});
 		
@@ -408,21 +414,6 @@
 	    <div id="StatusBar" style="height: 20px;"></div>
     		
 		<div id="filter">
-			<%--
-			章节名称: <input type="text" name="filter_LIKES_chapterName" 
-			                            value="${param['filter_LIKES_chapterName']}" 
-			                            size="9" tabindex="1" 
-			                            onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
-			章节内容: <input type="text" name="filter_LIKES_content"
-							             value="${param['filter_LIKES_content']}" 
-							             size="9" tabindex="3" 
-							             onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
-			<input type="button" value="搜索" onclick="search();" tabindex="5"/>
-			&nbsp;&nbsp;
-			
-			<input type="button" value="更新索引" onclick="linkTo('specification-chapter!index.action')" tabindex="6"/>
-			<input type="button" value="树状结构" onclick="linkTo('ztree.action')" tabindex="6"/>
-			--%>
 			<input type="button" value="添加节点" onclick="addTreeNode();" tabindex="6"/>
 			<input type="button" value="修改节点" onclick="modTreeNode();" tabindex="6"/>
 			<input type="button" value="删除节点" onclick="delTreeNode();" tabindex="6"/>
@@ -435,7 +426,7 @@
 		<div id="content">
 		<table width="100%">
 			<tr>
-			<td valign="top">
+			<td valign="top" width="40%">
 				<div class="zTreeDemoBackground left">
 					<ul id="treeDemo" class="ztree"></ul>
 				</div>			
@@ -444,21 +435,21 @@
 			<form id="inputForm" action="ztree!saveTreeData.action" method="post">
 				<table class="noborder">
 					<tr valign="top">
-						<td>名称:</td>
+						<td width="20%">名称:</td>
 						<td><input type="text" id="treeName" name="treeName" size="40" value="" maxlength="50"/></td>
 					</tr>
 					<tr valign="top">
-						<td>内容:</td>
+						<td width="20%">内容:</td>
 						<td>
-							<textarea id="treeData" name="treeData" rows="5" cols="40"></textarea>
+							<textarea id="treeData" name="treeData" class="resizable"></textarea>
 						</td>
 					</tr>
 					<tr valign="top">
-						<td>创建:</td>
+						<td width="20%">创建:</td>
 						<td>${createBy} <fmt:formatDate value="${createTime}" type="both"/></td>
 					</tr>
 					<tr valign="top">
-						<td>最后修改:</td>
+						<td width="20%">最后修改:</td>
 						<td>${lastModifyBy} <fmt:formatDate value="${lastModifyTime}" type="both"/></td>
 					</tr>
 					<tr>
