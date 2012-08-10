@@ -107,12 +107,23 @@ public class ZtreeAction extends ActionSupport {
 		logger.debug("id --> " + id);
 		logger.debug("name --> " + name);
 		logger.debug("content --> " + content);
-		scManager.addSC(id, sc);
+		SpecificationChapter sc = new SpecificationChapter();
+		SpecificationChapter parentSC = scManager.getChapter(id);
 		
+		sc.setName(name);
+		sc.setContent(content);
+		sc.setParentChapter(parentSC);
+		scManager.saveChapter(sc);
+		
+		logger.debug("sc --> " + sc.toString());
+		
+		StringBuffer sb = new StringBuffer();
+		sb.append("{\"retCode\":1, \"retMessage\":\"节点添加成功\", \"id\":").append(sc.getId()).append("}");
+		logger.debug("返回 --> " + sb.toString());
 		//返回响应
 		HttpServletResponse response = ServletActionContext.getResponse();
 		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write("节点添加成功");
+		response.getWriter().write(sb.toString());
 		//addActionMessage("节点添加成功");
 		logger.debug("addTreeNode end ...}");
 	}

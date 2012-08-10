@@ -99,7 +99,7 @@ public class SpecificationChapter extends AuditableEntity {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
+
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "parentChapter")
 	public List<SpecificationChapter> getChapterList() {
 		return chapterList;
@@ -118,7 +118,7 @@ public class SpecificationChapter extends AuditableEntity {
 	public void setVersion(Integer version) {
 		this.version = version;
 	}
-	
+
 	@Transient
 	public void calculateTreeIndex() {
 		if (getParentChapter() == null) {
@@ -133,7 +133,11 @@ public class SpecificationChapter extends AuditableEntity {
 
 	@Override
 	public String toString() {
-		return "SpecificationChapter [name=" + name + ", treeIndex=" + treeIndex + ", sort=" + sort + ", isLeaf="
-				+ isLeaf + ", state=" + state + "]";
+		return "SpecificationChapter [parentChapter=" + parentChapter.getId() + ", name=" + name + ", treeIndex="
+				+ treeIndex + ", sort=" + sort + ", isLeaf=" + isLeaf + ", state=" + state + ", content=" + content
+				+ ", chapterList=" + chapterList + ", version=" + version + ", createTime=" + createTime
+				+ ", createBy=" + createBy + ", lastModifyTime=" + lastModifyTime + ", lastModifyBy=" + lastModifyBy
+				+ ", id=" + id + "]";
 	}
+
 }
