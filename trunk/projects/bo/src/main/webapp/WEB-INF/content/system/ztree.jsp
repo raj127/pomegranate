@@ -10,40 +10,28 @@
 	<link href="${ctx}/css/yui.css" type="text/css" rel="stylesheet"/>
 	<link href="${ctx}/css/style.css" type="text/css" rel="stylesheet"/>
 	<link href="${ctx}/css/zTreeStyle/zTreeStyle.css" type="text/css" rel="stylesheet"/>
+	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css" />
+	<link href="${ctx}/css/jnotify/jquery.jnotify.css" type="text/css" rel="stylesheet"/>
 	<script src="${ctx}/js/jquery.js" type="text/javascript"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="http://jqueryui.com/themeroller/themeswitchertool/"></script>	
 	<script src="${ctx}/js/ztree/jquery.ztree.core-3.3.js" type="text/javascript"></script>
 	<script src="${ctx}/js/ztree/jquery.ztree.excheck-3.3.js" type="text/javascript"></script>
 	<script src="${ctx}/js/ztree/jquery.ztree.exedit-3.3.js" type="text/javascript"></script>
+	<script src="${ctx}/js/jnotify/jquery.jnotify.js" type="text/javascript"></script>
 	<script>
-		$(document).ready(function() {
-			$(".mainNav a").attr("class","");
-			$("#n2").attr("class","actived");
-			$("#subNav206").attr("class","actived");
-			$(".secondNav div").each(function(){
-				$(this).hide();
-				$("#subNav2").show();
-			});
-			
-	        $("#treeName").attr('disabled','disabled');
-	        $("#treeData").attr('disabled','disabled');
-	        $("#btnSubmit").attr('disabled','disabled');
-
-		});
-		
-	</script>
-	<script type="text/javascript">
-		<!--
+		<!--		
 		/*---------- 全局变量定义 -----------*/
 		var zTree;
 		var zNodes =[];
 		var selectedId;
 		var op;
 
-		/*---------- 参数定义 -----------*/
+		/*---------- 参数定义  -----------*/
 		var setting = {
 			view : {
-				addHoverDom: addHoverDom,
-				removeHoverDom: removeHoverDom,
+				//addHoverDom: addHoverDom,
+				//removeHoverDom: removeHoverDom,
 				dblClickExpand : false,
 				showLine : true,
 				selectedMulti : false,
@@ -58,7 +46,7 @@
 				}
 			},
 			edit: {
-				enable: true,
+				enable: false,
 				showRemoveBtn: true,
 				removeTitle: setRemoveTitle
 			},
@@ -72,20 +60,15 @@
 				dataFilter : filter
 			},
 			callback : {
-				beforeAsync : zTreeBeforeAsync,
+				//beforeAsync : zTreeBeforeAsync,
 				onAsyncSuccess : zTreeOnAsyncSuccess,
-				onClick: zTreeOnClick,
-				beforeRemove: zTreeBeforeRemove,
-				onRemove: zTreeOnRemove,
-				beforeRename: zTreeBeforeRename,
-				onRename: zTreeOnRename
+				onClick: zTreeOnClick
+				//beforeRemove: zTreeBeforeRemove,
+				//onRemove: zTreeOnRemove,
+				//beforeRename: zTreeBeforeRename,
+				//onRename: zTreeOnRename
 			}
 		};
-
-		/*---------- 初始化树 -----------*/
-		$(document).ready(function() {
-			refreshTree();
-		});
 
 		/**
 		 * 初始化树.
@@ -267,31 +250,112 @@
 		 * 点击提交按钮激活该方法.
 		 */
 		function doSubmit(){
-			alert("doSubmit {...");
-			alert(op);
 			if(op == "add"){
-				alert("add");
 				var selectedNode = zTree.getNodeByParam("id", selectedId, null);
 		        var url = 'ztree!addTreeNode.action';
 		        var params = {id:selectedId, name:$("#treeName").attr("value"), content:$("#treeData").attr("value")};
-		        jQuery.post(url, params, addTreeNodeCallbackFun);
+		        $.getJSON(url, params, addTreeNodeCallbackFun);
 			}else if(op == "mod"){
 				alert("mod");
 			}else if(op == "del"){
 				alert("del");
 			}
-			alert("doSubmit ...}");
 		}
 		
 		/**
 		 *添加树节点的回调函数.
 		 */
 		function addTreeNodeCallbackFun(data){
-			//alert(data);
+			alert("data.id --> " + data.id);
+			alert("data.retCode --> " + data.retCode);
+			alert("data.retMessage --> " + data.retMessage);
+			var treeName = $("#treeName").attr("value");
+			alert(treeName);
 			var selectedNode = zTree.getNodeByParam("id", selectedId, null);
-			alert("selectedNode --> " + selectedNode);
-			zTree.addNodes(selectedNode, {id:1001, pId:selectedNode.id, name:"new node"});
-		}		
+			alert("selectedNode.id --> " + selectedNode.id);
+			zTree.addNodes(selectedNode, {id:data.id, pId:selectedNode.id, name:treeName});
+		}
+		
+		$(document).ready(function() {
+			$(".mainNav a").attr("class","");
+			$("#n2").attr("class","actived");
+			$("#subNav206").attr("class","actived");
+			$(".secondNav div").each(function(){
+				$(this).hide();
+				$("#subNav2").show();
+			});
+			
+			//将编辑框置为不可用
+	        $("#treeName").attr('disabled','disabled');
+	        $("#treeData").attr('disabled','disabled');
+	        $("#btnSubmit").attr('disabled','disabled');
+	        
+	        //初始化树
+	        refreshTree();
+	        
+	        
+	     // --------------------------------------------------------------------------
+	        
+            // For jNotify Inizialization
+            // Parameter:
+            // oneAtTime : true if you want show only one message for time
+            // appendType: 'prepend' if you want to add message on the top of stack, 'append' otherwise
+            $('#StatusBar').jnotifyInizialize({
+                oneAtTime: true
+            })
+            $('#Notification')
+                .jnotifyInizialize({
+                    oneAtTime: false,
+                    appendType: 'append'
+                })
+                .css({ 'position': 'absolute',
+                    'marginTop': '20px',
+                    'right': '20px',
+                    'width': '250px',
+                    'z-index': '9999'
+                });
+            // --------------------------------------------------------------------------
+            // For add a notification on button click
+            // Parameter:
+            // text: Html do you want to show
+            // type: 'message' or 'error'
+            // permanent: True if you want to make a message permanent
+            // disappearTime: Time spent before closing message
+            $('#addStatusBarMessage').click(function() {
+                $('#StatusBar').jnotifyAddMessage({
+                    text: 'This is a non permanent message.',
+                    permanent: false,
+                    showIcon: false
+                });
+            });
+
+            $('#addStatusBarError').click(function() {
+                $('#StatusBar').jnotifyAddMessage({
+                    text: 'This is a permanent error.',
+                    permanent: true,
+                    type: 'error'
+                });
+            });
+
+            $('#addNotificationMessage').click(function() {
+                $('#Notification').jnotifyAddMessage({
+                    text: 'This is a non permanent message.',
+                    permanent: false
+                });
+            });
+
+            $('#addNotificationError').click(function() {
+                $('#Notification').jnotifyAddMessage({
+                    text: 'This is a permanent error.',
+                    permanent: true,
+                    type: 'error'
+                });
+            });
+            // -----------------------------------------------------
+	        
+
+		});
+		
 	//-->
 	</script>
 	<style type="text/css">
@@ -313,6 +377,9 @@
 	<div id="yui-main">
 	<div class="yui-b">
 		<div id="message"><s:actionmessage theme="custom" cssClass="success"/></div>
+	    <div id="Notification"></div>
+	    <div id="StatusBar" style="height: 20px;"></div>
+    		
 		<div id="filter">
 			<%--
 			章节名称: <input type="text" name="filter_LIKES_chapterName" 
@@ -332,6 +399,11 @@
 			<input type="button" value="添加节点" onclick="addTreeNode();" tabindex="6"/>
 			<input type="button" value="修改节点" onclick="modTreeNode();" tabindex="6"/>
 			<input type="button" value="删除节点" onclick="delTreeNode();" tabindex="6"/>
+		    <button id="addStatusBarMessage">Add1</button>
+		    <button id="addStatusBarError">Add2</button>
+		    <button id="addNotificationMessage">Add3</button>
+		    <button id="addNotificationError">Add4</button>
+			
 		</div>
 		<div id="content">
 		<table width="100%">
