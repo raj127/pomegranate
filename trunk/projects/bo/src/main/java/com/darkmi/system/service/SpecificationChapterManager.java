@@ -225,6 +225,7 @@ public class SpecificationChapterManager {
 			throw new ServiceException("该章节不能删除");
 		}
 
+		//获取父亲节点
 		SpecificationChapter parentChapter = Chapter.getParentChapter();
 		parentChapter.getChapterList().remove(Chapter);
 		Chapter.setParentChapter(null);

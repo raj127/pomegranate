@@ -196,7 +196,6 @@
 		 * 点击添加节点按钮激活该方法.
 		 */
 		function addTreeNode(){
-			alert("begin addTreeNode{...");
 			if(selectedId == null){
 				alert("请选择一个节点");
 				return;
@@ -204,46 +203,62 @@
 			//将表单置为空值
 	        $("#treeName").val("");
 	        $("#treeData").val("");
-	        
+	        //移除只读属性
 	        $("#treeName").removeAttr("disabled");
 	        $("#treeData").removeAttr("disabled");
 	        $("#btnSubmit").removeAttr("disabled");
-
+	        //设置操作代码
 	        op = "add";
-	        alert("end addTreeNode ...}");
-
 		}
 				
 		/**
 		 * 修改树节点.
 		 */
 		function modTreeNode(){
-	        var url = 'ztree!modTreeNode.action';
-	        var params = {id:selectedId};
-	        jQuery.post(url, params, modTreeNodeCallbackFun);
+			if(selectedId == null){
+				alert("请选择一个节点");
+				return;
+			}
+	        //移除只读属性
+	        $("#treeName").removeAttr("disabled");
+	        $("#treeData").removeAttr("disabled");
+	        $("#btnSubmit").removeAttr("disabled");
+	        //设置操作代码
+	        op = "mod";
 		}
 
 		/**
-		 * 修改树节点的回调函数.
-		 */
-		function modTreeNodeCallbackFun(data){
-			alert(data);
-		}
-
-		/**
-		 * 删除树节点.
+		 * 点击删除树节点按钮.
 		 */
 		function delTreeNode(){
+			if(selectedId == null){
+				alert("请选择一个节点");
+				return;
+			}
+	        //设置操作代码
+	        op = "del";
 	        var url = 'ztree!delTreeNode.action';
-	        var params = {id:selectedId};
-	        jQuery.post(url, params, delTreeNodeCallbackFun);
+	        var params = {id:selectedId, name:$("#treeName").attr("value"), content:$("#treeData").attr("value")};
+	        $.getJSON(url, params, delTreeNodeCallbackFun);
 		}
 
 		/**
 		 * 删除树节点的回调函数.
 		 */
 		function delTreeNodeCallbackFun(data){
-			alert(data);
+			//alert("data.id --> " + data.id);
+			//alert("data.retCode --> " + data.retCode);
+			//alert("data.retMessage --> " + data.retMessage);
+			if(data.retCode == 1){
+				//alert("删除成功.");
+				var selectedNode = zTree.getNodeByParam("id", selectedId, null);
+				zTree.removeNode(selectedNode, null);
+				//将表单置为空值
+		        $("#treeName").val("");
+		        $("#treeData").val("");				
+			}else{
+				//alert("删除失败.");
+			}			
 		}
 		
 		/**
@@ -256,9 +271,10 @@
 		        var params = {id:selectedId, name:$("#treeName").attr("value"), content:$("#treeData").attr("value")};
 		        $.getJSON(url, params, addTreeNodeCallbackFun);
 			}else if(op == "mod"){
-				alert("mod");
-			}else if(op == "del"){
-				alert("del");
+				var selectedNode = zTree.getNodeByParam("id", selectedId, null);
+		        var url = 'ztree!modTreeNode.action';
+		        var params = {id:selectedId, name:$("#treeName").attr("value"), content:$("#treeData").attr("value")};
+		        $.getJSON(url, params, modTreeNodeCallbackFun);
 			}
 		}
 		
@@ -266,14 +282,26 @@
 		 *添加树节点的回调函数.
 		 */
 		function addTreeNodeCallbackFun(data){
-			alert("data.id --> " + data.id);
-			alert("data.retCode --> " + data.retCode);
-			alert("data.retMessage --> " + data.retMessage);
 			var treeName = $("#treeName").attr("value");
-			alert(treeName);
 			var selectedNode = zTree.getNodeByParam("id", selectedId, null);
-			alert("selectedNode.id --> " + selectedNode.id);
 			zTree.addNodes(selectedNode, {id:data.id, pId:selectedNode.id, name:treeName});
+		}
+		
+		/**
+		 * 修改树节点的回调函数.
+		 */
+		function modTreeNodeCallbackFun(data){
+			//alert("data.id --> " + data.id);
+			//alert("data.retCode --> " + data.retCode);
+			//alert("data.retMessage --> " + data.retMessage);	
+			if(data.retCode == 1){
+				//alert("修改成功.");
+				var selectedNode = zTree.getNodeByParam("id", selectedId, null);
+				selectedNode.name = $("#treeName").attr("value");
+				zTree.updateNode(selectedNode);
+			}else{
+				//alert("修改失败.");
+			}
 		}
 		
 		$(document).ready(function() {
@@ -292,7 +320,6 @@
 	        
 	        //初始化树
 	        refreshTree();
-	        
 	        
 	     // --------------------------------------------------------------------------
 	        

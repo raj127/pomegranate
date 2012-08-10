@@ -113,6 +113,9 @@ public class ZtreeAction extends ActionSupport {
 		sc.setName(name);
 		sc.setContent(content);
 		sc.setParentChapter(parentSC);
+		sc.setIsLeaf(true);
+		sc.setSort(0);
+		sc.setState(true);
 		scManager.saveChapter(sc);
 		
 		logger.debug("sc --> " + sc.toString());
@@ -135,12 +138,20 @@ public class ZtreeAction extends ActionSupport {
 	public void modTreeNode() throws Exception {
 		logger.debug("modTreeNode begin {...");
 		logger.debug("id --> " + id);
-		scManager.modSC(id, sc);
+		logger.debug("name --> " + name);
+		logger.debug("content --> " + content);
+		SpecificationChapter sc = scManager.getChapter(id);
+		sc.setName(name);
+		sc.setContent(content);
+		scManager.saveChapter(sc);
+		
+		StringBuffer sb = new StringBuffer();
+		sb.append("{\"retCode\":1, \"retMessage\":\"节点修改成功\", \"id\":").append(sc.getId()).append("}");
+		logger.debug("返回 --> " + sb.toString());
 		//返回响应
 		HttpServletResponse response = ServletActionContext.getResponse();
 		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write("节点修改成功");
-		//addActionMessage("节点修改成功");
+		response.getWriter().write(sb.toString());
 		logger.debug("modTreeNode end ...}");
 	}
 
@@ -151,12 +162,15 @@ public class ZtreeAction extends ActionSupport {
 	public void delTreeNode() throws Exception {
 		logger.debug("delTreeNode begin {...");
 		logger.debug("id --> " + id);
-		scManager.delSC(id);
+		scManager.deleteChapter(id);
+		
+		StringBuffer sb = new StringBuffer();
+		sb.append("{\"retCode\":1, \"retMessage\":\"节点删除成功\", \"id\":").append(id).append("}");
+		logger.debug("返回 --> " + sb.toString());
 		//返回响应
 		HttpServletResponse response = ServletActionContext.getResponse();
 		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write("节点删除成功");
-		//addActionMessage("节点删除成功");
+		response.getWriter().write(sb.toString());
 		logger.debug("delTreeNode end ...}");
 	}
 
