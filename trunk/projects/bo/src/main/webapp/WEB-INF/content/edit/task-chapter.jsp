@@ -1,3 +1,8 @@
+<%--
+Description:规程编制 --》 作业规程列表页面
+author:darkmi
+date:2012/08/21
+--%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="org.springside.modules.security.springsecurity.SpringSecurityUtils" %>
 <%@ include file="/common/taglibs.jsp" %>
@@ -26,8 +31,6 @@
 			
 			//
 			$("#taskTree").treeTable({expandable: true});
-			//$("#taskTree tr:odd").addClass("color1");
-			//$("#taskTree tr:even").addClass("color2");
 			$("#taskTree tr").hover(function(){
 				jQuery(this).addClass("color3")},
 				function(){

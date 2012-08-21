@@ -41,28 +41,8 @@ public class TaskChapterAction extends ActionSupport {
 		return super.execute();
 	}
 
-	//	/**
-	//	 * 根据当前工号权限获取所有的章节目录.
-	//	 */
-	//	public String list() throws Exception {
-	//		//获取taskId
-	//		HttpServletRequest request = ServletActionContext.getRequest();
-	//		String taskIdStr = request.getParameter("taskId");
-	//		if (null == taskIdStr || "".equals(taskIdStr)) {
-	//			if (SpringSecurityUtils.getCurrentUserName().equals("admin")) {
-	//
-	//				tcs = taskChapterManager.getAllTaskChapter();
-	//			}
-	//		} else {
-	//			taskId = Long.parseLong(request.getParameter("taskId"));
-	//			tcs = taskChapterManager.getTcsByTaskId(taskId);
-	//		}
-	//		return SUCCESS;
-	//	}
-
 	private void getTaskChapter() throws Exception {
 		List<Task> tasks = taskManager.getAllTask();
-
 		StringBuffer sb = new StringBuffer();
 		sb.append("<table id=\"taskTree\">");
 		sb.append("<thead>");
@@ -115,9 +95,7 @@ public class TaskChapterAction extends ActionSupport {
 					sb.append("</tr>");
 					levelTwoCounter++;
 				}
-
 				levelOneCounter++;
-				//----------
 			}
 			taskCounter++;
 		}
@@ -125,9 +103,6 @@ public class TaskChapterAction extends ActionSupport {
 		sb.append("</table>");
 		logger.debug(sb.toString());
 		taskTree = sb.toString();
-		//HttpServletResponse response = ServletActionContext.getResponse();
-		//response.setCharacterEncoding("UTF-8");
-		//response.getWriter().write(sb.toString());
 	}
 
 	/*~~~~~~~~~~~Setters And Getters ~~~~~~~~~~~~~~~~~*/
