@@ -290,5 +290,4 @@ public class TaskAction extends CrudActionSupport<Task> {
 	public void setTcManager(TemplateChapterManager tcManager) {
 		this.tcManager = tcManager;
 	}
-
 }

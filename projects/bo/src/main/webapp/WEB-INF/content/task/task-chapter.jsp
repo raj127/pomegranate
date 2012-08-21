@@ -1,3 +1,8 @@
+<%--
+Description:规程编制 --》 作业规程列表页面
+author:darkmi
+date:2012/08/21
+--%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="org.springside.modules.security.springsecurity.SpringSecurityUtils" %>
 <%@ include file="/common/taglibs.jsp" %>
@@ -5,17 +10,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>作业规程章节列表</title>
+	<title>作业规程编制</title>
 	<%@ include file="/common/meta.jsp" %>
 	<link href="${ctx}/css/yui.css" type="text/css" rel="stylesheet"/>
 	<link href="${ctx}/css/style.css" type="text/css" rel="stylesheet"/>
-	<!--<link href="${ctx}/css/pagination.css" type="text/css" rel="stylesheet"/>-->
-	<!--<link href="${ctx}/css/jquery.treeTable.css" type="text/css" rel="stylesheet"/>-->
-	
+	<link href="${ctx}/css/jquery.treeTable.css" rel="stylesheet" type="text/css" />
 	<script src="${ctx}/js/jquery.js" type="text/javascript"></script>
-	<script src="${ctx}/js/table.js" type="text/javascript"></script>
-	
-	<script>
+	<script src="${ctx}/js/treetable/jquery.ui.js" type="text/javascript"></script>
+	<script src="${ctx}/js/treetable/jquery.treeTable.js" type="text/javascript"></script>
+	  	
+	<script type="text/javascript">
 		$(document).ready(function() {
 			$(".mainNav a").attr("class","");
 			$("#n4").attr("class","actived");
@@ -24,7 +28,16 @@
 				$(this).hide();
 				$("#subNav4").show();
 			});
+			
+			//
+			$("#taskTree").treeTable({expandable: true});
+			$("#taskTree tr").hover(function(){
+				jQuery(this).addClass("color3")},
+				function(){
+				jQuery(this).removeClass("color3")
+				});			
 		});
+		
 	</script>
 </head>
 
@@ -34,55 +47,11 @@
 <div id="bd">
 	<div id="yui-main">
 	<div class="yui-b">
-	<form id="mainForm" action="tast-chapter.action" method="get">		
+	<form id="mainForm" action="tast-chapter.action" method="get">
 		<div id="message"><s:actionmessage theme="custom" cssClass="success"/></div>
-		<div id="filter">
-			目录名称: <input type="text" 
-			                 name="filter_LIKES_chapterName" 
-			                 value="${param['filter_LIKES_chapterName']}" 
-			                 size="9" tabindex="1" 
-			                 onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
-			<input type="button" value="搜索" onclick="search();" tabindex="5"/>
-			&nbsp;&nbsp;
-			
-			<security:authorize ifAnyGranted="ROLE_用户修改">
-				<input type="button" 
-				       value="增加一级目录" 
-				       onclick="linkTo('task-chapter!input.action?taskId=${taskId}&parentId=0')" tabindex="6"/>
-			</security:authorize>
-		</div>		
 		<div id="content">
-		
-			<table id="contentTable">
-				<tr>
-					<th>章节名称</th>
-					<th>文件名称</th>
-					<th>显示顺序</th>
-					<th>章节描述</th>
-					<th>章节状态</th>
-					<th>操作</th>
-				</tr>
-
-				<s:iterator value="tcs">
-					<tr>
-						<td><s:if test="parentId!=0">&nbsp;&nbsp;&nbsp;&nbsp;</s:if> ${chapterName}&nbsp;</td>
-						<td><a href="task-chapter!edit.action?id=${id}" target="_blank">${fileName}</a>&nbsp;</td>
-						<td>${displayOrder}&nbsp;</td>
-						<td>${description}&nbsp;</td>
-						<td>${state}&nbsp;</td>
-						<td>&nbsp;
-							<security:authorize ifAnyGranted="ROLE_模板修改">
-								<a href="task-chapter!input.action?id=${id}&viewOnly=true">查看</a>&nbsp;
-								<a href="task-chapter!input.action?id=${id}&taskId=${taskId}">编辑</a>&nbsp;
-								<a href="task-chapter!input.action?parentId=${id}&taskId=${taskId}" <s:if test="parentId!=0">disabled</s:if>>添加子目录</a>&nbsp;
-								<a href="task-chapter!delete.action?id=${id}&taskId=${taskId}" onclick="return confirm('确定删除吗？')">删除</a>&nbsp;
-							</security:authorize>
-						</td>
-					</tr>
-				</s:iterator>
-			</table>
+		${taskTree}
 		</div>
-
 	</form>
 	</div>
 	</div>

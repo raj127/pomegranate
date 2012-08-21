@@ -14,7 +14,7 @@
 		<script>
 		$(document).ready(function() {
 			$(".mainNav a").attr("class","");
-			$("#n4").attr("class","actived");
+			$("#n5").attr("class","actived");
 			$("#subNav404").attr("class","actived");
 			$(".secondNav div").each(function(){
 				$(this).hide();
