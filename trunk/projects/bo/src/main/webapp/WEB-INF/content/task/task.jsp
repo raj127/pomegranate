@@ -49,7 +49,7 @@ date:2012/08/21
 			<input type="button" value="搜索" onclick="search();" tabindex="2"/>
 			&nbsp;&nbsp;
 			<security:authorize ifAnyGranted="ROLE_任务修改">
-				<input type="button" value="新建作业规程" onclick="linkTo('task!input.action')" tabindex="3"/>
+				<input type="button" value="新建任务" onclick="linkTo('task!input.action')" tabindex="3"/>
 			</security:authorize>
 		</div>
 		<div id="content">
