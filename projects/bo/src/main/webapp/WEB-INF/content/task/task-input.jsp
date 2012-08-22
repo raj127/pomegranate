@@ -1,3 +1,8 @@
+<%--
+Description:任务管理 --》 任务查看和任务编辑页面
+author:darkmi
+date:2012/08/21
+--%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/common/taglibs.jsp" %>
 
@@ -26,8 +31,6 @@
 		 //$("#useTemplate").hide("slow");
 		 $("#copy").hide();
 		 $("#useTemplate").hide();
-
-
 	});
 	</script>
 	

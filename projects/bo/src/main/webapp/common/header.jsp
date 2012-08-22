@@ -1,3 +1,8 @@
+<%--
+Description:菜单页面
+author:darkmi
+date:2012/08/21
+--%>
 <%@ page language="java" pageEncoding="UTF-8" %>
 <%@ include file="/common/taglibs.jsp" %>
 <%@ page import="org.springside.modules.security.springsecurity.SpringSecurityUtils" %>
@@ -92,8 +97,8 @@
 
 			<security:authorize ifAnyGranted="ROLE_任务管理">
 					<div id="subNav4" class="subNav4">
-						<a id="subNav401" href="${ctx}/task/task.action" >作业规程任务列表</a>
-						<a id="subNav402" href="${ctx}/task/task!input.action" >新建作业规程</a>
+						<a id="subNav401" href="${ctx}/task/task.action" >任务列表</a>
+						<!--<a id="subNav402" href="${ctx}/task/task!input.action" >新建任务</a>-->
 						<a id="subNav403" href="${ctx}/task/task-chapter.action" >作业规程章节列表</a>
 						<a id="subNav404" href="${ctx}/task/task-chapter.action" >新建作业规程章节</a>
 						<a id="subNav405" href="${ctx}/task/authority.action" disabled>权限管理</a>
