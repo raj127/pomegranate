@@ -1,3 +1,8 @@
+<%--
+Description:模板管理 --》 模板章节目录列表
+author:darkmi
+date:2012/08/23
+--%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="org.springside.modules.security.springsecurity.SpringSecurityUtils" %>
 <%@ include file="/common/taglibs.jsp" %>
@@ -48,6 +53,10 @@
 				       value="增加一级目录" 
 				       onclick="linkTo('template-chapter!input.action?templateId=${templateId}&parentId=0')" tabindex="6"/>
 			</security:authorize>
+				<input type="button" 
+				       value="树状结构" 
+				       onclick="linkTo('template-chapter-tree.action?templateId=${templateId}&parentId=0')" tabindex="6"/>
+			
 		</div>		
 		<div id="content">
 		

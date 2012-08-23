@@ -1,3 +1,8 @@
+<%--
+Description:模板管理 --》 模板列表
+author:darkmi
+date:2012/08/21
+--%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="org.springside.modules.security.springsecurity.SpringSecurityUtils" %>
 <%@ include file="/common/taglibs.jsp" %>
@@ -14,19 +19,7 @@
 	<script src="${ctx}/js/table.js" type="text/javascript"></script>
 	<script src="${ctx}/js/jquery.pagination.js" type="text/javascript"></script>
 	<script>
-		$(document).ready(function() {
-			
-			/*测试代码 begin { }*/
-			//alert($("#filter").html());
-			//$(mainForm.elements).hide();
-			
-			//$("a").click(function(){
-			//	alert("hello");
-			//});
-			
-			
-			/*测试代码 end } }*/
-			
+		$(document).ready(function() {	
 			$(".mainNav a").attr("class","");
 			$("#n3").attr("class","actived");
 			$("#subNav301").attr("class","actived");
@@ -53,7 +46,7 @@
 		<div id="message"><s:actionmessage theme="custom" cssClass="success"/></div>
 		<div id="filter">
 			模板名称: <input type="text" name="filter_LIKES_templateName" value="${param['filter_LIKES_templateName']}" size="20" tabindex="1" onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
-			<input type="button" value="搜索" onclick="search();" tabindex="2"/>
+			<input type="button" value="搜索" onclick="search();" tabindex="1"/>
 			&nbsp;&nbsp;
 			<security:authorize ifAnyGranted="ROLE_模板修改">
 				<input type="button" value="添加模板" onclick="linkTo('template!input.action')" tabindex="3"/>
