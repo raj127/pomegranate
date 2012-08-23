@@ -20,12 +20,21 @@ public class TemplateChapterDao extends HibernateDao<TemplateChapter, Long> {
 
 	private static final String GET_BY_WHERE = "from TemplateChapter t where 1=1 ";
 	private static final String GET_BY_TID = "from TemplateChapter t where t.template.id=? order by displayOrder asc";
+	private static final String GET_TC_LEVEL_ONE = "from TemplateChapter t where t.template.id=? and isLeaf = false order by displayOrder asc";
 
+	
 	/**
 	 * 通过模板ID得到其所有章节.
 	 */
 	public List<TemplateChapter> getTcsByTemplateId(Long templateId) {
 		return find(GET_BY_TID, templateId);
+	}
+	
+	/**
+	 * 获取指定模板的一级目录.
+	 */
+	public List<TemplateChapter> getTcLevelOne(Long templateId) {
+		return find(GET_TC_LEVEL_ONE, templateId);
 	}
 
 	public Page<TemplateChapter> findPageByWhere(Page<TemplateChapter> page, String where, Map<String, Object> values) {

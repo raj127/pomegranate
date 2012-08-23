@@ -30,6 +30,7 @@ public class TemplateChapter extends AuditableEntity {
 	private Long parentId;
 	private Integer displayOrder;
 	private StateEnum state;
+	private Boolean isLeaf;//是否叶子节点
 
 	@Column(name = "chapter_id")
 	public String getChapterId() {
@@ -103,6 +104,15 @@ public class TemplateChapter extends AuditableEntity {
 
 	public void setDisplayOrder(Integer displayOrder) {
 		this.displayOrder = displayOrder;
+	}
+
+	@Column(name = "is_leaf")
+	public Boolean getIsLeaf() {
+		return this.isLeaf;
+	}
+
+	public void setIsLeaf(Boolean isLeaf) {
+		this.isLeaf = isLeaf;
 	}
 
 	@Override

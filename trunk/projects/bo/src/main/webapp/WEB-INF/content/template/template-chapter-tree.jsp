@@ -61,7 +61,7 @@ date:2012/08/23
 			},
 			async : {
 				enable : true,
-				url : "template-chapter-tree!getTree.action",
+				url : "template-chapter-tree!getTree.action?templateId=${templateId}&parentId=${parentId}",
 				autoParam : [ "id", "name", "level" ],
 				otherParam : {
 					"otherParam" : "zTreeAsyncTest"
@@ -180,7 +180,7 @@ date:2012/08/23
 		
 		//提交请求
 	    function getTreeData(treeId){
-	        var url = 'ztree!getTreeData.action';
+	        var url = 'template-chapter-tree!getTreeData.action';
 	        var params = {id:treeId};
 	        jQuery.post(url, params, callbackFun);
 	    }
@@ -247,7 +247,7 @@ date:2012/08/23
 			}
 	        //设置操作代码
 	        op = "del";
-	        var url = 'ztree!delTreeNode.action';
+	        var url = 'template-chapter-tree!delTreeNode.action';
 	        var params = {id:selectedId, name:$("#treeName").attr("value"), content:$("#treeData").attr("value")};
 	        $.getJSON(url, params, delTreeNodeCallbackFun);
 		}
@@ -277,12 +277,12 @@ date:2012/08/23
 		function doSubmit(){
 			if(op == "add"){
 				var selectedNode = zTree.getNodeByParam("id", selectedId, null);
-		        var url = 'ztree!addTreeNode.action';
+		        var url = 'template-chapter-tree!addTreeNode.action?templateId=${templateId}';
 		        var params = {id:selectedId, name:$("#treeName").attr("value"), content:$("#treeData").attr("value")};
 		        $.getJSON(url, params, addTreeNodeCallbackFun);
 			}else if(op == "mod"){
 				var selectedNode = zTree.getNodeByParam("id", selectedId, null);
-		        var url = 'ztree!modTreeNode.action';
+		        var url = 'template-chapter-tree!modTreeNode.action?templateId=${templateId}';
 		        var params = {id:selectedId, name:$("#treeName").attr("value"), content:$("#treeData").attr("value")};
 		        $.getJSON(url, params, modTreeNodeCallbackFun);
 			}
@@ -422,10 +422,10 @@ date:2012/08/23
 			<input type="button" value="添加节点" onclick="addTreeNode();" tabindex="6"/>
 			<input type="button" value="修改节点" onclick="modTreeNode();" tabindex="6"/>
 			<input type="button" value="删除节点" onclick="delTreeNode();" tabindex="6"/>
-		    <button id="addStatusBarMessage">Add1</button>
+		    <%--<button id="addStatusBarMessage">Add1</button>
 		    <button id="addStatusBarError">Add2</button>
 		    <button id="addNotificationMessage">Add3</button>
-		    <button id="addNotificationError">Add4</button>
+		    <button id="addNotificationError">Add4</button>--%>
 			
 		</div>
 		<div id="content">
@@ -437,7 +437,9 @@ date:2012/08/23
 				</div>			
 			</td>
 			<td valign="top">
-			<form id="inputForm" action="ztree!saveTreeData.action" method="post">
+			<form id="inputForm" action="template-chapter-tree!saveTreeData.action" method="post">
+				<input type="hidden" name="templateId" value="${templateId}"/>
+				<input type="hidden" name="parentId" value="${parentId}"/>
 				<table class="noborder">
 					<tr valign="top">
 						<td width="20%">名称:</td>
