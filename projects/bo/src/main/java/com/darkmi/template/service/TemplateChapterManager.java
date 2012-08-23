@@ -73,6 +73,14 @@ public class TemplateChapterManager {
 	}
 	
 	/**
+	 * 获取指定模板的一级目录.
+	 */
+	public List<TemplateChapter> getTcLevelOne(Long templateId) {
+		return tcDao.getTcLevelOne(templateId);
+	}
+
+	
+	/**
 	 * 获得指定作业规程模板的一级目录.
 	 */
 	public List<TemplateChapter> getParentTemplateChapter(Long templateId) {

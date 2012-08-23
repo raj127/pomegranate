@@ -11,8 +11,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.darkmi.entity.system.SpecificationChapter;
-import com.darkmi.system.service.SpecificationChapterManager;
+import com.darkmi.entity.StateEnum;
+import com.darkmi.entity.template.Template;
+import com.darkmi.entity.template.TemplateChapter;
+import com.darkmi.template.service.TemplateChapterManager;
+import com.darkmi.template.service.TemplateManager;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
@@ -25,23 +28,21 @@ import com.opensymphony.xwork2.ActionSupport;
 public class TemplateChapterTreeAction extends ActionSupport {
 	private static final long serialVersionUID = -1832062843458845519L;
 	private Logger logger = LoggerFactory.getLogger(TemplateChapterTreeAction.class);
-	
-	//-------------
+	private Long id; //对应章节的ID
 	private Long templateId; //模板Id
 	private Long parentId; //目录的父Id
-	//-------------
-	private Long id;
-	private String name;
-	private String content;
-	private SpecificationChapter sc;
-	private SpecificationChapterManager scManager;
+	private String name; //章节命长
+	private String content; //章节描述
+	private TemplateManager templateManager;
+	private TemplateChapterManager tcManager;
 
 	/**
 	 * 默认的执行方法.
 	 */
 	public String execute() throws Exception {
 		logger.debug("execute begin {...");
-		//getTree();
+		logger.debug("templateId --》 {}", templateId);
+		logger.debug("parentId --》 {}", parentId);
 		logger.debug("execute end ...}");
 		return SUCCESS;
 	}
@@ -57,25 +58,28 @@ public class TemplateChapterTreeAction extends ActionSupport {
 		StringBuffer sb = new StringBuffer();
 		sb.append("[");
 		if (id == null) {
-			List<SpecificationChapter> scs = scManager.getSpecifications();
-			for (Iterator<SpecificationChapter> iterator = scs.iterator(); iterator.hasNext();) {
-				SpecificationChapter sc = (SpecificationChapter) iterator.next();
-				sb.append("{id:" + sc.getId() + ", pId:1, name: \"");
-				sb.append(sc.getName() + "\", isParent:true, click:false},");
+			logger.debug("templateId --》 {}", templateId);
+			List<TemplateChapter> scs = tcManager.getTcLevelOne(templateId);
+			logger.debug("获取到的章节数量 --》{}", scs.size());
+			for (Iterator<TemplateChapter> iterator = scs.iterator(); iterator.hasNext();) {
+				TemplateChapter tc = (TemplateChapter) iterator.next();
+				sb.append("{id:" + tc.getId() + ", pId:0, name: \"");
+				sb.append(tc.getChapterName() + "\", isParent:true, click:false},");
 			}
 			sb.deleteCharAt(sb.length() - 1);
 			sb.append("]");
 		} else {
-			List<SpecificationChapter> scs = scManager.getChildSC(id);
-			for (Iterator<SpecificationChapter> iterator = scs.iterator(); iterator.hasNext();) {
-				SpecificationChapter sc = (SpecificationChapter) iterator.next();
-				List<SpecificationChapter> childSCS = scManager.getChildSC(sc.getId());
-				if (childSCS.size() > 0) {
-					sb.append("{id:" + sc.getId() + ", pId:1, name: \"");
-					sb.append(sc.getName() + "\", isParent:true, click:false},");
+			//获得指定模板的一级目录
+			List<TemplateChapter> tcs = tcManager.getChildTemplateChapter(id);
+			for (Iterator<TemplateChapter> iterator = tcs.iterator(); iterator.hasNext();) {
+				TemplateChapter tc = (TemplateChapter) iterator.next();
+				List<TemplateChapter> childTcs = tcManager.getChildTemplateChapter(tc.getId());
+				if (childTcs.size() > 0) {
+					sb.append("{id:" + tc.getId() + ", pId:1, name: \"");
+					sb.append(tc.getChapterName() + "\", isParent:true, click:false},");
 				} else {
-					sb.append("{id:" + sc.getId() + ", pId:1, name: \"");
-					sb.append(sc.getName() + "\", isParent:false, click:true},");
+					sb.append("{id:" + tc.getId() + ", pId:1, name: \"");
+					sb.append(tc.getChapterName() + "\", isParent:false, click:true},");
 				}
 			}
 			sb.deleteCharAt(sb.length() - 1);
@@ -97,10 +101,10 @@ public class TemplateChapterTreeAction extends ActionSupport {
 	public void getTreeData() throws Exception {
 		logger.debug("get tree data begin {...");
 		logger.debug("id --> " + id);
-		SpecificationChapter sc = scManager.getChapter(id);
+		TemplateChapter sc = tcManager.getTemplateChapter(id);
 		HttpServletResponse response = ServletActionContext.getResponse();
 		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(sc.getContent());
+		response.getWriter().write(sc.getDescription());
 		logger.debug("get tree data end ...}");
 	}
 
@@ -110,24 +114,29 @@ public class TemplateChapterTreeAction extends ActionSupport {
 	 */
 	public void addTreeNode() throws Exception {
 		logger.debug("addTreeNode begin {...");
+		logger.debug("templateId --> " + templateId);
 		logger.debug("id --> " + id);
 		logger.debug("name --> " + name);
 		logger.debug("content --> " + content);
-		SpecificationChapter sc = new SpecificationChapter();
-		SpecificationChapter parentSC = scManager.getChapter(id);
 
-		sc.setName(name);
-		sc.setContent(content);
-		sc.setParentChapter(parentSC);
-		sc.setIsLeaf(true);
-		sc.setSort(0);
-		sc.setState(true);
-		scManager.saveChapter(sc);
+		TemplateChapter tc = new TemplateChapter();
+		Template template = templateManager.getTemplate(templateId);
+		tc.setTemplate(template);
+		tc.setChapterName(name);
+		tc.setDescription(content);
+		tc.setParentId(id);
+		tc.setIsLeaf(true);
+		tc.setDisplayOrder(1);
+		tc.setState(StateEnum.NORMAL);
+		tcManager.saveTemplateChapter(tc);
+		logger.debug("sc --> " + tc.toString());
 
-		logger.debug("sc --> " + sc.toString());
+		TemplateChapter parentTc = tcManager.getTemplateChapter(id);
+		parentTc.setIsLeaf(false);
+		tcManager.saveTemplateChapter(parentTc);
 
 		StringBuffer sb = new StringBuffer();
-		sb.append("{\"retCode\":1, \"retMessage\":\"节点添加成功\", \"id\":").append(sc.getId()).append("}");
+		sb.append("{\"retCode\":1, \"retMessage\":\"节点添加成功\", \"id\":").append(tc.getId()).append("}");
 		logger.debug("返回 --> " + sb.toString());
 		//返回响应
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -146,10 +155,10 @@ public class TemplateChapterTreeAction extends ActionSupport {
 		logger.debug("id --> " + id);
 		logger.debug("name --> " + name);
 		logger.debug("content --> " + content);
-		SpecificationChapter sc = scManager.getChapter(id);
-		sc.setName(name);
-		sc.setContent(content);
-		scManager.saveChapter(sc);
+		TemplateChapter sc = tcManager.getTemplateChapter(id);
+		sc.setChapterName(name);
+		sc.setDescription(content);
+		tcManager.saveTemplateChapter(sc);
 
 		StringBuffer sb = new StringBuffer();
 		sb.append("{\"retCode\":1, \"retMessage\":\"节点修改成功\", \"id\":").append(sc.getId()).append("}");
@@ -168,7 +177,7 @@ public class TemplateChapterTreeAction extends ActionSupport {
 	public void delTreeNode() throws Exception {
 		logger.debug("delTreeNode begin {...");
 		logger.debug("id --> " + id);
-		scManager.deleteChapter(id);
+		tcManager.deleteTemplateChapter(id);
 
 		StringBuffer sb = new StringBuffer();
 		sb.append("{\"retCode\":1, \"retMessage\":\"节点删除成功\", \"id\":").append(id).append("}");
@@ -206,14 +215,14 @@ public class TemplateChapterTreeAction extends ActionSupport {
 		this.content = content;
 	}
 
-	public SpecificationChapter getSc() {
-		return sc;
-	}
+	//	public SpecificationChapter getSc() {
+	//		return sc;
+	//	}
+	//
+	//	public void setSc(SpecificationChapter sc) {
+	//		this.sc = sc;
+	//	}
 
-	public void setSc(SpecificationChapter sc) {
-		this.sc = sc;
-	}
-	
 	public Long getTemplateId() {
 		return templateId;
 	}
@@ -221,6 +230,7 @@ public class TemplateChapterTreeAction extends ActionSupport {
 	public void setTemplateId(Long templateId) {
 		this.templateId = templateId;
 	}
+
 	public Long getParentId() {
 		return parentId;
 	}
@@ -228,11 +238,27 @@ public class TemplateChapterTreeAction extends ActionSupport {
 	public void setParentId(Long parentId) {
 		this.parentId = parentId;
 	}
-
+	
 
 	/*~~~~~~~~~~~业务逻辑类注入~~~~~~~~~~~~~~~~~*/
+	//	@Autowired
+	//	public void setScManager(SpecificationChapterManager scManager) {
+	//		this.scManager = scManager;
+	//	}
+
+	//	@Autowired
+	//	public void setTemplateManager(TemplateManager templateManager) {
+	//		this.templateManager = templateManager;
+	//	}
+
 	@Autowired
-	public void setScManager(SpecificationChapterManager scManager) {
-		this.scManager = scManager;
+	public void setTcManager(TemplateChapterManager tcManager) {
+		this.tcManager = tcManager;
 	}
+	
+	@Autowired
+	public void setTemplateManager(TemplateManager templateManager) {
+		this.templateManager = templateManager;
+	}
+
 }
