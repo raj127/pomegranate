@@ -93,7 +93,7 @@ public class TemplateChapterTableAction extends ActionSupport {
 				sb.append("<td>" + levelTwo.getDescription() + "</td>");
 				sb.append("<td>&nbsp;</td>");
 				sb.append("<td>&nbsp;</td>");
-				sb.append("<td>" + "<a href=\"task-verify!main.action?id=" + levelTwo.getId()
+				sb.append("<td>" + "<a href=\"template-chapter-edit.action?id=" + levelTwo.getId()
 						+ "\" target=\"_blank\">编辑</a>" + "</td>");
 				sb.append("</tr>");
 				levelTwoCounter++;
