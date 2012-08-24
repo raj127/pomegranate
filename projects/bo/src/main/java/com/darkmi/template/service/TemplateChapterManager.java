@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springside.modules.orm.Page;
 import org.springside.modules.orm.PropertyFilter;
 
-import com.darkmi.entity.task.TaskChapter;
 import com.darkmi.entity.template.TemplateChapter;
 import com.darkmi.template.dao.TemplateChapterDao;
 
