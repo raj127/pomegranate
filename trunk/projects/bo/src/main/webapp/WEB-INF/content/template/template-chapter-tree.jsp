@@ -317,7 +317,7 @@ date:2012/08/23
 		$(document).ready(function() {
 			$(".mainNav a").attr("class","");
 			$("#n3").attr("class","actived");
-			$("#subNav302").attr("class","actived");
+			$("#subNav301").attr("class","actived");
 			$(".secondNav div").each(function(){
 				$(this).hide();
 				$("#subNav3").show();
@@ -419,6 +419,7 @@ date:2012/08/23
 	    <div id="StatusBar" style="height: 20px;"></div>
     		
 		<div id="filter">
+			<input type="button" value="表格查看" onclick="linkTo('template-chapter-table.action?templateId=${templateId}&parentId=0')" tabindex="1"/>
 			<input type="button" value="添加节点" onclick="addTreeNode();" tabindex="6"/>
 			<input type="button" value="修改节点" onclick="modTreeNode();" tabindex="6"/>
 			<input type="button" value="删除节点" onclick="delTreeNode();" tabindex="6"/>

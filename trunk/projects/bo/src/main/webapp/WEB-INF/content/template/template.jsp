@@ -79,7 +79,7 @@ date:2012/08/21
 								<a href="#" onclick="if(confirm('确定要永久删除么?')){linkTo('template!delete.action?id=${id}');}">删除</a>
 							</security:authorize>
 							<security:authorize ifAnyGranted="ROLE_模板浏览">
-									<a href="template-chapter.action?templateId=${id}">查看模板目录</a>&nbsp;
+									<a href="template-chapter-table.action?templateId=${id}">查看模板目录</a>&nbsp;
 							</security:authorize>							
 						</td>
 					</tr>

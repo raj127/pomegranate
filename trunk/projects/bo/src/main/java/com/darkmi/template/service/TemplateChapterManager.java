@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springside.modules.orm.Page;
 import org.springside.modules.orm.PropertyFilter;
 
+import com.darkmi.entity.task.TaskChapter;
 import com.darkmi.entity.template.TemplateChapter;
 import com.darkmi.template.dao.TemplateChapterDao;
 
@@ -71,7 +72,7 @@ public class TemplateChapterManager {
 	public List<TemplateChapter> getParentTemplateChapter() {
 		return tcDao.findBy("parentId", new Long(0));
 	}
-	
+
 	/**
 	 * 获取指定模板的一级目录.
 	 */
@@ -79,12 +80,20 @@ public class TemplateChapterManager {
 		return tcDao.getTcLevelOne(templateId);
 	}
 
-	
+	/**
+	 * 获取二级目录.
+	 */
+	@Transactional(readOnly = true)
+	public List<TemplateChapter> getLevelTwo(Long parentId) {
+		logger.debug("parentId -->{}", parentId);
+		return tcDao.findBy("parentId", parentId);
+	}
+
 	/**
 	 * 获得指定作业规程模板的一级目录.
 	 */
 	public List<TemplateChapter> getParentTemplateChapter(Long templateId) {
-		
+
 		return tcDao.findBy("parentId", new Long(0));
 	}
 
