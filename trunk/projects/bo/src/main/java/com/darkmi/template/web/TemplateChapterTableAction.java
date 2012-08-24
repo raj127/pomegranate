@@ -27,14 +27,12 @@ import com.opensymphony.xwork2.ActionSupport;
 public class TemplateChapterTableAction extends ActionSupport {
 	private static final long serialVersionUID = -2907389496513631586L;
 	private Logger logger = LoggerFactory.getLogger(TemplateChapterTableAction.class);
+	
+	private Long templateId;
 	private String taskTree;
-	//---------------
 	private TemplateManager templateManager;
 	private TemplateChapterManager tcManager;
-	private Long templateId;
-
-	//---------------
-
+	
 	@Override
 	public String execute() throws Exception {
 		logger.debug("begin TemplateChapterTableAction execute { ...");
@@ -93,8 +91,10 @@ public class TemplateChapterTableAction extends ActionSupport {
 				sb.append("<td>" + levelTwo.getDescription() + "</td>");
 				sb.append("<td>&nbsp;</td>");
 				sb.append("<td>&nbsp;</td>");
-				sb.append("<td>" + "<a href=\"template-chapter-edit.action?id=" + levelTwo.getId()
-						+ "\" target=\"_blank\">编辑</a>" + "</td>");
+				sb.append("<td>");
+				sb.append("<a href=\"template-chapter-edit!input.action?id=");
+				sb.append(levelTwo.getId() + "\" target=\"_blank\">编辑</a>");
+				sb.append("</td>");
 				sb.append("</tr>");
 				levelTwoCounter++;
 			}
