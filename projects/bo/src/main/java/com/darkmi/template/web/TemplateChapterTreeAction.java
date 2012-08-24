@@ -215,14 +215,6 @@ public class TemplateChapterTreeAction extends ActionSupport {
 		this.content = content;
 	}
 
-	//	public SpecificationChapter getSc() {
-	//		return sc;
-	//	}
-	//
-	//	public void setSc(SpecificationChapter sc) {
-	//		this.sc = sc;
-	//	}
-
 	public Long getTemplateId() {
 		return templateId;
 	}
@@ -241,16 +233,6 @@ public class TemplateChapterTreeAction extends ActionSupport {
 	
 
 	/*~~~~~~~~~~~业务逻辑类注入~~~~~~~~~~~~~~~~~*/
-	//	@Autowired
-	//	public void setScManager(SpecificationChapterManager scManager) {
-	//		this.scManager = scManager;
-	//	}
-
-	//	@Autowired
-	//	public void setTemplateManager(TemplateManager templateManager) {
-	//		this.templateManager = templateManager;
-	//	}
-
 	@Autowired
 	public void setTcManager(TemplateChapterManager tcManager) {
 		this.tcManager = tcManager;
