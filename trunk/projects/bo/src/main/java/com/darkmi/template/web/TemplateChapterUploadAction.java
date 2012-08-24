@@ -16,6 +16,12 @@ import org.slf4j.LoggerFactory;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+/**
+ * Description: 保存模板.
+ * Copyright (c) darkmi
+ * All Rights Reserved.
+ * @version 1.0  2012-08-24 下午01:36:31 darkmi created
+ */
 @Namespace("/template")
 /*@Results({ @Result(name = "success", location = "upload.jsp") })*/
 public class TemplateChapterUploadAction extends ActionSupport {
@@ -78,6 +84,7 @@ public class TemplateChapterUploadAction extends ActionSupport {
 		return aPath;
 	}
 
+	/*~~~~~~~~~~~ Getter And Setter ~~~~~~~~~~~~~~~~~*/
 	public File getFile() {
 		return file;
 	}

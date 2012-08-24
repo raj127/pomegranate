@@ -1,3 +1,8 @@
+<%--
+Description:模板管理 --》 模板编辑页面
+author:darkmi
+date:2012/08/21
+--%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="org.springside.modules.security.springsecurity.SpringSecurityUtils" %>
 <%@ include file="/common/taglibs.jsp" %>
