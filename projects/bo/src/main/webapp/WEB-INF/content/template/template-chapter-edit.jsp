@@ -29,7 +29,7 @@ date:2012/08/21
 <body onload='intializePage("${ctx}${filePath}")' onunload="onPageClose()">
 <div class="ui-layout-center">
 	<form id="form1" method="post" action="template-chapter-upload!upload.action" enctype="multipart/form-data">
-	<input id="fileName" name="fileName" type="hidden" value="测试" />
+	<input id="fileName" name="fileName" type="hidden" value="${fileName}" />
 	<input id="fileId" name="fileId" type="hidden" value="" />
 
 		<div id="officecontrol">
@@ -178,6 +178,5 @@ date:2012/08/21
 		</tr>
 	</table>
 </div>
-
 </body>
 </html>

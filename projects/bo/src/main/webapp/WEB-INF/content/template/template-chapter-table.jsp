@@ -52,7 +52,7 @@ date:2012/08/21
 	<input type="hidden" name="templateId" id="templateId" value="${templateId}"/>
 		<div id="message"><s:actionmessage theme="custom" cssClass="success"/></div>
 		<div id="filter">
-			<input type="button" value="添加模板" onclick="linkTo('template!input.action')" tabindex="3"/>
+			<%--<input type="button" value="添加模板" onclick="linkTo('template!input.action')" tabindex="3"/>--%>
 			<input type="button" value="树状查看" onclick="linkTo('template-chapter-tree.action?templateId=${templateId}&parentId=0')" tabindex="1"/>
 		</div>		
 		<div id="content">

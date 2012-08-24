@@ -117,6 +117,7 @@ public class TemplateChapterEditAction extends CrudActionSupport<TemplateChapter
 		logger.debug("id --> {}", id);
 		//if (true == viewOnly) {
 		filePath = tc.getTemplate().getPath() + tc.getFileName();
+		fileName = tc.getFileName();
 		logger.debug("filePath --> {}", filePath);
 		//}
 		return INPUT;
