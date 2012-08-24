@@ -1,5 +1,5 @@
 <%--
-Description:模板管理 --》 模板章节表格展示
+Description:本页面不再使用
 author:darkmi
 date:2012/08/23
 --%>
