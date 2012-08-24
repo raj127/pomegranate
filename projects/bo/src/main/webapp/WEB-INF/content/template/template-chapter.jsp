@@ -1,5 +1,5 @@
 <%--
-Description:模板管理 --》 模板章节目录列表
+Description:模板管理 --》 模板章节表格展示
 author:darkmi
 date:2012/08/23
 --%>
@@ -14,7 +14,6 @@ date:2012/08/23
 	<%@ include file="/common/meta.jsp" %>
 	<link href="${ctx}/css/yui.css" type="text/css" rel="stylesheet"/>
 	<link href="${ctx}/css/style.css" type="text/css" rel="stylesheet"/>
-	
 	<script src="${ctx}/js/jquery.js" type="text/javascript"></script>
 	<script src="${ctx}/js/table.js" type="text/javascript"></script>
 	
