@@ -1,3 +1,8 @@
+<%--
+Description:系统管理--》用户列表
+author:darkmi
+date:2012/08/23
+--%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="org.springside.modules.security.springsecurity.SpringSecurityUtils" %>
 <%@ include file="/common/taglibs.jsp" %>
@@ -72,7 +77,7 @@
 					<th width="10%"><a href="javascript:sort('phoneNumber','asc')">电话</a></th>
 					<th width="10%"><a href="javascript:sort('email','asc')">电邮</a></th>
 					<th width="10%"><a href="javascript:sort('email','asc')">单位名称</a></th>
-					<th width="55%" style="word-break:break-all;">角色</th>
+					<th>角色</th>
 					<th width="15%">操作</th>
 				</tr>
 
@@ -85,7 +90,7 @@
 						<td>${company.companyName}&nbsp;</td>
 						<td>
 							<s:if test="%{roleNames != null && roleNames.length()>70}">
-	                      			<s:property value='%{roleNames.substring(0, 59)+"......"}' />
+	                      			<s:property value='%{roleNames.substring(0, 30)+"......"}' />
 				           	</s:if>
 				           	<s:else>
 				            	<s:property value="%{roleNames}" default="-" />

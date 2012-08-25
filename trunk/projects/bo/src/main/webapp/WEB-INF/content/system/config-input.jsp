@@ -1,3 +1,8 @@
+<%--
+Description:系统管理--》配置管理--》配置查看|添加|修改页面
+author:darkmi
+date:2012/08/23
+--%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/common/taglibs.jsp" %>
 
@@ -64,7 +69,7 @@
 		<input type="hidden" name="page.pageSize" id="pageSize" value="${page.pageSize}"/>
 		<table class="noborder">
 			<tr>
-				<td>名字:</td>
+				<td width="10%">名字:</td>
 				<td><input type="text" id="name" name="name" size="40" value="${name}" maxlength="50"/></td>
 			</tr>
 		    <tr>

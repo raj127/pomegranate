@@ -1,3 +1,8 @@
+<%--
+Description:系统管理--》规范管理
+author:darkmi
+date:2012/08/23
+--%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="org.springside.modules.security.springsecurity.SpringSecurityUtils" %>
 <%@ include file="/common/taglibs.jsp" %>

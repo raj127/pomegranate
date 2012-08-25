@@ -1,3 +1,8 @@
+<%--
+Description:公司管理--》官司查看及编辑页面
+author:darkmi
+date:2012/08/23
+--%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/common/taglibs.jsp" %>
 
@@ -68,7 +73,7 @@
 <div id="bd1">
 	<div id="yui-main">
 	<div class="yui-b">
-	<h2><s:if test="id == null">创建</s:if><s:else>修改</s:else>公司</h2>
+	<h2><s:if test="id == null">创建</s:if><s:else><s:if test="viewOnly">查看</s:if><s:else>修改</s:else></s:else>公司</h2>
 	<form id="inputForm" action="company!save.action" method="post">
 		<input type="hidden" name="id" value="${id}"/>
 		<input type="hidden" name="workingVersion" value="${version}"/>
@@ -78,7 +83,7 @@
 		<input type="hidden" name="page.pageSize" id="pageSize" value="${page.pageSize}"/>
 		<table class="noborder">
 			<tr>
-				<td>公司名称:</td>
+				<td width="10%">公司名称:</td>
 				<td><input type="text" name="companyName" size="40" id="companyName" value="${companyName}" maxlength="50"/></td>
 			</tr>
 			<tr>

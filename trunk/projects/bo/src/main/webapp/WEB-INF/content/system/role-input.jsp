@@ -1,3 +1,8 @@
+<%--
+Description:系统管理--》角色管理--》角色查看|添加|修改页面
+author:darkmi
+date:2012/08/23
+--%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/common/taglibs.jsp" %>
 
@@ -90,7 +95,7 @@
 		<input type="hidden" name="id" value="${id}"/>
 		<table class="noborder">
 			<tr>
-				<td>角色名:</td>
+				<td width="10%">角色名:</td>
 				<td><input type="text" id="name" name="name" size="40" value="${name}" class="required" maxlength="200"/></td>
 				<td><input type="button" id="selectAll" name="selectAll" value="全选授权" onclick="setAuth(this.value);"/></td>
 			</tr>
