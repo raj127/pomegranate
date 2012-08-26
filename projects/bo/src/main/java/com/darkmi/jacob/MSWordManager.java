@@ -1,10 +1,16 @@
 package com.darkmi.jacob;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
 import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
 
+@Component
 public class MSWordManager {
+	private Logger logger = LoggerFactory.getLogger(MSWordManager.class);
 	// word文档 
 	private Dispatch doc;
 	// word运行程序对象 
@@ -16,40 +22,54 @@ public class MSWordManager {
 	private boolean saveOnExit = true;
 
 	/** 
-	*     
-	* @param visible 为true表示word应用程序可见 
-	*/
+	 * 默认的构造函数 
+	 */
+	public MSWordManager() {
+		logger.debug("MSWordManager begin {...");
+		if (word == null) {
+			word = new ActiveXComponent("Word.Application");
+			word.setProperty("Visible", new Variant(false));
+		}
+		if (documents == null) {
+			documents = word.getProperty("Documents").toDispatch();
+		}
+		logger.debug("MSWordManager ...}");
+	}
+
+	/** 
+	 * 构造函数    
+	 * @param visible 为true表示word应用程序可见 
+	 */
 	public MSWordManager(boolean visible) {
 		if (word == null) {
 			word = new ActiveXComponent("Word.Application");
 			word.setProperty("Visible", new Variant(visible));
 		}
-		if (documents == null){
+		if (documents == null) {
 			documents = word.getProperty("Documents").toDispatch();
 		}
 	}
 
-	/** */
 	/** 
-	* 设置退出时参数 
-	*     
-	* @param saveOnExit boolean true-退出时保存文件，false-退出时不保存文件 
-	*/
+	 * 设置退出时参数 
+	 *     
+	 * @param saveOnExit boolean true-退出时保存文件，false-退出时不保存文件 
+	 */
 	public void setSaveOnExit(boolean saveOnExit) {
 		this.saveOnExit = saveOnExit;
 	}
 
-	/** */
 	/** 
-	* 创建一个新的word文档 
-	*     
-	*/
+	 * 创建一个新的word文档 
+	 *     
+	 */
 	public void createNewDocument() {
+		logger.debug("begin createNewDocument{ ...");
 		doc = Dispatch.call(documents, "Add").toDispatch();
 		selection = Dispatch.get(word, "Selection").toDispatch();
+		logger.debug("end createNewDocument ...}");
 	}
 
-	/** */
 	/** 
 	* 打开一个已存在的文档 
 	*     
@@ -61,7 +81,6 @@ public class MSWordManager {
 		selection = Dispatch.get(word, "Selection").toDispatch();
 	}
 
-	/** */
 	/** 
 	* 把选定的内容或插入点向上移动 
 	*     
@@ -72,10 +91,8 @@ public class MSWordManager {
 			selection = Dispatch.get(word, "Selection").toDispatch();
 		for (int i = 0; i < pos; i++)
 			Dispatch.call(selection, "MoveUp");
-
 	}
 
-	/** */
 	/** 
 	* 把选定的内容或者插入点向下移动 
 	*     
@@ -88,7 +105,6 @@ public class MSWordManager {
 			Dispatch.call(selection, "MoveDown");
 	}
 
-	/** */
 	/** 
 	* 把选定的内容或者插入点向左移动 
 	*     
@@ -102,7 +118,6 @@ public class MSWordManager {
 		}
 	}
 
-	/** */
 	/** 
 	* 把选定的内容或者插入点向右移动 
 	*     
@@ -131,7 +146,6 @@ public class MSWordManager {
 		Dispatch.call(selection, "EndKey", new Variant(6));
 	}
 
-	/** */
 	/** 
 	* 从选定内容或插入点开始查找文本 
 	*     
@@ -158,7 +172,6 @@ public class MSWordManager {
 		return Dispatch.call(find, "Execute").getBoolean();
 	}
 
-	/** */
 	/** 
 	* 把选定选定内容设定为替换文本 
 	*     
@@ -173,7 +186,6 @@ public class MSWordManager {
 		return true;
 	}
 
-	/** */
 	/** 
 	* 全局替换文本 
 	*     
@@ -187,7 +199,6 @@ public class MSWordManager {
 		}
 	}
 
-	/** */
 	/** 
 	* 在当前插入点插入字符串 
 	*     
@@ -197,7 +208,6 @@ public class MSWordManager {
 		Dispatch.put(selection, "Text", newText);
 	}
 
-	/** */
 	/** 
 	*     
 	* @param toFindText 要查找的字符串 
@@ -211,7 +221,6 @@ public class MSWordManager {
 		return true;
 	}
 
-	/** */
 	/** 
 	* 全局替换图片 
 	*     
@@ -225,7 +234,6 @@ public class MSWordManager {
 		}
 	}
 
-	/** */
 	/** 
 	* 在当前插入点插入图片 
 	*     
@@ -235,7 +243,6 @@ public class MSWordManager {
 		Dispatch.call(Dispatch.get(selection, "InLineShapes").toDispatch(), "AddPicture", imagePath);
 	}
 
-	/** */
 	/** 
 	* 合并单元格 
 	*     
@@ -257,7 +264,6 @@ public class MSWordManager {
 		Dispatch.call(fstCell, "Merge", secCell);
 	}
 
-	/** */
 	/** 
 	* 在指定的单元格里填写数据 
 	*     
@@ -276,7 +282,6 @@ public class MSWordManager {
 		Dispatch.put(selection, "Text", txt);
 	}
 
-	/** */
 	/** 
 	* 在当前文档拷贝数据 
 	*     
@@ -290,7 +295,6 @@ public class MSWordManager {
 		}
 	}
 
-	/** */
 	/** 
 	* 在当前文档粘帖剪贴板数据 
 	*     
@@ -304,7 +308,6 @@ public class MSWordManager {
 		}
 	}
 
-	/** */
 	/** 
 	* 在当前文档指定的位置拷贝表格 
 	*     
@@ -322,7 +325,6 @@ public class MSWordManager {
 		}
 	}
 
-	/** */
 	/** 
 	* 在当前文档末尾拷贝来自另一个文档中的段落 
 	*     
@@ -335,7 +337,6 @@ public class MSWordManager {
 		copyParagraphFromAnotherDoc(anotherDocPath, paragraphIndex, "$selection$");
 	}
 
-	/** */
 	/** 
 	* 在当前文档指定的位置拷贝来自另一个文档中的段落 
 	*     
@@ -366,7 +367,6 @@ public class MSWordManager {
 		}
 	}
 
-	/** */
 	/** 
 	* 在当前文档指定的位置拷贝来自另一个文档中的表格 
 	*     
@@ -396,7 +396,6 @@ public class MSWordManager {
 		}
 	}
 
-	/** */
 	/** 
 	* 在当前文档指定的位置拷贝来自另一个文档中的图片 
 	*     
@@ -426,14 +425,14 @@ public class MSWordManager {
 		}
 	}
 
-	/** */
+	/*~~~~~~~~~~~ 表格操作 ~~~~~~~~~~~~~~~~~*/
 	/** 
-	* 创建表格 
-	*     
-	* @param pos    位置 
-	* @param cols 列数 
-	* @param rows 行数 
-	*/
+	 * 创建表格 
+	 *     
+	 * @param pos  位置 
+	 * @param cols 列数 
+	 * @param rows 行数 
+	 */
 	public void createTable(int numCols, int numRows) {//(String pos, int numCols, int numRows) { 
 		//                if (!find(pos)) { 
 		Dispatch tables = Dispatch.get(doc, "Tables").toDispatch();
@@ -446,7 +445,6 @@ public class MSWordManager {
 		//                } 
 	}
 
-	/** */
 	/** 
 	* 在指定行前面增加行 
 	*     
@@ -464,7 +462,6 @@ public class MSWordManager {
 		Dispatch.call(rows, "Add", new Variant(row));
 	}
 
-	/** */
 	/** 
 	* 在第1行前增加一行 
 	*     
@@ -481,7 +478,6 @@ public class MSWordManager {
 		Dispatch.call(rows, "Add", new Variant(row));
 	}
 
-	/** */
 	/** 
 	* 在最后1行前增加一行 
 	*     
@@ -499,7 +495,6 @@ public class MSWordManager {
 		Dispatch.call(rows, "Add", new Variant(row));
 	}
 
-	/** */
 	/** 
 	* 增加一行 
 	*     
@@ -514,7 +509,6 @@ public class MSWordManager {
 		Dispatch.call(rows, "Add");
 	}
 
-	/** */
 	/** 
 	* 增加一列 
 	*     
@@ -531,7 +525,6 @@ public class MSWordManager {
 		Dispatch.call(cols, "AutoFit");
 	}
 
-	/** */
 	/** 
 	* 在指定列前面增加表格的列 
 	*     
@@ -552,7 +545,6 @@ public class MSWordManager {
 		Dispatch.call(cols, "AutoFit");
 	}
 
-	/** */
 	/** 
 	* 在第1列前增加一列 
 	*     
@@ -569,7 +561,6 @@ public class MSWordManager {
 		Dispatch.call(cols, "AutoFit");
 	}
 
-	/** */
 	/** 
 	* 在最后一列前增加一列 
 	*     
@@ -586,7 +577,6 @@ public class MSWordManager {
 		Dispatch.call(cols, "AutoFit");
 	}
 
-	/** */
 	/** 
 	* 自动调整表格 
 	*     
@@ -602,7 +592,6 @@ public class MSWordManager {
 		}
 	}
 
-	/** */
 	/** 
 	* 调用word里的宏以调整表格的宽度,其中宏保存在document下 
 	*     
@@ -622,7 +611,6 @@ public class MSWordManager {
 		}
 	}
 
-	/** */
 	/** 
 	* 设置当前选定内容的字体 
 	*     
@@ -643,7 +631,6 @@ public class MSWordManager {
 		Dispatch.put(font, "Size", size);
 	}
 
-	/** */
 	/** 
 	* 文件保存或另存为 
 	*     
@@ -653,7 +640,6 @@ public class MSWordManager {
 		Dispatch.call((Dispatch) Dispatch.call(word, "WordBasic").getDispatch(), "FileSaveAs", savePath);
 	}
 
-	/** */
 	/** 
 	* 关闭当前word文档 
 	*     
@@ -666,7 +652,6 @@ public class MSWordManager {
 		}
 	}
 
-	/** */
 	/** 
 	* 关闭全部应用 
 	*     
@@ -681,7 +666,6 @@ public class MSWordManager {
 		documents = null;
 	}
 
-	/** */
 	/** 
 	* 打印当前word文档 
 	*     
@@ -691,6 +675,103 @@ public class MSWordManager {
 			Dispatch.call(doc, "PrintOut");
 		}
 	}
+
+	/*~~~~~~~~~~~ 多文档操作 ~~~~~~~~~~~~~~~~~*/
+
+	//	// 合并Word文档
+	//	public void mergeWord(File[] file) {
+	//		logger.debug("合并word文档 begin { ...");
+	//		try {
+	//			setWordTitle();
+	//			// 设置文本样式，不包括接下来要插入的WORD文档内容
+	//			Dispatch.put(paragraph, "Alignment", "3");// 1:中 2:右 3:左
+	//			Dispatch.put(font, "Color", "1,0,0,0"); // 红色
+	//			Dispatch.put(font, "Size", 12);
+	//			for (int i = 0; i < file.length; i++) {
+	//				String tempFile = file[i].getAbsolutePath();
+	//				logger.debug("合并第一个文件--> {}", tempFile);
+	//				if (tempFile.endsWith(".doc") || tempFile.endsWith(".docx")) {
+	//					Dispatch.put(selection, "Text", file[i].getName() + "文档内容如下：");
+	//					Dispatch.call(selection, "MoveDown");
+	//					Dispatch.call(selection, "TypeParagraph"); // 空一行段落
+	//					Dispatch.call(selection, "insertFile", tempFile);// 插入文件内容
+	//					Dispatch.call(selection, "TypeParagraph"); // 空一行段落
+	//				}
+	//			}
+	//
+	//			fillBookmarks(new String[] { "author" }, new String[] { "victor" });
+	//			Dispatch.call(document, "SaveAs", new Variant("C:\\test\\test.docx")); //保存
+	//			Dispatch.call(document, "Close", new Variant(false));// 关闭文档
+	//			logger.debug("");
+	//		} catch (Exception ex) {
+	//			ex.printStackTrace();
+	//		} finally {
+	//			//app.invoke("Quit", new Variant(0));// 退出word应用
+	//			ComThread.Release();// 释放Com线程
+	//		}
+	//		logger.debug("合并word文档 end ...}");
+	//	}
+	//
+	//	// 合并Word文档
+	//	public void mergeWord(File[] file, String savePath) {
+	//		logger.debug("合并word文档 begin { ...");
+	//		try {
+	//			setWordTitle();
+	//			// 设置文本样式，不包括接下来要插入的WORD文档内容
+	//			Dispatch.put(paragraph, "Alignment", "3");// 1:中 2:右 3:左
+	//			Dispatch.put(font, "Color", "1,0,0,0"); // 红色
+	//			Dispatch.put(font, "Size", 12);
+	//			for (int i = 0; i < file.length; i++) {
+	//				String tempFile = file[i].getAbsolutePath();
+	//				logger.debug("合并第一个文件--> {}", tempFile);
+	//				if (tempFile.endsWith(".doc") || tempFile.endsWith(".docx")) {
+	//					Dispatch.put(selection, "Text", file[i].getName() + "文档内容如下：");
+	//					Dispatch.call(selection, "MoveDown");
+	//					Dispatch.call(selection, "TypeParagraph"); // 空一行段落
+	//					Dispatch.call(selection, "insertFile", tempFile);// 插入文件内容
+	//					Dispatch.call(selection, "TypeParagraph"); // 空一行段落
+	//				}
+	//			}
+	//
+	//			fillBookmarks(new String[] { "author" }, new String[] { "victor" });
+	//			Dispatch.call(document, "SaveAs", new Variant(savePath + "\\tempate.docx")); //保存
+	//			Dispatch.call(document, "Close", new Variant(false));// 关闭文档
+	//			logger.debug("");
+	//		} catch (Exception ex) {
+	//			ex.printStackTrace();
+	//		} finally {
+	//			//app.invoke("Quit", new Variant(0));// 退出word应用
+	//			ComThread.Release();// 释放Com线程
+	//		}
+	//		logger.debug("合并word文档 end ...}");
+	//	}
+	//
+	//	// 设置合并后文档的标题及样式
+	//	private void setWordTitle() {
+	//		Dispatch.put(paragraph, "Alignment", 1);// 1:中 2:右 3:左
+	//		Dispatch.put(font, "Bold", new Variant(true));
+	//		Dispatch.put(font, "Color", "0,0,0,0"); // 黑色
+	//		Dispatch.put(font, "Size", 16);
+	//		Dispatch.call(selection, "TypeText", "合并后的Word文档"); // 写入标题内容
+	//		Dispatch.call(selection, "TypeParagraph"); // 空一行段落
+	//	}
+	//
+	//	// 填充书签
+	//	private void fillBookmarks(String[] bookmarks, String[] fillValues) {
+	//		Dispatch bookMarks = Dispatch.call(document, "Bookmarks").toDispatch();
+	//		if (bookmarks.length == fillValues.length) {
+	//			for (int i = 0; i < bookmarks.length; i++) {
+	//				Variant isExist = Dispatch.call(bookMarks, "Exists", bookmarks[i]);
+	//				if (isExist.getBoolean()) {
+	//					Dispatch item = Dispatch.call(bookMarks, "Item", bookmarks[i]).toDispatch();
+	//					Dispatch range = Dispatch.call(item, "Range").toDispatch();
+	//					Dispatch.put(range, "Text", fillValues[i]);
+	//				}
+	//			}
+	//		}
+	//	}
+
+	/*~~~~~~~~~~~ 多文档操作 ~~~~~~~~~~~~~~~~~*/
 
 	public static void main(String args[]) throws Exception {
 
