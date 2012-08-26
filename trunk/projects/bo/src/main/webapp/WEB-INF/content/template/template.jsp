@@ -55,12 +55,12 @@ date:2012/08/21
 		<div id="content">
 			<table id="contentTable">
 				<tr>
-					<th><a href="javascript:sort('templateName','asc')">模板名称</a></th>
-					<th><a href="javascript:sort('templateName','asc')">所属单位</a></th>
+					<th width="10%"><a href="javascript:sort('templateName','asc')">模板名称</a></th>
+					<th width="10%"><a href="javascript:sort('templateName','asc')">所属单位</a></th>
 					<th><a href="javascript:sort('path','asc')">保存路径</a></th>
 					<th><a href="javascript:sort('description','asc')">描述</a></th>
 					<th><a href="javascript:sort('state','asc')">状态</a></th>
-					<th>操作</th>
+					<th width="20%">操作</th>
 				</tr>
 
 				<s:iterator value="page.result">
@@ -78,6 +78,9 @@ date:2012/08/21
 								<a href="template!input.action?id=${id}&page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}">修改</a>&nbsp;
 								<a href="#" onclick="if(confirm('确定要永久删除么?')){linkTo('template!delete.action?id=${id}');}">删除</a>
 							</security:authorize>
+							<security:authorize ifAnyGranted="ROLE_模板浏览">
+								<a href="template!export.action?id=${id}">导出</a>&nbsp;
+							</security:authorize>							
 							<security:authorize ifAnyGranted="ROLE_模板浏览">
 									<a href="template-chapter-table.action?templateId=${id}">查看模板目录</a>&nbsp;
 							</security:authorize>							
