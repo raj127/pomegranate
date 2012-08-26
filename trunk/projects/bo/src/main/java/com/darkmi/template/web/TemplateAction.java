@@ -1,7 +1,9 @@
 package com.darkmi.template.web;
 
+import java.io.File;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
@@ -18,6 +20,7 @@ import com.darkmi.SystemConfig;
 import com.darkmi.common.tools.Cn2Spell;
 import com.darkmi.entity.system.Company;
 import com.darkmi.entity.template.Template;
+import com.darkmi.jacob.JacobWord;
 import com.darkmi.system.service.AccountManager;
 import com.darkmi.template.service.TemplateManager;
 import com.darkmi.util.CrudActionSupport;
@@ -37,6 +40,7 @@ public class TemplateAction extends CrudActionSupport<Template> {
 	private Template template;
 	private TemplateManager templateManager;
 	private AccountManager accountManager;
+	private JacobWord jacobWord;
 	private SystemConfig systemConfig;
 	private Page<Template> page = new Page<Template>(20);
 	private boolean viewOnly = false;
@@ -94,6 +98,27 @@ public class TemplateAction extends CrudActionSupport<Template> {
 		return RELOAD;
 	}
 
+	/**
+	 * 导出模板.
+	 */
+	public String export() throws Exception {
+		logger.debug("export template begin { ...");
+		logger.debug("id --> {}", id);
+		Template template = templateManager.getTemplate(id);
+		logger.debug("template --> {}", template);
+		ServletContext sc = ServletActionContext.getServletContext();
+		String aPath = FileHelper.getAbsolutePath(sc, template.getPath());
+		logger.debug("文件保存的绝对路径为 -->{}", aPath);
+
+		//new JacobWord().mergeWord(new File(aPath).listFiles(), aPath);
+		//logger.debug("jacobWord -->{}", jacobWord);
+		jacobWord.mergeWord(new File(aPath).listFiles(), aPath);
+		//createWord();
+		//testJacob();
+
+		logger.debug("export template end ...} ");
+		return RELOAD;
+	}
 
 	/**
 	 * 获取用户公司的根目录.
@@ -105,7 +130,7 @@ public class TemplateAction extends CrudActionSupport<Template> {
 		String loginName = SpringSecurityUtils.getCurrentUserName();
 		logger.debug("current user loginName is --> {}", loginName);
 		Company company = accountManager.getCompanyByLoginName(loginName);
-		
+
 		StringBuffer sb = new StringBuffer();
 		sb.append(ServletActionContext.getRequest().getContextPath());
 		sb.append("/");
@@ -116,7 +141,7 @@ public class TemplateAction extends CrudActionSupport<Template> {
 		sb.append("/");
 		String path = sb.toString();
 		logger.debug("template path is --> {}", path);
-	
+
 		return path;
 	}
 
@@ -147,12 +172,15 @@ public class TemplateAction extends CrudActionSupport<Template> {
 	/*~~~~~~~~~~~ 重载方法 ~~~~~~~~~~~~~~~~~*/
 	@Override
 	protected void prepareModel() throws Exception {
+		logger.debug("begin prepareModel {...");
+		logger.debug("id --> {}", id);
 		if (id != null) {
 			template = templateManager.getTemplate(id);
+			logger.debug("template --> {}", template.toString());
 		} else {
 			template = new Template();
 		}
-
+		logger.debug("begin prepareModel ...}");
 	}
 
 	@Override
@@ -164,6 +192,10 @@ public class TemplateAction extends CrudActionSupport<Template> {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	public Page<Template> getPage() {
@@ -194,4 +226,8 @@ public class TemplateAction extends CrudActionSupport<Template> {
 		this.systemConfig = systemConfig;
 	}
 
+	@Autowired
+	public void setJacobWord(JacobWord jacobWord) {
+		this.jacobWord = jacobWord;
+	}
 }

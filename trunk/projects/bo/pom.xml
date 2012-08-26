@@ -12,7 +12,7 @@
 	<artifactId>bo</artifactId>
 	<version>0.0.1</version>
 	<packaging>war</packaging>
-	<name>Rose HRMS's bo</name>
+	<name>osdms Core Module</name>
 
 	<!-- 项目属性 -->
 	<properties>
@@ -308,23 +308,6 @@
 			<version>1.17</version>
 		</dependency>
 		
-		<!--  
-		<dependency>
-			<groupId>jsonlib</groupId>
-			<artifactId>jsonlib</artifactId>
-			<version>2.3</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>		
-		
-		<dependency>
-			<groupId>jsonplugin</groupId>
-			<artifactId>jsonplugin</artifactId>
-			<version>0.32</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>		
-		-->
 		<dependency>
 			<groupId>org.htmlparser</groupId>
 			<artifactId>htmlparser</artifactId>
@@ -384,33 +367,6 @@
 			<scope>compile</scope>
 		</dependency>
 		
-		<!-- flexjson -->
-		<!--<dependency>
-			<groupId>net.sf.flexjson</groupId>
-			<artifactId>flexjson</artifactId>
-		</dependency>-->
-		
-		<!--<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-		</dependency>-->
-				
-		<!--<dependency>
-			<groupId>com.googlecode.xmemcached</groupId>
-			<artifactId>xmemcached</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.thimbleware.jmemcached</groupId>
-			<artifactId>jmemcached-core</artifactId>
-		</dependency>-->
-		
-		<!--<dependency>
-			<groupId>org.apache.mina</groupId>
-			<artifactId>mina-core</artifactId>
-		</dependency>-->
-			
-		
 	</dependencies>
 
 	<build>
@@ -426,19 +382,32 @@
 					</additionalProjectnatures>
 				</configuration>
 			</plugin>
-
-			<!-- jetty插件 -->
-			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>maven-jetty-plugin</artifactId>
-			</plugin>
-
+			
 			<!-- test插件, 设置ClassLoader -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
 					<useSystemClassLoader>false</useSystemClassLoader>
+				</configuration>
+			</plugin>
+			
+			<!-- jetty插件 -->
+			<!--  
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>maven-jetty-plugin</artifactId>
+			</plugin>
+			-->
+
+			<!-- Tomcat插件 -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>tomcat-maven-plugin</artifactId>
+				<configuration>
+					<url>http://localhost:8080/manager</url>
+					<server>TomcatServer</server>
+					<path>/bo</path>
 				</configuration>
 			</plugin>
 
@@ -454,6 +423,7 @@
 					</instrumentation>
 				</configuration>
 			</plugin>
+			
 		</plugins>
 	</build>
 </project>

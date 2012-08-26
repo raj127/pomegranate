@@ -27,7 +27,6 @@ import com.opensymphony.xwork2.ActionSupport;
 public class TemplateChapterTableAction extends ActionSupport {
 	private static final long serialVersionUID = -2907389496513631586L;
 	private Logger logger = LoggerFactory.getLogger(TemplateChapterTableAction.class);
-	
 	private Long templateId;
 	private String taskTree;
 	private TemplateManager templateManager;
@@ -43,9 +42,7 @@ public class TemplateChapterTableAction extends ActionSupport {
 	}
 
 	private void getTaskChapter() throws Exception {
-
 		Template template = templateManager.getTemplate(templateId);
-
 		StringBuffer sb = new StringBuffer();
 		sb.append("<table id=\"taskTree\">");
 		sb.append("<thead>");
