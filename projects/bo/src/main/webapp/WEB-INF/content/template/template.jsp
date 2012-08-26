@@ -80,7 +80,11 @@ date:2012/08/21
 							</security:authorize>
 							<security:authorize ifAnyGranted="ROLE_模板浏览">
 								<a href="template!export.action?id=${id}">导出</a>&nbsp;
+							</security:authorize>
+							<security:authorize ifAnyGranted="ROLE_模板浏览">
+								<a href="template-download.action?id=${id}">下载</a>&nbsp;
 							</security:authorize>							
+														
 							<security:authorize ifAnyGranted="ROLE_模板浏览">
 									<a href="template-chapter-table.action?templateId=${id}">查看模板目录</a>&nbsp;
 							</security:authorize>							
