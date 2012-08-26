@@ -1,6 +1,9 @@
 package com.darkmi.template.web;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -33,7 +36,11 @@ import com.darkmi.util.FileHelper;
  * @version 1.0  2012-05-10 上午09:20:11 DarkMi created
  */
 @Namespace("/template")
-@Results({ @Result(name = CrudActionSupport.RELOAD, location = "template.action?page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}", type = "redirect") })
+@Results({
+		@Result(name = CrudActionSupport.RELOAD, location = "template.action?page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}", type = "redirect"),
+		@Result(name = "download", type = "stream", params = { "contentType", "application/vnd.ms-word", "inputName",
+				"inputStream", "contentDisposition", "attachment;filename=\"${downloadFileName}\"", "bufferSize",
+				"4096" }) })
 public class TemplateAction extends CrudActionSupport<Template> {
 	private static final long serialVersionUID = -2907389496513631586L;
 	private Long id; //模板Id
@@ -44,6 +51,10 @@ public class TemplateAction extends CrudActionSupport<Template> {
 	private SystemConfig systemConfig;
 	private Page<Template> page = new Page<Template>(20);
 	private boolean viewOnly = false;
+
+	public static final String DOWNLOAD = "download";
+
+	//private String fileName;// 初始的通过param指定的文件名属性
 
 	/**
 	 * 模板列表页面.
@@ -118,6 +129,54 @@ public class TemplateAction extends CrudActionSupport<Template> {
 
 		logger.debug("export template end ...} ");
 		return RELOAD;
+	}
+
+	/**
+	 * 测试下载功能.
+	 * @return
+	 */
+	public String download() {
+		logger.debug("download template begin {... ");
+
+		logger.debug("download template end ...} ");
+		return DOWNLOAD;
+	}
+
+	/**
+	 * 获得下载文件流.
+	 * @return
+	 * @throws Exception
+	 */
+	public InputStream getInputStream() throws Exception {
+		logger.debug("获得下载文件流 begin {...");
+		Template template = templateManager.getTemplate(id);
+		String filePath = template.getPath() + "template.docx";
+		//获取的模板的绝对路径
+		ServletContext sc = ServletActionContext.getServletContext();
+		String aPath = FileHelper.getAbsolutePath(sc, filePath);
+		logger.debug("模板的绝对路径为 -->{}", aPath);
+		File file = new File(aPath);
+		InputStream is = new FileInputStream(file);
+		logger.debug("获得下载文件流 end ...} ");
+		return is;
+	}
+
+	/**
+	 * 提供转换编码后的供下载用的文件名.
+	 * @return
+	 */
+	public String getDownloadFileName() {
+		logger.debug("获得下载文件名 begin {...");
+		//String downFileName = fileName;
+		String downFileName = "aaa.docx";
+		try {
+			downFileName = new String(downFileName.getBytes(), "ISO8859-1");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		logger.debug("downFileName -->{}", downFileName);
+		logger.debug("获得下载文件名 end ...}");
+		return downFileName;
 	}
 
 	/**

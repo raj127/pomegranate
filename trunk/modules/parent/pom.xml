@@ -915,7 +915,7 @@
 					<artifactId>maven-war-plugin</artifactId>
 					<version>2.1</version>
 					<configuration>
-						<warName>${project.artifactId}</warName>
+						<warName>${project.artifactId.version.packaging}</warName>
 					</configuration>
 				</plugin>
 
