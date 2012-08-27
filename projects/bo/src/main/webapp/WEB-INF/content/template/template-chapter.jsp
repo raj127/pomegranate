@@ -16,7 +16,6 @@ date:2012/08/23
 	<link href="${ctx}/css/style.css" type="text/css" rel="stylesheet"/>
 	<script src="${ctx}/js/jquery.js" type="text/javascript"></script>
 	<script src="${ctx}/js/table.js" type="text/javascript"></script>
-	
 	<script>
 		$(document).ready(function() {
 			$(".mainNav a").attr("class","");
