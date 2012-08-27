@@ -10,7 +10,7 @@ date:2012/08/21
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html  xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>作业规程编辑</title>
+	<title>模板编辑</title>
 	<meta http-equiv="cache-control" content="no-cache,must-revalidate"/><!--设置缓存-->
 	<meta http-equiv="pragram" content="no-cache"/>
 	<meta http-equiv="expires" content="0"/>
@@ -23,7 +23,6 @@ date:2012/08/21
 	$(document).ready(function () {
 		$('body').layout({ applyDefaultStyles: true });
 	});
-
 	</script>	
 </head>
 <body onload='intializePage("${ctx}${filePath}")' onunload="onPageClose()">

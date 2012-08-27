@@ -18,7 +18,7 @@ import com.google.common.collect.Lists;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
- * Description: 任务章节管理Action.
+ * Description: 规程编制--》规程章节查看Action.
  * Copyright (c) www.darkmi.com
  * All Rights Reserved.
  * @version 1.0  2012-05-10 上午09:20:11 DarkMi created
@@ -134,5 +134,4 @@ public class TaskChapterAction extends ActionSupport {
 	public void setTaskManager(TaskManager taskManager) {
 		this.taskManager = taskManager;
 	}
-
 }

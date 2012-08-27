@@ -1,3 +1,9 @@
+<%--
+Description:规程编制 --》 规程章节编辑的主页面-控件加载页面
+author:darkmi
+CreateDate:2012/08/21
+UpdateDate:2012/08/27
+--%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <script type="text/javascript" for="TANGER_OCX" event="OnDocumentClosed()">
 	setFileOpenedOrClosed(false);
@@ -59,8 +65,11 @@
 
 <script type="text/javascript" for="TANGER_OCX" event="OnFileCommand(TANGER_OCX_str,TANGER_OCX_obj)">
 	if (TANGER_OCX_str == 3){
-		alert("不能保存！");
+		//alert("不能保存！");
+		//CancelLastCommand = true;
+		saveFileToUrl();
 		CancelLastCommand = true;
+		return;
 	}
 </script>
 

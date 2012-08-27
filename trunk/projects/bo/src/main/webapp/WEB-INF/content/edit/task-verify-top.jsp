@@ -1,4 +1,10 @@
-﻿<%@ page contentType="text/html;charset=UTF-8" %>
+﻿<%--
+Description:规程编制 --》 规程章节编辑的主页面-top页面
+author:darkmi
+CreateDate:2012/08/21
+UpdateDate:2012/08/27
+--%>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <div class="top">
 	<div class="left">
 	  当前编辑的作业规程名称：${tc.task.taskName} &nbsp;|&nbsp;

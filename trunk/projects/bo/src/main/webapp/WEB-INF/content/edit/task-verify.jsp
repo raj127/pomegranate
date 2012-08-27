@@ -1,10 +1,9 @@
 <%--
-
-该文件已经不再使用.
-darkmi 2012/07/04
-
+Description:该页面不再使用
+author:darkmi
+CreateDate:2012/08/21
+UpdateDate:2012/08/27
 --%>
-
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="org.springside.modules.security.springsecurity.SpringSecurityUtils" %>
 <%@ include file="/common/taglibs.jsp" %>
