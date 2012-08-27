@@ -1,17 +1,22 @@
-﻿<%@ page contentType="text/html;charset=UTF-8" %>
+﻿<%--
+Description:规程编制 --》 规程章节编辑的主页面
+author:darkmi
+CreateDate:2012/08/21
+UpdateDate:2012/08/27
+--%>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="org.springside.modules.security.springsecurity.SpringSecurityUtils" %>
 <%@ include file="/common/taglibs.jsp" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>作业规程校验</title>
+	<title>规程编制</title>
 	<%@ include file="/common/meta.jsp" %>
 	<link rel="stylesheet" type="text/css" href="${ctx}/js/temp/global.css" />
 	<link rel="stylesheet" type="text/css" href="${ctx}/js/temp/layout-default-1.3.0.css" />
 	<link rel="stylesheet" type="text/css" href="${ctx}/js/temp/collection.css" media="all" />
 	<script type="text/javascript" src="${ctx}/js/temp/jquery-1.4.2.min.js"></script>
-	<!--<script type="text/javascript" src="${ctx}/js/temp/jquery.textarea.js"></script>-->
 	<script type="text/javascript" src="${ctx}/js/temp/jquery-ui-1.8.4.custom.min.js"></script>
 	<script type="text/javascript" src="${ctx}/js/temp/jquery.layout.min-1.3.0.js"></script>
 	<script type="text/javascript" src="${ctx}/js/temp/collection.js"></script>

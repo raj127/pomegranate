@@ -26,7 +26,7 @@ import com.google.common.collect.Lists;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
- * Description: 作业规程校验Action.
+ * Description: 规程编制--》规程章节编辑Action.
  * Copyright (c) www.darkmi.com
  * All Rights Reserved.
  * @version 1.0  2012-05-10 上午09:20:11 DarkMi created

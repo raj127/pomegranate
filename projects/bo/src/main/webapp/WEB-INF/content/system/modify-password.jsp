@@ -1,3 +1,8 @@
+<%--
+Description:系统管理--》修改密码
+author:darkmi
+date:2012/08/23
+--%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/common/taglibs.jsp" %>
 

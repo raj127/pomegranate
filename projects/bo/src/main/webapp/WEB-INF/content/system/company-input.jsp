@@ -1,5 +1,5 @@
 <%--
-Description:公司管理--》官司查看及编辑页面
+Description:系统管理--》公司管理--》官司查看及编辑页面
 author:darkmi
 date:2012/08/23
 --%>
