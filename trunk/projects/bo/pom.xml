@@ -10,7 +10,6 @@
 	</parent>
 	<groupId>.com.darkmi.rose</groupId>
 	<artifactId>bo</artifactId>
-	<version>0.0.1</version>
 	<packaging>war</packaging>
 	<name>osdms Core Module</name>
 
@@ -174,25 +173,21 @@
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-impl</artifactId>
-			<version>2.2.1</version>
 		</dependency>
 
 		<dependency>
 			<groupId>dom4j</groupId>
 			<artifactId>dom4j</artifactId>
-			<version>1.6.1</version>
 		</dependency>
 
 		<dependency>
 			<groupId>jaxen</groupId>
 			<artifactId>jaxen</artifactId>
-			<version>1.1.1</version>
 		</dependency>
 
 		<dependency>
 			<groupId>xerces</groupId>
 			<artifactId>xercesImpl</artifactId>
-			<version>2.9.1</version>
 		</dependency>
 		<!-- xml end -->
 
@@ -231,7 +226,6 @@
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>1.4</version>
 		</dependency>		
 		<dependency>
 			<groupId>commons-fileupload</groupId>
@@ -246,14 +240,12 @@
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
-			<version>1.6.1</version>
 		</dependency>
 		<!-- utils end -->
 		
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
-			<version>3.6</version>
 		</dependency>
 
 		<!-- testing begin -->
@@ -354,7 +346,6 @@
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.1.1</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
