@@ -30,7 +30,7 @@ import com.google.common.collect.Lists;
 public class SolrClient {
 	private static SolrClient solrClient = null;
 	private static HttpSolrServer server = null;
-	private String url = "http://localhost:8080/solr/core1/";
+	private String url = "http://localhost:8088/solr/core1/";
 	private static Logger logger = LoggerFactory.getLogger(SolrClient.class);
 
 	/**
