@@ -37,13 +37,6 @@
 
 	<!-- 设定除中央仓库(repo1.maven.org/maven2/)外的其他仓库,按设定顺序进行查找. -->
 	<repositories>
-		<!--  
-		<repository>
-			<id>nexus</id>
-			<name>Team Nexus Repository</name>
-			<url>http://192.168.14.44:8081/nexus/content/groups/public</url>
-		</repository>
-		-->
 		<repository>
 			<id>offical</id>
 			<name>Maven Official Repository</name>
@@ -52,7 +45,24 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-
+		
+		<repository>
+		  <id>people.apache.snapshots</id>
+		  <url>http://repository.apache.org/content/groups/snapshots-group/</url>
+		  <releases>
+		    <enabled>false</enabled>
+		  </releases>
+		  <snapshots>
+		    <enabled>true</enabled>
+		  </snapshots>
+		</repository> 		
+		
+		<repository>
+			<id>nexus</id>
+			<name>Team Nexus Repository</name>
+			<url>http://repo1.maven.org/maven2/org/codehaus/mojo/</url>
+		</repository>
+		
 		<repository>
 			<id>springside</id>
 			<name>SpringSide Additional Repository</name>
@@ -61,7 +71,7 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-
+		
 		<repository>
 			<id>jboss</id>
 			<name>Jboss Repository</name>
@@ -81,35 +91,28 @@
 		</repository>
 	</repositories>
 
-	<!--  
 	<pluginRepositories>
+		<pluginRepository>
+		  <id>apache.snapshots</id>
+		  <name>Apache Snapshots</name>
+		  <url>http://repository.apache.org/content/groups/snapshots-group/</url>
+		  <releases>
+		    <enabled>false</enabled>
+		  </releases>
+		  <snapshots>
+		    <enabled>true</enabled>
+		  </snapshots>
+		</pluginRepository> 
+	
 		<pluginRepository>
 			<id>nexus</id>
 			<name>Team Nexus Repository</name>
-			<url>http://192.168.14.44:8081/nexus/content/groups/public</url>
+			<url>http://repo1.maven.org/maven2/org/codehaus/mojo/</url>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
-	-->
-	
-	<!-- 设定团队持续集成发布包服务器  -->
-	<!--  
-	<distributionManagement>
-		<repository>
-			<id>nexus</id>
-			<name>Team Nexus Release Repository</name>
-			<url>http://192.168.14.44:8081/nexus/content/repositories/releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>nexus</id>
-			<name>Team Nexus Snapshot Repository</name>
-			<url>http://192.168.14.44:8081/nexus/content/repositories/snapshots</url>
-			<uniqueVersion>false</uniqueVersion>
-		</snapshotRepository>
-	</distributionManagement>
-	-->
 	
 	<!-- 预定义依赖项的version,scope与exclusions,子项目中只需定义groupId 和 artifactId 即可 -->
 	<dependencyManagement>
