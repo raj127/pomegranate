@@ -20,7 +20,7 @@ import com.darkmi.util.CrudActionSupport;
 import com.google.common.collect.Lists;
 
 /**
- * Description: 规范章节管理Action.
+ * Description: 系统管理--》规范章节管理Action.
  * Copyright (c) darkmi
  * All Rights Reserved.
  * @version 1.0  2012-05-23 下午01:36:31 darkmi created
@@ -33,9 +33,8 @@ public class SpecificationChapterAction extends CrudActionSupport<SpecificationC
 	private Integer workingVersion;//对象版本号, 配合Hibernate的@Version防止并发修改
 	private boolean viewOnly = false;
 	private SpecificationChapter entity;
-	private Page<SpecificationChapter> page = new Page<SpecificationChapter>(20);//每页20条记录
-
 	private SpecificationChapterManager scManager;
+	private Page<SpecificationChapter> page = new Page<SpecificationChapter>(20);//每页20条记录
 
 	/**
 	 * 规范章节列表页面.
@@ -63,6 +62,7 @@ public class SpecificationChapterAction extends CrudActionSupport<SpecificationC
 
 	/**
 	 * 删除规范章节信息.
+	 * TODO:删除功能还没有实现.
 	 */
 	@Override
 	public String delete() throws Exception {
@@ -92,16 +92,16 @@ public class SpecificationChapterAction extends CrudActionSupport<SpecificationC
 		List<SpecificationChapter> scs = scManager.getAllChapter();
 		for (Iterator<SpecificationChapter> iterator = scs.iterator(); iterator.hasNext();) {
 			SpecificationChapter chapter = (SpecificationChapter) iterator.next();
-			
-			if(null ==chapter.getContent()|| "".equals(chapter.getContent())){
+
+			if (null == chapter.getContent() || "".equals(chapter.getContent())) {
 				logger.debug("content is null.");
-			}else{
+			} else {
 				SpecificationChapterDto scDto = new SpecificationChapterDto();
 				scDto.setId(String.valueOf(chapter.getId()));
 				scDto.setChapterName(scManager.getParentChapterName(chapter));
 				scDto.setContent(chapter.getContent());
 				scDto.setSpecificationName(scManager.getSpecificationName(chapter));
-				scDtos.add(scDto);				
+				scDtos.add(scDto);
 			}
 		}
 		SolrClient.createIndex(scDtos);
