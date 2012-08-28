@@ -7,7 +7,7 @@ document.write('<object id="TANGER_OCX" classid="clsid:A39F1330-3322-4a1d-9BF0-0
 document.write('codebase="officecontrol/OfficeControl.cab#version=5,0,1,6" width="100%" height="'+($(window).height()-33)+'px">   ');
 //work
 //document.write('codebase="officecontrol/OfficeControl.cab#version=5,0,1,2" width="100%" height="700px">   ');
-document.write('codebase="officecontrol/OfficeControl.cab#version=5,0,1,2" width="100%" height="'+($(window).height()-33)+'px">   ');
+//document.write('codebase="officecontrol/OfficeControl.cab#version=5,0,1,2" width="100%" height="'+($(window).height()-33)+'px">   ');
 document.write('<param name="IsUseUTF8URL" value="-1">   ');
 document.write('<param name="IsUseUTF8Data" value="-1">   ');
 document.write('<param name="BorderStyle" value="1">   ');
