@@ -8,5 +8,8 @@ UpdateDate:2012/08/27
 <form id="form1" method="post" action="task-chapter-upload!upload.action" enctype="multipart/form-data">
 <input id="fileName" name="fileName" type="hidden" value="测试" />
 <input id="fileId" name="fileId" type="hidden" value="" />
-	<script type="text/javascript" src="${ctx}/officecontrol/ntkoofficecontrol.js"></script>
+<%-- 
+<script type="text/javascript" src="${ctx}/officecontrol/ntkoofficecontrol.js"></script>
+--%>
+<script type="text/javascript" src="${ctx}/officecontrol/pgNtkoGenObjJsForEdit.js"></script>
 </form>
