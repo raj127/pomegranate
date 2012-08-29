@@ -1,5 +1,5 @@
 <%--
-Description:任务管理 --》 作业规程任务列表
+Description:任务管理 --》 主页面
 author:darkmi
 date:2012/08/21
 --%>
@@ -45,11 +45,11 @@ date:2012/08/21
 
 		<div id="message"><s:actionmessage theme="custom" cssClass="success"/></div>
 		<div id="filter">
-			作业规程名称: <input type="text" name="filter_LIKES_taskName" value="${param['filter_LIKES_taskName']}" size="9" tabindex="1" onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
-			<input type="button" value="搜索" onclick="search();" tabindex="2"/>
+			任务名称: <input type="text" name="filter_LIKES_taskName" value="${param['filter_LIKES_taskName']}" size="9" tabindex="1" onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
+			<input type="button" value="搜索" onclick="search();" tabindex="1"/>
 			&nbsp;&nbsp;
 			<security:authorize ifAnyGranted="ROLE_任务修改">
-				<input type="button" value="新建任务" onclick="linkTo('task!input.action')" tabindex="3"/>
+				<input type="button" value="新建任务" onclick="linkTo('task-manager!input.action')" tabindex="2"/>
 			</security:authorize>
 		</div>
 		<div id="content">
@@ -68,16 +68,16 @@ date:2012/08/21
 						<td>${state}&nbsp;</td>
 						<td>&nbsp;
 							<security:authorize ifAnyGranted="ROLE_任务浏览">
-								<a href="task!input.action?id=${id}&viewOnly=true">查看</a>&nbsp;
+							<a href="task-manager!input.action?id=${id}&viewOnly=true">查看</a>&nbsp;
 							</security:authorize>
 							<security:authorize ifAnyGranted="ROLE_任务修改">
-								<a href="task!input.action?id=${id}&update=true&page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}">修改</a>&nbsp;
+							<a href="task-manager!input.action?id=${id}&update=true&page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}">修改</a>&nbsp;
 							</security:authorize>
 							<security:authorize ifAnyGranted="ROLE_任务浏览">
-							<a href="task-chapter.action?taskId=${id}">查看目录</a>&nbsp;
+							<a href="task-chapter-manager.action?taskId=${id}">查看目录</a>&nbsp;
 							</security:authorize>
 							<security:authorize ifAnyGranted="ROLE_任务修改">
-								<a href="#" onclick="if(confirm('确定要永久删除么?')){linkTo('task!delete.action?id=${id}');}">永久删除</a>
+							<a href="#" onclick="if(confirm('确定要永久删除么?')){linkTo('task-manager!delete.action?id=${id}');}">永久删除</a>
 							</security:authorize>
 						</td>
 					</tr>

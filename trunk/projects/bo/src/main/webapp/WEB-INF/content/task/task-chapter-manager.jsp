@@ -1,5 +1,5 @@
 <%--
-Description:任务管理 --》 作业规程任务列表
+Description:任务管理 --》 任务目录管理主页面
 author:darkmi
 date:2012/08/21
 --%>
@@ -47,7 +47,7 @@ date:2012/08/21
 <div id="bd">
 	<div id="yui-main">
 	<div class="yui-b">
-	<form id="mainForm" action="tast-chapter.action" method="get">
+	<form id="mainForm" action="tast-chapter-manager.action" method="get">
 		<div id="message"><s:actionmessage theme="custom" cssClass="success"/></div>
 		<div id="content">
 		${taskTree}
