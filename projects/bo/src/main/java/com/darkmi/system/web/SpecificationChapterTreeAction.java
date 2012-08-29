@@ -22,9 +22,9 @@ import com.opensymphony.xwork2.ActionSupport;
  * @version 1.0  2012-05-23 下午01:36:31 darkmi created
  */
 @Namespace("/system")
-public class ZtreeAction extends ActionSupport {
+public class SpecificationChapterTreeAction extends ActionSupport {
 	private static final long serialVersionUID = -1832062843458845519L;
-	private Logger logger = LoggerFactory.getLogger(ZtreeAction.class);
+	private Logger logger = LoggerFactory.getLogger(SpecificationChapterTreeAction.class);
 	private Long id;
 	private String name;
 	private String content;

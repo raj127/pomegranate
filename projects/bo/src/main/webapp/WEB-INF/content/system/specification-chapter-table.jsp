@@ -1,5 +1,5 @@
 <%--
-Description:系统管理--》规范管理--》主页面(本页面不再使用)
+Description:系统管理--》规范管理--》主页面
 author:darkmi
 date:2012/08/23
 --%>
@@ -38,7 +38,7 @@ date:2012/08/23
 <div id="bd">
 	<div id="yui-main">
 	<div class="yui-b">
-	<form id="mainForm" action="specification-chapter.action" method="post">
+	<form id="mainForm" action="specification-chapter-table.action" method="post">
 		<input type="hidden" name="page.pageNo" id="pageNo" value="${page.pageNo}"/>
 		<input type="hidden" name="page.orderBy" id="orderBy" value="${page.orderBy}"/>
 		<input type="hidden" name="page.order" id="order" value="${page.order}"/>
@@ -52,15 +52,17 @@ date:2012/08/23
 			                            onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
 			章节内容: <input type="text" name="filter_LIKES_content"
 							             value="${param['filter_LIKES_content']}" 
-							             size="9" tabindex="3" 
+							             size="9" tabindex="2" 
 							             onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
-			<input type="button" value="搜索" onclick="search();" tabindex="5"/>
+			<input type="button" value="搜索" onclick="search();" tabindex="3"/>
 			&nbsp;&nbsp;
-			<input type="button" value="添加章节" onclick="linkTo('specification-chapter!input.action')" tabindex="6"/>
+			<input type="button" value="添加章节" onclick="linkTo('specification-chapter-table!input.action')" tabindex="4"/>
+			<%-- 
 			&nbsp;&nbsp;
 			<input type="button" value="创建索引" onclick="linkTo('specification-chapter!createIndex.action')" tabindex="6"/>
+			--%>
 			&nbsp;&nbsp;
-			<input type="button" value="树状结构" onclick="linkTo('ztree.action')" tabindex="6"/>
+			<input type="button" value="树状结构" onclick="linkTo('specification-chapter-tree.action')" tabindex="5"/>
 
 		</div>
 		<div id="content">
@@ -85,8 +87,8 @@ date:2012/08/23
 						</td>
 						<td>${isLeaf}&nbsp;</td>
 						<td>&nbsp;
-						<a href="specification-chapter!input.action?id=${id}&viewOnly=true">查看</a>&nbsp;
-						<a href="specification-chapter!input.action?id=${id}&page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}">修改</a>&nbsp;
+						<a href="specification-chapter-table!input.action?id=${id}&viewOnly=true">查看</a>&nbsp;
+						<a href="specification-chapter-table!input.action?id=${id}&page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}">修改</a>&nbsp;
 						</td>
 					</tr>
 				</s:iterator>

@@ -419,13 +419,15 @@ date:2012/08/23
 	    <div id="StatusBar" style="height: 20px;"></div>
     		
 		<div id="filter">
-			<input type="button" value="添加节点" onclick="addTreeNode();" tabindex="6"/>
-			<input type="button" value="修改节点" onclick="modTreeNode();" tabindex="6"/>
-			<input type="button" value="删除节点" onclick="delTreeNode();" tabindex="6"/>
+			<input type="button" value="添加节点" onclick="addTreeNode();" tabindex="1"/>
+			<input type="button" value="修改节点" onclick="modTreeNode();" tabindex="2"/>
+			<input type="button" value="删除节点" onclick="delTreeNode();" tabindex="3"/>
+			<%-- 
 		    <button id="addStatusBarMessage">Add1</button>
 		    <button id="addStatusBarError">Add2</button>
 		    <button id="addNotificationMessage">Add3</button>
 		    <button id="addNotificationError">Add4</button>
+		    --%>
 			
 		</div>
 		<div id="content">

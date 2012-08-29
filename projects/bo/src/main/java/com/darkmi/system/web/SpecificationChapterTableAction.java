@@ -27,7 +27,7 @@ import com.google.common.collect.Lists;
  */
 @Namespace("/system")
 @Results({ @Result(name = CrudActionSupport.RELOAD, location = "specification-chapter.action?page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}", type = "redirect") })
-public class SpecificationChapterAction extends CrudActionSupport<SpecificationChapter> {
+public class SpecificationChapterTableAction extends CrudActionSupport<SpecificationChapter> {
 	private static final long serialVersionUID = 5159486167580353246L;
 	private Long id;
 	private Integer workingVersion;//对象版本号, 配合Hibernate的@Version防止并发修改
