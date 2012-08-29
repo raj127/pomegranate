@@ -25,11 +25,11 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 @Namespace("/task")
 @Results({
-		@Result(name = CrudActionSupport.RELOAD, location = "task-chapter.action?taskId=${taskId}", type = "redirect"),
+		@Result(name = CrudActionSupport.RELOAD, location = "task-chapter-manager.action?taskId=${taskId}", type = "redirect"),
 		@Result(name = "edit", location = "edit.jsp") })
-public class TaskChapterAction extends ActionSupport {
+public class TaskChapterManagerAction extends ActionSupport {
 	private static final long serialVersionUID = 8559745143820907960L;
-	private Logger logger = LoggerFactory.getLogger(TaskChapterAction.class);
+	private Logger logger = LoggerFactory.getLogger(TaskChapterManagerAction.class);
 	private Long taskId;
 	private Long parentId;
 	private String taskTree;
@@ -98,7 +98,7 @@ public class TaskChapterAction extends ActionSupport {
 				sb.append("<td>" + levelTwo.getDescription() + "</td>");
 				sb.append("<td>&nbsp;</td>");
 				sb.append("<td>&nbsp;</td>");
-				sb.append("<td>" + "<a href=\"task-verify!main.action?id=" + levelTwo.getId()
+				sb.append("<td>" + "<a href=\"task-chapter-manager!edit.action?id=" + levelTwo.getId()
 						+ "\" target=\"_blank\">编辑</a>" + "</td>");
 				sb.append("</tr>");
 				levelTwoCounter++;

@@ -53,8 +53,6 @@ date:2012/08/21
 					this.disabled = 'true';
 				});
 			}
-			
-			
 		});
 	</script>
 	
@@ -108,7 +106,7 @@ date:2012/08/21
 	<div id="yui-main">
 	<div class="yui-b">
 	<h2><s:if test="id == null">创建</s:if><s:else>修改</s:else>作业规程任务信息</h2>
-	<form id="inputForm" action="task!save.action" method="post">
+	<form id="inputForm" action="task-manager!save.action" method="post">
 		<input type="hidden" name="id" value="${id}"/>
 		<input type="hidden" name="page.pageNo" id="pageNo" value="${page.pageNo}"/>
 		<input type="hidden" name="page.orderBy" id="orderBy" value="${page.orderBy}"/>
