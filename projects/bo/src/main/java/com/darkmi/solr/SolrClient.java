@@ -221,9 +221,8 @@ public class SolrClient {
 				scDto = new SpecificationChapterDto();
 				scId = solrDocument.getFieldValue("id").toString();
 				scDto.setId(scId);
-				scDto.setSpecificationName(solrDocument.getFieldValue("chapterName").toString());
-				scDto.setChapterName(solrDocument.getFieldValue("specificationName").toString());
-
+				scDto.setSpecificationName(solrDocument.getFieldValue("specificationName").toString());
+				scDto.setChapterName(solrDocument.getFieldValue("chapterName").toString());
 				List<String> contentList = highlightMap.get(scId).get("content");
 				if (contentList != null && contentList.size() > 0) {
 					scDto.setContent(contentList.get(0));

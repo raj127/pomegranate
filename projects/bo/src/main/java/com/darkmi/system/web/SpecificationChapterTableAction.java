@@ -1,6 +1,5 @@
 package com.darkmi.system.web;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.struts2.convention.annotation.Namespace;
@@ -13,11 +12,8 @@ import org.springside.modules.orm.PropertyFilter;
 import org.springside.modules.utils.web.struts2.Struts2Utils;
 
 import com.darkmi.entity.system.SpecificationChapter;
-import com.darkmi.solr.SolrClient;
-import com.darkmi.solr.dto.SpecificationChapterDto;
 import com.darkmi.system.service.SpecificationChapterManager;
 import com.darkmi.util.CrudActionSupport;
-import com.google.common.collect.Lists;
 
 /**
  * Description: 系统管理--》规范章节管理Action.
@@ -79,34 +75,6 @@ public class SpecificationChapterTableAction extends CrudActionSupport<Specifica
 		}
 		scManager.saveChapter(entity);
 		addActionMessage("保存规范信息成功");
-		return RELOAD;
-	}
-
-	/**
-	 * 创建索引.
-	 * @return
-	 */
-	public String createIndex() {
-		logger.debug("生成索引 begin { ... ");
-		List<SpecificationChapterDto> scDtos = Lists.newArrayList();
-		List<SpecificationChapter> scs = scManager.getAllChapter();
-		for (Iterator<SpecificationChapter> iterator = scs.iterator(); iterator.hasNext();) {
-			SpecificationChapter chapter = (SpecificationChapter) iterator.next();
-
-			if (null == chapter.getContent() || "".equals(chapter.getContent())) {
-				logger.debug("content is null.");
-			} else {
-				SpecificationChapterDto scDto = new SpecificationChapterDto();
-				scDto.setId(String.valueOf(chapter.getId()));
-				scDto.setChapterName(scManager.getParentChapterName(chapter));
-				scDto.setContent(chapter.getContent());
-				scDto.setSpecificationName(scManager.getSpecificationName(chapter));
-				scDtos.add(scDto);
-			}
-		}
-		SolrClient.createIndex(scDtos);
-		addActionMessage("索引创建成功");
-		logger.debug("生成索引 end ... }");
 		return RELOAD;
 	}
 
