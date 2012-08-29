@@ -24,10 +24,10 @@ import com.opensymphony.xwork2.ActionSupport;
  * @version 1.0  2012-05-10 上午09:20:11 DarkMi created
  */
 @Namespace("/edit")
-@Results({ @Result(name = CrudActionSupport.RELOAD, location = "task-chapter.action?taskId=${taskId}", type = "redirect") })
-public class TaskChapterAction extends ActionSupport {
+@Results({ @Result(name = CrudActionSupport.RELOAD, location = "task-chapter-edit-index.action?taskId=${taskId}", type = "redirect") })
+public class TaskChapterEditIndexAction extends ActionSupport {
 	private static final long serialVersionUID = -2907389496513631586L;
-	private Logger logger = LoggerFactory.getLogger(TaskChapterAction.class);
+	private Logger logger = LoggerFactory.getLogger(TaskChapterEditIndexAction.class);
 	private String taskTree;
 	private List<TaskChapter> tcs = Lists.newArrayList();
 	private TaskChapterManager taskChapterManager;
@@ -90,7 +90,7 @@ public class TaskChapterAction extends ActionSupport {
 					sb.append("<td>" + levelTwo.getDescription() + "</td>");
 					sb.append("<td>&nbsp;</td>");
 					sb.append("<td>&nbsp;</td>");
-					sb.append("<td>" + "<a href=\"task-verify!main.action?id=" + levelTwo.getId()
+					sb.append("<td>" + "<a href=\"task-chapter-edit-main!main.action?id=" + levelTwo.getId()
 							+ "\" target=\"_blank\">编辑</a>" + "</td>");
 					sb.append("</tr>");
 					levelTwoCounter++;

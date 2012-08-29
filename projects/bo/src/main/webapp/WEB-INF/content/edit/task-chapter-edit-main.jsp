@@ -1,4 +1,4 @@
-﻿<%--
+<%--
 Description:规程编制 --》 规程章节编辑的主页面
 author:darkmi
 CreateDate:2012/08/21
@@ -97,14 +97,14 @@ UpdateDate:2012/08/27
 <body onload='intializePage("${ctx}${tc.task.path}${tc.fileName}")' onunload="onPageClose()">
 <!-- top bar -->
 <div id="top-pane" class="ui-layout-north" style="overflow:hidden" >
-<%@ include file="task-verify-top.jsp"%>
+<%@ include file="task-chapter-edit-top.jsp"%>
 </div>
 <div id="left-pane" class="ui-layout-center"><!-- left bar -->
-<%@ include file="task-verify-left.jsp"%>
+<%@ include file="task-chapter-edit-left.jsp"%>
 </div>
 <div id="right-pane" class="ui-layout-east"><!-- right bar -->
 <div id="result">在编辑器中选中一行文件，点击菜单栏的内容工具-》校验本行，可以插件校验结果。</div>
 </div>
 </body>
 </html>
-<%@ include file="task-verify-ntko.jsp"%>
+<%@ include file="task-chapter-edit-ntko.jsp"%>

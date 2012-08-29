@@ -47,7 +47,7 @@ date:2012/08/21
 <div id="bd">
 	<div id="yui-main">
 	<div class="yui-b">
-	<form id="mainForm" action="tast-chapter.action" method="get">
+	<form id="mainForm" action="tast-chapter-edit-index.action" method="get">
 		<div id="message"><s:actionmessage theme="custom" cssClass="success"/></div>
 		<div id="content">
 		${taskTree}
