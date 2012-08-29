@@ -1,5 +1,5 @@
 <%--
-Description:系统管理--》索引管理
+Description:系统管理--》规范管理--》索引管理
 author:darkmi
 date:2012/08/23
 --%>
@@ -47,7 +47,7 @@ date:2012/08/23
 <div id="bd">
 	<div id="yui-main">
 	<div class="yui-b">
-	<form id="mainForm" action="solr-index.action" method="get">
+	<form id="mainForm" action="specification-chapter-index.action" method="get">
 		<input type="hidden" name="page.pageNo" id="pageNo" value="${page.pageNo}"/>
 		<input type="hidden" name="page.orderBy" id="orderBy" value="${page.orderBy}"/>
 		<input type="hidden" name="page.order" id="order" value="${page.order}"/>
@@ -60,15 +60,13 @@ date:2012/08/23
 			&nbsp;&nbsp;
 			&nbsp;&nbsp;
 			<security:authorize ifAnyGranted="ROLE_用户修改">
-			<input type="button" value="更新索引" onclick="linkTo('solr-index!updateIndex.action')" tabindex="6"/>
+			<input type="button" value="更新索引" onclick="linkTo('specification-chapter-index!updateIndex.action')" tabindex="6"/>
 			</security:authorize>
 			&nbsp;&nbsp;
 			<security:authorize ifAnyGranted="ROLE_用户修改">
-			<input type="button" value="删除所有索引" onclick="linkTo('solr-index!deleteAllIndex.action')" tabindex="6"/>
+			<input type="button" value="删除所有索引" onclick="linkTo('specification-chapter-index!deleteAllIndex.action')" tabindex="6"/>
 			</security:authorize>
-			
 
-			
 		</div>
 		<div id="content">
 			<table id="contentTable">
