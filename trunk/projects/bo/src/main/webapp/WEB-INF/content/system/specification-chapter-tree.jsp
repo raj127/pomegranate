@@ -61,7 +61,7 @@ date:2012/08/23
 			},
 			async : {
 				enable : true,
-				url : "ztree!getTree.action",
+				url : "specification-chapter-tree!getTree.action",
 				autoParam : [ "id", "name", "level" ],
 				otherParam : {
 					"otherParam" : "zTreeAsyncTest"
@@ -247,7 +247,7 @@ date:2012/08/23
 			}
 	        //设置操作代码
 	        op = "del";
-	        var url = 'ztree!delTreeNode.action';
+	        var url = 'specification-chapter-tree!delTreeNode.action';
 	        var params = {id:selectedId, name:$("#treeName").attr("value"), content:$("#treeData").attr("value")};
 	        $.getJSON(url, params, delTreeNodeCallbackFun);
 		}
@@ -277,12 +277,12 @@ date:2012/08/23
 		function doSubmit(){
 			if(op == "add"){
 				var selectedNode = zTree.getNodeByParam("id", selectedId, null);
-		        var url = 'ztree!addTreeNode.action';
+		        var url = 'specification-chapter-tree!addTreeNode.action';
 		        var params = {id:selectedId, name:$("#treeName").attr("value"), content:$("#treeData").attr("value")};
 		        $.getJSON(url, params, addTreeNodeCallbackFun);
 			}else if(op == "mod"){
 				var selectedNode = zTree.getNodeByParam("id", selectedId, null);
-		        var url = 'ztree!modTreeNode.action';
+		        var url = 'specification-chapter-tree!modTreeNode.action';
 		        var params = {id:selectedId, name:$("#treeName").attr("value"), content:$("#treeData").attr("value")};
 		        $.getJSON(url, params, modTreeNodeCallbackFun);
 			}

@@ -58,6 +58,9 @@ date:2012/08/23
 			关键词: <input type="text" name="keyWords" value="${keyWords}" size="9" tabindex="1" onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
 			<input type="button" value="搜索" onclick="search();" tabindex="5"/>
 			&nbsp;&nbsp;
+			<security:authorize ifAnyGranted="ROLE_用户修改">
+			<input type="button" value="创建索引" onclick="linkTo('specification-chapter-index!createIndex.action')" tabindex="6"/>
+			</security:authorize>			
 			&nbsp;&nbsp;
 			<security:authorize ifAnyGranted="ROLE_用户修改">
 			<input type="button" value="更新索引" onclick="linkTo('specification-chapter-index!updateIndex.action')" tabindex="6"/>
@@ -72,10 +75,10 @@ date:2012/08/23
 			<table id="contentTable">
 				<tr>
 					<th width="5%">id</th>
-					<th width="5%">specificationName</th>
-					<th width="5%">chapterName</th>
-					<th width="10%">conent</th>
-					<th width="15%">操作</th>
+					<th width="10%">specificationName</th>
+					<th width="30%">chapterName</th>
+					<th>conent</th>
+					<th width="10%">操作</th>
 				</tr>
 
 				<s:iterator value="page.result">
