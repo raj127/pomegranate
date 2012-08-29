@@ -21,9 +21,9 @@ import com.opensymphony.xwork2.ActionSupport;
  * @version 1.0  2012-05-10 上午09:20:11 DarkMi created
  */
 @Namespace("/edit")
-public class TaskChapterUploadAction extends ActionSupport {
+public class TaskChapterEditUploadAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
-	private static Logger logger = LoggerFactory.getLogger(TaskChapterUploadAction.class);
+	private static Logger logger = LoggerFactory.getLogger(TaskChapterEditUploadAction.class);
 	private File file;// 对应文件域的file，封装文件内容
 	private String fileContentType;// 封装文件类型
 	private String fileName;// 封装文件名

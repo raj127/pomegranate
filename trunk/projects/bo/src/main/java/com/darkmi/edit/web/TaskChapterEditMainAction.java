@@ -32,11 +32,11 @@ import com.opensymphony.xwork2.ActionSupport;
  * @version 1.0  2012-05-10 上午09:20:11 DarkMi created
  */
 @Namespace("/edit")
-@Results({ @Result(name = "main-success", location = "task-verify-main.jsp"),
-		@Result(name = "right-success", location = "task-verify-right.jsp") })
-public class TaskVerifyAction extends ActionSupport {
+@Results({ @Result(name = "main-success", location = "task-chapter-edit-main.jsp"),
+		@Result(name = "right-success", location = "task-chapter-edit-right.jsp") })
+public class TaskChapterEditMainAction extends ActionSupport {
 	private static final long serialVersionUID = -2907389496513631586L;
-	private Logger logger = LoggerFactory.getLogger(TaskVerifyAction.class);
+	private Logger logger = LoggerFactory.getLogger(TaskChapterEditMainAction.class);
 	private Long id; //作业规程的ID
 	private String sentence; //选中的一行文本
 	private TaskChapter tc;
