@@ -9,7 +9,7 @@
 	</parent>
 	<artifactId>rose-core</artifactId>
 	<packaging>jar</packaging>
-	<name>Rose HRMS's Core Module</name>
+	<name>Rose HRMS's Core Module</name> 
 
 	<dependencies>
 		<!-- spring -->
