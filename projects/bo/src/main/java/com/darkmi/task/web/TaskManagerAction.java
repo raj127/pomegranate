@@ -100,6 +100,7 @@ public class TaskManagerAction extends CrudActionSupport<Task> {
 			task.setPath(getPath(task.getTaskName()));
 			task.setCompany(getCompany());
 			task.setState(StateEnum.NORMAL);
+			logger.debug("task -->{}",task.toString());
 			taskManager.saveTask(task);
 		} else if (CreateTypeEnum.TEMPLATE.equals(task.getCreateType())) { //使用模板
 			if (templateId == null) {

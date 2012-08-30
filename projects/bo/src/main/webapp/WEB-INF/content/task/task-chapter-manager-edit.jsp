@@ -26,7 +26,8 @@ date:2012/08/21
 
 	</script>	
 </head>
-<body onload='intializePage("${ctx}${filePath}")' onunload="onPageClose()">
+<%-- <body onload='intializePage("${filePath}")' onunload="onPageClose()">--%>
+<body onload='intializePage(http://localhost:8080/bo/company/default/default.docx)' onunload="onPageClose()">
 <div class="ui-layout-center">
 	<form id="form1" method="post" action="upload.action" enctype="multipart/form-data">
 	<input id="fileName" name="fileName" type="hidden" value="测试" />
