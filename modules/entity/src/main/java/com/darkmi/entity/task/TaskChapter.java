@@ -108,6 +108,7 @@ public class TaskChapter extends AuditableEntity {
 	public String toString() {
 		return "TaskChapter [chapterId=" + chapterId + ", chapterName=" + chapterName + ", fileName=" + fileName
 				+ ", description=" + description + ", task=" + task + ", parentId=" + parentId + ", displayOrder="
-				+ displayOrder + ", state=" + state + "]";
+				+ displayOrder + ", state=" + state + ", createTime=" + createTime + ", createBy=" + createBy
+				+ ", lastModifyTime=" + lastModifyTime + ", lastModifyBy=" + lastModifyBy + ", id=" + id + "]";
 	}
 }

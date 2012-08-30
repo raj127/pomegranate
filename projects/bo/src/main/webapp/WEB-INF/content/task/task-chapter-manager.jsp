@@ -23,7 +23,7 @@ date:2012/08/21
 		$(document).ready(function() {
 			$(".mainNav a").attr("class","");
 			$("#n4").attr("class","actived");
-			$("#subNav403").attr("class","actived");
+			$("#subNav401").attr("class","actived");
 			$(".secondNav div").each(function(){
 				$(this).hide();
 				$("#subNav4").show();
