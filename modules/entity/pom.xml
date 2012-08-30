@@ -14,7 +14,7 @@
 
 	<dependencies>
 	
-			<!-- vodlite-core -->
+		<!-- vodlite-core -->
 		<dependency>
 			<groupId>com.darkmi.rose</groupId>
 			<artifactId>rose-core</artifactId>
