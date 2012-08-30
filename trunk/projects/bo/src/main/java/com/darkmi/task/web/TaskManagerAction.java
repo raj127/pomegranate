@@ -127,7 +127,6 @@ public class TaskManagerAction extends CrudActionSupport<Task> {
 					taskChapterManager.saveTaskChapter(taskChapter);
 				}
 			}
-
 		} else if (CreateTypeEnum.COPY.equals(task.getCreateType())) { //复制已有规程
 
 		}

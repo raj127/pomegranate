@@ -19,8 +19,8 @@ date:2012/08/21
 		<script>
 		$(document).ready(function() {
 			$(".mainNav a").attr("class","");
-			$("#n5").attr("class","actived");
-			$("#subNav404").attr("class","actived");
+			$("#n4").attr("class","actived");
+			$("#subNav401").attr("class","actived");
 			$(".secondNav div").each(function(){
 				$(this).hide();
 				$("#subNav4").show();
@@ -54,16 +54,13 @@ date:2012/08/21
 	<div id="yui-main">
 	<div class="yui-b">
 	<h2><s:if test="id == null">添加</s:if><s:else>修改</s:else>作业规程模板目录</h2>
-	<form id="inputForm" action="task-chapter-manager!save.action" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="id" value="${id}"/>
+	<form id="inputForm" action="task-chapter-manager!save.action" method="get">
+		<input type="hidden" name="id" id="id" value="${id}"/>
+		<input type="hidden" name="taskId" id="taskId" value="${taskId}"/>
 		<input type="hidden" name="page.pageNo" id="pageNo" value="${page.pageNo}"/>
 		<input type="hidden" name="page.orderBy" id="orderBy" value="${page.orderBy}"/>
 		<input type="hidden" name="page.order" id="order" value="${page.order}"/>
 		<input type="hidden" name="page.pageSize" id="pageSize" value="${page.pageSize}"/>
-		<input type="hidden" name="taskId" id="taskId" value="${taskId}"/>
-		<s:if test="%{parentId == 0}">
-		<input type="hidden" name="parentId" id="parentId" value="${parentId}"/>
-		</s:if>
 		<table class="noborder">
 			<tr>
 				<td>章节名称:</td>
@@ -81,38 +78,26 @@ date:2012/08/21
 				<td><input type="text" id="displayOrder" name="displayOrder" value="${displayOrder}" size="40" maxlength="255"/></td>
 			</tr>
 			
-			<s:if test="%{parentId != 0}">
 			<tr>
 				<td>父章节:</td>
 				<td>
-				<s:select id="parentId" 
-				          name="parentId"
-				          headerKey="0" 
-				          headerValue="请选择" 
-				          list="%{allParentChapter}"  
-				          listKey="id" 
-				          listValue="chapterName"   
-				          required="true" 
-				          theme="simple" />
-
+				<input type="text" id="parentId" name="parentId" value="${parentId}" size="40" maxlength="255" readonly="true"/>
 				</td>
 			</tr>
-			<s:if test="%{filePath != null}">
+			<%-- 
 			<tr>
 				<td>文件路径:</td>
 				<td>
 				<input type="text" id="filePath" name="filePath" value="${filePath}" size="40" maxlength="255" disabled/>
 				</td>
 			</tr>
-			</s:if>
 			<tr>
 				<td>文件:</td>
 				<td>
 				<s:file id ="upload" name="upload" label ="Word文件" cssStyle="border: 1px solid #266392;" theme="simple" />
 				</td>
 			</tr>
-			</s:if>
-						
+			--%>		
 			<tr>
 				<td>状态:</td>
 				<td>
@@ -132,9 +117,7 @@ date:2012/08/21
 				</tr>
 			<tr>
 				<td colspan="2">
-					
-						<input class="button" type="submit" value="提交"/>&nbsp;
-					
+					<input class="button" type="submit" value="提交"/>&nbsp;
 					<input class="button" type="button" value="返回" onclick="history.back()"/>
 				</td>
 			</tr>

@@ -15,7 +15,6 @@ import com.darkmi.entity.task.TaskChapter;
 import com.darkmi.task.service.TaskManager;
 import com.darkmi.util.CrudActionSupport;
 import com.google.common.collect.Lists;
-import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * Description: 任务章节管理Action.
@@ -24,31 +23,82 @@ import com.opensymphony.xwork2.ActionSupport;
  * @version 1.0  2012-05-10 上午09:20:11 DarkMi created
  */
 @Namespace("/task")
-@Results({
-		@Result(name = CrudActionSupport.RELOAD, location = "task-chapter-manager.action?taskId=${taskId}", type = "redirect"),
-		@Result(name = "edit", location = "edit.jsp") })
-public class TaskChapterManagerAction extends ActionSupport {
+@Results({ @Result(name = "reload", location = "task-chapter-manager.action?taskId=${taskId}", type = "redirect")
+//@Result(name = "edit", location = "task-chapter-manager-input.jsp?taskId=${taskId}", type = "redirect"),
+//@Result(name = "add", location = "task-chapter-manager-input.jsp") 
+})
+public class TaskChapterManagerAction extends CrudActionSupport<TaskChapter> {
 	private static final long serialVersionUID = 8559745143820907960L;
 	private Logger logger = LoggerFactory.getLogger(TaskChapterManagerAction.class);
-	private Long taskId;
-	private Long parentId;
-	private String taskTree;
+	private Long id;//当前章节的ID
+	private Long parentId;//当前章节的父ID
+	private Long taskId;//当前章节的所属任务ID
+	private boolean viewOnly = false;
+	private String taskTree;//任务树
+	private TaskChapter tc;
 	private List<TaskChapter> tcs = Lists.newArrayList();
 	private TaskManager taskManager;
-	private TaskChapterManager taskChapterManager;
+	private TaskChapterManager tcManager;
 
-	/**
-	 * 模板列表页面.
-	 * 默认入口.
-	 */
 	@Override
-	public String execute() throws Exception {
-		logger.debug("begin task execute() { ...");
+	public String list() throws Exception {
 		getTaskChapter();
-		logger.debug("end task execute() ...} ");
-		return super.execute();
+		return SUCCESS;
 	}
 
+	@Override
+	public String save() throws Exception {
+		logger.debug("保存任务章节 begin {...");
+		logger.debug("id --> " + id);
+		logger.debug("taskId --> " + taskId);
+		logger.debug("parentId --> " + parentId);
+		logger.debug("tc --> {}", tc.toString());
+
+		if (null == tc.getTask()) {
+			Task task = taskManager.getTask(taskId);
+			tc.setTask(task);
+		}
+		tc.setParentId(parentId);
+
+		tcManager.saveTaskChapter(tc);
+		addActionMessage("保存任务章节成功");
+		logger.debug("保存任务章节 end ...}");
+		return RELOAD;
+	}
+
+	@Override
+	public String input() throws Exception {
+		return INPUT;
+	}
+
+	@Override
+	public String delete() throws Exception {
+		logger.debug("删除任务章节 begin {...");
+		logger.debug("id -->{}", id);
+		tcManager.deleteTaskChapter(id);
+		addActionMessage("删除任务章节成功");
+		logger.debug("删除任务章节 ...}");
+		return RELOAD;
+	}
+
+	//	@Action(value = "edit", results = { @Result(name = "edit", location = "task-chapter-manager-input.jsp", type = "redirect") })
+	//	public String edit() {
+	//		logger.debug("编辑作业规程... begin{ ");
+	//		logger.debug("编辑作业规程... end} ");
+	//		return "edit";
+	//	}
+	//
+	//	@Action(value = "add", results = { @Result(name = "add", location = "task-chapter-manager-input.jsp", type = "redirect") })
+	//	public String add() {
+	//		logger.debug("添加作业规程... begin{ ");
+	//		logger.debug("添加作业规程... end} ");
+	//		return "add";
+	//	}
+
+	/**
+	 * 获得任务的表格树.
+	 * @throws Exception
+	 */
 	private void getTaskChapter() throws Exception {
 		StringBuffer sb = new StringBuffer();
 		sb.append("<table id=\"taskTree\">");
@@ -70,11 +120,13 @@ public class TaskChapterManagerAction extends ActionSupport {
 		sb.append("<td>&nbsp;</td>");
 		sb.append("<td>&nbsp;</td>");
 		sb.append("<td>&nbsp;</td>");
-		sb.append("<td>&nbsp;</td>");
+		sb.append("<td>");
+		sb.append("<a href=\"task-chapter-manager!input.action?taskId=" + taskId + "&parentId=0\">添加</a>");
+		sb.append("</td>");
 		sb.append("</tr>");
 
 		//获取一级目录
-		List<TaskChapter> levelOnes = taskChapterManager.getLevelOne(taskId);
+		List<TaskChapter> levelOnes = tcManager.getLevelOne(taskId);
 		int levelOneCounter = 1;
 		for (TaskChapter levelOne : levelOnes) {
 			sb.append("<tr id=\"ex3-node-" + taskCounter + "-" + levelOneCounter + "\" class=\"child-of-ex3-node-"
@@ -84,11 +136,25 @@ public class TaskChapterManagerAction extends ActionSupport {
 			sb.append("<td>" + levelOne.getDescription() + "</td>");
 			sb.append("<td>&nbsp;</td>");
 			sb.append("<td>&nbsp;</td>");
-			sb.append("<td>&nbsp;</td>");
-			sb.append("</tr>");
+			sb.append("<td>");
+			sb.append("<a href=\"task-chapter-manager!input.action?id=" + levelOne.getId() + "&viewOnly=true\">查看</a>");
+			sb.append("&nbsp;&nbsp;");
+			sb.append("<a href=\"task-chapter-manager!input.action?id=" + levelOne.getId() + "&taskId=" + taskId
+					+ "&viewOnly=false\">编辑</a>");
+			sb.append("&nbsp;&nbsp;");
+			sb.append("<a href=\"task-chapter-manager!input.action?taskId=" + taskId + "&parentId=" + levelOne.getId()
+					+ "\">添加</a>");
 
 			//获取二级目录
-			List<TaskChapter> levelTwos = taskChapterManager.getLevelTwo(levelOne.getId());
+			List<TaskChapter> levelTwos = tcManager.getLevelTwo(levelOne.getId());
+			if (levelTwos.size() <= 0) {
+				sb.append("&nbsp;&nbsp;");
+				sb.append("<a href=\"task-chapter-manager!delete.action?id=" + levelOne.getId() + "&taskId=" + taskId
+						+ "\">删除</a>");
+			}
+			sb.append("</td>");
+			sb.append("</tr>");
+
 			int levelTwoCounter = 1;
 			for (TaskChapter levelTwo : levelTwos) {
 				sb.append("<tr id=\"ex3-node-" + taskCounter + "-" + levelOneCounter + "-" + levelTwoCounter
@@ -98,8 +164,16 @@ public class TaskChapterManagerAction extends ActionSupport {
 				sb.append("<td>" + levelTwo.getDescription() + "</td>");
 				sb.append("<td>&nbsp;</td>");
 				sb.append("<td>&nbsp;</td>");
-				sb.append("<td>" + "<a href=\"task-chapter-manager!edit.action?id=" + levelTwo.getId()
-						+ "\" target=\"_blank\">编辑</a>" + "</td>");
+				sb.append("<td>");
+				sb.append("<a href=\"task-chapter-manager!input.action?id=" + levelTwo.getId()
+						+ "&viewOnly=true\">查看</a>");
+				sb.append("&nbsp;&nbsp;");
+				sb.append("<a href=\"task-chapter-manager!input.action?id=" + levelTwo.getId() + "&taskId=" + taskId
+						+ "&viewOnly=false\">编辑</a>");
+				sb.append("&nbsp;&nbsp;");
+				sb.append("<a href=\"task-chapter-manager!delete.action?id=" + levelTwo.getId() + "&taskId=" + taskId
+						+ "\">删除</a>");
+				sb.append("</td>");
 				sb.append("</tr>");
 				levelTwoCounter++;
 			}
@@ -113,20 +187,29 @@ public class TaskChapterManagerAction extends ActionSupport {
 		taskTree = sb.toString();
 	}
 
-	//@Action(value = "edit", results = { @Result(name = "edit", location = "edit.jsp", type = "redirect") })
-	public String edit() {
-		logger.debug("编辑作业规程... begin{ ");
-		logger.debug("编辑作业规程... end} ");
-		return "edit";
+	/*~~~~~~~~~~~ 数据准备 ~~~~~~~~~~~~~~~~~*/
+	@Override
+	public TaskChapter getModel() {
+		return tc;
+	}
+
+	@Override
+	protected void prepareModel() throws Exception {
+		if (id != null) {
+			tc = tcManager.getTaskChapter(id);
+		} else {
+			tc = new TaskChapter();
+		}
 	}
 
 	/*~~~~~~~~~~~Setters And Getters ~~~~~~~~~~~~~~~~~*/
-	public Long getTaskId() {
-		return taskId;
+
+	public Long getId() {
+		return id;
 	}
 
-	public void setTaskId(Long taskId) {
-		this.taskId = taskId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Long getParentId() {
@@ -137,12 +220,12 @@ public class TaskChapterManagerAction extends ActionSupport {
 		this.parentId = parentId;
 	}
 
-	public List<TaskChapter> getTcs() {
-		return tcs;
+	public Long getTaskId() {
+		return taskId;
 	}
 
-	public void setTcs(List<TaskChapter> tcs) {
-		this.tcs = tcs;
+	public void setTaskId(Long taskId) {
+		this.taskId = taskId;
 	}
 
 	public String getTaskTree() {
@@ -153,15 +236,40 @@ public class TaskChapterManagerAction extends ActionSupport {
 		this.taskTree = taskTree;
 	}
 
+	public TaskChapter getTc() {
+		return tc;
+	}
+
+	public void setTc(TaskChapter tc) {
+		this.tc = tc;
+	}
+
+	public List<TaskChapter> getTcs() {
+		return tcs;
+	}
+
+	public void setTcs(List<TaskChapter> tcs) {
+		this.tcs = tcs;
+	}
+
+	public boolean isViewOnly() {
+		return viewOnly;
+	}
+
+	public void setViewOnly(boolean viewOnly) {
+		this.viewOnly = viewOnly;
+	}
+
 	/*~~~~~~~~~~~业务逻辑类注入~~~~~~~~~~~~~~~~~*/
 
 	@Autowired
 	public void setTaskChapterManager(TaskChapterManager taskChapterManager) {
-		this.taskChapterManager = taskChapterManager;
+		this.tcManager = taskChapterManager;
 	}
 
 	@Autowired
 	public void setTaskManager(TaskManager taskManager) {
 		this.taskManager = taskManager;
 	}
+
 }
