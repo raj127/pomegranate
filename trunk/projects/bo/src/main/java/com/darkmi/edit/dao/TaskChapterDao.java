@@ -15,10 +15,9 @@ import com.darkmi.entity.task.TaskChapter;
  */
 @Component
 public class TaskChapterDao extends HibernateDao<TaskChapter, Long> {
-
 	private static final String GET_BY_TID = "from TaskChapter t where t.task.id=? order by displayOrder asc";
-
 	private static final String GET_LEVEL_ONE = "from TaskChapter t where t.task.id=? and parentId=? order by displayOrder asc";
+	private static final String DEL_BY_TID = "delete TaskChapter t where t.task.id=?";
 
 	/**
 	 * 通过任务ID得到其下所有章节.
@@ -34,4 +33,10 @@ public class TaskChapterDao extends HibernateDao<TaskChapter, Long> {
 		return find(GET_LEVEL_ONE, taskId, new Long(0));
 	}
 
+	/**
+	 * 删除指定任务ID其下所有章节.
+	 */
+	public void deleteTcByTaskId(Long taskId) {
+		batchExecute(DEL_BY_TID, taskId);
+	}
 }

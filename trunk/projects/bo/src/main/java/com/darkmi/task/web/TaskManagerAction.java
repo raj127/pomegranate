@@ -141,10 +141,15 @@ public class TaskManagerAction extends CrudActionSupport<Task> {
 	 */
 	@Override
 	public String delete() throws Exception {
+		logger.debug("删除任务begin{...");
 		task = taskManager.getTask(id);
+		//删除任务
 		taskManager.deleteTask(id);
+		//删除任务所有的章节
+		taskChapterManager.deleteTcsByTaskId(id);
 		dbLogger.info(SpringSecurityUtils.getCurrentUserName() + ":删除" + task.getTaskName() + "任务！");
 		addActionMessage("删除作业规任务成功！");
+		logger.debug("删除任务end...}");
 		return RELOAD;
 	}
 

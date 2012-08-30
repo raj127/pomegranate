@@ -24,22 +24,7 @@ public class TaskChapterManager {
 	private static Logger logger = LoggerFactory.getLogger(TaskChapterManager.class);
 	private TaskChapterDao taskChapterDao;
 
-	/**
-	 * 保存作业规程目录信息.
-	 */
-	public void saveTaskChapter(TaskChapter taskChapter) {
-		taskChapterDao.save(taskChapter);
-		logger.debug("保存TaskChapter信息成功.");
-	}
-
-	/**
-	 * 根据主键删除作业规程任务信息
-	 * @param id
-	 */
-	public void deleteTaskChapter(Long id) {
-		taskChapterDao.delete(id);
-		logger.debug("删除taskChapter id={}", id);
-	}
+	/*~~~~~~~~~~~ 查询类方法 ~~~~~~~~~~~~~~~~~*/
 
 	/**
 	 * 根据主键得到作业规程的具体章节信息.
@@ -56,7 +41,7 @@ public class TaskChapterManager {
 	public List<TaskChapter> getTcsByTaskId(Long taskId) {
 		return taskChapterDao.getTcsByTaskId(taskId);
 	}
-	
+
 	/**
 	 * 获取一级目录.
 	 */
@@ -64,16 +49,15 @@ public class TaskChapterManager {
 	public List<TaskChapter> getLevelOne(Long taskId) {
 		return taskChapterDao.getLevelOne(taskId);
 	}
-	
+
 	/**
 	 * 获取二级目录.
 	 */
 	@Transactional(readOnly = true)
 	public List<TaskChapter> getLevelTwo(Long parentId) {
-		logger.debug("parentId -->{}",parentId);
+		logger.debug("parentId -->{}", parentId);
 		return taskChapterDao.findBy("parentId", parentId);
 	}
-
 
 	/**
 	 * 得到所有的作业规程任务列表
@@ -98,6 +82,35 @@ public class TaskChapterManager {
 	public List<TaskChapter> searchTaskChapter(List<PropertyFilter> filters) {
 		return taskChapterDao.find(filters);
 	}
+
+	/*~~~~~~~~~~~ 更新类方法 ~~~~~~~~~~~~~~~~~*/
+
+	/**
+	 * 保存作业规程目录信息.
+	 */
+	public void saveTaskChapter(TaskChapter taskChapter) {
+		taskChapterDao.save(taskChapter);
+		logger.debug("保存TaskChapter信息成功.");
+	}
+
+	/**
+	 * 根据主键删除作业规程任务信息
+	 * @param id
+	 */
+	public void deleteTaskChapter(Long id) {
+		taskChapterDao.delete(id);
+		logger.debug("删除taskChapter id={}", id);
+	}
+
+	/**
+	 * 根据任务ID,删除其下所有章节.
+	 * @param id
+	 */
+	public void deleteTcsByTaskId(Long id) {
+		taskChapterDao.deleteTcByTaskId(id);
+	}
+
+	/*~~~~~~~~~~~业务逻辑类注入~~~~~~~~~~~~~~~~~*/
 
 	@Autowired
 	public void setTaskDao(TaskChapterDao taskDao) {
