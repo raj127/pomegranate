@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>com.darkmi.rose</groupId>
 	<artifactId>rose-common</artifactId>
-	<packaging>jar</packaging>
+	<packaging>jar</packaging> 
 	<name>Rose HRMS's Common Module</name>
 	<dependencies>
 
