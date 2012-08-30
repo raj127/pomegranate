@@ -60,6 +60,9 @@ public class TaskChapterEditMainAction extends ActionSupport {
 		logger.debug("begin main() { ...");
 		logger.debug("id --> {}", id);
 		tc = tcManager.getTaskChapter(id);
+		if(null == tc.getFileName()|| "".equals(tc.getFileName())){
+			//tc.set
+		}
 		logger.debug(tc.toString());
 		logger.debug("end main() ...} ");
 		return "main-success";

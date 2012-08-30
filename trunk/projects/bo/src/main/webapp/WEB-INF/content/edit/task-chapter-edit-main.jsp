@@ -63,7 +63,7 @@ UpdateDate:2012/08/27
 	
 	//提交请求
     function doSearch(selectedSentence){
-        var url = 'task-verify!search.action';
+        var url = 'task-chapter-edit-main!search.action';
         var params = {sentence:selectedSentence};
         jQuery.post(url, params, callbackFun);
     }
