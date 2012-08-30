@@ -22,7 +22,7 @@ UpdateDate:2012/08/27
 	<script type="text/javascript" src="${ctx}/js/temp/collection.js"></script>
 	
 	<%--############ --%>
-	<script type="text/javascript" src="${ctx}/js/OfficeContorlFunctions.js"></script>
+	<script type="text/javascript" src="${ctx}/officecontrol/OfficeContorlFunctions.js"></script>
 	<%--############ --%>
 	<script language="javascript">
 	$(document).ready(function(){

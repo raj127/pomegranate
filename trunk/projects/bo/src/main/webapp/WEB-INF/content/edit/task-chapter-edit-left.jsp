@@ -5,7 +5,7 @@ CreateDate:2012/08/21
 UpdateDate:2012/08/27
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<form id="form1" method="post" action="task-chapter-upload!upload.action" enctype="multipart/form-data">
+<form id="form1" method="post" action="task-chapter-edit-upload!upload.action" enctype="multipart/form-data">
 <input id="fileName" name="fileName" type="hidden" value="测试" />
 <input id="fileId" name="fileId" type="hidden" value="" />
 <%-- 
