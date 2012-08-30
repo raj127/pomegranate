@@ -42,9 +42,9 @@ function trim(str){ // 删除左右两端的空格
  * @returns
  */
 function saveFileToUrl(){
-	alert("begin save file { ...");
+	//alert("begin save file { ...");
 	var myUrl =document.forms[0].action ;
-	alert(myUrl);
+	//alert(myUrl);
 	var fileName = document.all("fileName").value;
 	var result  ;
 	if(IsFileOpened){
@@ -73,16 +73,13 @@ function saveFileToUrl(){
 			default :
 				fileType = "unkownfiletype";
 		}
-		alert("fileType --> " + fileType);
-		alert("fileName --> " + fileName);
-		result = OFFICE_CONTROL_OBJ.saveToURL(myUrl,// 提交到的url地址
-											  "file",// 文件域的id，类似<input
-														// type=file
-														// id=upLoadFile 中的id
-											  "fileType="+fileType,          // 与控件一起提交的参数如："p1=a&p2=b&p3=c"
-											  fileName,    // 上传文件的名称，类似<input
-															// type=file 的value
-											  0    // 与控件一起提交的表单id，也可以是form的序列号，这里应该是0.
+		//alert("fileType --> " + fileType);
+		//alert("fileName --> " + fileName);
+		result = OFFICE_CONTROL_OBJ.saveToURL(myUrl, // 提交到的url地址
+											  "file", // 文件域的id，类似<input type=file id=upLoadFile 中的id
+											  "fileType="+fileType, // 与控件一起提交的参数如："p1=a&p2=b&p3=c"
+											  fileName, //上传文件的名称，类似<input type=file 的value
+											  0 //与控件一起提交的表单id，也可以是form的序列号，这里应该是0.
 											  );
 		result=trim(result);
 		// document.all("statusBar").innerHTML="服务器返回信息:"+result;
@@ -93,7 +90,7 @@ function saveFileToUrl(){
 }
 
 /**
- * 将文档保存到服务器.
+ * 将文档以HTML格式保存到服务器.
  * 
  * @returns
  */
