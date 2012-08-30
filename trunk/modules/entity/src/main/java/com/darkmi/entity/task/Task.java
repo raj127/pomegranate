@@ -24,7 +24,6 @@ import com.darkmi.entity.system.Company;
 public class Task extends AuditableEntity {
 	private String taskName;
 	private String description;
-	
 	private String path;
 	private Company company;
 	private StateEnum state;
@@ -66,7 +65,7 @@ public class Task extends AuditableEntity {
 	public void setCompany(Company company) {
 		this.company = company;
 	}
-	
+
 	@Column(name = "state")
 	@Enumerated(EnumType.STRING)
 	public StateEnum getState() {
@@ -87,11 +86,11 @@ public class Task extends AuditableEntity {
 		this.createType = createType;
 	}
 
-
 	@Override
 	public String toString() {
-		return "Task [taskName=" + taskName + ", description=" + description + ", state=" + state + ", path=" + path
-				+ ", company=" + company + "]";
+		return "Task [taskName=" + taskName + ", description=" + description + ", path=" + path + ", company="
+				+ company + ", state=" + state + ", createType=" + createType + ", createTime=" + createTime
+				+ ", createBy=" + createBy + ", lastModifyTime=" + lastModifyTime + ", lastModifyBy=" + lastModifyBy
+				+ ", id=" + id + "]";
 	}
-
 }
