@@ -3,7 +3,7 @@ document.write('<!-- 因为微软的ActiveX新机制，需要一个外部引入�
 document.write('<object id="TANGER_OCX" classid="clsid:A39F1330-3322-4a1d-9BF0-0BA2BB90E970"    ');
 /*使用绝对路径就可以，使用相对路径就不行，还没有搞定*/
 //document.write('codebase="http://www.ntko.com/admin/ocv14_test.nsf/vwOCX/OfficeControl.cab/$FILE/OfficeControl.cab#version=5,0,1,6" width="100%" height="100%">   ');
-document.write('codebase="http://localhost:8088/bo/officecontrol/OfficeControl.cab#version=5,0,1,6" width="100%" height="'+($(window).height()-33)+'px">   ');
+document.write('codebase="http://localhost:8080/bo/officecontrol/OfficeControl.cab#version=5,0,1,6" width="100%" height="'+($(window).height()-33)+'px">   ');
 document.write('<param name="BorderStyle" value="1">   ');
 document.write('<param name="BorderColor" value="14402205">   ');
 document.write('<param name="TitlebarColor" value="15658734">   ');
