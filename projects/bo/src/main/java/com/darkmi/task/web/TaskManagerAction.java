@@ -94,7 +94,12 @@ public class TaskManagerAction extends CrudActionSupport<Task> {
 	 */
 	@Override
 	public String save() throws Exception {
+		logger.debug("保存任务信息{...");
 		if (CreateTypeEnum.NEW.equals(task.getCreateType())) { //新建
+			//设置作业规程的保存路径
+			task.setPath(getPath(task.getTaskName()));
+			task.setCompany(getCompany());
+			task.setState(StateEnum.NORMAL);
 			taskManager.saveTask(task);
 		} else if (CreateTypeEnum.TEMPLATE.equals(task.getCreateType())) { //使用模板
 			if (templateId == null) {
@@ -127,7 +132,8 @@ public class TaskManagerAction extends CrudActionSupport<Task> {
 
 		}
 
-		addActionMessage("保存作业规程任务成功！");
+		addActionMessage("保存任务成功！");
+		logger.debug("保存任务信息 ... }");
 		return RELOAD;
 	}
 
@@ -143,6 +149,10 @@ public class TaskManagerAction extends CrudActionSupport<Task> {
 		return RELOAD;
 	}
 
+	/**
+	 * 获得当前工号的工作目录
+	 * @return
+	 */
 	private Company getCompany() {
 		//获取当前工号所属单位
 		String loginName = SpringSecurityUtils.getCurrentUserName();
