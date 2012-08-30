@@ -24,11 +24,10 @@ public class TaskChapter extends AuditableEntity {
 	private String chapterName;
 	private String fileName;
 	private String description;
-	private Task task;
-
 	private Long parentId;
 	private Integer displayOrder;
 	private StateEnum state;
+	private Task task;
 
 	@Column(name = "chapter_id")
 	public String getChapterId() {
