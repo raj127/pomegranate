@@ -10,7 +10,7 @@ date:2012/08/23
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>安全规范查看</title>
+	<title>规范管理</title>
 	<%@ include file="/common/meta.jsp" %>
 	<link href="${ctx}/css/yui.css" type="text/css" rel="stylesheet"/>
 	<link href="${ctx}/css/style.css" type="text/css" rel="stylesheet"/>
@@ -28,11 +28,12 @@ date:2012/08/23
 	<script src="${ctx}/js/jnotify/jquery.jnotify.js" type="text/javascript"></script>
 	<script src="${ctx}/js/textarearesizer/jquery.textarearesizer.compressed.js" type="text/javascript"></script>
 	<!--<script src="${ctx}/js/artDialog/artDialog.js?skin=default" type="text/javascript"></script>-->
+	<script src="${ctx}/js/table.js" type="text/javascript"></script>
 	<script>
 		<!--		
 		/*---------- 全局变量定义 -----------*/
 		var zTree;
-		var zNodes =[];
+		var zNodes =[{id:1, pId:0, name: "所有规范", isParent:true, click:false}];
 		var selectedId;
 		var op;
 
@@ -51,7 +52,7 @@ date:2012/08/23
 					enable : true,
 					idKey : "id",
 					pIdKey : "pId",
-					rootPId : ""
+					rootPId : "0"
 				}
 			},
 			edit: {
@@ -69,9 +70,9 @@ date:2012/08/23
 				dataFilter : filter
 			},
 			callback : {
-				//beforeAsync : zTreeBeforeAsync,
 				onAsyncSuccess : zTreeOnAsyncSuccess,
 				onClick: zTreeOnClick
+				//beforeAsync : zTreeBeforeAsync,
 				//beforeRemove: zTreeBeforeRemove,
 				//onRemove: zTreeOnRemove,
 				//beforeRename: zTreeBeforeRename,
@@ -180,7 +181,7 @@ date:2012/08/23
 		
 		//提交请求
 	    function getTreeData(treeId){
-	        var url = 'ztree!getTreeData.action';
+	        var url = 'specification-chapter-tree!getTreeData.action';
 	        var params = {id:treeId};
 	        jQuery.post(url, params, callbackFun);
 	    }
@@ -419,6 +420,7 @@ date:2012/08/23
 	    <div id="StatusBar" style="height: 20px;"></div>
     		
 		<div id="filter">
+			<input type="button" value="表格结构" onclick="linkTo('specification-chapter-table.action')" tabindex="5"/>
 			<input type="button" value="添加节点" onclick="addTreeNode();" tabindex="1"/>
 			<input type="button" value="修改节点" onclick="modTreeNode();" tabindex="2"/>
 			<input type="button" value="删除节点" onclick="delTreeNode();" tabindex="3"/>
@@ -439,24 +441,24 @@ date:2012/08/23
 				</div>			
 			</td>
 			<td valign="top">
-			<form id="inputForm" action="ztree!saveTreeData.action" method="post">
+			<form id="inputForm" action="specification-chapter-tree!saveTreeData.action" method="post">
 				<table class="noborder">
 					<tr valign="top">
-						<td width="20%">名称:</td>
+						<td width="10%">名称:</td>
 						<td><input type="text" id="treeName" name="treeName" size="40" value="" maxlength="50"/></td>
 					</tr>
 					<tr valign="top">
-						<td width="20%">内容:</td>
+						<td>内容:</td>
 						<td>
 							<textarea id="treeData" name="treeData" class="resizable"></textarea>
 						</td>
 					</tr>
 					<tr valign="top">
-						<td width="20%">创建:</td>
+						<td>创建:</td>
 						<td>${createBy} <fmt:formatDate value="${createTime}" type="both"/></td>
 					</tr>
 					<tr valign="top">
-						<td width="20%">最后修改:</td>
+						<td>最后修改:</td>
 						<td>${lastModifyBy} <fmt:formatDate value="${lastModifyTime}" type="both"/></td>
 					</tr>
 					<tr>
