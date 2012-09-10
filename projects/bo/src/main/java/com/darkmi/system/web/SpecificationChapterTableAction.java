@@ -16,7 +16,7 @@ import com.darkmi.system.service.SpecificationChapterManager;
 import com.darkmi.util.CrudActionSupport;
 
 /**
- * Description: 系统管理--》规范章节管理Action.
+ * Description: 系统管理--》规范管理(table)Action.
  * Copyright (c) darkmi
  * All Rights Reserved.
  * @version 1.0  2012-05-23 下午01:36:31 darkmi created

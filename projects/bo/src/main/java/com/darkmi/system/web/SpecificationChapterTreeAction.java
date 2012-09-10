@@ -14,9 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.darkmi.entity.system.SpecificationChapter;
 import com.darkmi.system.service.SpecificationChapterManager;
 import com.opensymphony.xwork2.ActionSupport;
-
 /**
- * Description: 规范树状展示Action.
+ * Description: 系统管理--》规范管理(tree)Action.
  * Copyright (c) darkmi
  * All Rights Reserved.
  * @version 1.0  2012-05-23 下午01:36:31 darkmi created
@@ -35,8 +34,6 @@ public class SpecificationChapterTreeAction extends ActionSupport {
 	 * 默认的执行方法.
 	 */
 	public String execute() throws Exception {
-		logger.debug("execute begin {...");
-		logger.debug("execute end ...}");
 		return SUCCESS;
 	}
 
