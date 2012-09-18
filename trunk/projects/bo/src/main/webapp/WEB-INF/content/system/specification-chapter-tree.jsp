@@ -450,7 +450,7 @@ date:2012/08/23
 					<tr valign="top">
 						<td>内容:</td>
 						<td>
-							<textarea id="treeData" name="treeData" class="resizable"></textarea>
+							<textarea id="treeData" name="treeData" rows="15" class="resizable"></textarea>
 						</td>
 					</tr>
 					<tr valign="top">
