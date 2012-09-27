@@ -47,6 +47,7 @@ public class ExtSolrQueryParser extends SolrQueryParser {
 				try {
 					//System.out.println(queryText);
 					//此字段的分词器
+					@SuppressWarnings("resource")
 					Analyzer analyzer = ft.getQueryAnalyzer() == null ? ft.getAnalyzer() : ft.getQueryAnalyzer();
 					if (analyzer != null) {
 						BooleanQuery bq = new BooleanQuery();//(true);

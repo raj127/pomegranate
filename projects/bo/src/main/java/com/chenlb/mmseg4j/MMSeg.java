@@ -53,6 +53,7 @@ public class MMSeg {
 	}
 
 	
+	@SuppressWarnings("incomplete-switch")
 	public Word next() throws IOException {
 		//先从缓存中取
 		Word word = bufWord.poll();;
