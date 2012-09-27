@@ -30,6 +30,7 @@
 		<compass.version>2.2.0</compass.version>
 		<jacob.version>1.7.0</jacob.version>
 		<lucene.version>3.6.0</lucene.version>
+		<jacob.version>1.17</jacob.version>
 		<!--<quartz.version>1.8.4</quartz.version>-->
 		<!-- Plugin的属性定义  -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -873,6 +874,12 @@
 				</exclusions>
 			</dependency>-->
 			<!-- jms end -->
+
+			<dependency>
+				<groupId>jacob</groupId>
+				<artifactId>jacob</artifactId>
+				<version>${jacob.version}</version>
+			</dependency>			
 
 		</dependencies>
 	</dependencyManagement>
