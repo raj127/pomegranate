@@ -42,6 +42,7 @@ public class MMSegTokenizerFactory extends BaseTokenizerFactory implements Resou
 		return seg;
 	}
 	
+	@SuppressWarnings("resource")
 	public Tokenizer create(Reader input) {
 		MMSegTokenizer tokenizer = tokenizerLocal.get();
 		if(tokenizer == null) {
