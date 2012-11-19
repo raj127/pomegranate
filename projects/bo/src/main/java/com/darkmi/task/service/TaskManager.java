@@ -25,22 +25,7 @@ public class TaskManager {
 	private static Logger logger = LoggerFactory.getLogger(TaskManager.class);
 	private TaskDao taskDao;
 
-	/**
-	 * 保存作业规程任务信息
-	 */
-	public void saveTask(Task task) {
-		taskDao.save(task);
-		logger.debug("保存task id={},name={}", new Object[] { task.getId(), task.getTaskName() });
-	}
-
-	/**
-	 * 根据主键删除作业规程任务信息
-	 * @param id
-	 */
-	public void deleteTask(Long id) {
-		taskDao.delete(id);
-		logger.debug("删除task id={}", id);
-	}
+	/*~~~~~~~~~~~ 查询类方法 ~~~~~~~~~~~~~~~~~*/
 
 	/**
 	 * 根据主键得到作业规程任务信息
@@ -67,14 +52,6 @@ public class TaskManager {
 	}
 
 	/**
-	 * 判断taskName是否唯一
-	 */
-	@Transactional(readOnly = true)
-	public boolean isTaskNameUnique(String newTaskName, String oldTaskName) {
-		return taskDao.isPropertyUnique("taskName", newTaskName, oldTaskName);
-	}
-
-	/**
 	 * 根据属性查询任务信息
 	 */
 	@Transactional(readOnly = true)
@@ -82,9 +59,37 @@ public class TaskManager {
 		return taskDao.findPage(page, filters);
 	}
 
+	/*~~~~~~~~~~~ 更新类方法 ~~~~~~~~~~~~~~~~~*/
+
+	/**
+	 * 保存作业规程任务信息
+	 */
+	public void saveTask(Task task) {
+		taskDao.save(task);
+		logger.debug("保存task id={},name={}", new Object[] { task.getId(), task.getTaskName() });
+	}
+
+	/**
+	 * 根据主键删除作业规程任务信息
+	 * @param id
+	 */
+	public void deleteTask(Long id) {
+		taskDao.delete(id);
+		logger.debug("删除task id={}", id);
+	}
+
+	/**
+	 * 判断taskName是否唯一
+	 */
+	@Transactional(readOnly = true)
+	public boolean isTaskNameUnique(String newTaskName, String oldTaskName) {
+		return taskDao.isPropertyUnique("taskName", newTaskName, oldTaskName);
+	}
+
+	/*~~~~~~~~~~~业务逻辑类注入~~~~~~~~~~~~~~~~~*/
+
 	@Autowired
 	public void setTaskDao(TaskDao taskDao) {
 		this.taskDao = taskDao;
 	}
-
 }
