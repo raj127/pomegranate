@@ -33,9 +33,7 @@ import com.darkmi.util.ServiceException;
 @Namespace("/system")
 @Results({ @Result(name = CrudActionSupport.RELOAD, location = "user.action?page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}", type = "redirect") })
 public class UserAction extends CrudActionSupport<User> {
-
 	private static final long serialVersionUID = 8683878162525847072L;
-
 	private AccountManager accountManager;
 	private CompanyManager companyManager;
 
