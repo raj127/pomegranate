@@ -55,13 +55,26 @@ date:2012/08/23
 
 		<div id="message"><s:actionmessage theme="custom" cssClass="success"/></div>
 		<div id="filter">
-			登录名: <input type="text" name="filter_LIKES_loginName" value="${param['filter_LIKES_loginName']}" size="9" tabindex="1" onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
-			姓名: <input type="text" name="filter_LIKES_name"
-							 value="${param['filter_LIKES_name']}" size="9" tabindex="2" onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
-			Email: <input type="text" name="filter_LIKES_email"
-							 value="${param['filter_LIKES_email']}" size="9" tabindex="3" onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
-			电话: <input type="text" name="filter_LIKES_phoneNumber"
-							 value="${param['filter_LIKES_phoneNumber']}" size="9" tabindex="4" onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
+			登录名: <input type="text" 
+			               name="filter_LIKES_loginName" 
+			               value="${param['filter_LIKES_loginName']}" 
+			               size="9" tabindex="1" 
+			               onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
+			姓名: <input type="text" 
+			             name="filter_LIKES_name"
+					     value="${param['filter_LIKES_name']}" 
+					     size="9" tabindex="2" 
+					     onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
+			Email: <input type="text" 
+			              name="filter_LIKES_email"
+					      value="${param['filter_LIKES_email']}" 
+					      size="9" tabindex="3" 
+					      onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
+			电话: <input type="text" 
+			             name="filter_LIKES_phoneNumber"
+					     value="${param['filter_LIKES_phoneNumber']}" 
+					     size="9" tabindex="4" 
+					     onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
 			<input type="button" value="搜索" onclick="search();" tabindex="5"/>
 			&nbsp;&nbsp;
 			
