@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springside.modules.orm.Page;
 import org.springside.modules.orm.PropertyFilter;
 
 import com.darkmi.edit.dao.TaskChapterDao;
@@ -82,6 +83,15 @@ public class TaskChapterManager {
 	public List<TaskChapter> searchTaskChapter(List<PropertyFilter> filters) {
 		return taskChapterDao.find(filters);
 	}
+	
+	/**
+	 * 使用属性过滤条件查询任务信息.
+	 */
+	@Transactional(readOnly = true)
+	public Page<TaskChapter> searchTaskChapter(final Page<TaskChapter> page, final List<PropertyFilter> filters) {
+		return taskChapterDao.findPage(page, filters);
+	}
+
 
 	/*~~~~~~~~~~~ 更新类方法 ~~~~~~~~~~~~~~~~~*/
 
