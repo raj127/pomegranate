@@ -34,13 +34,13 @@ public class TaskChapterEditIndexAction extends CrudActionSupport<Task> {
 
 	//-- 任务列表页面属性 --//
 	private Long id; //该ID为Task的ID.
-	private Task entity;
+	private Task entity; //任务实体
 	private Integer workingVersion;//对象版本号, 配合Hibernate的@Version防止并发修改
 	private boolean viewOnly = false;
 	private Page<Task> page = new Page<Task>(20);//每页20条记录
 
 	//-- 任务详细页面属性 --//
-	private String taskTree;
+	private String taskTree; //单独一个任务的章节树
 	private List<TaskChapter> tcs = Lists.newArrayList();
 
 	//-- 业务类 --//

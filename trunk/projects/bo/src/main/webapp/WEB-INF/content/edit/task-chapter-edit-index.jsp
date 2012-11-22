@@ -1,5 +1,5 @@
 <%--
-Description:任务管理 --》 主页面
+Description:规程编制 --》 主页面
 author:darkmi
 date:2012/08/21
 --%>
@@ -21,11 +21,11 @@ date:2012/08/21
 	<script>
 		$(document).ready(function() {
 			$(".mainNav a").attr("class","");
-			$("#n4").attr("class","actived");
-			$("#subNav401").attr("class","actived");
+			$("#n5").attr("class","actived");
+			$("#subNav501").attr("class","actived");
 			$(".secondNav div").each(function(){
 				$(this).hide();
-				$("#subNav4").show();
+				$("#subNav5").show();
 			});
 		});
 	</script>
