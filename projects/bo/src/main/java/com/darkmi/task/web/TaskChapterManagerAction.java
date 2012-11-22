@@ -22,9 +22,10 @@ import com.darkmi.util.CrudActionSupport;
 import com.google.common.collect.Lists;
 
 /**
- * Description: 任务章节管理Action. Copyright (c) www.darkmi.com All Rights Reserved.
- * 
- * @version 1.0 2012-05-10 上午09:20:11 DarkMi created
+ * Description: 任务管理--》章节管理.
+ * Copyright (c) www.darkmi.com
+ * All Rights Reserved.
+ * @version 1.0  2012-05-10 上午09:20:11 DarkMi created
  */
 @Namespace("/task")
 @Results({ @Result(name = "reload", location = "task-chapter-manager.action?taskId=${taskId}", type = "redirect")
