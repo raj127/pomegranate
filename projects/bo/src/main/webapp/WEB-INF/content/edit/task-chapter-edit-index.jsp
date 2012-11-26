@@ -48,9 +48,12 @@ date:2012/08/21
 			任务名称: <input type="text" name="filter_LIKES_taskName" value="${param['filter_LIKES_taskName']}" size="9" tabindex="1" onkeypress="if (event.keyCode == 13) {javascript:document.forms.mainForm.submit()}"/>
 			<input type="button" value="搜索" onclick="search();" tabindex="1"/>
 			&nbsp;&nbsp;
+			<%--
 			<security:authorize ifAnyGranted="ROLE_任务修改">
 				<input type="button" value="新建任务" onclick="linkTo('task-manager!input.action')" tabindex="2"/>
 			</security:authorize>
+			--%>
+			
 		</div>
 		<div id="content">
 			<table id="contentTable">
@@ -74,7 +77,7 @@ date:2012/08/21
 							<a href="task-manager!input.action?id=${id}&update=true&page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}">修改</a>&nbsp;
 							</security:authorize>
 							<security:authorize ifAnyGranted="ROLE_任务浏览">
-							<a href="task-chapter-manager.action?taskId=${id}">查看目录</a>&nbsp;
+							<a href="task-chapter-tabletree.action?taskId=${id}">查看目录</a>&nbsp;
 							</security:authorize>
 							<security:authorize ifAnyGranted="ROLE_任务修改">
 							<a href="#" onclick="if(confirm('确定要永久删除么?')){linkTo('task-manager!delete.action?id=${id}');}">永久删除</a>

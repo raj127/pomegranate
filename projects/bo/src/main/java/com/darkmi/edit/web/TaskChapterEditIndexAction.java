@@ -1,6 +1,5 @@
 package com.darkmi.edit.web;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.struts2.convention.annotation.Namespace;
@@ -47,41 +46,28 @@ public class TaskChapterEditIndexAction extends CrudActionSupport<Task> {
 	private TaskChapterManager taskChapterManager;
 	private TaskManager taskManager;
 
-	@Override
-	public Task getModel() {
-		return entity;
-	}
-
-	@Override
-	protected void prepareModel() throws Exception {
-		if (id != null) {
-			entity = taskManager.getTask(id);
-		} else {
-			entity = new Task();
-		}
-	}
-
 	/**
 	 * 作业规程列表页面.
 	 * 默认入口.
 	 */
 	@Override
 	public String list() throws Exception {
+		logger.debug("list() begin {... ");
 		List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(Struts2Utils.getRequest());
 		//设置默认排序方式
 		if (!page.isOrderBySetted()) {
 			page.setOrderBy("id");
 			page.setOrder(Page.DESC);
 		}
-		List<Task> list = taskManager.getAllTask();
-		for (Iterator<Task> iterator = list.iterator(); iterator.hasNext();) {
-			Task employee = (Task) iterator.next();
-			System.out.println(employee.getTaskName());
-		}
+		//List<Task> list = taskManager.getAllTask();
+		//for (Iterator<Task> iterator = list.iterator(); iterator.hasNext();) {
+		//	Task employee = (Task) iterator.next();
+		//	System.out.println(employee.getTaskName());
+		//}
 		page = taskManager.searchTask(page, filters);
+		logger.debug("list() ...end } ");
 		return SUCCESS;
 	}
-
 
 	@Override
 	public String input() throws Exception {
@@ -169,6 +155,26 @@ public class TaskChapterEditIndexAction extends CrudActionSupport<Task> {
 		sb.append("</table>");
 		logger.debug(sb.toString());
 		taskTree = sb.toString();
+	}
+
+	/* ~~~~~~~~~~~ 数据准备 ~~~~~~~~~~~~~~~~~ */
+
+	@Override
+	public Task getModel() {
+		logger.debug("getModel() {begin... ");
+		logger.debug("getModel() ...end }");
+		return entity;
+	}
+
+	@Override
+	protected void prepareModel() throws Exception {
+		logger.debug("prepareModel() {begin... ");
+		if (id != null) {
+			entity = taskManager.getTask(id);
+		} else {
+			entity = new Task();
+		}
+		logger.debug("prepareModel() ...end }");
 	}
 
 	/*~~~~~~~~~~~Setters And Getters ~~~~~~~~~~~~~~~~~*/
