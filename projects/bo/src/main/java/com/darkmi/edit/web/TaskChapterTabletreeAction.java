@@ -2,21 +2,16 @@ package com.darkmi.edit.web;
 
 import java.util.List;
 
-import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springside.modules.security.springsecurity.SpringSecurityUtils;
 
-import com.darkmi.SystemConfig;
 import com.darkmi.edit.service.TaskChapterManager;
-import com.darkmi.entity.system.Company;
 import com.darkmi.entity.task.Task;
 import com.darkmi.entity.task.TaskChapter;
-import com.darkmi.system.service.AccountManager;
 import com.darkmi.task.service.TaskManager;
 import com.darkmi.util.CrudActionSupport;
 import com.google.common.collect.Lists;
@@ -28,8 +23,7 @@ import com.google.common.collect.Lists;
  * @version 1.0  2012-05-10 上午09:20:11 DarkMi created
  */
 @Namespace("/edit")
-@Results({ @Result(name = "reload", location = "task-chapter-tabletree.action?taskId=${taskId}", type = "redirect")
-})
+@Results({ @Result(name = "reload", location = "task-chapter-tabletree.action?taskId=${taskId}", type = "redirect") })
 public class TaskChapterTabletreeAction extends CrudActionSupport<TaskChapter> {
 	private static final long serialVersionUID = 8559745143820907960L;
 	private Logger logger = LoggerFactory.getLogger(TaskChapterTabletreeAction.class);
@@ -42,10 +36,10 @@ public class TaskChapterTabletreeAction extends CrudActionSupport<TaskChapter> {
 
 	private TaskChapter tc;
 	private List<TaskChapter> tcs = Lists.newArrayList();
+
+	//-- 业务类 --//
 	private TaskManager taskManager;
 	private TaskChapterManager tcManager;
-	private AccountManager accountManager;
-	private SystemConfig systemConfig;
 
 	@Override
 	public String list() throws Exception {
@@ -55,87 +49,13 @@ public class TaskChapterTabletreeAction extends CrudActionSupport<TaskChapter> {
 		return SUCCESS;
 	}
 
-	@Override
-	public String save() throws Exception {
-		logger.debug("保存任务章节 begin {...");
-		logger.debug("id --> " + id);
-		logger.debug("taskId --> " + taskId);
-		logger.debug("parentId --> " + parentId);
-		logger.debug("tc --> {}", tc.toString());
-
-		if (null == tc.getTask()) {
-			Task task = taskManager.getTask(taskId);
-			tc.setTask(task);
-		}
-		tc.setParentId(parentId);
-		tc.setFileName("default.docx");
-		tcManager.saveTaskChapter(tc);
-		addActionMessage("保存任务章节成功");
-		logger.debug("保存任务章节 end ...}");
-		return RELOAD;
-	}
-
-	@Override
-	public String input() throws Exception {
-		return INPUT;
-	}
-
-	@Override
-	public String delete() throws Exception {
-		logger.debug("删除任务章节 begin {...");
-		logger.debug("id -->{}", id);
-		tcManager.deleteTaskChapter(id);
-		addActionMessage("删除任务章节成功");
-		logger.debug("删除任务章节 ...}");
-		return RELOAD;
-	}
-
-	public String edit() {
-		logger.debug("编辑作业规程... begin{ ");
-		filePath = getPath();
-		logger.debug("编辑作业规程... end} ");
-		return "edit";
-	}
-
-	//
-	// @Action(value = "add", results = { @Result(name = "add", location =
-	// "task-chapter-manager-input.jsp", type = "redirect") })
-	// public String add() {
-	// logger.debug("添加作业规程... begin{ ");
-	// logger.debug("添加作业规程... end} ");
-	// return "add";
-	// }
-
 	/**
-	 * 获取用户公司的根目录.
-	 * 
-	 * @return
-	 */
-	private String getPath() {
-		// 获取当前工号所属单位
-		String loginName = SpringSecurityUtils.getCurrentUserName();
-		logger.debug("current user loginName is --> {}", loginName);
-		Company company = accountManager.getCompanyByLoginName(loginName);
-
-		StringBuffer sb = new StringBuffer();
-		sb.append(ServletActionContext.getRequest().getContextPath());
-		sb.append("/");
-		sb.append(systemConfig.getCompanyFolder());
-		sb.append(company.getFolder());
-		sb.append("/");
-		sb.append("default.docx");
-		String path = sb.toString();
-		logger.debug("task path is --> {}", path);
-
-		return path;
-	}
-
-	/**
-	 * 获得任务的表格树.
-	 * 
+	 * 获得目录树状展示字符串.
 	 * @throws Exception
 	 */
 	private void getTaskChapter() throws Exception {
+		Task task = taskManager.getTask(taskId);
+		logger.debug("task --》" + task);
 		StringBuffer sb = new StringBuffer();
 		sb.append("<table id=\"taskTree\">");
 		sb.append("<thead>");
@@ -148,87 +68,73 @@ public class TaskChapterTabletreeAction extends CrudActionSupport<TaskChapter> {
 		sb.append("</thead>");
 		sb.append("<tbody>");
 		int taskCounter = 1;
-		// for (Task task : tasks) {
-		Task task = taskManager.getTask(taskId);
+		//for (Task task : tasks) {
 		sb.append("<tr id=\"ex3-node-" + taskCounter + "\">");
 		sb.append("<td>" + task.getTaskName() + "</td>");
 		sb.append("<td>&nbsp;</td>");
 		sb.append("<td>&nbsp;</td>");
 		sb.append("<td>&nbsp;</td>");
 		sb.append("<td>&nbsp;</td>");
-		sb.append("<td>");
-		sb.append("<a href=\"task-chapter-manager!input.action?taskId=" + taskId + "&parentId=0\">添加</a>");
-		sb.append("</td>");
+		sb.append("<td>&nbsp;</td>");
 		sb.append("</tr>");
 
-		// 获取一级目录
-		List<TaskChapter> levelOnes = tcManager.getLevelOne(taskId);
+		//获取一级目录
+		List<TaskChapter> levelOnes = tcManager.getLevelOne(task.getId());
 		int levelOneCounter = 1;
 		for (TaskChapter levelOne : levelOnes) {
 			sb.append("<tr id=\"ex3-node-" + taskCounter + "-" + levelOneCounter + "\" class=\"child-of-ex3-node-"
 					+ taskCounter + "\">");
 			sb.append("<td>" + levelOne.getChapterName() + "</td>");
-			sb.append("<td>");
-			sb.append("<a href=\"task-chapter-manager!edit.action\">");
-			sb.append(levelOne.getFileName());
-			sb.append("</a>");
-			sb.append("</td>");
+			sb.append("<td>" + levelOne.getFileName() + "</td>");
 			sb.append("<td>" + levelOne.getDescription() + "</td>");
 			sb.append("<td>&nbsp;</td>");
 			sb.append("<td>&nbsp;</td>");
-			sb.append("<td>");
-			sb.append("<a href=\"task-chapter-manager!input.action?id=" + levelOne.getId() + "&viewOnly=true\">查看</a>");
-			sb.append("&nbsp;&nbsp;");
-			sb.append("<a href=\"task-chapter-manager!input.action?id=" + levelOne.getId() + "&taskId=" + taskId
-					+ "&viewOnly=false\">编辑</a>");
-			sb.append("&nbsp;&nbsp;");
-			sb.append("<a href=\"task-chapter-manager!input.action?taskId=" + taskId + "&parentId=" + levelOne.getId()
-					+ "\">添加</a>");
-
-			// 获取二级目录
-			List<TaskChapter> levelTwos = tcManager.getLevelTwo(levelOne.getId());
-			if (levelTwos.size() <= 0) {
-				sb.append("&nbsp;&nbsp;");
-				sb.append("<a href=\"task-chapter-manager!delete.action?id=" + levelOne.getId() + "&taskId=" + taskId
-						+ "\">删除</a>");
-			}
-			sb.append("</td>");
+			sb.append("<td>&nbsp;</td>");
 			sb.append("</tr>");
 
+			//获取二级目录
+			List<TaskChapter> levelTwos = tcManager.getLevelTwo(levelOne.getId());
 			int levelTwoCounter = 1;
 			for (TaskChapter levelTwo : levelTwos) {
 				sb.append("<tr id=\"ex3-node-" + taskCounter + "-" + levelOneCounter + "-" + levelTwoCounter
 						+ "\" class=\"child-of-ex3-node-" + taskCounter + "-" + levelOneCounter + "\">");
 				sb.append("<td>" + levelTwo.getChapterName() + "</td>");
-				sb.append("<td>");
-				sb.append("<a href=\"task-chapter-manager!edit.action\" target=\"_blank\">");
-				sb.append(levelTwo.getFileName());
-				sb.append("</a>");
-				sb.append("</td>");
+				sb.append("<td>" + levelTwo.getFileName() + "</td>");
 				sb.append("<td>" + levelTwo.getDescription() + "</td>");
 				sb.append("<td>&nbsp;</td>");
 				sb.append("<td>&nbsp;</td>");
-				sb.append("<td>");
-				sb.append("<a href=\"task-chapter-manager!input.action?id=" + levelTwo.getId()
-						+ "&viewOnly=true\">查看</a>");
-				sb.append("&nbsp;&nbsp;");
-				sb.append("<a href=\"task-chapter-manager!input.action?id=" + levelTwo.getId() + "&taskId=" + taskId
-						+ "&viewOnly=false\">编辑</a>");
-				sb.append("&nbsp;&nbsp;");
-				sb.append("<a href=\"task-chapter-manager!delete.action?id=" + levelTwo.getId() + "&taskId=" + taskId
-						+ "\">删除</a>");
-				sb.append("</td>");
+				sb.append("<td>" + "<a href=\"task-chapter-edit-main!main.action?id=" + levelTwo.getId()
+						+ "\" target=\"_blank\">编辑</a>" + "</td>");
 				sb.append("</tr>");
 				levelTwoCounter++;
 			}
 			levelOneCounter++;
 		}
-		taskCounter++;
-		// }
+		//taskCounter++;
+		//}
 		sb.append("</tbody>");
 		sb.append("</table>");
 		logger.debug(sb.toString());
 		taskTree = sb.toString();
+	}
+
+	@Override
+	public String save() throws Exception {
+		return null;
+	}
+
+	@Override
+	public String input() throws Exception {
+		return null;
+	}
+
+	@Override
+	public String delete() throws Exception {
+		return null;
+	}
+
+	public String edit() {
+		return null;
 	}
 
 	/* ~~~~~~~~~~~ 数据准备 ~~~~~~~~~~~~~~~~~ */
@@ -326,16 +232,6 @@ public class TaskChapterTabletreeAction extends CrudActionSupport<TaskChapter> {
 	@Autowired
 	public void setTaskManager(TaskManager taskManager) {
 		this.taskManager = taskManager;
-	}
-
-	@Autowired
-	public void setAccountManager(AccountManager accountManager) {
-		this.accountManager = accountManager;
-	}
-
-	@Autowired
-	public void setSystemConfig(SystemConfig systemConfig) {
-		this.systemConfig = systemConfig;
 	}
 
 }
