@@ -46,6 +46,8 @@ date:2012/08/21
 				$("select").each(function(){
 					this.disabled = 'true';
 				});
+				
+				$("#description").attr("disabled", "disabled"); 
 			}
 			if(${update}){
 				//设置所有select标签的disabled属性
@@ -116,12 +118,16 @@ date:2012/08/21
 			<tr>
 				<td width="10%">任务名称:</td>
 				<td>
-					<input type="text" id="taskName" name="taskName" value="${taskName}" size="40" maxlength="50"/>
+					<input type="text" id="taskName" name="taskName" value="${taskName}" size="98" maxlength="50"/>
 				</td>
 			</tr>
 			<tr>
 				<td>任务描述:</td>
-				<td><input type="text" id="description" name="description" value="${description}" size="40" maxlength="255"/></td>
+				<td>
+					<textarea id="description" name="description" rows="5" cols="100">
+					${description}
+					</textarea>
+				</td>
 			</tr>
 			<tr>
 				<td>
