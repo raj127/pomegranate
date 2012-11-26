@@ -55,16 +55,23 @@ date:2012/08/21
 		<div id="content">
 			<table id="contentTable">
 				<tr>
-					<th><a href="javascript:sort('fullName','asc')">任务名称</a></th>
+					<th width="20%"><a href="javascript:sort('fullName','asc')">任务名称</a></th>
 					<th><a href="javascript:sort('gender','asc')">任务描述</a></th>
-					<th><a href="javascript:sort('birthyear','asc')">任务状态</a></th>
-					<th>操作</th>
+					<th width="10%"><a href="javascript:sort('birthyear','asc')">任务状态</a></th>
+					<th width="20%">操作</th>
 				</tr>
 
 				<s:iterator value="page.result">
 					<tr>
 						<td>${taskName}&nbsp;</td>
-						<td>${description}&nbsp;</td>
+						<td>
+							<s:if test="%{description != null && description.length()>70}">
+		                    	<s:property value='%{description.substring(0, 30)+"......"}' />
+					    	</s:if>
+					    	<s:else>
+					    		<s:property value="%{description}" default="-" />
+					    	</s:else>
+						&nbsp;</td>
 						<td>${state}&nbsp;</td>
 						<td>&nbsp;
 							<security:authorize ifAnyGranted="ROLE_任务浏览">
