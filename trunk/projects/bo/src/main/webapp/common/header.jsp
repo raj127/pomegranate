@@ -81,7 +81,7 @@ date:2012/08/21
 					<%--<a id="subNav201" href="${ctx}/system/company.action" >公司列表</a>--%>
 					<a id="subNav202" href="${ctx}/system/user.action" >用户列表</a>
 					<a id="subNav203" href="${ctx}/system/role.action" >角色列表</a>
-					<a id="subNav204" href="${ctx}/system/config.action" >配置列表</a>
+					<%-- <a id="subNav204" href="${ctx}/system/config.action" >配置列表</a>--%>
 					<a id="subNav205" href="${ctx}/system/log.action" >日志列表</a>
 					<a id="subNav206" href="${ctx}/system/specification-chapter-table.action" >规范管理</a>
 					<a id="subNav208" href="${ctx}/system/specification-chapter-index.action" >索引维护</a>
