@@ -65,9 +65,9 @@ date:2012/08/23
 			<br/>
 			<table id="contentTable">
 				<tr>
-					<th>名称</th>
+					<th width="10%">名称</th>
 					<th>授权</th>
-					<th>操作</th>
+					<th width="10%">操作</th>
 				</tr>
 	
 				<s:iterator status="status" value="page.result">
