@@ -47,7 +47,7 @@ date:2012/08/21
 					this.disabled = 'true';
 				});
 				
-				$("#description").attr("disabled", "disabled"); 
+				$("#description").attr("disabled", "disabled");
 			}
 			if(${update}){
 				//设置所有select标签的disabled属性
@@ -124,9 +124,7 @@ date:2012/08/21
 			<tr>
 				<td>任务描述:</td>
 				<td>
-					<textarea id="description" name="description" rows="5" cols="100">
-					${description}
-					</textarea>
+					<textarea id="description" name="description" rows="5" cols="100">${description}</textarea>
 				</td>
 			</tr>
 			<tr>

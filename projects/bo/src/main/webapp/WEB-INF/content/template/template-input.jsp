@@ -41,6 +41,8 @@ date:2012/08/23
 				$("select").each(function(){
 					this.disabled = 'true';
 				});
+				
+				$("#description").attr("disabled", "disabled");
 			}
 		});
 	</script>
@@ -89,7 +91,7 @@ date:2012/08/23
 			<tr>
 				<td width="10%">模板名称:</td>
 				<td>
-					<input type="text" id="templateName" name="templateName" value="${templateName}" size="40" maxlength="50" class="required"/>
+					<input type="text" id="templateName" name="templateName" value="${templateName}" size="98" maxlength="98" class="required"/>
 				</td>
 			</tr>
 			<%--
@@ -102,7 +104,10 @@ date:2012/08/23
 			--%>			
 			<tr>
 				<td>模板描述:</td>
-				<td><input type="text" id="description" name="description" value="${description}" size="40" maxlength="255"/></td>
+				<td>
+				<textarea id="description" name="description" rows="5" cols="100">${description}</textarea>
+				<%--<input type="text" id="description" name="description" value="${description}" size="40" maxlength="255"/> --%>
+				</td>
 			</tr>
 			</tr>
 			<tr>
