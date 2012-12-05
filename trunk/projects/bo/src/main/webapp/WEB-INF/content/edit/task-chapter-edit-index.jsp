@@ -84,7 +84,28 @@ date:2012/08/21
 							</security:authorize>
 						</td>
 					</tr>
+					
 				</s:iterator>
+					<tr>
+						<td>3302轨道顺槽掘进工作面作业规程&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;
+							<security:authorize ifAnyGranted="ROLE_任务浏览">
+							<a href="task-manager!input.action?id=${id}&viewOnly=true">查看</a>&nbsp;
+							</security:authorize>
+							<security:authorize ifAnyGranted="ROLE_任务修改">
+							<a href="task-manager!input.action?id=${id}&update=true&page.pageNo=${page.pageNo}&page.orderBy=${page.orderBy}&page.order=${page.order}&page.pageSize=${page.pageSize}">修改</a>&nbsp;
+							</security:authorize>
+							<security:authorize ifAnyGranted="ROLE_任务浏览">
+							<a href="task-chapter-edit-main!main.action?id=1000" target="_blank">编辑内容</a>&nbsp;
+							</security:authorize>
+							<security:authorize ifAnyGranted="ROLE_任务修改">
+							<a href="#" onclick="if(confirm('确定要永久删除么?')){linkTo('task-manager!delete.action?id=${id}');}">永久删除</a>
+							</security:authorize>
+						</td>
+					</tr>
+				
 			</table>
 		</div>
 

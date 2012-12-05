@@ -1,45 +1,201 @@
-﻿var OFFICE_CONTROL_OBJ;// 控件对象
+﻿/*
+ * --------------------------------------------------
+ * 全局变量定义
+ * --------------------------------------------------
+ */
+var OFFICE_CONTROL_OBJ;// 控件对象
 var IsFileOpened;      // 控件是否打开文档
 var fileType ;
 var fileTypeSimple;
 
-/* 初始化页面 */
-function intializePage(fileUrl){
-	// alert("begin intializePage { ...");
-	// alert(document.all("TANGER_OCX"));
-	OFFICE_CONTROL_OBJ = document.all("TANGER_OCX");
-	initCustomMenus();
-	NTKO_OCX_OpenDoc(fileUrl);
-	// alert("end intializePage ...}");
+/*
+ * --------------------------------------------------
+ * 界面定制方法
+ * --------------------------------------------------
+ */
+
+// 设置工具栏
+function setToolBar(){
+	OFFICE_CONTROL_OBJ.ToolBars=!OFFICE_CONTROL_OBJ.ToolBars;
 }
 
-function onPageClose(){
-	if(!OFFICE_CONTROL_OBJ.activeDocument.saved)
+// 控制是否显示所有菜单
+function setMenubar(){
+	OFFICE_CONTROL_OBJ.Menubar=!OFFICE_CONTROL_OBJ.Menubar;
+}
+
+// 控制”插入“菜单栏
+function setInsertMemu(){
+		OFFICE_CONTROL_OBJ.IsShowInsertMenu=!OFFICE_CONTROL_OBJ.IsShowInsertMenu;
+}
+
+// 控制”编辑“菜单栏
+function setEditMenu(){
+		OFFICE_CONTROL_OBJ.IsShowEditMenu=!OFFICE_CONTROL_OBJ.IsShowEditMenu;
+}
+
+// 控制”工具“菜单栏
+function setToolMenu(){
+	OFFICE_CONTROL_OBJ.IsShowToolMenu=!OFFICE_CONTROL_OBJ.IsShowToolMenu;
+}
+	
+// 自定义菜单功能函数
+function initCustomMenus(){
+	var myobj = OFFICE_CONTROL_OBJ;
+	myobj.AddCustomMenu2(0," 内容工具 ");
+	myobj.AddCustomMenuItem2(0,0,-1,false,"校验本行",false,0);
+
+	myobj.AddCustomMenu2(1," 图片工具 ");
+	myobj.AddCustomMenuItem2(1,0,-1,false,"插入远程图片",false,10);
+	
+	myobj.AddCustomMenu2(2," 表格工具 ");
+	myobj.AddCustomMenuItem2(2,0,-1,false,"插入表格",false,20);
+	
+	myobj.AddCustomMenu2(3," 公式 ");
+	myobj.AddCustomMenuItem2(3,0,-1,false,"插入公式",false,30);
+	
+	myobj.AddCustomMenu2(4," 信息统计 ");
+	myobj.AddCustomMenuItem2(4,0,-1,false,"文字总数",false,40);
+	myobj.AddCustomMenuItem2(4,1,-1,false,"句子总数",false,41);
+	myobj.AddCustomMenuItem2(4,2,-1,false,"段落总数",false,42);
+	myobj.AddCustomMenuItem2(4,3,-1,false,"图片总数",false,43);
+	myobj.AddCustomMenuItem2(4,4,-1,false,"表格总数",false,44);
+	
+	
+//	for(var menuPos=0; menuPos<3; menuPos++){
+//		myobj.AddCustomMenu2(menuPos,"菜单"+menuPos+"(&"+menuPos+")");
+//		for(var submenuPos=0;submenuPos<10;submenuPos++){
+//			if(1 ==(submenuPos % 3)){ // 主菜单增加分隔符。第3个参数是-1是在主菜单增加
+//				myobj.AddCustomMenuItem2(menuPos,submenuPos,-1,false,"-",true);
+//			}else if(0 == (submenuPos % 2)){ // 主菜单增加子菜单，第3个参数是-1是在主菜单增加
+//				myobj.AddCustomMenuItem2(menuPos,submenuPos,-1,true,"子菜单"+menuPos+"-"+submenuPos,false);
+//				// 增加子菜单项目
+//				for(var subsubmenuPos=0;subsubmenuPos<9;subsubmenuPos++)
+//				{
+//					if(0 == (subsubmenuPos % 2))// 增加子菜单项目
+//					{
+//						myobj.AddCustomMenuItem2(menuPos,
+//								                 submenuPos,
+//								                 subsubmenuPos,
+//								                 false,
+//							                     "子菜单项目"+menuPos+"-"+submenuPos+"-"+subsubmenuPos,
+//							                     false,
+//							                     menuPos*100+submenuPos*20+subsubmenuPos);
+//					}
+//					else // 增加子菜单分隔
+//					{
+//						myobj.AddCustomMenuItem2(menuPos,submenuPos,subsubmenuPos,false,
+//							"-"+subsubmenuPos,true);
+//					}
+//					// 测试禁用和启用
+//					if(2 == (subsubmenuPos % 4))
+//					{
+//						myobj.EnableCustomMenuItem2(menuPos,submenuPos,subsubmenuPos,false);
+//					}
+//				}				
+//			}else{ // 主菜单增加项目，第3个参数是-1是在主菜单增加
+//			
+//				myobj.AddCustomMenuItem2(menuPos,
+//						                 submenuPos,
+//						                 -1,
+//						                 false,
+//						                 "菜单项目"+menuPos+"-"+submenuPos,
+//						                 false,
+//						                 menuPos*100+submenuPos);
+//			}
+//			
+//			// 测试禁用和启用
+//			if(1 == (submenuPos % 4))
+//			{
+//				myobj.EnableCustomMenuItem2(menuPos,submenuPos,-1,false);
+//			}
+//		}
+//	}
+}
+
+/*
+ * --------------------------------------------------
+ * 文档属性设置
+ * --------------------------------------------------
+ */
+function SetReviewMode(boolvalue){
+	if(OFFICE_CONTROL_OBJ.doctype==1)
 	{
-		if(confirm( "文档修改过,还没有保存,是否需要保存?"))
-		{
+		OFFICE_CONTROL_OBJ.ActiveDocument.TrackRevisions = boolvalue;// 设置是否保留痕迹
+	}
+} 
+
+function setShowRevisions(boolevalue){
+	if(OFFICE_CONTROL_OBJ.doctype==1)
+	{
+		OFFICE_CONTROL_OBJ.ActiveDocument.ShowRevisions =boolevalue;// 设置是否显示痕迹
+	}
+}
+
+function setFilePrint(boolvalue){
+	OFFICE_CONTROL_OBJ.fileprint=boolvalue;// 是否允许打印
+}
+
+function setFileNew(boolvalue){
+	OFFICE_CONTROL_OBJ.FileNew=boolvalue;// 是否允许新建
+}
+
+function setFileSaveAs(boolvalue){
+	OFFICE_CONTROL_OBJ.FileSaveAs=boolvalue;// 是否允许另存为
+}
+
+function setIsNoCopy(boolvalue){
+	OFFICE_CONTROL_OBJ.IsNoCopy=boolvalue;// 是否禁止粘贴
+}
+
+/*
+ * --------------------------------------------------
+ * 文档的打开及保存
+ * --------------------------------------------------
+ */
+
+/**
+ * 初始化word文档.
+ */
+function intializePage(fileUrl){
+	 alert("begin intializePage { ...");
+	// alert(document.all("TANGER_OCX"));
+	OFFICE_CONTROL_OBJ = document.all("TANGER_OCX");
+	//OFFICE_CONTROL_OBJ.ActiveDocument.Protect(3,false,"123456",false,true);
+	initCustomMenus();
+	NTKO_OCX_OpenDoc(fileUrl);
+	//OFFICE_CONTROL_OBJ.ActiveDocument.Protect(3,false,"123456",false,true);
+	 alert("end intializePage ...}");
+}
+
+/**
+ * 页面关闭的时候调用该方法
+ */
+function onPageClose(){
+	if(!OFFICE_CONTROL_OBJ.activeDocument.saved){
+		if(confirm( "文档修改过,还没有保存,是否需要保存?")){
 			saveFileToUrl();
 		}
 	}
 }
 
+/**
+ * 从指定路径打开office文件.
+ * @param fileUrl
+ */
 function NTKO_OCX_OpenDoc(fileUrl){
 	OFFICE_CONTROL_OBJ.BeginOpenFromURL(fileUrl);
 }
 
-function setFileOpenedOrClosed(bool){
-	IsFileOpened = bool;
-	fileType = OFFICE_CONTROL_OBJ.DocType ;
-}
-
-function trim(str){ // 删除左右两端的空格
-　　return str.replace(/(^\s*)|(\s*$)/g, "");
+/**
+ * 从指定路径打开word模板
+ */
+function openTemplateFileFromUrl(templateUrl){
+	OFFICE_CONTROL_OBJ.openFromUrl(templateUrl);
 }
 
 /**
  * 将文件保存到指定路径,以原始格式.
- * 
- * @returns
  */
 function saveFileToUrl(){
 	//alert("begin save file { ...");
@@ -91,15 +247,13 @@ function saveFileToUrl(){
 
 /**
  * 将文档以HTML格式保存到服务器.
- * 
- * @returns
+ * 该方法未测试.
  */
 function saveFileAsHtmlToUrl(){
 	var myUrl = "upLoadHtmlFile.jsp"	;
 	var htmlFileName = document.all("fileName").value+".html";
 	var result;
-	if(IsFileOpened)
-	{
+	if(IsFileOpened){
 		result=OFFICE_CONTROL_OBJ.PublishAsHTMLToURL("upLoadHtmlFile.jsp","uploadHtml","htmlFileName="+htmlFileName,htmlFileName);
 		result=trim(result);
 		document.all("statusBar").innerHTML="服务器返回信息:"+result;
@@ -109,26 +263,103 @@ function saveFileAsHtmlToUrl(){
 }
 
 /**
- * 将文档保存到服务器.
- * 
- * @returns
+ * 将文档以PDF格式保存到服务器.
+ * 该方法未测试.
  */
 function saveFileAsPdfToUrl(){
 	var myUrl = "upLoadPdfFile.jsp"	;
 	var pdfFileName = document.all("fileName").value+".pdf";
-	if(IsFileOpened)
-	{
+	if(IsFileOpened){
 		OFFICE_CONTROL_OBJ.PublishAsPdfToURL(myUrl,"uploadPdf","PdfFileName="+pdfFileName,pdfFileName,"","",true,false);
 	}
 }
+
+/**
+ * 没看明白这个方法做什么用.
+ * @param bool
+ */
+function setFileOpenedOrClosed(bool){
+	IsFileOpened = bool;
+	fileType = OFFICE_CONTROL_OBJ.DocType ;
+}
+
+/**
+ * 一个测试方法.
+ */
 function testFunction(){
 	alert(IsFileOpened);
 }
 
+/*
+ * --------------------------------------------------
+ * 书签函数定义
+ * --------------------------------------------------
+ */
+
+/**
+ * 获得所有的书签.
+ */
+function getAllBookmarks(){
+	var doc = OFFICE_CONTROL_OBJ.ActiveDocument;
+	var bks = doc.Bookmarks;
+	var bksCount = bks.Count;
+	for(i=1; i<=bksCount; i++){
+		alert(bks(i).Name);
+	}
+}
+
+/**
+ * 保护文档部分修改.
+ */
+function protectDoc(){
+	var marks=OFFICE_CONTROL_OBJ.ActiveDocument.Bookmarks;//获取所有的书签
+	for(var i=1; i<=marks.Count; i++){
+		OFFICE_CONTROL_OBJ.ActiveDocument.Bookmarks(marks(i).Name).Range.Select();//选取书签区域保护
+		OFFICE_CONTROL_OBJ.ActiveDocument.Application.Selection.Editors.Add(-1);//增加可编辑区域
+		//NTKO START
+		OFFICE_CONTROL_OBJ.ActiveDocument.ActiveWindow.View.ShadeEditableRanges = true;
+		OFFICE_CONTROL_OBJ.ActiveDocument.ActiveWindow.View.ShowBookmarks = true;
+		//NTKO END
+	} 
+	if(OFFICE_CONTROL_OBJ.ActiveDocument.ProtectionType==-1){
+		OFFICE_CONTROL_OBJ.ActiveDocument.Protect(3);//实现文档保护
+	}
+}
+
+/**
+ * 取消可编辑区域，保护文档，每个地方都不能修改.
+ */
+function unEditDoc(){
+	OFFICE_CONTROL_OBJ.ActiveDocument.DeleteAllEditableRanges(-1)
+	//增加可编辑区域
+	//NTKO START
+	OFFICE_CONTROL_OBJ.ActiveDocument.ActiveWindow.View.ShadeEditableRanges = false;
+	OFFICE_CONTROL_OBJ.ActiveDocument.ActiveWindow.View.ShowBookmarks = false;
+	//NTKO END 
+	if(OFFICE_CONTROL_OBJ.ActiveDocument.ProtectionType==-1){
+		OFFICE_CONTROL_OBJ.ActiveDocument.Protect(3);//实现文档保护
+	}
+}
+
+
+/*
+ * --------------------------------------------------
+ * 工具类方法
+ * --------------------------------------------------
+ */
+function trim(str){ // 删除左右两端的空格
+	　　return str.replace(/(^\s*)|(\s*$)/g, "");
+}
+
+/*
+ * --------------------------------------------------
+ * 印章函数定义定义
+ * 暂时未使用.
+ * --------------------------------------------------
+ */
 function addServerSecSign(){
 	var signUrl=document.all("secSignFileUrl").options[document.all("secSignFileUrl").selectedIndex].value;
-	if(IsFileOpened)
-	{
+	if(IsFileOpened){
 		if(OFFICE_CONTROL_OBJ.doctype==1||OFFICE_CONTROL_OBJ.doctype==2)
 		{
 			try
@@ -143,16 +374,15 @@ function addServerSecSign(){
 }
 
 function addLocalSecSign(){
-	if(IsFileOpened)
-	{
-		if(OFFICE_CONTROL_OBJ.doctype==1||OFFICE_CONTROL_OBJ.doctype==2)
-		{
-			try
-			{OFFICE_CONTROL_OBJ.AddSecSignFromLocal("ntko","");}
-			catch(error){}
+	if(IsFileOpened){
+		if(OFFICE_CONTROL_OBJ.doctype==1||OFFICE_CONTROL_OBJ.doctype==2){
+			try{
+				OFFICE_CONTROL_OBJ.AddSecSignFromLocal("ntko","");
+			}catch(error){}
 		}
-		else
-		{alert("不能在该类型文档中使用安全签名印章.");}
+		else{
+			alert("不能在该类型文档中使用安全签名印章.");
+		}
 	}	
 }
 
@@ -335,12 +565,8 @@ function insertRedHeadFromUrl(headFileURL){
 	OFFICE_CONTROL_OBJ.addtemplatefromurl(headFileURL);// 在光标位置插入红头文档
 }
 
-function openTemplateFileFromUrl(templateUrl){
-	OFFICE_CONTROL_OBJ.openFromUrl(templateUrl);
-}
 
-function doHandSign()
-{
+function doHandSign(){
 	/*
 	 * if(OFFICE_CONTROL_OBJ.doctype==1||OFFICE_CONTROL_OBJ.doctype==2)//此处设置只允许在word和excel中盖章.doctype=1是"word"文档,doctype=2是"excel"文档 {
 	 */
@@ -355,35 +581,6 @@ function doHandSign()
 	// }
 }
 
-function SetReviewMode(boolvalue){
-	if(OFFICE_CONTROL_OBJ.doctype==1)
-	{
-		OFFICE_CONTROL_OBJ.ActiveDocument.TrackRevisions = boolvalue;// 设置是否保留痕迹
-	}
-} 
-
-function setShowRevisions(boolevalue){
-	if(OFFICE_CONTROL_OBJ.doctype==1)
-	{
-		OFFICE_CONTROL_OBJ.ActiveDocument.ShowRevisions =boolevalue;// 设置是否显示痕迹
-	}
-}
-
-function setFilePrint(boolvalue){
-	OFFICE_CONTROL_OBJ.fileprint=boolvalue;// 是否允许打印
-}
-
-function setFileNew(boolvalue){
-	OFFICE_CONTROL_OBJ.FileNew=boolvalue;// 是否允许新建
-}
-
-function setFileSaveAs(boolvalue){
-	OFFICE_CONTROL_OBJ.FileSaveAs=boolvalue;// 是否允许另存为
-}
-
-function setIsNoCopy(boolvalue){
-	OFFICE_CONTROL_OBJ.IsNoCopy=boolvalue;// 是否禁止粘贴
-}
 
 // 验证文档控件自带印章功能盖的章
 function DoCheckSign(){
@@ -398,101 +595,4 @@ function DoCheckSign(){
    }	
 }
 
-// 设置工具栏
-function setToolBar(){
-	OFFICE_CONTROL_OBJ.ToolBars=!OFFICE_CONTROL_OBJ.ToolBars;
-}
 
-// 控制是否显示所有菜单
-function setMenubar(){
-	OFFICE_CONTROL_OBJ.Menubar=!OFFICE_CONTROL_OBJ.Menubar;
-}
-
-// 控制”插入“菜单栏
-function setInsertMemu(){
-		OFFICE_CONTROL_OBJ.IsShowInsertMenu=!OFFICE_CONTROL_OBJ.IsShowInsertMenu;
-}
-
-// 控制”编辑“菜单栏
-function setEditMenu(){
-		OFFICE_CONTROL_OBJ.IsShowEditMenu=!OFFICE_CONTROL_OBJ.IsShowEditMenu;
-}
-
-// 控制”工具“菜单栏
-function setToolMenu(){
-	OFFICE_CONTROL_OBJ.IsShowToolMenu=!OFFICE_CONTROL_OBJ.IsShowToolMenu;
-}
-	
-// 自定义菜单功能函数
-function initCustomMenus(){
-	var myobj = OFFICE_CONTROL_OBJ;
-	myobj.AddCustomMenu2(0," 内容工具 ");
-	myobj.AddCustomMenuItem2(0,0,-1,false,"校验本行",false,0);
-
-	myobj.AddCustomMenu2(1," 图片工具 ");
-	myobj.AddCustomMenuItem2(1,0,-1,false,"插入远程图片",false,10);
-	
-	myobj.AddCustomMenu2(2," 表格工具 ");
-	myobj.AddCustomMenuItem2(2,0,-1,false,"插入表格",false,20);
-	
-	myobj.AddCustomMenu2(3," 公式 ");
-	myobj.AddCustomMenuItem2(3,0,-1,false,"插入公式",false,30);
-	
-	myobj.AddCustomMenu2(4," 信息统计 ");
-	myobj.AddCustomMenuItem2(4,0,-1,false,"文字总数",false,40);
-	myobj.AddCustomMenuItem2(4,1,-1,false,"句子总数",false,41);
-	myobj.AddCustomMenuItem2(4,2,-1,false,"段落总数",false,42);
-	myobj.AddCustomMenuItem2(4,3,-1,false,"图片总数",false,43);
-	myobj.AddCustomMenuItem2(4,4,-1,false,"表格总数",false,44);
-	
-	
-//	for(var menuPos=0; menuPos<3; menuPos++){
-//		myobj.AddCustomMenu2(menuPos,"菜单"+menuPos+"(&"+menuPos+")");
-//		for(var submenuPos=0;submenuPos<10;submenuPos++){
-//			if(1 ==(submenuPos % 3)){ // 主菜单增加分隔符。第3个参数是-1是在主菜单增加
-//				myobj.AddCustomMenuItem2(menuPos,submenuPos,-1,false,"-",true);
-//			}else if(0 == (submenuPos % 2)){ // 主菜单增加子菜单，第3个参数是-1是在主菜单增加
-//				myobj.AddCustomMenuItem2(menuPos,submenuPos,-1,true,"子菜单"+menuPos+"-"+submenuPos,false);
-//				// 增加子菜单项目
-//				for(var subsubmenuPos=0;subsubmenuPos<9;subsubmenuPos++)
-//				{
-//					if(0 == (subsubmenuPos % 2))// 增加子菜单项目
-//					{
-//						myobj.AddCustomMenuItem2(menuPos,
-//								                 submenuPos,
-//								                 subsubmenuPos,
-//								                 false,
-//							                     "子菜单项目"+menuPos+"-"+submenuPos+"-"+subsubmenuPos,
-//							                     false,
-//							                     menuPos*100+submenuPos*20+subsubmenuPos);
-//					}
-//					else // 增加子菜单分隔
-//					{
-//						myobj.AddCustomMenuItem2(menuPos,submenuPos,subsubmenuPos,false,
-//							"-"+subsubmenuPos,true);
-//					}
-//					// 测试禁用和启用
-//					if(2 == (subsubmenuPos % 4))
-//					{
-//						myobj.EnableCustomMenuItem2(menuPos,submenuPos,subsubmenuPos,false);
-//					}
-//				}				
-//			}else{ // 主菜单增加项目，第3个参数是-1是在主菜单增加
-//			
-//				myobj.AddCustomMenuItem2(menuPos,
-//						                 submenuPos,
-//						                 -1,
-//						                 false,
-//						                 "菜单项目"+menuPos+"-"+submenuPos,
-//						                 false,
-//						                 menuPos*100+submenuPos);
-//			}
-//			
-//			// 测试禁用和启用
-//			if(1 == (submenuPos % 4))
-//			{
-//				myobj.EnableCustomMenuItem2(menuPos,submenuPos,-1,false);
-//			}
-//		}
-//	}
-}
