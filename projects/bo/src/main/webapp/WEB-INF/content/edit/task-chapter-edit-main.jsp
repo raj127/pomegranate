@@ -94,7 +94,12 @@ UpdateDate:2012/08/27
 	
 </head>
 
+<%-- 
+<body onload='intializePage("/bo/company/default/task/diyifenzuoyeguicheng/3302轨道顺槽掘进工作面作业规程9月份修改.doc")' onunload="onPageClose()">
 <body onload='intializePage("${ctx}${tc.task.path}${tc.fileName}")' onunload="onPageClose()">
+--%>
+<body onload='intializePage("/bo/company/default/task/diyifenzuoyeguicheng/3302.doc")' onunload="onPageClose()">
+
 <!-- top bar -->
 <div id="top-pane" class="ui-layout-north" style="overflow:hidden" >
 <%@ include file="task-chapter-edit-top.jsp"%>

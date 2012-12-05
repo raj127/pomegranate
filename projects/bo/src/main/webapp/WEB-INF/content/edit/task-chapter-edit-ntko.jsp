@@ -10,10 +10,10 @@ UpdateDate:2012/08/27
 </script>
 
 <script type="text/javascript" for="TANGER_OCX" event="OnDocumentOpened(TANGER_OCX_str,TANGER_OCX_obj)">
-	//saved属性用来判断文档是否被修改过,文档打开的时候设置成ture,当文档被修改,自动被设置为false,该属性由office提供.
+	//saved属性用来判断文档是否被修改过,文档打开的时候设置成true,当文档被修改,自动被设置为false,该属性由office提供.
 	OFFICE_CONTROL_OBJ.activeDocument.saved=true;
 	//设置标题
-	OFFICE_CONTROL_OBJ.Caption= "haha";
+	OFFICE_CONTROL_OBJ.Caption= "规程编辑";
 	
 	//水平滚动条
 	OFFICE_CONTROL_OBJ.ActiveDocument.ActiveWindow.DisplayHorizontalScrollBar; 

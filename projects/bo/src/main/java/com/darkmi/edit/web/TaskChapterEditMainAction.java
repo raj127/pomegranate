@@ -59,9 +59,11 @@ public class TaskChapterEditMainAction extends ActionSupport {
 	public String main() throws Exception {
 		logger.debug("begin main() { ...");
 		logger.debug("id --> {}", id);
+		id = (long) 22;
 		tc = tcManager.getTaskChapter(id);
 		if(null == tc.getFileName()|| "".equals(tc.getFileName())){
-			//tc.set
+		//	logger.debug("测试.....");
+		//	logger.debug("打开一份完整的作业规程.");
 		}
 		logger.debug(tc.toString());
 		logger.debug("end main() ...} ");
