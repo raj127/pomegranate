@@ -1,37 +1,29 @@
-/**
- * 
- */
 package com.darkmi.jacob;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
 
 /**
- * @author Administrator
+ * Jacob测试程序.
  *
  */
 public class JacobOne {
-
+	private Logger logger = LoggerFactory.getLogger(JacobOne.class);
 	private ActiveXComponent objWord;
 	private Dispatch document;
 	private Dispatch wordObject;
+	private static final String FILE_PATH = "c:\\test\\1.docx";//最好是一个空白word文件
 
-	public static void main(String[] args) {
-		JacobOne t1 = new JacobOne();
-
-		try {
-			// 为了演示方便，请在下列目录新建一个空白文档
-			t1.open("c:\\java_dev\\test1.docx");
-			t1.close();
-		} catch (Exception e) {
-			t1.close();
-			System.err.println(e.getMessage());
-			e.printStackTrace();
-		}
-	}
-
+	/**
+	 * 打开参数指定的word文件.
+	 * @param filename
+	 */
 	public void open(String filename) {
+		logger.debug("open begin { ... ");
 		// 实例化 objWord
 		objWord = new ActiveXComponent("Word.Application");
 
@@ -82,8 +74,13 @@ public class JacobOne {
 		Dispatch.call(disSelect, "TypeParagraph");
 		Dispatch.call(disSelect, "TypeText", "哈尔滨银行");
 		Dispatch.call(disSelect, "TypeParagraph");
+
+		logger.debug("open end ...}");
 	}
 
+	/**
+	 * 关闭word文档.
+	 */
 	public void close() {
 		// 关闭文档
 		// 由于是演示程序，这里只简单的把word退出即可
@@ -91,4 +88,20 @@ public class JacobOne {
 		Dispatch.call(wordObject, "quit");
 	}
 
+	/**
+	 * 主方法.
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		JacobOne jacob = new JacobOne();
+		try {
+			// 为了演示方便，请在下列目录新建一个空白文档
+			jacob.open(FILE_PATH);
+			jacob.close();
+		} catch (Exception e) {
+			jacob.close();
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+		}
+	}
 }
