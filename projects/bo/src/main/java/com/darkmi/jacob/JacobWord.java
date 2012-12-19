@@ -35,7 +35,7 @@ public class JacobWord {
 		app = new ActiveXComponent("Word.Application");// 初始化word应用程序
 		app.setProperty("Visible", new Variant(false));// 设置word文档不在前台打开
 		app.setProperty("AutomationSecurity", new Variant(3)); // 禁用宏
-		Dispatch docs = app.getProperty("Documents").toDispatch();// 获取文挡属性
+		Dispatch docs = app.getProperty("Documents").toDispatch();// 获取文档属性
 		document = Dispatch.call(docs, "Add").toDispatch(); // 创建新文档
 		selection = app.getProperty("Selection").toDispatch();// 获得选定内容
 		paragraph = Dispatch.get(selection, "ParagraphFormat").getDispatch();// 段落
