@@ -8,7 +8,8 @@ import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
 
 /**
- * Jacob测试程序.
+ * 本程序演示如何打开word文件及写入内容.
+ * @author Darkmi
  *
  */
 public class JacobOne {
