@@ -41,6 +41,8 @@ public class JacobTwo {
 		document = Dispatch.call(documents, "Open", filename).toDispatch();
 		
 		Dispatch bookMarks = Dispatch.call(document, "Bookmarks").toDispatch();
+		//bookMarks.
+		
 		logger.debug(bookMarks.toString());
 		//--------------
 //		Dispatch bookMarks = Dispatch.call(document, "Bookmarks").toDispatch();
