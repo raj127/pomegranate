@@ -2,26 +2,26 @@ package com.darkmi.jacob;
 
 import java.util.HashMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
 
 public class MSWordManager {
-
+	private Logger logger = LoggerFactory.getLogger(MSWordManager.class);
 	private Dispatch doc; // word文档
 	private ActiveXComponent word; // word运行程序对象 
 	private Dispatch documents;// 所有word文档集合
 	private Dispatch selection; // 选定的范围或插入点
 	private boolean saveOnExit = false;
 
-	public boolean isSaveOnExit() {
-		return saveOnExit;
-	}
-
 	/** 　　　 
 	  * @param visible 为true表示word应用程序可见 
 	    */
 	public MSWordManager(boolean visible) {
+		logger.debug("MSWordManager begin { ... ");
 		if (word == null) {
 			word = new ActiveXComponent("Word.Application");
 			word.setProperty("Visible", new Variant(visible));
@@ -29,19 +29,9 @@ public class MSWordManager {
 		if (documents == null) {
 			documents = word.getProperty("Documents").toDispatch();
 		}
+		logger.debug("MSWordManager begin ... }");
 	}
 
-	/** */
-	/** 
-	* 设置退出时参数 
-	*　　　　 
-	* @param saveOnExit boolean true-退出时保存文件，false-退出时不保存文件 
-	*/
-	public void setSaveOnExit(boolean saveOnExit) {
-		this.saveOnExit = saveOnExit;
-	}
-
-	/** */
 	/** 
 	* 创建一个新的word文档 
 	*　　　　 
@@ -51,19 +41,21 @@ public class MSWordManager {
 		selection = Dispatch.get(word, "Selection").toDispatch();
 	}
 
-	/** */
 	/** 
 	* 打开一个已存在的文档 
 	*　　　　 
 	* @param docPath 
 	*/
 	public void openDocument(String docPath) {
+		//首先需要检测文件是否存在
+
+		//检测是否为word文件
+
 		closeDocument();
 		doc = Dispatch.call(documents, "Open", docPath).toDispatch();
 		selection = Dispatch.get(word, "Selection").toDispatch();
 	}
 
-	/** */
 	/** 
 	* 把选定的内容或插入点向上移动 
 	*　　　　 
@@ -78,7 +70,6 @@ public class MSWordManager {
 		}
 	}
 
-	/** */
 	/** 
 	* 把选定的内容或者插入点向下移动 
 	*　　　　 
@@ -91,7 +82,6 @@ public class MSWordManager {
 			Dispatch.call(selection, "MoveDown");
 	}
 
-	/** */
 	/** 
 	* 把选定的内容或者插入点向左移动 
 	*　　　　 
@@ -105,7 +95,6 @@ public class MSWordManager {
 		}
 	}
 
-	/** */
 	/** 
 	* 把选定的内容或者插入点向右移动 
 	*　　　　 
@@ -118,7 +107,6 @@ public class MSWordManager {
 			Dispatch.call(selection, "MoveRight");
 	}
 
-	/** */
 	/** 
 	* 把插入点移动到文件首位置 
 	*　　　　 
@@ -135,7 +123,6 @@ public class MSWordManager {
 		Dispatch.call(selection, "EndKey", new Variant(6));
 	}
 
-	/** */
 	/** 
 	* 从选定内容或插入点开始查找文本 
 	*　　　　 
@@ -162,7 +149,6 @@ public class MSWordManager {
 		return Dispatch.call(find, "Execute").getBoolean();
 	}
 
-	/** */
 	/** 
 	* 把选定选定内容设定为替换文本 
 	*　　　　 
@@ -177,7 +163,6 @@ public class MSWordManager {
 		return true;
 	}
 
-	/** */
 	/** 
 	* 全局替换文本 
 	*　　　　 
@@ -191,7 +176,6 @@ public class MSWordManager {
 		}
 	}
 
-	/** */
 	/** 
 	* 在当前插入点插入字符串 
 	*　　　　 
@@ -201,7 +185,6 @@ public class MSWordManager {
 		Dispatch.put(selection, "Text", newText);
 	}
 
-	/** */
 	/** 
 	*　　　　 
 	* @param toFindText 要查找的字符串 
@@ -215,7 +198,6 @@ public class MSWordManager {
 		return true;
 	}
 
-	/** */
 	/** 
 	* 全局替换图片 
 	*　　　　 
@@ -229,7 +211,6 @@ public class MSWordManager {
 		}
 	}
 
-	/** */
 	/** 
 	* 在当前插入点插入图片 
 	*　　　　 
@@ -239,7 +220,6 @@ public class MSWordManager {
 		Dispatch.call(Dispatch.get(selection, "InLineShapes").toDispatch(), "AddPicture", imagePath);
 	}
 
-	/** */
 	/** 
 	* 合并单元格 
 	*　　　　 
@@ -261,7 +241,6 @@ public class MSWordManager {
 		Dispatch.call(fstCell, "Merge", secCell);
 	}
 
-	/** */
 	/** 
 	* 在指定的单元格里填写数据 
 	*　　　　 
@@ -280,7 +259,6 @@ public class MSWordManager {
 		Dispatch.put(selection, "Text", txt);
 	}
 
-	/** */
 	/** 
 	* 在当前文档拷贝数据 
 	*　　　　 
@@ -294,7 +272,6 @@ public class MSWordManager {
 		}
 	}
 
-	/** */
 	/** 
 	* 在当前文档粘帖剪贴板数据 
 	*　　　　 
@@ -308,7 +285,6 @@ public class MSWordManager {
 		}
 	}
 
-	/** */
 	/** 
 	* 在当前文档指定的位置拷贝表格
 	* @param pos 当前文档指定的位置
@@ -645,11 +621,15 @@ public class MSWordManager {
 	 *　　　　 
 	 */
 	public void closeDocument() {
+		logger.debug("closeDocument begin { ... ");
 		if (doc != null) {
 			Dispatch.call(doc, "Save");
 			Dispatch.call(doc, "Close", new Variant(saveOnExit));
 			doc = null;
+		} else {
+			logger.error("doc is null~~~~~~~~~~~~~~~~~~~~~~~~~");
 		}
+		logger.debug("closeDocument end ... } ");
 	}
 
 	/** 
@@ -657,6 +637,7 @@ public class MSWordManager {
 	*　　　　 
 	*/
 	public void close() {
+		logger.debug("close begin { ... ");
 		closeDocument();
 		if (word != null) {
 			Dispatch.call(word, "Quit");
@@ -664,6 +645,7 @@ public class MSWordManager {
 		}
 		selection = null;
 		documents = null;
+		logger.debug("close end ... } ");
 	}
 
 	/** 
@@ -697,9 +679,34 @@ public class MSWordManager {
 
 		save(tofile);
 	}
-	
-	public static void main(String[] args) {
-			
+
+	/*~~~~~~~~~~~~ Setter And Getter ~~~~~~~~~~~~~~~~~*/
+	public boolean isSaveOnExit() {
+		return saveOnExit;
+	}
+
+	/** 
+	* 设置退出时参数 
+	*　　　　 
+	* @param saveOnExit boolean true-退出时保存文件，false-退出时不保存文件 
+	*/
+	public void setSaveOnExit(boolean saveOnExit) {
+		this.saveOnExit = saveOnExit;
+	}
+
+	/**
+	 * 测试主方法
+	 * @param args
+	 */
+	public static void main(String[] args) throws Exception {
+		String savePath = "C:\\doc\\test.doc";
+		MSWordManager wordManager = new MSWordManager(true);
+		wordManager.setSaveOnExit(true);
+		wordManager.createNewDocument();
+		wordManager.save(savePath);
+		//wordManager.closeDocument();
+		wordManager.close();
+
 	}
 
 }
