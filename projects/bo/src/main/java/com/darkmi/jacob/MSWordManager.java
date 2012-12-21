@@ -1,6 +1,9 @@
 package com.darkmi.jacob;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,9 +20,10 @@ public class MSWordManager {
 	private Dispatch selection; // 选定的范围或插入点
 	private boolean saveOnExit = false;
 
-	/** 　　　 
-	  * @param visible 为true表示word应用程序可见 
-	    */
+	/**
+	 * 构造函数.
+	 * @param visible 为true表示word应用程序可见 
+	 */
 	public MSWordManager(boolean visible) {
 		logger.debug("MSWordManager begin { ... ");
 		if (word == null) {
@@ -32,10 +36,9 @@ public class MSWordManager {
 		logger.debug("MSWordManager begin ... }");
 	}
 
-	/** 
-	* 创建一个新的word文档 
-	*　　　　 
-	*/
+	/**
+	 * 新建一个空白文档.
+	 */
 	public void createNewDocument() {
 		doc = Dispatch.call(documents, "Add").toDispatch();
 		selection = Dispatch.get(word, "Selection").toDispatch();
@@ -55,6 +58,8 @@ public class MSWordManager {
 		doc = Dispatch.call(documents, "Open", docPath).toDispatch();
 		selection = Dispatch.get(word, "Selection").toDispatch();
 	}
+
+	/*~~~~~~~~~~~~ 光标操作方法 ~~~~~~~~~~~~~~~~~*/
 
 	/** 
 	* 把选定的内容或插入点向上移动 
@@ -185,6 +190,8 @@ public class MSWordManager {
 		Dispatch.put(selection, "Text", newText);
 	}
 
+	/*~~~~~~~~~~~~ 图片操作方法 ~~~~~~~~~~~~~~~~~*/
+
 	/** 
 	*　　　　 
 	* @param toFindText 要查找的字符串 
@@ -219,6 +226,8 @@ public class MSWordManager {
 	public void insertImage(String imagePath) {
 		Dispatch.call(Dispatch.get(selection, "InLineShapes").toDispatch(), "AddPicture", imagePath);
 	}
+
+	/*~~~~~~~~~~~~ 表格操作方法 ~~~~~~~~~~~~~~~~~*/
 
 	/** 
 	* 合并单元格 
@@ -271,20 +280,14 @@ public class MSWordManager {
 			Dispatch.call(textRange, "Copy");
 		}
 	}
-
-	/** 
-	* 在当前文档粘帖剪贴板数据 
-	*　　　　 
-	* @param pos 
-	*/
-	public void paste(String pos) {
-		moveStart();
-		if (this.find(pos)) {
-			Dispatch textRange = Dispatch.get(selection, "Range").toDispatch();
-			Dispatch.call(textRange, "Paste");
-		}
+	
+	/**
+	 * 在当前文档复制图像.
+	 */
+	public void copyImage(){
+		
 	}
-
+	
 	/** 
 	* 在当前文档指定的位置拷贝表格
 	* @param pos 当前文档指定的位置
@@ -300,6 +303,21 @@ public class MSWordManager {
 			Dispatch.call(textRange, "Paste");
 		}
 	}
+
+	/** 
+	* 在当前文档粘帖剪贴板数据 
+	*　　　　 
+	* @param pos 
+	*/
+	public void paste(String pos) {
+		moveStart();
+		if (this.find(pos)) {
+			Dispatch textRange = Dispatch.get(selection, "Range").toDispatch();
+			Dispatch.call(textRange, "Paste");
+		}
+	}
+
+
 
 	/** 
 	* 在当前文档末尾拷贝来自另一个文档中的段落 
@@ -658,6 +676,36 @@ public class MSWordManager {
 		}
 	}
 
+	/*~~~~~~~~~~~~ 标签操作方法 ~~~~~~~~~~~~~~~~~*/
+
+	/**
+	 * 获取指定word文件的所有书签.
+	 */
+	public List<Map<String, String>> getAllBookmark(String inFile) {
+		//打开指定文件
+		openDocument(inFile);
+		//书签集合
+		Dispatch bookmarks = Dispatch.call(doc, "Bookmarks").toDispatch();
+		List<Map<String, String>> allBookmarks = new ArrayList<Map<String, String>>();
+		int bkCount = Dispatch.get(bookmarks, "Count").getInt();
+		//将书签列表存放到list + map 结构中
+		for (int i = 1; i <= bkCount; i++) {
+			Map<String, String> bookMark = new HashMap<String, String>();
+			Dispatch item = Dispatch.call(bookmarks, "Item", i).toDispatch();
+			String itemName = Dispatch.get(item, "Name").getString(); //读取书签命名
+			Dispatch range = Dispatch.get(item, "Range").toDispatch();
+			String itemValue = Dispatch.get(range, "Text").getString(); //读取书签文本
+			if (!itemName.equals("")) {
+				logger.debug("BookmarkName--》" + itemName);
+				logger.debug("BookmarkValue--》" + itemValue);
+				bookMark.put("NAME", itemName);
+				bookMark.put("TEXT", itemValue);
+				allBookmarks.add(bookMark);
+			}
+		}
+		return allBookmarks;
+	}
+
 	/**
 	 * 往标签里面插入值,例:生成合同文本
 	 * @param infile
@@ -699,14 +747,18 @@ public class MSWordManager {
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception {
-		String savePath = "C:\\doc\\test.doc";
+		//String savePath = "C:\\doc\\test.doc";
+		String srcDoc = "C:\\doc\\RCServer.doc";
 		MSWordManager wordManager = new MSWordManager(true);
 		wordManager.setSaveOnExit(true);
-		wordManager.createNewDocument();
-		wordManager.save(savePath);
-		//wordManager.closeDocument();
+		
+		//wordManager.createNewDocument();
+		//wordManager.insertText("你好.");
+		//wordManager.save(savePath);
+		//wordManager.close();
+		//wordManager.openDocument(srcDoc);
+		wordManager.getAllBookmark(srcDoc);
 		wordManager.close();
 
 	}
-
 }
